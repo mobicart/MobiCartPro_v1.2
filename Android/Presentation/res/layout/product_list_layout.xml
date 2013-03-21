@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mobicart="http://schemas.android.com/apk/res/com.mobicart.renamed_package"
+    android:id="@+id/productList_Top_RL"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/home_page_bg" >
+
+    <EditText
+        android:id="@+id/productList_search_et"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/search_bar_dpi"
+        android:cursorVisible="false"
+        android:editable="true"
+        android:gravity="bottom"
+        android:hint="@string/home_search_hint"
+        android:imeOptions="actionSearch"
+        android:paddingBottom="12dip"
+        android:paddingLeft="45dip"
+        android:paddingRight="50dip"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="17sp"
+        android:typeface="normal" />
+
+    <com.mobicart.renamed_package.utils.MyCommonView
+        android:id="@+id/productList_search_button"
+        style="@style/TextFontBtn"
+        android:layout_width="65dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dip"
+        android:layout_marginTop="8dip"
+        android:background="@drawable/cancel_btn_withouttext_dpi"
+        android:paddingBottom="6dip"
+        android:paddingTop="6dip"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="#ffffff"
+        android:visibility="gone"
+        mobicart:ttf_name="Helvetica Neue Bold.ttf" />
+
+    <RelativeLayout
+        android:id="@+id/productList_Relative1"
+        android:layout_width="fill_parent"
+        android:layout_height="45dip"
+        android:layout_below="@id/productList_search_et"
+        android:background="@drawable/productlist_title_selector" >
+
+        <com.mobicart.renamed_package.utils.MyCommonView
+            android:id="@+id/productList_title_TV"
+            style="@style/TitleFont"
+            android:layout_width="wrap_content"
+            android:layout_height="25dip"
+            android:layout_centerVertical="true"
+            android:paddingLeft="12dip"
+            android:paddingTop="5dip"
+            android:text="@string/productList_title"
+            android:textColor="#363636"
+            mobicart:ttf_name="Helvetica Neue Bold.ttf" />
+
+        <RadioGroup
+            android:id="@+id/productList_RadioGroup1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/radiogroupgradient"
+            android:checkedButton="@+id/productList_price_RBtn"
+            android:orientation="horizontal" >
+
+            <com.mobicart.renamed_package.utils.MyRadioButton
+                android:id="@+id/productList_price_RBtn"
+                style="@style/TitleFont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="1dip"
+                android:background="@drawable/price_radiobtn_selector"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:padding="10dip"
+                android:text="@string/productList_price"
+                android:textColor="#363636"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:typeface="normal"
+                mobicart:ttf_name="Helvetica Neue Bold.ttf" />
+
+            <com.mobicart.renamed_package.utils.MyRadioButton
+                android:id="@+id/productList_status_RBtn"
+                style="@style/TitleFont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="1dip"
+                android:background="@drawable/status_radiobtn_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dip"
+                android:text="@string/productList_status"
+                android:textColor="#363636"
+                android:textSize="12sp"
+                mobicart:ttf_name="Helvetica Neue Bold.ttf" />
+
+            <com.mobicart.renamed_package.utils.MyRadioButton
+                android:id="@+id/productList_AtoZ_RBtn"
+                style="@style/TitleFont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/alphabetic_radiobtn_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dip"
+                android:text="@string/productList_AtoZ"
+                android:textColor="#363636"
+                android:textSize="12sp"
+                mobicart:ttf_name="Helvetica Neue Bold.ttf" />
+        </RadioGroup>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/product_listEmpty_TV"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/productList_Relative1"
+        android:layout_marginTop="20dip"
+        android:gravity="center"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/productList_bottom_bar_LL"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:background="#e6e5e5" >
+
+        <TextView
+            android:id="@+id/loadMoreProducts_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:layout_marginBottom="10dip"
+            android:layout_gravity="center_horizontal"
+            android:text="Tap to load more"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/productList_List_LV"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/productList_bottom_bar_LL"
+        android:layout_below="@id/productList_Relative1"
+        android:background="@drawable/account_bg"
+        android:divider="#d9d7d7"
+        android:dividerHeight="0.5dip"
+        android:fadingEdge="none"
+        android:scrollingCache="false" />
+
+</RelativeLayout>
