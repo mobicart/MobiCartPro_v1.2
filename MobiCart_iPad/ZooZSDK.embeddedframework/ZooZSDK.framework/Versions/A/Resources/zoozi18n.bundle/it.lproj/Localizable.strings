@@ -44,7 +44,7 @@
 "Wrong Passcode"="Codice errato";
 "Please Enter your ZooZ Passcode"="Inserisci il tuo codice d'accesso ZooZ";
 
-"Forgot passcode? Click here to enter card details"="Codice d'acceso dimenticato? Clicca qui per inserire i dati della carta";
+"Forgot passcode? Click here to enter card details"="Codice d'acceso dimenticato?\nClicca qui per inserire i dati della carta";
 "Not Accepted"="Rifiutato";
 "Warning"="Attenzione";
 "Some network error occured"="Errore di connessione";
@@ -70,3 +70,14 @@
 
 "Authentication code is missing." = "Codice di sicurezza mancante";
 "Cannot complete transaction, your passcode is incorrect, please try again." = "Non Ë possibile completare la transazione, il codice di sicurezza Ë errato.";
+"Add a Card"="Aggiungi una scheda";
+"Verify"="Verificare";
+"Add +"="Aggiungere +";
+"Authorization completed"="Autorizzazione completata";
+"Payment is pending approval"="Payment is pending approval";
+"HOW WOULD YOU LIKE TO PAY"="COME VUOI PAGARE";
+"zooz.fundtype.creditcard" = "Carta di credito";
+"zooz.fundtype.paypal" = "PayPal";
+"zooz.fundtype.dwolla" = "Bank transfer";
+"zooz.fundtype.qiwi" = "Qiwi wallet";
+"zooz.fundtype.klarna" = "Klarna";

@@ -44,7 +44,7 @@
 "Save"="Guardar";
 "Wrong Passcode"="Contraseña incorrecta";
 "Please Enter your ZooZ Passcode"="Introduzca su contraseña de ZooZ";
-"Forgot passcode? Click here to enter card details"="¿Has olvidado tu contraseña? pulsa aquí para introducir los datos de tu tarjeta de crédito";
+"Forgot passcode? Click here to enter card details"="¿Has olvidado tu contraseña?\npulsa aquí para introducir los datos de tu tarjeta de crédito";
 "Not Accepted"="Rechazada";
 "Warning"="Atención";
 "Some network error occured"="Error de conexión";
@@ -63,6 +63,16 @@
 "Invalid ZIP"="Inválido";
 "Invalid ID"="ID Inválido";
 "Secure connection..."="Conexión seguro...";
+"Add a Card"="Añadir una tarjeta de";
+"Verify"="Verificar";
+"Add +"="Agregar +";
+"Authorization completed"="Autorizado";
+"Payment is pending approval"="Payment is pending approval";
+"HOW WOULD YOU LIKE TO PAY"="Cómo le gustaría para pagar";
 
-
+"zooz.fundtype.creditcard" = "Tarjeta de crédito";
+"zooz.fundtype.paypal" = "PayPal";
+"zooz.fundtype.dwolla" = "Bank transfer";
+"zooz.fundtype.qiwi" = "Qiwi wallet";
+"zooz.fundtype.klarna" = "Klarna";
 

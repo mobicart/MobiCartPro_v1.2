@@ -20,7 +20,6 @@
 @end
 
 
-
 @interface ZooZInvoice : NSObject
 
 //invoiceNumber is a customize refernce number that can be freely set to the invoice. It usually is some tracking refernce to the app own server.
@@ -31,6 +30,7 @@
 -(NSArray *)getItems;
 
 @property(nonatomic, retain) NSString *invoiceNumber;
-@property(nonatomic, retain) NSString *additionalDetails;//free text for custom description on the trasnaction (200 chars)
+//Free text for custom description on the trasnaction (200 chars)
+@property(nonatomic, retain) NSString *additionalDetails;
 
 @end

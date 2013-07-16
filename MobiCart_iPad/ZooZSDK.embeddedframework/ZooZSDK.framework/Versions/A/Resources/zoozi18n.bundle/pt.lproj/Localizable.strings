@@ -44,7 +44,7 @@
 "Save"="Salvar";
 "Wrong Passcode"="Senha incorreta";
 "Please Enter your ZooZ Passcode"="Informe sua senha do ZooZ";
-"Forgot passcode? Click here to enter card details"="Esqueceu sua senha? Clique aqui para informar os dados do seu cartão de crédito";
+"Forgot passcode? Click here to enter card details"="Esqueceu sua senha?\nClique aqui para informar os dados do seu cartão de crédito";
 "Not Accepted"="Não autorizado";
 "Warning"="Atenção";
 "Some network error occured"="Ocorreu um erro com a conexão de rede";
@@ -54,12 +54,22 @@
 "Secure Payment"="Pagamento seguro";
 "Personal Passcode"="Senha persoal";
 "Enhance Security"="Melhorar a segurança";
-"Create personal passcode"="Criar uma senha persoal";
+"Create personal passcode"="Criar uma senha pessoal";
 "Invalid email"="E-mail inválido";
 "Invalid"="inválido";
 "Invalid Number"="Número do cartão inválido";
 "Invalid CVV"="CVV inválido";
 "Invalid ZIP"="CEP inválido";
 "Invalid ID"="CPF";
-"Secure connection..."="Conexão seguro...";
-
+"Secure connection..."="Conexão segura...";
+"Add a Card"="Adicionar um cartão";
+"Verify"="Verificar";
+"Add +"="Juntar +";
+"Authorization completed"="Autorização concluída";
+"Payment is pending approval"="Payment is pending approval";
+"HOW WOULD YOU LIKE TO PAY"="COMO VOCÊ GOSTARIA DE PAGAR";
+"zooz.fundtype.creditcard" = "Cartão de crédito";
+"zooz.fundtype.paypal" = "PayPal";
+"zooz.fundtype.dwolla" = "Bank transfer";
+"zooz.fundtype.qiwi" = "Qiwi wallet";
+"zooz.fundtype.klarna" = "Klarna";

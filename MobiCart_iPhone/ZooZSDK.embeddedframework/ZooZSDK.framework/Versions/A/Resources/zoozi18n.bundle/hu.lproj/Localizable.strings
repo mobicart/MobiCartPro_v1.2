@@ -44,7 +44,7 @@
 "Save"="Mentés";
 "Wrong Passcode"="Rossz PIN kód";
 "Please Enter your ZooZ Passcode"="Kérjük írja be Zooz PIN kódját";
-"Forgot passcode? Click here to enter card details"="Elfelejtette PIN kódját? Kattintson ide és adja meg a bankkártya adait";
+"Forgot passcode? Click here to enter card details"="Elfelejtette PIN kódját?\nKattintson ide és adja meg a bankkártya adait";
 "Not Accepted"="Visszautasítva";
 "Warning"="Hiba";
 "Some network error occured"="Hálózati hiba történt";
@@ -63,5 +63,15 @@
 "Invalid ZIP"="Hibás ZIP";
 "Invalid ID"="Hibás személyigazolvány szám.";
 "Secure connection..."="Biztonságos kapcsolat...";
-
+"Add a Card"="Add a kártya";
+"Verify"="Ellenőrzése";
+"Add +"="Hozzáad +";
+"Authorization completed"="Felhatalmazott";
+"Payment is pending approval"="Payment is pending approval";
+"HOW WOULD YOU LIKE TO PAY"="Hogyan szeretné fizetni";
+"zooz.fundtype.creditcard" = "Bankkártya";
+"zooz.fundtype.paypal" = "PayPal";
+"zooz.fundtype.dwolla" = "Bank transfer";
+"zooz.fundtype.qiwi" = "Qiwi wallet";
+"zooz.fundtype.klarna" = "Klarna";
 

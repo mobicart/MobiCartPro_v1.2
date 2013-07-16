@@ -38,7 +38,7 @@
 "Save"="Kaydet";
 "Wrong Passcode"="Hatalı şifre";
 "Please Enter your ZooZ Passcode"="Lütfen ZooZ şifrenizi giriniz";
-"Forgot passcode? Click here to enter card details"="Şifremi Unuttum? Kart Detaylarını Griniz";
+"Forgot passcode? Click here to enter card details"="Şifremi Unuttum?\nKart Detaylarını Griniz";
 "Not Accepted"="Onaylanmadı";
 "Warning"="Uyarı";
 "Some network error occured"="Bağlantı Hatası Yaşandı";
@@ -57,4 +57,15 @@
 "Invalid ZIP"="Hatalı posta kodu";
 "Invalid ID"="Hatalı ID";
 "Secure connection..."="Güvenli bağlantı...";
+"Verify" = "Onaylamak";
+"Add a Card"="Bir Kart ekleme";
+"Add +"="Eklemek +";
+"Authorization completed"="Yetkilendirme tamamlandı";
+"Payment is pending approval"="Payment is pending approval";
+"HOW WOULD YOU LIKE TO PAY"="SİZE NASIL ÖDEME YAPMAK İSTİYORUM";
+"zooz.fundtype.creditcard" = "Kredi Kartı";
+"zooz.fundtype.paypal" = "PayPal";
+"zooz.fundtype.dwolla" = "Bank transfer";
+"zooz.fundtype.qiwi" = "Qiwi wallet";
+"zooz.fundtype.klarna" = "Klarna";
 

@@ -8,9 +8,9 @@
 "CVV is missing" = "CVV fehlt";
 "Close"="Schließen";
 "Continue"="Fortfahren";
-"Pay now"="Jetzt zahlen";
-"- Pay with:" = "- Zahle mit:";
-"Pay with:" = "Zahle mit:";
+"Pay now"="Jetzt bezahlen";
+"- Pay with:" = "- Bezahlen mit:";
+"Pay with:" = "Bezahlen mit:";
 "Total:"="Gesamt:";
 "Not Accepted"="Nicht akzeptiert";
 "Thank You"="Vielen Dank";
@@ -24,12 +24,12 @@
 "Zip Code"="Postleitzahl";
 "Email"="E-mail";
 "Missing Email"="Fehlende E-Mail";
-"ID Number"="ID-Nummer";
+"ID Number"="Kennnummer";
 //"ZooZ Mobile Gateway"="ZooZ Mobile Zahlung";
 "Card number is incorrect"="Kartennummer ist nicht korrekt";
 "CVV is missing"="CVV fehlt";
 "Missing ZIP Code"="Fehlende Postleitzahl";
-"Missing ID Number"="Fehlende Kennummer";
+"Missing ID Number"="Fehlende Kennnummer";
 "Invalid expiration date"="Verfallsdatum fehlt";
 "Missing card owner name"="Name des Karteninhabers fehlt";
 "Credit Card"="Kreditkarte";
@@ -40,18 +40,20 @@
 "4 Digits"="4 Ziffern";
 "Retype"="Wiederholen";
 "Code does not match"="Code stimmt nicht überein";
-"Please create your passcode:"="Bitte geben Sie ihr ZooZ Passwort ein";
+"Please create your passcode:"="Bitte erstellen Sie ihr ZooZ Passwort ein";
 "Save"="Speichern";
 "Wrong Passcode"="Falsches Passwort";
 "Please Enter your ZooZ Passcode"="Bitte geben Sie ihr ZooZ Passwort ein";
-"Forgot passcode? Click here to enter card details"="Passwort vergessen? Klicken Sie hier um Ihre Kartendaten einzugeben";
+"Forgot passcode? Click here to enter card details"="Passwort vergessen?\nKlicken Sie hier um Ihre Kartendaten einzugeben";
+"Forgot passcode?\nClick here to enter card details" = "test";
+
 "Not Accepted"="Nicht akzeptiert";
 "Warning"="Warnung";
 "Some network error occured"="Ein Netzwerkfehler ist aufgetreten";
 "Some general service error occured, please try again later"="Ein allgemeiner Fehler ist aufgetreten, bitte versuchen Sie es später erneut";
 "Network Error"="Netzwerkfehler";
-"We identified that you have the ZooZ app installed on your phone. Please enter the passcode as used in ZooZ app, or as saved in previous ZooZ payments on this device."="Wir haben erkannt, dass Sie die ZooZ App auf ihren Telefon installiert haben. Bitte geben Sie das Passwort ein, dass Sie in der ZooZ App benutzt haben, oder dass Sie in diesem Gerät gespeichert haben.";
-"This passcode will be used for future payments from this device for all apps that uses the ZooZ mobile payment checkout."="Dieses Passwort wird auf diesem Gerät für alle zukünftige Zahlungen über Zooz verwendet.";
+"We identified that you have the ZooZ app installed on your phone. Please enter the passcode as used in ZooZ app, or as saved in previous ZooZ payments on this device."="Wir haben erkannt, dass Sie die ZooZ App auf ihren Telefon installiert haben. Bitte geben Sie das Passwort ein, dass Sie in der ZooZ App benutzt haben, oder dass Sie für vorherige Zahlungen in diesem Gerät gespeichert haben.";
+"This passcode will be used for future payments from this device for all apps that uses the ZooZ mobile payment checkout."="Dieses Passwort wird auf diesem Gerät für alle zukünftigen Zahlungen über ZooZ verwendet.";
 "Secure Payment"="Sichere bezahlung";
 "Personal Passcode"="Persönliches Passwort";
 "Enhance Security"="Erweiterte Sicherheit";
@@ -59,9 +61,24 @@
 "Invalid email"="Ungültige E-Mail-Adresse";
 "Invalid"="Ungültig";
 "Invalid Number"="Kartennummer ist nicht korrekt";
-"Invalid CVV"="Ungültig";
-"Invalid ZIP"="Ungültig";
-"Invalid ID"="Ungültig ID";
+"Invalid CVV"="Ungültiger CVV";
+"Invalid ZIP"="Ungültige PLZ";
+"Invalid ID"="Kennnummer";
 "Secure connection..."="Sichere verbindung...";
+"Verify" = "Verifizieren";
+"Register Payment Source"="Zahlungsquelle registrieren";
+"Authorization completed"="Autorisierung abgeschlossen";
+"Add a Card"="Fügen Sie eine Karte hinzu";
+"Verify"="Verifizieren";
+"Add +"="Hinzufügen";
+"Payment is pending approval"="Payment is pending approval";
+
+"HOW WOULD YOU LIKE TO PAY" = "WIE MÖCHTEN SIE BEZAHLEN";
+
+"zooz.fundtype.creditcard" = "Kreditkarte";
+"zooz.fundtype.paypal" = "PayPal";
+"zooz.fundtype.dwolla" = "Bank transfer";
+"zooz.fundtype.qiwi" = "Qiwi wallet";
+"zooz.fundtype.klarna" = "Klarna";
 
 

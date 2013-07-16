@@ -11,7 +11,7 @@
 "Pay now"="שלם";
 "- Pay with:" = "";
 "Pay with:" = "";
-"Total:"=":סה\"כ";
+"Total:"="סה\"כ:";
 "Not Accepted"="לא מתקבל";
 "Thank You"="תודה רבה";
 "Payment is confirmed"="תשלום אושר";
@@ -44,7 +44,7 @@
 "Save"="שמור";
 "Wrong Passcode"="סיסמה שגויה";
 "Please Enter your ZooZ Passcode"="אנא הקש את סיסמת ZooZ";
-"Forgot passcode? Click here to enter card details"="שכחת סיסמה? הקש כאן כדי להכניס פרטי אמצעי תשלום";
+"Forgot passcode? Click here to enter card details"="שכחת סיסמה?\nהקש כאן כדי להכניס פרטי אמצעי תשלום";
 "Not Accepted"="לא מתקבל";
 "Warning"="אזהרה";
 "Some network error occured"="נראה כי יש בעיית קישוריות לאינטרנט";
@@ -63,6 +63,15 @@
 "Invalid ZIP"="מיקוד לא תקין";
 "Invalid ID"="ת.ז. לא תקינה";
 "Secure connection..."="חיבור מאובטח...";
-
-
+"Add a Card"="הוספת כרטיס";
+"Verify"="אישור";
+"Add +"="הוסף +";
+"Authorization completed"="אושר בהצלחה";
+"Payment is pending approval"="בקשת תשלום התקבלה, ממתין לאישור סופי";
+"HOW WOULD YOU LIKE TO PAY"="כיצד ברצונך לשלם";
+"zooz.fundtype.creditcard" = "כרטיס אשראי";
+"zooz.fundtype.paypal" = "פייפאל";
+"zooz.fundtype.dwolla" = "העברה בנקאית";
+"zooz.fundtype.qiwi" = "Qiwi wallet";
+"zooz.fundtype.klarna" = "Klarna";
 
