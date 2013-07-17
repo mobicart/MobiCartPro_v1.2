@@ -533,12 +533,7 @@ extern BOOL isLoadingTableFooter;
 	if([[GlobalPrefrences getPaypalModeEnable] intValue]==1 &&([GlobalPrefrences getPaypalLiveToken].length!=0))
     {
         
-        NSLog(@"*****************************PayPal Token/PayPal Mode******************************");
-        NSLog(@"PayPalToken: %@",[GlobalPrefrences getPaypalLiveToken]);
-        NSLog(@"PayPalMode:  %@",[GlobalPrefrences getPaypalModeIsLive]);
-        NSLog(@"*******************************************************************************");
-        
-        
+               
         if([[GlobalPrefrences getPaypalModeIsLive]intValue]==1)
         {
             [PayPal initializeWithAppID:[GlobalPrefrences getPaypalLiveToken] forEnvironment:ENV_LIVE];
@@ -570,13 +565,7 @@ extern BOOL isLoadingTableFooter;
     /*********************************integration with Zooz payment gatway****************************************/
     if([[GlobalPrefrences getZoozModeEnable] intValue]==1&&([GlobalPrefrences getZoozPaymentToken].length!=0))
     {
-        NSLog(@"*****************************ZooZ AppUnique ID/Zooz Mode******************************");
-        NSLog(@"iPad ZooZ App Unique ID:  %@",[[NSBundle mainBundle] bundleIdentifier]);
-        NSLog(@"iPad ZooZ key:  %@",[GlobalPrefrences getZoozPaymentToken]);
-        NSLog(@"ZooZ Mode:  %@",[GlobalPrefrences getZooZModeIsLive]);
-        NSLog(@"*******************************************************************************");
-        
-        btnZooz=[UIButton buttonWithType:UIButtonTypeCustom];
+               btnZooz=[UIButton buttonWithType:UIButtonTypeCustom];
         
         [btnZooz addTarget:self action:@selector(payWithZooz) forControlEvents:UIControlEventTouchUpInside];
         
