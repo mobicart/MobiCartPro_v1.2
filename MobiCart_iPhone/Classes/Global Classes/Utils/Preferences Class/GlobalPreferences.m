@@ -547,7 +547,8 @@ int userStateID=0;
 	NSString *str = [[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.common.search"];
 	[_searchBar setPlaceholder:str];
 	[_searchBar setTranslucent:YES];
-   	[[_searchBar.subviews objectAtIndex:0] removeFromSuperview];
+    //Sa vo mark code
+   	//[[_searchBar.subviews objectAtIndex:0] removeFromSuperview];
     
     
     

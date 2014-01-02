@@ -13,8 +13,10 @@
 #import "SqlQuery.h"
 
 @implementation MobicartAppAppDelegate
-@synthesize window;  
-@synthesize mobicartView,viewController,tabController,arrAllData,loadingIndicator,backgroundImage,alert;
+@synthesize window;
+@synthesize viewController;
+@synthesize mobicartView;
+@synthesize tabController,arrAllData,loadingIndicator,backgroundImage,alert;
 
 
 
@@ -22,7 +24,8 @@
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
-{        
+{
+    
     window.rootViewController=viewController;
   
     [window makeKeyAndVisible];

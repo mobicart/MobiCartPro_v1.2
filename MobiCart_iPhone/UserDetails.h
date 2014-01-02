@@ -14,6 +14,6 @@
 
 
 
-#define merchant_email @"Wladimir@mobi-cart.com"
+#define merchant_email @"POLO-305@LIVE.COM"
 
 
