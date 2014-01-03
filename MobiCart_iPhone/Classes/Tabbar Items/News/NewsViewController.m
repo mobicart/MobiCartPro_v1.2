@@ -43,6 +43,13 @@ BOOL isOnlyTwitter;
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     [GlobalPreferences showLoadingIndicator];
 	[super viewWillAppear:animated];
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];

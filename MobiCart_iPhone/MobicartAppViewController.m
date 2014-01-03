@@ -18,6 +18,13 @@
 - (void)viewDidLoad 
 {
 	[super viewDidLoad];
+    
+    //iOS 7 Check to load the view with status bar issue avoid over the view
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     [self loadData];
     [self locateUser];
 }
@@ -47,9 +54,8 @@
 {
     NSAutoreleasePool *pool=[[NSAutoreleasePool alloc]init];
     
-    
-    
-
+	// For getting geo coordinates of user location
+	    
     if([[NSUserDefaults standardUserDefaults]valueForKey:@"isFirstTime"]==nil)
     {
         
@@ -59,8 +65,7 @@
     }
     
     
-	
-    [pool release];
+	    [pool release];
     
 }
 
@@ -74,7 +79,6 @@
 
 - (void)dealloc 
 {
-    
     [super dealloc];
 }
 

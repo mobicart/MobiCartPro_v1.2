@@ -74,6 +74,7 @@ savedPreferences *_savedPreferences;
 #define merchantEmailId [GlobalPreferences getMerchantEmailId]
 
 #define urlAppFeatures @"app"  
+//#define urlAppColorPreferences @"colorscheme.json" 
 
 //**********Global Preferences ***********/
 #pragma mark Global Preferences 

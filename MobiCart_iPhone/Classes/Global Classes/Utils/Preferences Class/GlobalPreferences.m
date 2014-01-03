@@ -8,10 +8,9 @@
 
 #import "GlobalPreferences.h"
 #import "Constants.h"
-
+#import "MobicartAppAppDelegate.h"
 @implementation GlobalPreferences
 @synthesize navigationBarColor;
-
 
 MobicartAppAppDelegate *_objMobicartAppDelegate;
 static GlobalPreferences *shared;
@@ -547,8 +546,8 @@ int userStateID=0;
 	NSString *str = [[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.common.search"];
 	[_searchBar setPlaceholder:str];
 	[_searchBar setTranslucent:YES];
-    //Sa vo mark code
-   	//[[_searchBar.subviews objectAtIndex:0] removeFromSuperview];
+   //	[[_searchBar.subviews objectAtIndex:0] removeFromSuperview];
+    //
     
     
     
@@ -1430,6 +1429,5 @@ UILabel* lbl_message;
 	[_loadingIndicator stopAnimating];
 	[_loadingIndicator hidesWhenStopped];
 }
-
 
 @end

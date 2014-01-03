@@ -23,6 +23,12 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad 
 {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+
 	UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"copyright_logo.png"]];
 	self.navigationItem.titleView = imgView;
 	[imgView release];

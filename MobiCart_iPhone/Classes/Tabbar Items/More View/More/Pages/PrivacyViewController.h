@@ -18,6 +18,5 @@
     
    // MobicartAppAppDelegate *delegate;
 }
-- (void)hideLoadingBar;
 
 @end

@@ -22,6 +22,13 @@ extern BOOL isNewsSection;
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
 	// The title is set to keep checks on Search Bar of this view controller
 	self.title = @"Products";
 	//[GlobalPreferences startLoadingIndicator];
@@ -758,7 +765,7 @@ extern BOOL isNewsSection;
 				[loadingIndicator startAnimating];
 				[loadingIndicator setHidden:NO];
 				[loadingIndicator setTag:[[NSString stringWithFormat:@"222%d",indexPath.row] intValue]];
-				[cell addSubview:loadingIndicator];
+		//		[cell addSubview:loadingIndicator];
 				[loadingIndicator release];
             }
 			
@@ -1034,6 +1041,11 @@ extern BOOL isNewsSection;
             self.arrAppRecordsAllEntries = [[NSMutableArray alloc] init];
         }
 		
+        //Sa Vo fix bug
+        //Start
+        [self.arrAppRecordsAllEntries removeAllObjects];
+
+        //End
 		for (int i =0; i<[arrSearch count] ;i++)
 		{
 			AppRecord *_currentRecord = [[AppRecord alloc] init];
@@ -1058,6 +1070,11 @@ extern BOOL isNewsSection;
     [productTableView reloadData];
     
     [self hideIndicator];
+    
+    //Sa Vo fix bug
+    //Start
+    [imageDownloadsInProgress removeAllObjects];
+    //End
 }
 #pragma mark loading indicator
 

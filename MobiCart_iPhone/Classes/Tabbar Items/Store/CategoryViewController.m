@@ -17,6 +17,13 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
 	// The title is set to keep checks on Search Bar of this view controller
     self.title = @"Category";
 	if (btnStore)
@@ -399,12 +406,12 @@
         UIImageView *cellImage =[[UIImageView alloc]initWithFrame:CGRectMake(228, 13, 46, 28)];                                 
         cellImage.image  = [UIImage imageNamed:@"oval_shape.png"];
 		
-		UIImageView *imgCellBackground=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 56)];
+		UIImageView *imgCellBackground=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 56)] autorelease];
 		[imgCellBackground setImage:[UIImage imageNamed:@"store_cell_bg.png"]];
 		
 		[[cell layer] insertSublayer:imgCellBackground.layer atIndex:0];
 		
-		[imgCellBackground release];
+		//[imgCellBackground release];
         
         if ([[arrCategoriesCount_Searched objectAtIndex:indexPath.row]intValue]==0)
         {
@@ -468,7 +475,7 @@
             [GlobalPreferences setCurrentCategoryId:[[arrCategoryIDs objectAtIndex:indexWhileSearching] integerValue]];
             self.navigationItem.title = [[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.tabbar.store"];
             [self.navigationController pushViewController:objProduct animated:YES];
-            [objProduct release];
+         //   [objProduct release];
 	    }
     }
 	else 
@@ -489,7 +496,7 @@
         //[GlobalPreferences setCurrentDepartmentId:[[arrDeptIDs objectAtIndex:indexWhileSearching] integerValue]];
 		
 		[self.navigationController pushViewController:objCategory animated:YES];
-		[objCategory release];
+		//[objCategory release];
 	}
 
     

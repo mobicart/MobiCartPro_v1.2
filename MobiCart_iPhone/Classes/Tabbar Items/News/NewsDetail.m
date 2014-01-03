@@ -18,6 +18,12 @@ extern BOOL isTwiiterSelected;
 - (void)viewWillAppear:(BOOL)animated
 {
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"updateLabelNews" object:nil];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
 }
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.

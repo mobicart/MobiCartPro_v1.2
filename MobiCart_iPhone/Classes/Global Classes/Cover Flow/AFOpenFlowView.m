@@ -45,7 +45,7 @@ const static CGFloat kReflectionFraction = 0.95;
 
 - (void)setUpInitialState 
 {
-	
+	// Set up the default image for the coverflow.
 	self.defaultImage = [self.dataSource defaultImage];
 	
 	// Create data holders for onscreen & offscreen covers & UIImage objects.
@@ -248,7 +248,7 @@ const static CGFloat kReflectionFraction = 0.95;
 	//UIGraphicsBeginImageContext(CGSizeMake(300,300));	
 	//[newImage drawInRect:CGRectMake(0.0, 0.0, 300,300)];
 	//newImage    = UIGraphicsGetImageFromCurrentImageContext();
-   
+    
     
 	UIImage *imageWithReflection = [newImage addImageReflection:kReflectionFraction];
 	NSNumber *coverNumber = [NSNumber numberWithInt:index];

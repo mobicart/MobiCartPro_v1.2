@@ -13,12 +13,9 @@ BOOL isNewsSection;
 
 @interface MobicartAppViewController : UIViewController<UITabBarControllerDelegate,CLLocationManagerDelegate> 
 {
-    UIWindow *_window;
-    MobicartAppAppDelegate *_viewController;
+   
 }
 
-@property (nonatomic, retain) UIWindow *window;
-@property (nonatomic, retain)  MobicartAppAppDelegate *viewController;
 -(void)loadData;
 -(void)locateUser;
 @end

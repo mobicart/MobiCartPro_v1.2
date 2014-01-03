@@ -8,15 +8,13 @@
 #import "MobicartAppAppDelegate.h"
 #import "MobicartAppViewController.h"
 #import "MobiCartStart.h"
-#import "GlobalPreferences.h"
 #import "UserDetails.h"
 #import "SqlQuery.h"
 
 @implementation MobicartAppAppDelegate
-@synthesize window;
-@synthesize viewController;
-@synthesize mobicartView;
-@synthesize tabController,arrAllData,loadingIndicator,backgroundImage,alert;
+@synthesize window;  
+@synthesize mobicartView,viewController,tabController,arrAllData,loadingIndicator,backgroundImage,alert;
+
 
 
 
@@ -25,11 +23,20 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
 {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        
+        [application setStatusBarStyle:UIStatusBarStyleLightContent];
+        
+        self.window.clipsToBounds =YES;
+        
+        self.window.frame =  CGRectMake(0,0,self.window.frame.size.width,self.window.frame.size.height);
+    }
     
     window.rootViewController=viewController;
-  
+    
     [window makeKeyAndVisible];
-   
+    //[self getUUID];
     userLocation = [[CLLocationManager alloc] init];
 	userLocation.delegate = self;
     
@@ -60,13 +67,12 @@
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-	NSLog(@"Error in Location Services. Error: %@", error);
+	DLog(@"Error in Location Services. Error: %@", error);
 }
 
 - (void) applicationDidEnterBackground:(UIApplication *)application {
-    
    
-
+    
 }
 #pragma mark Push Notification Delegation methods
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken 
@@ -76,12 +82,12 @@
 	NSString *tokenString= [tempToken1 stringByReplacingOccurrencesOfString:@"<" withString:@"" ];
 	
 	NSData*	deviceToken = [[NSData alloc]initWithData:devToken];
-	NSLog(@"device token is: %@",deviceToken);
+	NSLog(@"device token is: %@",tempToken);
 	
 	NSString *strLatitude=[NSString stringWithFormat:@"%lf",tempLocation.latitude];
 	NSString *strLongitude=[NSString stringWithFormat:@"%lf",tempLocation.longitude];
 	
-	[ServerAPI pushNotifications:strLatitude:strLongitude:tokenString:[GlobalPreferences getCurrentAppId]];
+	[ServerAPI pushNotifications:strLatitude :strLongitude :tokenString :[GlobalPreferences getCurrentAppId]];
     [deviceToken release];
 }
 
@@ -89,7 +95,6 @@
 {
 	DLog(@"Error in registration. Error: %@", err);
 }
-
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
@@ -113,6 +118,7 @@
         [backgroundImage release];
     }
 
+	
 	
     [super dealloc];
 }

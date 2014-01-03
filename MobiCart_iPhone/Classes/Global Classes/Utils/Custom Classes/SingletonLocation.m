@@ -20,7 +20,7 @@ static SingletonLocation *sharedSingletonLocationDelegate = nil;
     {
 		if (sharedSingletonLocationDelegate == nil) 
         {
-			NSLog(@"Location Manager created");
+			DLog(@"Location Manager created");
 			sharedSingletonLocationDelegate = [[super allocWithZone:NULL] init]; 
 		}
 	}
@@ -57,11 +57,6 @@ static SingletonLocation *sharedSingletonLocationDelegate = nil;
 {
      // Denotes an object that cannot be released
 	return UINT_MAX; 
-}
-
-- (void)release 
-{
-	// Do nothing
 }
 
 - (id)autorelease 

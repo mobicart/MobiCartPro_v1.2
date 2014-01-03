@@ -11,6 +11,7 @@
 #import "Reachability.h"
 #import <Foundation/NSString.h>
 #import "SBJSON.h"
+#import "MobicartAppAppDelegate.h"
 
 extern BOOL isNewsSection;
 
@@ -234,6 +235,7 @@ NSOperationQueue *queue;
 +(void)showLoadingIndicator;
 +(void)hideLoadingIndicator;
 @end
+
 
 
 

@@ -55,5 +55,4 @@ BOOL isCheckForCheckout;
 @property(nonatomic)BOOL isFomCheckout;
 - (void)createTableView;
 - (void)hideBottomBar;
-
 @end

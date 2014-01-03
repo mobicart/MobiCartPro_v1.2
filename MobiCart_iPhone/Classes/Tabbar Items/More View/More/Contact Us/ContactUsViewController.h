@@ -33,5 +33,4 @@
 
 - (void)addressLocation;
 - (void)updateControls;
-- (void)hideLoadingBar;
 @end

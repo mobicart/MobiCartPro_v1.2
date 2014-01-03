@@ -53,20 +53,20 @@
 
 
 - (id)initWithStyleFor_Store_ProductView:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]))
+    if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) 
     {
         // Initialization code
 		if(!isShoppingCart_TableStyle &&!isWishlist_TableStyle)
 		{
-            
-            UIImageView *imgPlaceHolder=[[UIImageView alloc]initWithFrame:CGRectMake(0,9, 68, 67)];
-            [imgPlaceHolder setImage:[UIImage imageNamed:@"product_list_ph.png"]];
-            [self.contentView addSubview:imgPlaceHolder];
-            
-            cellProductImage=[[UIImageView alloc]initWithFrame:CGRectMake(0 ,0, 60, 65)];
-            [cellProductImage setBackgroundColor:[UIColor clearColor]];
-            [imgPlaceHolder addSubview:cellProductImage];
-            [imgPlaceHolder release];
+		
+		UIImageView *imgPlaceHolder=[[UIImageView alloc]initWithFrame:CGRectMake(0,9, 68, 67)];
+		[imgPlaceHolder setImage:[UIImage imageNamed:@"product_list_ph.png"]];
+		[self.contentView addSubview:imgPlaceHolder];
+		
+		cellProductImage=[[UIImageView alloc]initWithFrame:CGRectMake(0 ,0, 60, 65)];
+		[cellProductImage setBackgroundColor:[UIColor clearColor]];
+		[imgPlaceHolder addSubview:cellProductImage];
+		[imgPlaceHolder release];
 		}
 		if (isShoppingCart_TableStyle)
 		{
@@ -88,7 +88,7 @@
 		if(isShoppingCart_TableStyle||isWishlist_TableStyle)
 		{
 			[self addSubview:cellProductName];
-		}
+		}		
 		else
 		{
 			[self.contentView addSubview:cellProductName];
@@ -112,17 +112,17 @@
 			cellProductPrice.textColor=_savedPreferences.labelColor;
 		    [cellProductPrice setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13]];
 		}
-        
+			
 		cellProductPrice.backgroundColor=[UIColor clearColor];
 		[cellProductPrice setTextAlignment:UITextAlignmentLeft];
-        
+	
 		[cellProductPrice setNumberOfLines:0];
 		cellProductPrice.lineBreakMode = UILineBreakModeTailTruncation;
 		if(isShoppingCart_TableStyle||isWishlist_TableStyle)
 			[self addSubview:cellProductPrice];
 		else
 			[self.contentView addSubview:cellProductPrice];
-        
+	
 		cellProductPrice.tag= productPrice_TAG;
 		
 		if (isShoppingCart_TableStyle)
@@ -141,13 +141,13 @@
 		[lblStatus setBackgroundColor:[UIColor clearColor]];
 		[lblStatus setTextColor:[UIColor whiteColor]];
 		[lblStatus setTextAlignment:UITextAlignmentCenter];
-		[lblStatus setFont:[UIFont fontWithName:@"Helvetica-Bold" size:10]];
-		cellProductAvailablity.backgroundColor=[UIColor clearColor];
+		[lblStatus setFont:[UIFont fontWithName:@"Helvetica-Bold" size:10]];		
+		cellProductAvailablity.backgroundColor=[UIColor clearColor];		
 		if (!(isShoppingCart_TableStyle||isWishlist_TableStyle))
         {
             [self.contentView addSubview:cellProductAvailablity];
         }
-        
+			
 		cellProductAvailablity.tag = productAvailablity_TAG;
 		
 		if (isShoppingCart_TableStyle)
@@ -158,25 +158,25 @@
         {
 			cellProductDiscount = [[UILabel alloc]initWithFrame:CGRectMake(cellProductPrice.frame.size.width+cellProductPrice.frame.origin.x+5,31,40, 20)];
 		}
-        
+					
 		cellProductDiscount.backgroundColor=[UIColor clearColor];
 		cellProductDiscount.textColor=_savedPreferences.labelColor;
 		[cellProductDiscount setNumberOfLines:0];
 		cellProductDiscount.lineBreakMode = UILineBreakModeTailTruncation;
 		[cellProductDiscount setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13]];
-        if(!(isShoppingCart_TableStyle||isWishlist_TableStyle))
-        {
-            [self.contentView addSubview:cellProductAvailablity];
-            [self.contentView addSubview:lblStatus];
-            [self.contentView addSubview:cellProductDiscount];
-        }
+       if(!(isShoppingCart_TableStyle||isWishlist_TableStyle))
+	   {
+		[self.contentView addSubview:cellProductAvailablity];
+		   [self.contentView addSubview:lblStatus];
+		[self.contentView addSubview:cellProductDiscount];
+	   }
 		else {
 			[self addSubview:cellProductAvailablity];
 			[self addSubview:lblStatus];
 			[self addSubview:cellProductDiscount];
 		}
-        
-        cellProductDiscount.tag = productDiscount_TAG;
+
+		   cellProductDiscount.tag = productDiscount_TAG;
     }
     return self;
 }
@@ -186,18 +186,18 @@
     if (![productName isEqual:[NSNull null]])
     {
 		cellProductName.text = productName;
-    }
+    }    
     
 	if (![productPrice isEqual:[NSNull null]])
 	{
-        
-        cellProductPrice.text =[NSString stringWithFormat:@"%@", productPrice];
+	
+	cellProductPrice.text =[NSString stringWithFormat:@"%@", productPrice];
 	}
     
 	if(!isShoppingCart_TableStyle&&!isWishlist_TableStyle)
 	{
 		//int imageX=imageName.size.width;
-        //  int imageY=imageName.size.height;
+      //  int imageY=imageName.size.height;
         
         int y=(67-imageName.size.height/2)/2+4.5;
 		int x=(67-imageName.size.width/2)/2+4.5;
@@ -208,7 +208,7 @@
 		}
 	}
 	
-    
+
 	if (![availability isEqual:[NSNull null]])
     {
 		if ([availability isEqualToString:[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.wishlist.comming.soon"]])
@@ -233,13 +233,13 @@
 		
 		
 	}
-    
+
 	if ((![discount isEqual:[NSNull null]]) && (![discount isEqualToString:@"<null>"]) && ([discount length]!=0))
     {
 		//CGSize size = [productPrice sizeWithFont:[UIFont fontWithName:@"Helvetica-Bold" size:13]];
 		CGSize size=[productPrice sizeWithFont:[UIFont fontWithName:@"Helvetica-Bold" size:13] constrainedToSize:CGSizeMake(100000,20) lineBreakMode:UILineBreakModeWordWrap];
 		if(size.width>80)
-            [cellProductPrice setFrame:CGRectMake(85, 31,80,20)];
+		  [cellProductPrice setFrame:CGRectMake(85, 31,80,20)];
 		else
 			[cellProductPrice setFrame:CGRectMake(85, 31, size.width,20)];
 		[cellProductDiscount setFrame:CGRectMake(cellProductPrice.frame.origin.x+cellProductPrice.frame.size.width+10,31,175
@@ -255,8 +255,8 @@
 
 #pragma mark -
 
-#pragma mark - Ratings & Reviews Table View Cell
-- (id)initWithRatingsAndReviewStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+#pragma mark - Ratings & Reviews Table View Cell 
+- (id)initWithRatingsAndReviewStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier 
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
@@ -269,7 +269,7 @@
 }
 #pragma mark -
 
-#pragma mark  News Feed
+#pragma mark  News Feed 
 - (void)setFeeds:(NSString *)strFeedTitle dateAndTime:(NSString *)strTime withImage:(UIImage *) cellImage
 {
 	lblFeedTitle.text = strFeedTitle;
@@ -278,8 +278,8 @@
 	
 }
 
-- (void)setPosition:(CustomCellBackgroundViewPosition)newPosition
-{
+- (void)setPosition:(CustomCellBackgroundViewPosition)newPosition 
+{	
     [(CustomCellBackgroundView *)self.backgroundView setPosition:newPosition];
 }
 
@@ -288,7 +288,7 @@
 - (void)dealloc
 {
 	if(cellProductImage)
-        [cellProductImage release];
+	  [cellProductImage release];
 	[cellProductDiscount release];
 	[cellProductName release];
 	[cellProductPrice release];

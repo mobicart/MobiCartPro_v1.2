@@ -65,6 +65,5 @@ extern BOOL isNewsSection;
 +(void)reloadTableWithArray:(NSArray *)_arrTemp;
 +(void)errorOccuredWhileParsing:(NSString *)_error;
 - (void)setTextColors:(id)sender;
-- (void)hideLoadingBar;
 
 @end

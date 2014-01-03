@@ -54,6 +54,13 @@ extern int controllersCount;
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
    // [NSThread detachNewThreadSelector:@selector(showLoadingbar) toTarget:self withObject:nil];
     
     [self showLoadingbar];

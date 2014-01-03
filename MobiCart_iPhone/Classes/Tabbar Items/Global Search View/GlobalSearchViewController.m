@@ -118,8 +118,11 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-  	
-	
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
 }
 
 #pragma mark - load TableView

@@ -37,6 +37,7 @@
 		verticalPosition = 0;
 		horizontalPosition = 0;
 		
+		// Image View
 		imageView = [[UIImageView alloc] initWithFrame:frame];
 		imageView.opaque = YES;
 		[self addSubview:imageView];
@@ -47,34 +48,23 @@
 
 - (void)setImage:(UIImage *)newImage originalImageHeight:(CGFloat)imageHeight reflectionFraction:(CGFloat)reflectionFraction 
 {
-        
-    
 	[imageView setImage:newImage];
-   
     imageView.contentMode=UIViewContentModeScaleAspectFit;
-    verticalPosition = imageHeight * reflectionFraction / 2.0;
-    originalImageHeight = imageHeight;
+   /* if(newImage.size.width>200||newImage.size.height>300){
+        
+        verticalPosition = 160 * reflectionFraction / 2.0;
+        originalImageHeight = 160;
 
-    
-     
-   if(imageHeight<400)
-   {  
-    
-    [self setFrame:CGRectMake(0,(100-newImage.size.height/2)/2-2.5,newImage.size.width,newImage.size.height/2)];
-    
-    
-   }else {
-       if(imageHeight<513)
-       {
-        [self setFrame:CGRectMake(0,(200-newImage.size.height/2)/2-2.5,newImage.size.width,newImage.size.height/2)];   
-       }else
-       {
-         [self setFrame:CGRectMake(0,(300-newImage.size.height/2)/2-2.5,newImage.size.width,newImage.size.height/2)];   
-       }
-   
-      
+    self.frame = CGRectMake(0, 0, 200, 300);
+    }else*/
+    {
+        verticalPosition = imageHeight * reflectionFraction / 2.0;
+        originalImageHeight = imageHeight;
+        
+
+     	self.frame = CGRectMake(0, 0, newImage.size.width, newImage.size.height);   
     }
-  	     
+  	//self.frame = CGRectMake(0, 0,256,256);
 
 }
 

@@ -20,6 +20,5 @@
     
     
 }
-- (void)hideLoadingBar;
 
 @end

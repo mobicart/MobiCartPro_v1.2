@@ -82,6 +82,13 @@ BOOL isTryingSecondTime;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
 	// Do any additional setup after loading the view.
 }
 

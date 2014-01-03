@@ -705,6 +705,12 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
     
     [super viewDidLoad];
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     isLoadingTableFooter = TRUE;
 	self.navigationItem.titleView = [GlobalPreferences createLogoImage];
 	arrInfoAccount=[[NSMutableArray alloc]init];
@@ -1423,7 +1429,7 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
 {
     NSMutableString * newproductName ;
     
-    NSMutableArray *test=nil;
+    NSMutableArray *tempArray=nil;
     
     NSMutableArray * strArray=nil;
     float optionPrice=0;
@@ -1433,10 +1439,10 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
     
     
     int optionSizesIndex[100]={};
-    
+    strArray=[NSMutableArray new];
     if (!([[[arrProductIds objectAtIndex:k] valueForKey:@"pOptionId"] intValue]==0))
     {
-        
+        tempArray=[NSMutableArray new];
         NSMutableArray *dictOption = [[arrProductIds objectAtIndex:k] objectForKey:@"productOptions"];
         
         NSMutableArray *arrProductOptionSize = [[[NSMutableArray alloc] init] autorelease];
@@ -1470,13 +1476,13 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
             optionPrice+=[[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"pPrice"]floatValue];
             
             
-            [test addObject: [NSString stringWithFormat:@"%@: %@",[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"sTitle"],[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"sName"]]] ;
+            [tempArray addObject: [NSString stringWithFormat:@"%@: %@",[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"sTitle"],[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"sName"]]] ;
             
             //DLog(@"%@",[test componentsJoinedByString:@"," ]);
         }
         //  DLog(@"%@",[NSString stringWithFormat:@"%@ %@",newproductName,[test componentsJoinedByString:@"," ]]);
         
-        [strArray addObject:[NSString stringWithFormat:@"%@ [%@]",newproductName,[test componentsJoinedByString:@"," ]]];
+        [strArray addObject:[NSString stringWithFormat:@"%@ [%@]",newproductName,[tempArray componentsJoinedByString:@"," ]]];
         [strArray addObject:[NSString stringWithFormat:@"%f",optionPrice]];
         
         return strArray;

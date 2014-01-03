@@ -88,8 +88,10 @@ static MobiCartStart *shared;
 	
     if (self)
 	{
-		_objMobicartAppDelegate = [[MobicartAppAppDelegate alloc] init];
+		//_objMobicartAppDelegate = [[MobicartAppAppDelegate alloc] init];
 		
+        _objMobicartAppDelegate = (MobicartAppAppDelegate*)[UIApplication sharedApplication].delegate;
+        
         // Custom initialization.
 		if (_merchantEmail)
 		{
@@ -535,7 +537,6 @@ static MobiCartStart *shared;
             
 			[btnCart[i] setBackgroundColor:[UIColor clearColor]];
 			
-            
 			[btnCart[i] setImage:[UIImage imageNamed:@"add_cart.png"] forState:UIControlStateNormal];
 			
 			[btnCart[i] addTarget:self action:@selector(btnShoppingCart_Clicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -638,8 +639,12 @@ static MobiCartStart *shared;
 // Handling Loading Indicator at the time of loading data from Server
 - (void)showLoadingbar
 {
+    
+    //Adding loading bar to window instead of view to avoid Crash in iOS 7
+    MobicartAppAppDelegate *appdelegate = (MobicartAppAppDelegate *)[UIApplication sharedApplication].delegate;
+    
 	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc]init];
-    [GlobalPreferences addLoadingBar_AtBottom:self.view withTextToDisplay:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.LoaderText"]];
+    [GlobalPreferences addLoadingBar_AtBottom:appdelegate.window withTextToDisplay:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.LoaderText"]];
 	
 	[pool release];
 }
@@ -735,11 +740,9 @@ static MobiCartStart *shared;
 	ShoppingCartViewController *objShopping = [[ShoppingCartViewController alloc] init];
     
     
-	// NSArray *arrViewControllers=[[GlobalPreferences getCurrentNavigationController] viewControllers];
-    // NSString * title=[[[[GlobalPreferences getCurrentNavigationController] viewControllers] lastObject] title];
-    //[[[[GlobalPreferences getCurrentNavigationController] viewControllers] lastObject] setTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.home.back"]];
+    
 	[[GlobalPreferences getCurrentNavigationController] pushViewController:objShopping animated:YES];
-    //[[[[GlobalPreferences getCurrentNavigationController] viewControllers] lastObject] setTitle:[NSString stringWithString:title]];
+    
     
 	[objShopping release];
 }
@@ -794,9 +797,18 @@ static MobiCartStart *shared;
         
         lblCart.textColor = [UIColor whiteColor];
         
+        //iOS7 Check to load Cart button on the exact location on the navigation Bar
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+        {
+            btnCartOnNavBar.frame = CGRectMake(237, 25, 78, 34);
+            lblCart.frame = CGRectMake(280, 25, 30, 34);
+        }
+        
         [_objMobicartAppDelegate.tabController.moreNavigationController.view addSubview:lblCart];
         
         [lblCart release];
+        
+        
     }
 	
 	
@@ -883,6 +895,13 @@ static MobiCartStart *shared;
             lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
             
             lblCart.textColor = [UIColor whiteColor];
+            
+            //iOS 7 check to add Cart button on exact location on Navigation Bar
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            {
+                btnCartOnNavBar.frame = CGRectMake(237, 25, 78, 34);
+                lblCart.frame = CGRectMake(280, 25, 30, 34);
+            }
             
             [_objMobicartAppDelegate.tabController.moreNavigationController.view addSubview:lblCart];
             
@@ -990,7 +1009,6 @@ static MobiCartStart *shared;
 {
 	if (!hideMobicartCopyrightLogo)
     {
-        
         UIView *imgBGView;
         if([GlobalPreferences isScreen_iPhone5])
         {
@@ -998,13 +1016,20 @@ static MobiCartStart *shared;
         }
         else
         {
-            imgBGView= [[UIView alloc] initWithFrame: CGRectMake(0, 351, 320, 60)];
+            // iOS 7 check on the PowerbyMobicart button 
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            {
+                imgBGView= [[UIView alloc] initWithFrame: CGRectMake(0, 369, 320, 60)];
+            }
+            else
+            {
+                imgBGView= [[UIView alloc] initWithFrame: CGRectMake(0, 352, 320, 60)];
+            }
+            
         }
 		[imgBGView setBackgroundColor:[UIColor blackColor]];
         
 		[imgBGView setTag:668042];
-        
-        
         
         UIButton *btnMobicart = [UIButton buttonWithType:UIButtonTypeCustom];
         
@@ -1093,6 +1118,7 @@ static MobiCartStart *shared;
 - (void)dealloc {
     [super dealloc];
 }
+
 
 
 @end

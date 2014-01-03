@@ -19,6 +19,12 @@ int rating=0;
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
 	[GlobalPreferences setCurrentNavigationController:self.navigationController];
 	self.navigationItem.titleView = [GlobalPreferences createLogoImage];
 	self.view.backgroundColor=navBarColor;

@@ -114,6 +114,12 @@ iProductSingleton *productObj;
 - (void)viewWillAppear:(BOOL)animated
 {
 	
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
 	self.title=[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.home.back"];
 	if([GlobalPreferences getPersonLoginStatus])
     {
@@ -287,7 +293,7 @@ iProductSingleton *productObj;
         
         
         NSString *strData = [[NSString alloc]initWithData:dataForProductImage encoding:NSUTF8StringEncoding];
-       NSLog(@"Data for product %@",strData);
+        DLog(@"Data for product %@",strData);
         [self performSelectorOnMainThread:@selector(resetControls) withObject:nil waitUntilDone:YES];
         
         
@@ -2072,11 +2078,11 @@ iProductSingleton *productObj;
 	
 	if (currentX-startX>45)
     {
-        [self previousImageSwap];
+     //   [self previousImageSwap];
     }
 	else if (startX-currentX>45)
     {
-        [self nextImageSwap];
+     //   [self nextImageSwap];
     }
 }
 

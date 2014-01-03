@@ -51,7 +51,7 @@
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
 	NSString * errorString = [NSString stringWithFormat:@"Unable to download story feed from web site (Error code %i )", [parseError code]];
-	NSLog(@"error parsing XML: %@", errorString);
+	DLog(@"error parsing XML: %@", errorString);
 	
 	[NewsViewController errorOccuredWhileParsing:errorString];
 	

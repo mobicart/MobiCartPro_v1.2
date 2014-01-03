@@ -36,7 +36,13 @@ BOOL isFirstTime;
 - (void)viewDidLoad
 {
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     
+    [GlobalPreferences showLoadingIndicator];
 	isFirstTime=YES;
     _isFomCheckout=NO;
 	strEditButtonTitle = [[NSString alloc ]initWithFormat:@"%@",[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.shoppingcart.edit"]];
@@ -158,7 +164,7 @@ BOOL isFirstTime;
 	
 	arrQuantity = [[NSMutableArray alloc] init];
 	//[self performSelector:@selector(hideBottomBar) onThread:[NSThread currentThread] withObject:nil waitUntilDone:NO];
-  
+    [self hideLoadingBar ];
     //[GlobalPreferences hideLoadingIndicator];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -393,8 +399,6 @@ BOOL isFirstTime;
 {
 	[super viewWillAppear:animated];
     // self.title=@"";
-    
-    [GlobalPreferences showLoadingIndicator];
     _isFomCheckout=NO;
 	if(controllersCount>5&&_objMobicartAppDelegate.tabController.selectedIndex>3)
 	{
@@ -508,8 +512,7 @@ BOOL isFirstTime;
         {
             selectedQuantity=[[[arrDatabaseCart objectAtIndex:0]valueForKey:@"quantity"]intValue];
             if(!_isFomCheckout)
-               // [self reloadMe];
-                 [self performSelector:@selector(reloadMe) withObject:nil afterDelay:0.01];
+                [self reloadMe];
         }
         
         
@@ -537,7 +540,6 @@ BOOL isFirstTime;
             }
         }
 	}
-      [self hideLoadingBar ];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -574,7 +576,7 @@ BOOL isFirstTime;
 	isShoppingCart_TableStyle = FALSE;
 	isCheckForCheckout=NO;
 	// Stoping the loading indicator
-	//[GlobalPreferences stopLoadingIndicator];
+	[GlobalPreferences stopLoadingIndicator];
 }
 
 
@@ -2049,7 +2051,7 @@ static int kAnimationType;
 - (void)hideLoadingBar
 {
 	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc]init];
-    NSTimer *aTimer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(runScheduledTask) userInfo:nil repeats:NO];
+    NSTimer *aTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(runScheduledTask) userInfo:nil repeats:NO];
     aTimer=nil;
 	
 	[pool release];

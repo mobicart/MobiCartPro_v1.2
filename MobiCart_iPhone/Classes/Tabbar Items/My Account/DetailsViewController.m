@@ -36,6 +36,12 @@ BOOL isLoadingTableFooter;
 	{
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"removedPoweredByMobicart" object:nil];
     }
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
 	
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"updateLabelAccount" object:nil];
