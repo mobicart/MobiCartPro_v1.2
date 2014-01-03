@@ -6,7 +6,7 @@
 //  Created by Mobicart on 05/03/11.
 //  Copyright mobicart. All rights reserved.
 //
-   
+
 #import "MobicartStart.h"
 #import "MoreTableViewDataSource.h"
 #import "ShoppingCartViewController.h"
@@ -24,14 +24,14 @@ static MobicartStart *shared;
 +(id)currentViewControllerObject:(id)objViewController;
 
 #pragma mark - Loading indicator setup
--(void)setupLoadingIndicator; 
+-(void)setupLoadingIndicator;
 -(void)show_LoadingIndicator;
 -(void)hide_LoadingIndicator;
 
 @end
 @implementation MobicartStart
 @synthesize imgFooter;
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
+// The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 
 - (id)init {
 	
@@ -61,7 +61,7 @@ static MobicartStart *shared;
 {
 	self=[super init];
     if (self)
-    {	
+    {
         _objMobicartAppDelegate = [[MobicartAppDelegate alloc] init];
         // Custom initialization.
         if(_merchantEmail)
@@ -71,15 +71,14 @@ static MobicartStart *shared;
         }
         _objMobicartAppDelegate.window = _window;
         
-        [self performSelector:@selector(initialSetup) withObject:nil];       
+        [self performSelector:@selector(initialSetup) withObject:nil];
 		[self performSelector:@selector(createTabbarContorllers) withObject:nil ];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(poweredMobicart) name:@"poweredByMobicart" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeMobicart) name:@"removedPoweredByMobicart" object:nil];
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshCartCount) name:@"updateCartLabel" object:nil];
         
     }
 	return self;
-
+    
 }
 
 -(void)initialSetup
@@ -89,11 +88,11 @@ static MobicartStart *shared;
 	[UIApplication sharedApplication].applicationIconBadgeNumber=0;
 	if (![GlobalPrefrences isInternetAvailable])
 	{
-		NSString* errorString ;
-		NSString* titleString ;
-		NSString* cancelString ;
+		NSString* errorString = [NSString string];
+		NSString* titleString = [NSString string];
+		NSString* cancelString = [NSString string];
 		
-		if ([[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.text"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.title"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.cancelbutton"] length]>0) 
+		if ([[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.text"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.title"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.cancelbutton"] length]>0)
 		{
 			errorString = [[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.text"];
 			
@@ -101,7 +100,7 @@ static MobicartStart *shared;
 			
 			cancelString = [[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.cancelbutton"];
 		}
-		else 
+		else
 		{
 			errorString = @"No Internet Connection. This Application requires Internet access to update its information";
 			
@@ -116,7 +115,7 @@ static MobicartStart *shared;
 		
 		[errorAlert release];
 	}
-	else 
+	else
 	{
 		// Setup and start Loading indicator
 		[self performSelectorInBackground:@selector(setupLoadingIndicator) withObject:nil];
@@ -125,7 +124,7 @@ static MobicartStart *shared;
 		[NSThread detachNewThreadSelector:@selector(initializeGlobalControllers) toTarget:[GlobalPrefrences class] withObject:nil];
 		
 		// Before diplaying the data, fetch user preferneces from the server
-		 [self performSelector:@selector(fetchDataFromServer) withObject:nil];
+        [self performSelector:@selector(fetchDataFromServer) withObject:nil];
 		
 		[NSThread detachNewThreadSelector:@selector(setGlobalPreferences) toTarget:[GlobalPrefrences class] withObject:nil];
 	}
@@ -139,11 +138,11 @@ static MobicartStart *shared;
 	if (![GlobalPrefrences isInternetAvailable])
 	{
 		
-		NSString* errorString  ;
-		NSString* titleString ;
-		NSString* cancelString ;
+		NSString* errorString = [NSString string];
+		NSString* titleString = [NSString string];
+		NSString* cancelString = [NSString string];
 		
-		if ([[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.text"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.title"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.cancelbutton"] length]>0) 
+		if ([[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.text"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.title"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.cancelbutton"] length]>0)
 		{
 			errorString = [[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.text"];
 			
@@ -151,7 +150,7 @@ static MobicartStart *shared;
 			
 			cancelString = [[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.cancelbutton"];
 		}
-		else 
+		else
 		{
 			errorString = @"No Internet Connection. This Application requires Internet access to update its information";
 			
@@ -167,75 +166,64 @@ static MobicartStart *shared;
 		[errorAlert release];
 		
 	}
-	else 
+	else
 	{
-	// Fetch App and Merchant Details from the server
-        
-        [GlobalPrefrences setAllDataDictionary];
-        /*
+        // Fetch App and Merchant Details from the server
 		NSDictionary *dictAppDetails;
 		dictAppDetails =[ServerAPI getAppStoreUserDetails:[GlobalPrefrences getMerchantEmailId]];
 		if(!dictAppDetails)
 		{
 			dictAppDetails =[ServerAPI getAppStoreUserDetails:[GlobalPrefrences getMerchantEmailId]];
 		}
-         */
-        NSDictionary *dictAppDetails=nil;
-		dictAppDetails =[GlobalPrefrences getDictAppStoreUser];
 		if (dictAppDetails)
 		{
-			iCurrentAppId = [[dictAppDetails objectForKey:@"appId"] intValue];
-            iCurrentMerchantId = [[dictAppDetails objectForKey:@"userId"] intValue];
-            iCurrentStoreId = [[dictAppDetails objectForKey:@"storeId"] intValue];
+			iCurrentAppId = [[[dictAppDetails objectForKey:@"app-store-user"] objectForKey:@"appId"] intValue];
+			iCurrentMerchantId = [[[dictAppDetails objectForKey:@"app-store-user"]objectForKey:@"userId"] intValue];
+			iCurrentStoreId = [[[dictAppDetails objectForKey:@"app-store-user"] objectForKey:@"storeId"] intValue];
 			BOOL hitLangService ;
 			NSString *strTimeStamp = [NSString stringWithFormat:@"%@",[[SqlQuery shared]getTimeStamp]];
 			NSLog(@"%d",[strTimeStamp length]);
 			
 			if ([strTimeStamp length]>0 || strTimeStamp != nil || ![strTimeStamp isEqualToString:@""] || ![strTimeStamp isEqualToString:@" "])
 			{
-				hitLangService  = [ServerAPI isLangUpdated:strTimeStamp :iCurrentMerchantId];	
+				hitLangService  = [ServerAPI isLangUpdated:strTimeStamp:iCurrentMerchantId];
 			}
 			else
 			{
 				hitLangService = FALSE;
 			}
 			
-			// Fetch Language Pack Values for Labels 
+			// Fetch Language Pack Values for Labels
 			
 			NSDictionary *dictLabels = [[NSDictionary alloc] init];
 			
-			if (!hitLangService) 
+			if (!hitLangService)
 			{
-				dictLabels = [ServerAPI fetchLanguagePreferences:iCurrentMerchantId];	
+				dictLabels = [ServerAPI fetchLanguagePreferences:iCurrentMerchantId];
 			}
 			
 			
 			
 			//fetch tabbar preferences from server
-			
-			NSDictionary *dictFeatures = [GlobalPrefrences getDictFeatures];
-			
-            // Fetch Color schemes
-			NSDictionary *dictColorSchemes =[GlobalPrefrences getDictColorScheme];
-			
-			NSDictionary *dictAppVitals = [GlobalPrefrences getDictVitals];
-            
-
-			arrTabbarDetails = (NSArray *)[GlobalPrefrences getDictStaticPages];
-			[arrTabbarDetails retain];
-            
+			NSDictionary *dictFeatures =[ServerAPI fetchAppFeatures:iCurrentAppId];
 			// Fetch Logo Image
-					NSString *strUrlLogo = [NSString stringWithFormat:@"%@",[dictAppVitals objectForKey:@"companyLogoIpadNew"]];
+			NSDictionary *dictColorSchemes=[ServerAPI fetchAppColorScheme:iCurrentAppId];
+			
+			NSDictionary *dictAppVitals =[ServerAPI fetchAppVitals:iCurrentAppId];
+			arrTabbarDetails = [[ServerAPI fetchStaticPages:iCurrentAppId] objectForKey:@"static-pages"];
+			[arrTabbarDetails retain];
+			// Fetch Logo Image
+            NSString *strUrlLogo = [NSString stringWithFormat:@"%@",[[dictAppVitals objectForKey:@"app-vitals"]objectForKey:@"companyLogoIpadNew"]];
 			
 			if((![strUrlLogo isEqual:[NSNull null]]) && (![strUrlLogo isEqualToString:@"<null>"]) && ([strUrlLogo length]!=0))
-				_savedPreferences.imgLogo=[ServerAPI setLogoImage:[NSString stringWithFormat:@"%@",strUrlLogo] :NO];
+				_savedPreferences.imgLogo=[ServerAPI setLogoImage:[NSString stringWithFormat:@"%@",strUrlLogo]:NO];
 			else
-			_savedPreferences.imgLogo=	[ServerAPI setLogoImage:[NSString stringWithFormat:@"%@",strUrlLogo] :YES];
+                _savedPreferences.imgLogo=	[ServerAPI setLogoImage:[NSString stringWithFormat:@"%@",strUrlLogo]:YES];
 			
 			
 			
 			// Save Language Prefrences in Database
-			if (!hitLangService && [dictLabels count]>0) 
+			if (!hitLangService && [dictLabels count]>0)
 			{
 				[[SqlQuery shared] deleteLangLabels];
 				[[SqlQuery shared] saveLanguageLabels:[dictLabels valueForKey:@"Labels"]];
@@ -243,24 +231,24 @@ static MobicartStart *shared;
 			
             NSDictionary *dictLabelsFromData = [[NSDictionary alloc] initWithDictionary:[[SqlQuery shared]getAllLabels]];
             
-            if ([dictLabelsFromData count]>0) 
+            if ([dictLabelsFromData count]>0)
 			{
                 [GlobalPrefrences setLanguageLabels:dictLabelsFromData];
             }
 			
             // Set TabBar Controllers Selected by User
 			
-						
+            
 			if([dictFeatures count] >0)
 				[GlobalPrefrences setTabbarControllers_SelectedByUser:dictFeatures];
 			else
 			{
 				
-				NSString* errorString ;
-				NSString* titleString ;
-				NSString* cancelString ;
+				NSString* errorString = [NSString string];
+				NSString* titleString = [NSString string];
+				NSString* cancelString = [NSString string];
 				
-				if ([[[SqlQuery shared]getLanguageLabel:@"key.iphone.server.notresp.text"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.server.notresp.title.error"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.cancelbutton"] length]>0) 
+				if ([[[SqlQuery shared]getLanguageLabel:@"key.iphone.server.notresp.text"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.server.notresp.title.error"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.cancelbutton"] length]>0)
 				{
 					errorString = [[SqlQuery shared]getLanguageLabel:@"key.iphone.server.notresp.text"];
 					
@@ -268,7 +256,7 @@ static MobicartStart *shared;
 					
 					cancelString = [[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.cancelbutton"];
 				}
-				else 
+				else
 				{
 					errorString = @"Server not Responding.";
 					
@@ -296,14 +284,14 @@ static MobicartStart *shared;
 			}
 			[GlobalPrefrences setColorScheme_SelectedByUser:dictColorSchemes];
 		}
-		else 
+		else
 		{
 			
-			NSString* errorString ;
-			NSString* titleString ;
-			NSString* cancelString ;
+			NSString* errorString = [NSString string];
+			NSString* titleString = [NSString string];
+			NSString* cancelString = [NSString string];
 			
-			if ([[[SqlQuery shared]getLanguageLabel:@"key.iphone.home.try.later"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.title"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.cancelbutton"] length]>0) 
+			if ([[[SqlQuery shared]getLanguageLabel:@"key.iphone.home.try.later"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.title"] length]>0 && [[[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.cancelbutton"] length]>0)
 			{
 				errorString = [[SqlQuery shared]getLanguageLabel:@"key.iphone.home.try.later"];
 				
@@ -311,7 +299,7 @@ static MobicartStart *shared;
 				
 				cancelString = [[SqlQuery shared]getLanguageLabel:@"key.iphone.nointernet.cancelbutton"];
 			}
-			else 
+			else
 			{
 				errorString = @"Please try later";
 				
@@ -341,7 +329,7 @@ static MobicartStart *shared;
 {
 	return objViewController;
 }
-+(void)setTitleForViewController:(UIViewController *)_obj :(NSString *)strTitle
++(void)setTitleForViewController:(UIViewController *)_obj:(NSString *)strTitle
 {
 	if ([strTitle isEqualToString:@"My Account"])
     {
@@ -351,11 +339,11 @@ static MobicartStart *shared;
 	_obj.title = strTitle;
 }
 
-//Creating tabbar
+
 -(void)createTabbarContorllers
 {
 	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc]init];
-    //fetch tabbar settings, as per selected by user 
+    //fetch tabbar settings, as per selected by user
 	NSArray *arrFetchedControllers = [GlobalPrefrences tabBarControllers_SelectedByUser];
 	checkTab  = 0;
 	if([arrFetchedControllers count] <= 4)
@@ -399,8 +387,8 @@ static MobicartStart *shared;
 		}
 	}
 	
-
-	NSMutableArray *arrAllControllerObjects = [[NSMutableArray alloc] init];	
+    
+	NSMutableArray *arrAllControllerObjects = [[NSMutableArray alloc] init];
 	HomeViewController *_objHome=[[HomeViewController alloc]init];
 	StoreViewController *_objStore = [[StoreViewController alloc] init];
 	NewsViewController *_objNews= [[NewsViewController alloc] init];
@@ -423,10 +411,10 @@ static MobicartStart *shared;
 	[arrAllControllerObjects addObject:_objPage1];
 	[arrAllControllerObjects addObject:_objPage2];
 	
-	NSMutableArray *arrControllersToCreate = [[NSMutableArray alloc] init];	
+	NSMutableArray *arrControllersToCreate = [[NSMutableArray alloc] init];
 	View1 *view1=[[View1 alloc]init];
 	View2 *view2=[[View2 alloc]init];
-	View3 *view3=[[View3 alloc]init];						  
+	View3 *view3=[[View3 alloc]init];
 	[arrControllersToCreate addObject:view1];
 	[arrControllersToCreate addObject:view2];
 	[arrControllersToCreate addObject:view3];
@@ -439,11 +427,11 @@ static MobicartStart *shared;
 		{
 			if([[arrFetchedControllers objectAtIndex:j] isEqualToString:strSelectedControllerName])
 			{
-				[arrControllersToCreate addObject:[MobicartStart currentViewControllerObject:[arrAllControllerObjects objectAtIndex:i]]]; 
+				[arrControllersToCreate addObject:[MobicartStart currentViewControllerObject:[arrAllControllerObjects objectAtIndex:i]]];
 				j++;
 			}
 		}
-		else 
+		else
 			break;
 	}
 	
@@ -460,7 +448,7 @@ static MobicartStart *shared;
 	[arrSelectedTitles addObject:@""];
 	for(int i =0; i<[arrAllNavigationTitles count]; i++)
 	{
-		if(![[arrAllNavigationTitles objectAtIndex:i] isEqual: @""])
+		if([arrAllNavigationTitles objectAtIndex:i] != @"")
 			[arrSelectedTitles addObject:[arrAllNavigationTitles objectAtIndex:i]];
 	}
 	for(int i=0;i< [arrControllersToCreate count]; i++)
@@ -470,8 +458,8 @@ static MobicartStart *shared;
 		localNavigationController.delegate = self;
 		[MobicartStart setTitleForViewController:[arrControllersToCreate objectAtIndex:i] :[arrSelectedTitles objectAtIndex:i]];
 		[localNavigationController release];
-	}	
-	_objMobicartAppDelegate.tabController.viewControllers = localControllersArray; 
+	}
+	_objMobicartAppDelegate.tabController.viewControllers = localControllersArray;
 	[localControllersArray release];
 	[_objHome release];
 	[_objStore release];
@@ -487,20 +475,21 @@ static MobicartStart *shared;
 	[view2 release];
 	[view3 release];
 	
-	[_objMobicartAppDelegate.window setRootViewController:(UINavigationController*)_objMobicartAppDelegate.tabController];
+	//[_objMobicartAppDelegate.window addSubview:_objMobicartAppDelegate.tabController.view];
+    [_objMobicartAppDelegate.window setRootViewController:(UINavigationController*)_objMobicartAppDelegate.tabController];
 	[_objMobicartAppDelegate.tabController setSelectedIndex:3];
-    	[_objMobicartAppDelegate.tabController setDelegate:self];
+    [_objMobicartAppDelegate.tabController setDelegate:self];
     
     [pool release];
 }
 
 
- - (void)navigationController:( UINavigationController * )navigationController_local willShowViewController:( UIViewController * )viewController_local animated:( BOOL )animated
+- (void)navigationController:( UINavigationController * )navigationController_local willShowViewController:( UIViewController * )viewController_local animated:( BOOL )animated
 {
 	MobicartStart *obj=[[MobicartStart alloc]init];
 	UIViewController * currentController = navigationController_local.visibleViewController;
     nextController = obj;
-
+    
 	NSLog(@"Nav contoller willShowViewController fired\n'%@'\n'%@'\nThere are currently: %d views on the stack\n",currentController,nextController,[self.navigationController.viewControllers count]);
 	
 	if ( [nextController isKindOfClass:NSClassFromString(@"UIMoreListController")])
@@ -521,7 +510,7 @@ static MobicartStart *shared;
         _objMobicartAppDelegate.arrAllData = [[NSArray alloc] init];
     }
 	
-	_objMobicartAppDelegate.arrAllData = (NSArray *)[GlobalPrefrences getDictStaticPages];
+	_objMobicartAppDelegate.arrAllData = [[ServerAPI fetchStaticPages:iCurrentAppId] objectForKey:@"static-pages"];
 	[_objMobicartAppDelegate.arrAllData retain];
 	
     self.imgFooter=[ServerAPI fetchFooterLogo];
@@ -549,6 +538,7 @@ static MobicartStart *shared;
 	selectedDepartment = [[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.store.tab.all"];
   	
     
+    
     switch (_objMobicartAppDelegate.tabController.selectedIndex)
 	{
 		case 0:
@@ -571,19 +561,18 @@ static MobicartStart *shared;
 	[lblMore setFont:[UIFont boldSystemFontOfSize:15]];
 	[viewMore addSubview:lblMore];
 	
-		
+    
 	UIImageView *imgHorizontalDottedLine=[[UIImageView alloc]initWithFrame:CGRectMake(40, 50, 420,2)];
 	[imgHorizontalDottedLine setImage:[UIImage imageNamed:@"dot_line.png"]];
 	[viewMore addSubview:imgHorizontalDottedLine];
 	[imgHorizontalDottedLine release];
-
+    
 	if(tabBarController.moreNavigationController == viewController1)
-	{   [GlobalPrefrences setIsMoreTab:YES];
-       
+	{
 		// Add a footer view to the root table view of the moreNavigationController
 		[tabBarController.moreNavigationController.topViewController.navigationController.navigationBar setHidden:YES];
 		[self fetchData];
-        [self refreshCartCount];
+		lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
 		if(tabBarController.moreNavigationController == viewController1)
 		{
 			[tabBarController.moreNavigationController.view setFrame:CGRectMake(0, 0, 1024, 720)];
@@ -606,7 +595,7 @@ static MobicartStart *shared;
 				viewRight=[[UIView alloc]initWithFrame:CGRectMake(550, 0, 425, 60)];
 				[viewRight setBackgroundColor:[UIColor clearColor]];
 				[viewMore addSubview:viewRight];
-				 [self addCartLabel];
+				
 				
 				UIImageView *imgHorizontalDottedLine=[[UIImageView alloc]initWithFrame:CGRectMake(0, 51, 424,2)];
 				[imgHorizontalDottedLine setImage:[UIImage imageNamed:@"dot_line.png"]];
@@ -614,10 +603,24 @@ static MobicartStart *shared;
 				[imgHorizontalDottedLine release];
 				
 				
+				UIButton *btnCart = [[UIButton alloc]init];
+				btnCart.frame = CGRectMake(350, 13, 78,34);
+				[btnCart setBackgroundColor:[UIColor clearColor]];
+				[btnCart setImage:[UIImage imageNamed:@"add_cart.png"] forState:UIControlStateNormal];
+				[btnCart addTarget:self action:@selector(btnShoppingCart_Clicked) forControlEvents:UIControlEventTouchUpInside];
+				[viewRight addSubview:btnCart];
+				
+				lblCart = [[UILabel alloc] initWithFrame:CGRectMake(42, 2, 30, 30)];
+				lblCart.backgroundColor = [UIColor clearColor];
+				lblCart.textAlignment = UITextAlignmentCenter;
+				lblCart.font = [UIFont boldSystemFontOfSize:16];
+				lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
+				lblCart.textColor = [UIColor whiteColor];
+				[btnCart addSubview:lblCart];
 			}
 			[viewRight setHidden:NO];
 			if ([moreViewController.view isKindOfClass:[UITableView class]])
-			{				
+			{
 				if(!moreTableView)
 				{
 					moreTableView = (UITableView*)moreViewController.view;
@@ -633,7 +636,7 @@ static MobicartStart *shared;
 					
 					if (!hideMobicartCopyrightLogo)
 					{
-						moreTableViewDataSource.isPoweredByMobicart=YES;  
+						moreTableViewDataSource.isPoweredByMobicart=YES;
 					}
 					else
 					{
@@ -642,23 +645,22 @@ static MobicartStart *shared;
 					
 					
 				}
-							
+                
 				if ([_objMobicartAppDelegate.arrAllData count]>0)
 				{
 					if (!hideMobicartCopyrightLogo)
-					{ 
+					{
 						[self removeMobicart];
 						[moreTableView setScrollEnabled:FALSE];
 						[self poweredMobicart];
 					}
-				}	
+				}
 				
 			}
 		}
 	}
 	else
 	{
-        [GlobalPrefrences setIsMoreTab:NO];
 		UIView *imgBGView = (UIView *)[_objMobicartAppDelegate.window viewWithTag:10801];
 		[imgBGView removeFromSuperview];
 		[self removeMobicart];
@@ -668,15 +670,15 @@ static MobicartStart *shared;
 	{
 		[[GlobalPrefrences getCurrentNavigationController] popToRootViewControllerAnimated:YES];
 	}
-	 [viewMore release];
+    [viewMore release];
 	
 	if([viewController1 isKindOfClass:[UINavigationController class]])
 		[GlobalPrefrences setCurrentNavigationController:(UINavigationController *)viewController1];
-     
+    
     if(tabBarController.selectedIndex==3)
-         [[GlobalPrefrences getCurrentNavigationController] popToRootViewControllerAnimated:YES];
-
-         
+        [[GlobalPrefrences getCurrentNavigationController] popToRootViewControllerAnimated:YES];
+    
+    
     
 	
 	
@@ -700,7 +702,7 @@ static MobicartStart *shared;
         if(orientation1==UIInterfaceOrientationPortrait)
         {
         }
-       if(orientation1 == UIInterfaceOrientationLandscapeLeft)
+        if(orientation1 == UIInterfaceOrientationLandscapeLeft)
 		{
 			UIView *imgBGView = [[UIView alloc] initWithFrame:CGRectMake(610,  550, 80, 180)];
             
@@ -739,13 +741,13 @@ static MobicartStart *shared;
 			[imgBGView addSubview:btnMobicart];
 			
 			CGContextRef context = UIGraphicsGetCurrentContext();
-			CATransition *animation = [CATransition animation]; 
-			[animation setDelegate:self]; 
+			CATransition *animation = [CATransition animation];
+			[animation setDelegate:self];
 			[animation setType: kCATransitionMoveIn];
-			[animation setSubtype:kCATransitionFromRight]; 
+			[animation setSubtype:kCATransitionFromRight];
 			
 			
-			[animation setDuration:1.0f]; 
+			[animation setDuration:1.0f];
 			[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
 			[UIView beginAnimations:nil context:context];
 			[[imgBGView layer] addAnimation:animation forKey:kCATransition];
@@ -755,18 +757,18 @@ static MobicartStart *shared;
 			[_objMobicartAppDelegate.window bringSubviewToFront:imgBGView];
 			[imgBGView release];
 			
-			[UIView commitAnimations]; 
+			[UIView commitAnimations];
 			
 		}
 		
 		if(orientation1 == UIInterfaceOrientationLandscapeRight)
-		
+            
         {
 			UIView *imgBGView = [[UIView alloc] initWithFrame:CGRectMake(80,  300, 80, 180)];
 			
 			[imgBGView setBackgroundColor:[UIColor clearColor]];
 			[imgBGView setTag:10801];
-		
+            
 			UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,imgView.size.width, imgView.size.height)];
 			CGAffineTransform t = CGAffineTransformMakeRotation(3.14/2);
 			rotatedViewBox.transform = t;
@@ -798,14 +800,14 @@ static MobicartStart *shared;
 			[imgBGView addSubview:btnMobicart];
 			
 			CGContextRef context = UIGraphicsGetCurrentContext();
-			CATransition *animation = [CATransition animation]; 
-			[animation setDelegate:self]; 
-	
-             [animation setType: kCATransitionMoveIn];
-			[animation setSubtype:kCATransitionFromLeft]; 
-		
+			CATransition *animation = [CATransition animation];
+			[animation setDelegate:self];
+            
+            [animation setType: kCATransitionMoveIn];
+			[animation setSubtype:kCATransitionFromLeft];
+            
 			
-			[animation setDuration:1.0f]; 
+			[animation setDuration:1.0f];
 			[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
 			[UIView beginAnimations:nil context:context];
 			[[imgBGView layer] addAnimation:animation forKey:kCATransition];
@@ -815,7 +817,7 @@ static MobicartStart *shared;
 			[_objMobicartAppDelegate.window bringSubviewToFront:imgBGView];
 			[imgBGView release];
 			
-			[UIView commitAnimations]; 
+			[UIView commitAnimations];
 		}
 	}
 }
@@ -842,7 +844,7 @@ static MobicartStart *shared;
 }
 
 
-//Calling More Tab
+
 -(void)moreTableCellClicked:(UIButton*)sender
 {
 	
@@ -864,42 +866,42 @@ static MobicartStart *shared;
 		
 		NSString *strTitle = [NSString stringWithFormat:@"%@",sender.titleLabel.text];
 		
-		    if([strTitle isEqualToString: [[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.more.aboutus"]])
-			{
-				AboutUsViewController *objAbout=[[AboutUsViewController alloc]init]; 
-				[detailsView addSubview:objAbout.view];
-				break;
-			}
-			else if([strTitle isEqualToString: [[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.more.contactus"]])
-			{
-				ContactUsViewController *objContactUS=[[ContactUsViewController alloc]init]; 
-				
-				[detailsView addSubview:objContactUS.view];
-				break;
-				
-			}
-			else if([strTitle isEqualToString: [[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.more.tandc"]])
-			{
-				TermsViewController *objTerms=[[TermsViewController alloc]init]; 
-				
-				[detailsView addSubview:objTerms.view];
-				break;
-				
-			}
-			else if([strTitle isEqualToString: [[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.more.privacy"]])
-			{
-				PrivacyViewController *objPrivacy=[[PrivacyViewController alloc]init]; 
-				
-				[detailsView addSubview:objPrivacy.view];
-				break;
-				
-			}
+        if([strTitle isEqualToString: [[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.more.aboutus"]])
+        {
+            AboutUsViewController *objAbout=[[AboutUsViewController alloc]init];
+            [detailsView addSubview:objAbout.view];
+            break;
+        }
+        else if([strTitle isEqualToString: [[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.more.contactus"]])
+        {
+            ContactUsViewController *objContactUS=[[ContactUsViewController alloc]init];
+            
+            [detailsView addSubview:objContactUS.view];
+            break;
+            
+        }
+        else if([strTitle isEqualToString: [[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.more.tandc"]])
+        {
+            TermsViewController *objTerms=[[TermsViewController alloc]init];
+            
+            [detailsView addSubview:objTerms.view];
+            break;
+            
+        }
+        else if([strTitle isEqualToString: [[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.more.privacy"]])
+        {
+            PrivacyViewController *objPrivacy=[[PrivacyViewController alloc]init];
+            
+            [detailsView addSubview:objPrivacy.view];
+            break;
+            
+        }
 		
 		if([[[arrTabbarDetails valueForKey:@"sTitle"] objectAtIndex:index]isEqualToString:[NSString stringWithFormat:@"%@",sender.titleLabel.text]])
 		{
-			 if([[[arrTabbarDetails valueForKey:@"sName"] objectAtIndex:index]isEqualToString:@"page1"])
+            if([[[arrTabbarDetails valueForKey:@"sName"] objectAtIndex:index]isEqualToString:@"page1"])
 			{
-				Page1ViewController *objpage1=[[Page1ViewController alloc]init]; 
+				Page1ViewController *objpage1=[[Page1ViewController alloc]init];
 				
 				[detailsView addSubview:objpage1.view];
 				break;
@@ -907,7 +909,7 @@ static MobicartStart *shared;
 			}
 			else if([[[arrTabbarDetails valueForKey:@"sName"] objectAtIndex:index]isEqualToString:@"page2"])
 			{
-				Page2ViewController *objpage2=[[Page2ViewController alloc]init]; 
+				Page2ViewController *objpage2=[[Page2ViewController alloc]init];
 				
 				[detailsView addSubview:objpage2.view];
 				break;
@@ -915,7 +917,7 @@ static MobicartStart *shared;
 			}
 		}
 		
-   }
+    }
 	
 }
 
@@ -929,22 +931,22 @@ static MobicartStart *shared;
 	[_objMobicartAppDelegate.backgroundImage setHidden:YES];
 	
     if( [UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait ){
-     
+        
     }
     if( [UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown ){
-      
+        
     }
     if( [UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft )
     {
     }
     if( [UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeRight ){
-       
-    } 
+        
+    }
 	CGRect frame = CGRectMake(512.0, 512.0, 50, 50);
 	_objMobicartAppDelegate.loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 	[_objMobicartAppDelegate.loadingIndicator setFrame:frame];
-   
-
+    
+    
 	[_objMobicartAppDelegate.loadingIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	[_objMobicartAppDelegate.loadingIndicator startAnimating];
 	[_objMobicartAppDelegate.window addSubview:_objMobicartAppDelegate.loadingIndicator];
@@ -969,7 +971,7 @@ static MobicartStart *shared;
 	[_objMobicartAppDelegate.loadingIndicator setHidden:YES];
 	[_objMobicartAppDelegate. backgroundImage setHidden:YES];
 }
-#pragma mark - button Shoppoing Cart Accessor 
+#pragma mark - button Shoppoing Cart Accessor
 -(void)showLoadingbar
 {
 	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc]init];
@@ -979,10 +981,10 @@ static MobicartStart *shared;
 
 
 /*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}*/
+ // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+ - (void)viewDidLoad {
+ [super viewDidLoad];
+ }*/
 
 
 
@@ -1011,34 +1013,21 @@ static MobicartStart *shared;
 - (void)dealloc {
 	if([arrTabbarDetails retainCount]>1)
 		[arrTabbarDetails release];
+	if(viewRight)
+		[viewRight release];
     [super dealloc];
 }
 
 
--(void)addCartLabel
++(void)tabSettingForAboutUs:(UINavigationController*)_arr
 {
-    btnCart = [[UIButton alloc]init];
-    btnCart.frame = CGRectMake(350, 13, 78,34);
-    [btnCart setBackgroundColor:[UIColor clearColor]];
-    [btnCart setImage:[UIImage imageNamed:@"add_cart.png"] forState:UIControlStateNormal];
-    [btnCart addTarget:self action:@selector(btnShoppingCart_Clicked) forControlEvents:UIControlEventTouchUpInside];
-    [viewRight addSubview:btnCart];
-    
-    lblCart = [[UILabel alloc] initWithFrame:CGRectMake(42, 2, 30, 30)];
-    lblCart.backgroundColor = [UIColor clearColor];
-    lblCart.textAlignment = UITextAlignmentCenter;
-    lblCart.font = [UIFont boldSystemFontOfSize:16];
-    lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
-    lblCart.textColor = [UIColor whiteColor];
-    [btnCart addSubview:lblCart];
-    
+	NSArray* arr = [_arr viewControllers];
+	if ([arr count]>0) 
+	{
+		UIViewController *vC = [_arr objectAtIndex:0];
+		NSArray* sub = [vC.view subviews];
+        
+	}
 }
 
--(void)refreshCartCount
-{
-    
-    lblCart.text=[NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
-   
-}
-	
 @end

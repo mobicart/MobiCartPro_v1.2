@@ -222,7 +222,6 @@ int isfromTag;
 			[txtDetails[i] setFrame:CGRectMake( 90, yAxis+33, 210, 28)];	
            
             txtDetails[i].text = [arrInfoAccount objectAtIndex:5];
-            txtDetails[i].delegate=nil;
 			btnShowPickerViewState = [UIButton buttonWithType:UIButtonTypeCustom];
 			[btnShowPickerViewState setFrame:txtDetails[i].frame];
 			[btnShowPickerViewState setBackgroundColor:[UIColor clearColor]];
@@ -237,7 +236,7 @@ int isfromTag;
 		{
 			[txtDetails[i] setEnabled:NO];
             txtDetails[i].text = [arrInfoAccount objectAtIndex:3];
-             txtDetails[i].delegate=nil;
+          
             [txtDetails[i] setFrame:CGRectMake( 90, yAxis+33, 210, 28)];
 			btnShowPickerViewDetails = [UIButton buttonWithType:UIButtonTypeCustom];
 			[btnShowPickerViewDetails setFrame:txtDetails[i].frame];
@@ -359,11 +358,13 @@ int isfromTag;
 	[dicSettings retain];
 	
 	interShippingDict = [[NSArray alloc]init];
-	NSDictionary *contentDict = dicSettings ;
+	NSDictionary *contentDict = [dicSettings objectForKey:@"store"];
 	interShippingDict = [contentDict objectForKey:@"shippingList"];
 	[interShippingDict retain];
 	
-	NSMutableArray *arrTempComp;
+	NSDictionary *lDicAppVitals=[[NSDictionary alloc]init];
+	lDicAppVitals=[GlobalPrefrences getAppVitals];
+	NSMutableArray *arrTempComp=[[NSMutableArray alloc]init];
 	arrTempComp=[contentDict valueForKey:@"taxList"];
 	
 	
@@ -513,10 +514,10 @@ int isfromTag;
 			}
 			[btnEdit setTitle:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.createaccount.edit"] forState:UIControlStateNormal];
 			
-			[contentScrollView setContentOffset:CGPointMake( 0, 0) animated:NO];
+			
 			
 			[[SqlQuery shared] updateTblAccountDetails:txtDetails[1].text :txtDetails[2].text :txtDetails[4].text :txtDetails[3].text :txtDetails[5].text :txtDeliveryDetails[0].text :txtDeliveryDetails[1].text :txtDeliveryDetails[2].text :txtDeliveryDetails[3].text :txtDeliveryDetails[4].text :txtDetails[0].text];
-			NSDictionary *contentDict = dicSettings ;
+			NSDictionary *contentDict = [dicSettings objectForKey:@"store"];
 			NSArray* arrTemp =[contentDict objectForKey:@"taxList"];
 			NSArray *arrTempShippingCountries=[contentDict objectForKey:@"shippingList"];
 			
@@ -686,7 +687,7 @@ int isfromTag;
 		{
 			[txtBillingField[i] setEnabled:NO];
 			[txtBillingField[i] setFrame:CGRectMake( 105, yAxis+35, 190, 28)];
-			txtBillingField[i].delegate=nil;
+			
 			UIButton *btnShowPickerView = [UIButton buttonWithType:UIButtonTypeCustom];
 			[btnShowPickerView setFrame:txtBillingField[i].frame];
 			[btnShowPickerView setBackgroundColor:[UIColor clearColor]];
@@ -699,7 +700,7 @@ int isfromTag;
 		else if(i==4)
 		{
 			[txtBillingField[i] setEnabled:NO];
-			txtBillingField[i] .delegate=nil;
+			
 			[txtBillingField[i] setFrame:CGRectMake( 105, yAxis+35, 190, 28)];
 			UIButton *btnShowPickerView = [UIButton buttonWithType:UIButtonTypeCustom];
 			[btnShowPickerView setFrame:txtBillingField[i].frame];
@@ -885,7 +886,7 @@ int isfromTag;
     {
         if(!isDeliveryShown)
         {
-            NSMutableArray *arrAccount;
+            NSMutableArray *arrAccount = [[NSMutableArray alloc] init];
             arrAccount =[[SqlQuery shared] getAccountData:txtBillingField[1].text];
             if([arrAccount count]==0)
             {
@@ -902,12 +903,12 @@ int isfromTag;
 
                 
                 [GlobalPrefrences setUserDefault_Preferences:txtBillingField[1].text :@"userEmail"];
-                NSDictionary *contentDict = dicSettings ;
+                NSDictionary *contentDict = [dicSettings objectForKey:@"store"];
                 NSArray* arrTemp =[contentDict objectForKey:@"taxList"];
                 NSArray *arrTempShippingCountries=[contentDict objectForKey:@"shippingList"];
                 
                 
-                NSString *strCountryCode=@"";
+                NSString *strCountryCode;
                 for(int i=0;i<[arrTemp count];i++)
                 {
                     if ([txtBillingField[4].text isEqualToString:[[arrTemp objectAtIndex:i]valueForKey:@"sCountry"]]) 
@@ -960,7 +961,7 @@ int isfromTag;
                 [alert show];
                 [alert release];
             }
-        
+            [arrAccount release];
         }
         else
         {
@@ -975,7 +976,7 @@ int isfromTag;
             {
                 
                 
-                NSMutableArray *arrAccount ;
+                NSMutableArray *arrAccount = [[NSMutableArray alloc] init];
                 
                 arrAccount =[[SqlQuery shared] getAccountData:txtBillingField[1].text];
                 
@@ -994,12 +995,12 @@ int isfromTag;
                     
                     [GlobalPrefrences setUserDefault_Preferences:txtBillingField[1].text :@"userEmail"];
                     
-                    NSDictionary *contentDict = dicSettings;
+                    NSDictionary *contentDict = [dicSettings objectForKey:@"store"];
                     NSArray* arrTemp =[contentDict objectForKey:@"taxList"];
                     NSArray *arrTempShippingCountries=[contentDict objectForKey:@"shippingList"];
                     
                     
-                    NSString *strCountryCode=@"";
+                    NSString *strCountryCode;
                     for(int i=0;i<[arrTemp count];i++)
                     {
                         
@@ -1113,7 +1114,7 @@ int isfromTag;
 
 -(void)getPickerView:(UIButton *)sender
 {
-    
+
 	if([sender tag]<5)
 	{
 		
@@ -1150,9 +1151,8 @@ int isfromTag;
 						[[arrTemp objectAtIndex:i] removeFromSuperview];
 				}	
 				[toolBar removeFromSuperview];
-                toolBar = nil;
 				[toolBar release];
-				
+				toolBar = nil;
 			}
             
             
@@ -1184,7 +1184,6 @@ int isfromTag;
                 {
                     if([txtDeliveryField[2].text length] != 0)
                     {
-                        [txtDeliveryField[4] resignFirstResponder];
                         [pickerViewCountry selectRow:[[arrayCountry valueForKey:@"sCountry"] indexOfObject:txtDeliveryField[2].text] inComponent:0 animated:YES];
                     }
                 }
@@ -1204,9 +1203,7 @@ int isfromTag;
                 {
                     
                     if([txtDeliveryDetails[2].text length] != 0)
-                        
                     {
-                        [txtDeliveryDetails[4] resignFirstResponder];
                         [pickerViewCountry selectRow:[[arrayCountry valueForKey:@"sCountry"] indexOfObject:txtDeliveryDetails[2].text] inComponent:0 animated:YES];
                     }
                 }
@@ -1317,16 +1314,16 @@ int isfromTag;
 {
    
 	dicSettings = [GlobalPrefrences getSettingsOfUserAndOtherDetails];
-	NSDictionary *contentDict = dicSettings ;
+	NSDictionary *contentDict = [dicSettings objectForKey:@"store"];
 	NSArray* arrTemp =[contentDict objectForKey:@"taxList"];
 	NSArray *arrTempShippingCountries=[contentDict objectForKey:@"shippingList"];
 	[arrayStates removeAllObjects];
 	
-	int CountryCode=0 ;
+	int CountryCode ;
 	if ([strCountryVal length]>0)
 	{
 		NSString *strCountry=strCountryVal;
-		NSString *strCountryCode=@"";
+		NSString *strCountryCode;
 		for(int i=0;i<[arrTemp count];i++)
 		{
 			
@@ -1393,7 +1390,7 @@ int isfromTag;
 		btnPicker[i]  = (UIButton *)[contentScrollView viewWithTag:i+1];
 		btnPicker[i].enabled = YES;
 	}
-	NSMutableArray *arrInfo;
+	NSMutableArray *arrInfo=[[NSMutableArray alloc]init];
 	arrInfo=[[SqlQuery shared] getAccountData:[GlobalPrefrences getUserDefault_Preferences:@"userEmail"]];
 	for(int i=0; i<=6; i++)
 	{
@@ -1425,7 +1422,6 @@ int isfromTag;
     [txtDetails[3] resignFirstResponder];
     [txtDetails[5] resignFirstResponder];
 	[txtDeliveryDetails[3] resignFirstResponder];
-    [txtDeliveryDetails[4] resignFirstResponder];
 	[toolBar setHidden:YES];
 	[pickerViewCountry setHidden:YES];
 	[pickerViewStates setHidden:YES];
@@ -1664,10 +1660,8 @@ int isfromTag;
 		btnPicker[i]  = (UIButton *)[contentScrollView viewWithTag:i+1];
 		btnPicker[i].enabled = YES;
 	}
-         [toolBar setHidden:YES];
-    
 	
-	
+	[toolBar setHidden:YES];
 	[textField resignFirstResponder];
 	[contentScrollView setContentOffset:svos animated:YES];
 	
@@ -1867,8 +1861,8 @@ int isfromTag;
 			[arrayStates addObject:[interShippingDict objectAtIndex:i]];
 	}
 	
-	NSMutableArray *arrTempComp;
-	NSDictionary *contentDict = dicSettings ;
+	NSMutableArray *arrTempComp=[[NSMutableArray alloc]init];
+	NSDictionary *contentDict = [dicSettings objectForKey:@"store"];
 	arrTempComp=[contentDict valueForKey:@"taxList"];
 	
 	for(int i=0; i<[arrTempComp count]; i++)

@@ -60,7 +60,6 @@ int countStore=0;
 	UINavigationBar *navBar=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 315, 40)];
 	[navBar setBarStyle:UIBarStyleBlackTranslucent];
 	[contentView addSubview:navBar];
-    [navBar release];
 	
 	UILabel *lblDepartments=[[UILabel alloc]initWithFrame:CGRectMake(55,0, 200,40)];
 	[lblDepartments setBackgroundColor:[UIColor clearColor]];
@@ -228,7 +227,7 @@ int countStore=0;
 -(void)fetchSubDepartments
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSDictionary* dictCategories = [ServerAPI fetchSubDepartments:iCurrentDepartmentId :iCurrentStoreId];
+    NSDictionary* dictCategories = [ServerAPI fetchSubDepartments:iCurrentDepartmentId:iCurrentStoreId];
 	NSArray *arrTemp  = [dictCategories objectForKey:@"categories"];
     [arrDepartmentData removeAllObjects];
 	[arrDepartmentData addObject:arrTemp];

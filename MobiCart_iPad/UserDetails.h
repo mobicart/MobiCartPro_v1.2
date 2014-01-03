@@ -11,5 +11,5 @@
 
 /*-------------------------MobiCart Email Id----------------------------------------------------------*/
 
-#define merchant_email @"Wladimir@mobi-cart.com"
+#define merchant_email @"roderick@nvisionmediagroup.com.au"
 

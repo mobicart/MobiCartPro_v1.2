@@ -39,12 +39,6 @@
 												 pageSize.width * 4, 	/* bytes per row */
 												 colorSpace, 
 												 kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-    if(context==nil)
-    {
-        return nil;
-    }else{
-        
-   
 	CGColorSpaceRelease(colorSpace);
 	CGContextClipToRect(context, CGRectMake(0, 0, pageSize.width, pageSize.height));
 	
@@ -57,7 +51,6 @@
 	CGImageRelease(image);
 	
 	return image;
-         }
 }
 
 - (CGImageRef) cachedImageForPageIndex:(NSUInteger)pageIndex {
@@ -70,7 +63,7 @@
 		CGImageRef pageCGImage = [self imageForPageIndex:pageIndex];
 		pageImage = [UIImage imageWithCGImage:pageCGImage];
 		@synchronized (pageCache) {
-			[pageCache setObject:pageImage forKey:pageIndexNumber];
+	//		[pageCache setObject:pageImage forKey:pageIndexNumber];
 		}
 	}
 	return pageImage.CGImage;

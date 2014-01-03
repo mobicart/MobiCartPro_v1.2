@@ -92,7 +92,6 @@
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
 	lblCart.textColor = [UIColor whiteColor];	 
 	[btnCart addSubview:lblCart];
-     [btnCart release];
 	
 	
 	UIImageView *imgHorizontalDottedLine=[[UIImageView alloc]initWithFrame:CGRectMake(5, 42, 414,2)];
@@ -108,7 +107,6 @@
 	[aboutLbl setFont:[UIFont boldSystemFontOfSize:15]];
 	[viewTopBar addSubview:aboutLbl];
 	[aboutLbl release];
-    [viewTopBar release];
 	
 	contentScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(50, 60, 420, 600)];
 	[contentScrollView setBackgroundColor:[UIColor clearColor]];
@@ -138,12 +136,12 @@
 #pragma mark - fetchDataFromServer
 -(void)fetchDataFromServer
 {
-	
+	NSAutoreleasePool* autoReleasePool = [[NSAutoreleasePool alloc] init];
 	if (!arrAllData)
 		arrAllData = [[NSArray alloc] init];
-	arrAllData = (NSArray *)[GlobalPrefrences getDictStaticPages];
+	arrAllData = [[ServerAPI fetchStaticPages:iCurrentAppId] objectForKey:@"static-pages"];
 	[self performSelectorOnMainThread:@selector(updateControls) withObject:nil waitUntilDone:YES];
-	
+	[autoReleasePool release];
 }
 
 

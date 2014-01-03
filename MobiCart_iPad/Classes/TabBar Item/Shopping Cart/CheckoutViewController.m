@@ -72,16 +72,19 @@ extern BOOL isLoadingTableFooter;
 	[contentScrollView setBackgroundColor:[UIColor clearColor]];
 	[contentView addSubview:contentScrollView];
 	
+	
+	
+	
 	NSDictionary *dicSettings = [[NSDictionary alloc]init];
 	dicSettings = [GlobalPrefrences getSettingsOfUserAndOtherDetails];
 	[dicSettings retain];
 	
 	NSMutableArray *interShippingDict = [[NSMutableArray alloc]init];
-	NSDictionary *contentDict = dicSettings ;
+	NSDictionary *contentDict = [dicSettings objectForKey:@"store"];
 	NSArray *arrShipping = [contentDict objectForKey:@"shippingList"];
 	[interShippingDict retain];
 	
-	NSDictionary *taxDict = dicSettings ;
+	NSDictionary *taxDict = [dicSettings objectForKey:@"store"];
 	NSArray *arrTax = [contentDict objectForKey:@"taxList"];
     [taxDict retain];
 	
@@ -128,7 +131,9 @@ extern BOOL isLoadingTableFooter;
 	
 	[dicSettings release];
 	[interShippingDict release];
-	NSDictionary *dictTax =[ServerAPI fetchTaxShippingDetails:countryID :stateID :iCurrentStoreId];
+	
+	//NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSDictionary *dictTax =[ServerAPI fetchTaxShippingDetails:countryID :stateID:iCurrentStoreId];
 	[dictTax retain];
 	
 	fShippingCharges=[[TaxCalculation shared]calculateShippingForCheckoutScreen:arrProductIds taxDetails:dictTax];
@@ -148,7 +153,8 @@ extern BOOL isLoadingTableFooter;
 	
 	
 	shippingtax=[GlobalPrefrences getRoundedOffValue:shippingtax];
-		
+	//[pool release];
+	
 	int yValue=50;
 	
 	NSMutableArray *arrTaxable = [[NSMutableArray alloc] init];
@@ -310,8 +316,10 @@ extern BOOL isLoadingTableFooter;
 			
 			_fSubTotal+=productTotal;
 			_fSubTotal=[GlobalPrefrences getRoundedOffValue:_fSubTotal];
-        	fTaxAmount=[GlobalPrefrences getRoundedOffValue:fTaxAmount];
-			if([[dicSettings valueForKey:@"bIncludeTax"]intValue]==1)
+            ///	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+			
+			fTaxAmount=[GlobalPrefrences getRoundedOffValue:fTaxAmount];
+			if([[[dicSettings valueForKey:@"store"]valueForKey:@"bIncludeTax"]intValue]==1)
 			{
 				if(countryID==0)
 				{
@@ -336,6 +344,8 @@ extern BOOL isLoadingTableFooter;
 			
 			
 			grandTotalValue += productTotal;
+			//[pool release];
+			
 			UILabel *lblProductSubTotal = [[UILabel alloc] init];
 			lblProductSubTotal.frame = CGRectMake( 300, yValue, 80, 30);
 			[lblProductSubTotal setBackgroundColor:[UIColor clearColor]];
@@ -343,7 +353,8 @@ extern BOOL isLoadingTableFooter;
 			lblProductSubTotal.font=[UIFont boldSystemFontOfSize:12];
 			lblProductSubTotal.textAlignment = UITextAlignmentRight;
 			lblProductSubTotal.lineBreakMode = UILineBreakModeTailTruncation;
-			lblProductSubTotal.text = [NSString stringWithFormat:@"%@%0.2f",_savedPreferences.strCurrencySymbol,productCost];
+			//lblProductSubTotal.text = [NSString stringWithFormat:@"%@%0.2f",_savedPreferences.strCurrencySymbol,productCost * [[[arrProductIds objectAtIndex:i-1]valueForKey:@"quantity"] intValue]];
+            lblProductSubTotal.text = [NSString stringWithFormat:@"%@%0.2f",_savedPreferences.strCurrencySymbol,productCost];
 			[contentScrollView addSubview:lblProductSubTotal];
 			[lblProductSubTotal release];
 			
@@ -439,14 +450,14 @@ extern BOOL isLoadingTableFooter;
 	lblShippingTax.textAlignment = UITextAlignmentRight;
 	[contentScrollView addSubview:lblShippingTax];
 	
-	if([[dicSettings  valueForKey:@"bTaxShipping"]intValue]==1)
+	if([[[dicSettings valueForKey:@"store"] valueForKey:@"bTaxShipping"]intValue]==1)
 		lblShippingTax.text= [NSString stringWithFormat:@"%@: %@%0.2f",[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.shoppingcart.tax.shipping"],_savedPreferences.strCurrencySymbol,(fShippingCharges*shippingtax)/100];
 	else
 		lblShippingTax.text= [NSString stringWithFormat:@"%@: %@0.00",[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.shoppingcart.tax.shipping"],_savedPreferences.strCurrencySymbol];
 	[lblShippingTax release];
 	
 	
-	if([[dicSettings  valueForKey:@"bTaxShipping"]intValue]==1)
+	if([[[dicSettings valueForKey:@"store"] valueForKey:@"bTaxShipping"]intValue]==1)
 		taxOnShipping=((fShippingCharges *shippingtax)/100);
 	else
 	{
@@ -533,7 +544,13 @@ extern BOOL isLoadingTableFooter;
 	if([[GlobalPrefrences getPaypalModeEnable] intValue]==1 &&([GlobalPrefrences getPaypalLiveToken].length!=0))
     {
         
-               
+        NSLog(@"*****************************PayPal Token/PayPal Mode******************************");
+        NSLog(@"PayPalToken: %@",[GlobalPrefrences getPaypalLiveToken]);
+        NSLog(@"PayPalMode:  %@",[GlobalPrefrences getPaypalModeIsLive]);
+        NSLog(@"PayPal version%@",[PayPal buildVersion]);
+        NSLog(@"*******************************************************************************");
+        
+        
         if([[GlobalPrefrences getPaypalModeIsLive]intValue]==1)
         {
             [PayPal initializeWithAppID:[GlobalPrefrences getPaypalLiveToken] forEnvironment:ENV_LIVE];
@@ -543,7 +560,7 @@ extern BOOL isLoadingTableFooter;
             [PayPal initializeWithAppID:@"APP-80W284485P519543T" forEnvironment:ENV_SANDBOX];
         }
         
-       
+        
         
         UIButton * btn = [[PayPal getPayPalInst] getPayButtonWithTarget:self andAction:@selector(payWithPayPal) andButtonType:BUTTON_278x43];
         btn.frame = CGRectMake (70, lblGrandTotal.frame.origin.y+lblGrandTotal.frame.size.height+30, 278, 38);
@@ -565,7 +582,13 @@ extern BOOL isLoadingTableFooter;
     /*********************************integration with Zooz payment gatway****************************************/
     if([[GlobalPrefrences getZoozModeEnable] intValue]==1&&([GlobalPrefrences getZoozPaymentToken].length!=0))
     {
-               btnZooz=[UIButton buttonWithType:UIButtonTypeCustom];
+        NSLog(@"*****************************ZooZ AppUnique ID/Zooz Mode******************************");
+        NSLog(@"iPad ZooZ App Unique ID:  %@",[[NSBundle mainBundle] bundleIdentifier]);
+        NSLog(@"iPad ZooZ key:  %@",[GlobalPrefrences getZoozPaymentToken]);
+        NSLog(@"ZooZ Mode:  %@",[GlobalPrefrences getZooZModeIsLive]);
+        NSLog(@"*******************************************************************************");
+        
+        btnZooz=[UIButton buttonWithType:UIButtonTypeCustom];
         
         [btnZooz addTarget:self action:@selector(payWithZooz) forControlEvents:UIControlEventTouchUpInside];
         
@@ -580,13 +603,13 @@ extern BOOL isLoadingTableFooter;
         
     }
     /*********************************integration with Cash on devlivery ****************************************/
-    if(![[dicSettings  valueForKey:@"codEnabled"]isEqual:[NSNull null]])
+    if(![[[dicSettings valueForKey:@"store"] valueForKey:@"codEnabled"]isEqual:[NSNull null]])
     {
-        if([[dicSettings  valueForKey:@"codEnabled"]intValue]==1)
+        if([[[dicSettings valueForKey:@"store"] valueForKey:@"codEnabled"]intValue]==1)
         {
-            cashOnDBtn=[UIButton buttonWithType:UIButtonTypeCustom];      
+            cashOnDBtn=[UIButton buttonWithType:UIButtonTypeCustom];
             [cashOnDBtn addTarget:self action:@selector(cashOnDeveliery) forControlEvents:UIControlEventTouchUpInside];
-          
+            
             [cashOnDBtn setTitle:[NSString stringWithFormat:@"%@",[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.CashOnDelivery"]] forState:UIControlStateNormal];
             [cashOnDBtn setBackgroundImage:[UIImage imageNamed:@"checkout_btn.png"] forState:UIControlStateNormal];
             
@@ -596,15 +619,15 @@ extern BOOL isLoadingTableFooter;
             cashOnDBtn.frame=CGRectMake (70, yAxise, 278, 38);
             [contentScrollView addSubview:cashOnDBtn];
             [contentScrollView setContentSize:CGSizeMake( 450, cashOnDBtn.frame.origin.y+cashOnDBtn.frame.size.height+200)];
-        
+            
         }
     }
     else
     {
         [contentScrollView setContentSize:CGSizeMake( 450, btnZooz.frame.origin.y+btnZooz.frame.size.height+200)];
     }
-
-      if(!sMerchantPaypayEmail)
+    
+    if(!sMerchantPaypayEmail)
 		sMerchantPaypayEmail = [[NSString alloc] init];
 }
 
@@ -642,22 +665,22 @@ extern BOOL isLoadingTableFooter;
 -(void)payWithPayPal
 {
     NSLog(@"PayPal");
+    
     if(![GlobalPrefrences getIsEditMode])
     {
         NSString *strCode =[_savedPreferences.strCurrency substringFromIndex:3];
         NSDictionary *dicAppSettings = [GlobalPrefrences getSettingsOfUserAndOtherDetails];
         [PayPal getPayPalInst].shippingEnabled = TRUE;
-        
-        //optional, set dynamicAmountUpdateEnabled to TRUE if you want to compute
+                //optional, set dynamicAmountUpdateEnabled to TRUE if you want to compute
         //shipping and tax based on the user's address choice, default: FALSE
         
         [PayPal getPayPalInst].dynamicAmountUpdateEnabled = FALSE;
         
         //optional, choose who pays the fee, default: FEEPAYER_EACHRECEIVER
-          [PayPal getPayPalInst].feePayer = FEEPAYER_EACHRECEIVER;
+        [PayPal getPayPalInst].feePayer = FEEPAYER_EACHRECEIVER;
         
         //for a payment with a single recipient, use a PayPalPayment object
-      
+        
         
         PayPalPaymentType paymentType =TYPE_GOODS;
         PayPalPayment *payment =[[PayPalPayment alloc] init];
@@ -665,8 +688,9 @@ extern BOOL isLoadingTableFooter;
         
         payment.paymentCurrency=strCode;
         payment.paymentType=paymentType;
+        //payment.subTotal=[NSString stringWithFormat:@"%0.2f",priceWithoutTax];
         payment.description = [NSString stringWithFormat:@"Total Amount"];
-        payment.merchantName = [NSString stringWithFormat:@"%@", [dicAppSettings objectForKey:@"sSName"]];
+        payment.merchantName = [NSString stringWithFormat:@"%@", [[dicAppSettings objectForKey:@"store"] objectForKey:@"sSName"]];
         
         
         NSString *subToatal;
@@ -697,7 +721,7 @@ extern BOOL isLoadingTableFooter;
         item.totalPrice = payment.subTotal;
         item.name = @"Total Amount";
         [payment.invoiceData.invoiceItems addObject:item];
-         
+        
         [[PayPal getPayPalInst] checkoutWithPayment:payment];
         
         
@@ -722,7 +746,7 @@ extern BOOL isLoadingTableFooter;
     
 }
 - (void)paymentSuccessWithKey:(NSString *)payKey andStatus:(PayPalPaymentStatus)paymentStatus {
-   
+    
     status = PAYMENTSTATUS_SUCCESS;
     NSString *severity = [[PayPal getPayPalInst].responseMessage objectForKey:@"severity"];
 	NSLog(@"severity: %@", severity);
@@ -821,6 +845,8 @@ extern BOOL isLoadingTableFooter;
             
 			break;
 		case PAYMENTSTATUS_CANCELED:
+			//alert = [[UIAlertView alloc] initWithTitle:[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.order.cancel.title"] message:[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.order.cancel.text"] delegate:nil cancelButtonTitle:[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.nointernet.cancelbutton"] otherButtonTitles:nil];
+            
 			break;
 	}
 	[alert show];
@@ -894,7 +920,7 @@ extern BOOL isLoadingTableFooter;
             item.itemId =[NSString stringWithFormat:@"%d", [[[arrProductIds objectAtIndex:i] objectForKey:@"id"] intValue]]; // optional
             
             [req addItem:item];
-           
+            
         }
         /* End of optional */
         
@@ -921,7 +947,7 @@ extern BOOL isLoadingTableFooter;
         }
         
     }
-
+    
     
 }
 
@@ -982,7 +1008,7 @@ extern BOOL isLoadingTableFooter;
             
             //NSLog(@"%@",[test componentsJoinedByString:@"," ]);
         }
-       
+        
         
         [strArray addObject:[NSString stringWithFormat:@"%@ [%@]",newproductName,[test componentsJoinedByString:@"," ]]];
         [strArray addObject:[NSString stringWithFormat:@"%f",optionPrice]];
@@ -1085,6 +1111,18 @@ extern BOOL isLoadingTableFooter;
     
 }
 
+/*- (void)paymentCanceled{
+ NSLog(@"payment cancelled");
+ 
+ UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.order.cancel.title"] message:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.order.cancel.text"] delegate:nil cancelButtonTitle:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.nointernet.cancelbutton"] otherButtonTitles:nil];
+ 
+ [alert show];
+ 
+ [alert release];
+ //dialog closed without payment completed
+ }*/
+
+
 
 #pragma mark -Alert View Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -1100,19 +1138,23 @@ extern BOOL isLoadingTableFooter;
 
 -(void)fetchDataFromLocalDB
 {
+	//NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	if(!arrUserDetails)
 		arrUserDetails = [[NSArray alloc] init];
 	
 	arrUserDetails = [[SqlQuery shared] getBuyerData:[GlobalPrefrences getUserDefault_Preferences:@"userEmail"]];
 	
-   
+    //[pool release];
+	
+	
 }
 #pragma mark Send Data To Server
 -(void) sendDataToServer:(NSString *)paymentMode
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
-   
+	// NSString *strCode =[_savedPreferences.strCurrency substringFromIndex:3];
+    
 	NSString *strDataToPost = [NSString stringWithFormat:@"{\"storeId\":%d,\"appId\":%d,\"merchantId\":%d,\"fAmount\":%0.2f,\"sMerchantPaypalEmail\":\"%@\",\"fTaxAmount\":%0.2f,\"fShippingAmount\":%0.2f,\"fTotalAmount\":%0.2f,\"sBuyerName\":\"%@\",\"sBuyerEmail\":\"%@\",\"iBuyerPhone\":null,\"sShippingStreet\":\"%@\",\"sShippingCity\":\"%@\",\"sShippingState\":\"%@\",\"sShippingPostalCode\":\"%@\",\"sShippingCountry\":\"%@\",\"sBillingStreet\":\"%@\",\"sBillingCity\":\"%@\",\"sBillingState\":\"%@\",\"sBillingPostalCode\":\"%@\",\"sBillingCountry\":\"%@\",\"paymentMode\":%@,\"orderCurrency\":\"%@\"}",iCurrentStoreId,iCurrentAppId,iCurrentMerchantId, priceWithoutTax,[GlobalPrefrences getPaypalRecipient_Email],[GlobalPrefrences getRoundedOffValue:fTaxAmount], totalShippingAmount,grandTotalValue, [[arrUserDetails objectAtIndex:0] objectForKey:@"sUserName"],[[arrUserDetails objectAtIndex:0] objectForKey:@"sEmailAddress"], [[arrUserDetails objectAtIndex:0] objectForKey:@"sDeliveryAddress"],[[arrUserDetails objectAtIndex:0] objectForKey:@"sDeliveryCity"],[[arrUserDetails objectAtIndex:0] objectForKey:@"sDeliveryState"],[[arrUserDetails objectAtIndex:0] objectForKey:@"sDeliveryPincode"],[[arrUserDetails objectAtIndex:0] objectForKey:@"sDeliveryCountry"],[[arrUserDetails objectAtIndex:0] objectForKey:@"sStreetAddress"],[[arrUserDetails objectAtIndex:0] objectForKey:@"sCity"],[[arrUserDetails objectAtIndex:0] objectForKey:@"sState"],[[arrUserDetails objectAtIndex:0] objectForKey:@"sPincode"],[[arrUserDetails objectAtIndex:0] objectForKey:@"sCountry"],paymentMode ,_savedPreferences.strCurrency];
     
     
@@ -1168,6 +1210,7 @@ extern BOOL isLoadingTableFooter;
 			{
 				NSString *dataToSave = [NSString stringWithFormat:@"{\"productId\":%d,\"fAmount\":%0.2f,\"orderId\":%d,\"productOptionId\":\"%@\",\"iQuantity\":%d,\"id\":null}",[[[arrProductIds objectAtIndex:i] objectForKey:@"id"] intValue],[[[arrProductIds objectAtIndex:i] objectForKey:@"fDiscountedPrice"] floatValue], iCurrentOrderId, [[arrCartItems objectAtIndex:i] valueForKey:@"pOptionId"], [[[arrProductIds objectAtIndex:i] objectForKey:@"quantity"] intValue]];
 				
+				//NSLog(@"string to be printed%@", dataToSave);
 				if (![GlobalPrefrences isInternetAvailable])
 				{
 					// If internet is not available, then save the data into the database, for sending it later
@@ -1190,7 +1233,7 @@ extern BOOL isLoadingTableFooter;
 			
 			if (iCurrentOrderId>0)
 			{
-				[ServerAPI product_order_NotifyURLSend:@"Sending Order Number Last Time" :iCurrentOrderId];
+				[ServerAPI product_order_NotifyURLSend:@"Sending Order Number Last Time":iCurrentOrderId];
 			}
 		}
 		else
@@ -1229,7 +1272,10 @@ extern BOOL isLoadingTableFooter;
  */
 -(void) receivedRotate: (NSNotification*) notification
 {
-	
+	//UIDeviceOrientation interfaceOrientation = [[UIDevice currentDevice] orientation];
+    
+	//if(interfaceOrientation != UIDeviceOrientationUnknown)
+    //[self deviceInterfaceOrientationChanged:interfaceOrientation];
 }
 
 - (void)viewDidUnload {
@@ -1244,7 +1290,10 @@ extern BOOL isLoadingTableFooter;
 }
 
 - (void)dealloc {
-
+	
+    //	[contentView release];
+	//contentView=nil;
+    //[super dealloc];
 }
 
 

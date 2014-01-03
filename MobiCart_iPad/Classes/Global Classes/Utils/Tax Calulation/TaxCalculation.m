@@ -25,12 +25,12 @@ static TaxCalculation *shared;
 	
 	shared = self;
 	return self;
-}
+} 
 
 //Creates a single instance of SqlQuery and returns the same every time called.
-+ (id)shared
++ (id)shared 
 {
-    if (!shared)
+    if (!shared) 
 	{
         [[TaxCalculation alloc] init];
     }
@@ -39,11 +39,11 @@ static TaxCalculation *shared;
 -(NSArray*)getStateAndCountryIDForTax
 {
 	
-	NSDictionary *dictSettingsDetails;
+	NSDictionary *dictSettingsDetails=[[NSDictionary alloc]init];
 	dictSettingsDetails=[[GlobalPrefrences getSettingsOfUserAndOtherDetails]retain];
 	
 	//Check if user is logged into app or not
-	NSMutableArray *arrInfoAccount=nil;
+	NSMutableArray *arrInfoAccount=[[NSMutableArray alloc]init];
 	arrInfoAccount=[[SqlQuery shared] getAccountData:[GlobalPrefrences getUserDefault_Preferences:@"userEmail"]];
 	
 	int countryID=0,stateID=0;
@@ -58,15 +58,15 @@ static TaxCalculation *shared;
 		
 	}
 	else {
-		/*if use  is not logged into app we will use merchats base country tax with others state combination.
-		 if tax of other state is defined we will use mechant's base country and others combination other wise we will use merchants base county and 0 as
+		/*if use  is not logged into app we will use merchats base country tax with others state combination. 
+		 if tax of other state is defined we will use mechant's base country and others combination other wise we will use merchants base county and 0 as 
 		 state id and in this case tax will be 0
 		 */
 		
 		
-		countryID=[[dictSettingsDetails valueForKey:@"territoryId"]intValue];
-		NSArray *arrtaxCountries=[dictSettingsDetails valueForKey:@"taxList"];
-		NSArray *arrShippingCountries=[dictSettingsDetails valueForKey:@"shippingList"];
+		countryID=[[[dictSettingsDetails valueForKey:@"store"]valueForKey:@"territoryId"]intValue];
+		NSArray *arrtaxCountries=[[dictSettingsDetails valueForKey:@"store"]valueForKey:@"taxList"];
+		NSArray *arrShippingCountries=[[dictSettingsDetails valueForKey:@"store"]valueForKey:@"shippingList"];
 		
 		NSMutableArray *arrTaxAndShippingCountries=[[NSMutableArray alloc]init];
 		
@@ -108,13 +108,13 @@ static TaxCalculation *shared;
 	{
 		if([[[_arrTemp objectAtIndex:indexPath.row]valueForKey:@"fPrice"] floatValue]>[discount floatValue])
 			productCost=[discount floatValue]+[[[_arrTemp objectAtIndex:indexPath.row]valueForKey:@"fTax"] floatValue];
-		else
+		else 
 			productCost=[[[_arrTemp objectAtIndex:indexPath.row]valueForKey:@"fPrice"] floatValue]+[[[_arrTemp objectAtIndex:indexPath.row]valueForKey:@"fTax"] floatValue];
 	}
 	else {
 		if([[[_arrTemp objectAtIndex:indexPath.row]valueForKey:@"fPrice"] floatValue]>[discount floatValue])
 			productCost=[discount floatValue];
-		else
+		else 
 			productCost=[[[_arrTemp objectAtIndex:indexPath.row]valueForKey:@"fPrice"] floatValue];
 	}
 	
@@ -124,7 +124,7 @@ static TaxCalculation *shared;
 -(NSString*)caluateTaxForProduct:(NSDictionary*)_dict
 {
 	float productCost=0;
-	NSString *strFinalPrice=@"";
+	NSString *strFinalPrice;
 	NSString *discount = [NSString stringWithFormat:@"%@", [_dict objectForKey:@"fDiscountedPrice"]];
 	
 	
@@ -140,7 +140,7 @@ static TaxCalculation *shared;
 	else
 		productCost=[[_dict objectForKey:@"fPrice"] floatValue];
 	
-	if(![[_dict objectForKey:@"bTaxable"]isEqual:[NSNull null]])
+	if(![[_dict objectForKey:@"bTaxable"]isEqual:[NSNull null]])	
 	{
 		if([[_dict objectForKey:@"bTaxable"] intValue]==1)
 		{
@@ -177,7 +177,7 @@ static TaxCalculation *shared;
 			productCost=[discount floatValue];
 			totalTaxApplied+=(([discount floatValue]*productQuantity)*_tax)/100;
 		}
-		else
+		else 
 		{
 			productCost=[[[_arrayShoppingCart objectAtIndex:i]valueForKey:@"fPrice"] floatValue];
 			totalTaxApplied=(totalTaxApplied+(([[[_arrayShoppingCart objectAtIndex:i]valueForKey:@"fPrice"] floatValue]*_tax)/100)*productQuantity);
@@ -188,21 +188,21 @@ static TaxCalculation *shared;
 	else {
 		if([[[_arrayShoppingCart objectAtIndex:i]valueForKey:@"fPrice"] floatValue]>[discount floatValue])
 			productCost=[discount floatValue];
-		else
+		else 
 			productCost=[[[_arrayShoppingCart objectAtIndex:i]valueForKey:@"fPrice"] floatValue];
 	}
 	
 	
 	
-	subTotal =	productCost * [[[_arrDatabaseCart objectAtIndex:i]valueForKey:@"quantity"] intValue];
+	subTotal =	productCost * [[[_arrDatabaseCart objectAtIndex:i]valueForKey:@"quantity"] intValue];    
 	
     //------------------getOptionPrice--------------------------
-    if(![_arrDatabaseCart count] == 0)
+        if(![_arrDatabaseCart count] == 0)
     {
-        
+  
         {
             
-            if (!([[[_arrDatabaseCart objectAtIndex:i] valueForKey:@"pOptionId"] intValue]==0))
+           if (!([[[_arrDatabaseCart objectAtIndex:i] valueForKey:@"pOptionId"] intValue]==0))
             {
                 
                 NSMutableArray *dictOption = [[_arrayShoppingCart objectAtIndex:i] objectForKey:@"productOptions"];
@@ -235,20 +235,20 @@ static TaxCalculation *shared;
                 for(int count=0;count<[arrSelectedOptions count];count++)
                 {
                     optionPrice =optionPrice+[[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"pPrice"]floatValue];
-                    
+               
                 }
                 
                 
-            }
-            optionPrice=optionPrice*[[[_arrDatabaseCart objectAtIndex:i]valueForKey:@"quantity"] intValue];
+            } 
+            optionPrice=optionPrice*[[[_arrDatabaseCart objectAtIndex:i]valueForKey:@"quantity"] intValue]; 
             
         }
     }
-    
+
     productCost+=optionPrice;
     subTotal+=optionPrice;
     
-	NSMutableArray *arrTaxDetails=[NSMutableArray new];
+	NSMutableArray *arrTaxDetails=[[NSMutableArray alloc]init];
 	[arrTaxDetails addObject:[NSString stringWithFormat:@"%f", productCost]];
 	[arrTaxDetails addObject:[NSString stringWithFormat:@"%f", subTotal]];
 	[arrTaxDetails addObject:[NSString stringWithFormat:@"%f", totalTaxApplied]];
@@ -257,7 +257,7 @@ static TaxCalculation *shared;
 
 -(NSArray*)calculatetaxForCheckOutScreen:(NSArray*)arrProductIds withSettings:(NSDictionary*)dicSettings forIndex:(int) index forCountryID:(int)countryID taxAmount:(float)taxPercent
 {
-	float productCost=0,_fSubTotal=0,priceWithoutTax=0;
+	float productCost,_fSubTotal=0,priceWithoutTax=0;
 	float productTax=0,fTaxAmount=0,optionPrice=0;
 	
 	NSString *discount = [NSString stringWithFormat:@"%@", [[arrProductIds objectAtIndex:index-1]valueForKey:@"fDiscountedPrice"]];
@@ -277,7 +277,7 @@ static TaxCalculation *shared;
 	priceWithoutTax+=(productCost*[[[arrProductIds objectAtIndex:index-1] valueForKey:@"quantity"] intValue]);
 	
 	
-	if([[dicSettings valueForKey:@"bIncludeTax"]intValue]==1)
+	if([[[dicSettings valueForKey:@"store"]valueForKey:@"bIncludeTax"]intValue]==1)
 		productCost=(productCost+[[[arrProductIds objectAtIndex:index-1]valueForKey:@"fTax"]floatValue]);
 	
 	
@@ -290,8 +290,8 @@ static TaxCalculation *shared;
 	
 	
 	
-	if([[dicSettings valueForKey:@"bIncludeTax"]intValue]==1)
-	{
+	if([[[dicSettings valueForKey:@"store"]valueForKey:@"bIncludeTax"]intValue]==1)
+	{				
 		if(countryID==0)
 		{
 			productTax = 0;
@@ -307,13 +307,13 @@ static TaxCalculation *shared;
 				productTax=([[[arrProductIds objectAtIndex:index-1]valueForKey:@"fPrice"] floatValue]*taxPercent)/100;
 			productTax = (productTax * [[[arrProductIds objectAtIndex:index-1] valueForKey:@"quantity"] intValue]);
 			fTaxAmount += productTax;
-			productTotal = productTotal;
+			productTotal = productTotal; 
 		}
 	}
     //-------------------------getOptionPrice--------------------
-    {
+     {
         
-        {
+         {
             
             
             
@@ -354,16 +354,16 @@ static TaxCalculation *shared;
                 }
                 
                 
-            }
+            } 
             productCost+=optionPrice;
-            optionPrice=optionPrice*[[[arrProductIds objectAtIndex:index-1]valueForKey:@"quantity"] intValue];
+            optionPrice=optionPrice*[[[arrProductIds objectAtIndex:index-1]valueForKey:@"quantity"] intValue]; 
             
         }
     }
     _fSubTotal+=optionPrice;
     productTotal+=optionPrice;
     priceWithoutTax+=optionPrice;
-  	NSMutableArray *arrTaxDetails=[NSMutableArray new];
+  	NSMutableArray *arrTaxDetails=[[NSMutableArray alloc]init];
 	[arrTaxDetails addObject:[NSString stringWithFormat:@"%f", productCost]];
 	[arrTaxDetails addObject:[NSString stringWithFormat:@"%f",priceWithoutTax]];
 	[arrTaxDetails addObject:[NSString stringWithFormat:@"%f",productTotal]];
@@ -385,7 +385,7 @@ static TaxCalculation *shared;
 			shippingCharges = [[[dictTax valueForKey:@"shipping"] valueForKey:@"fAlone"] floatValue];
 			
 		}
-		else
+		else 
 		{
 			shippingCharges = [[[dictTax valueForKey:@"shipping"] valueForKey:@"fOthers"] floatValue];
 		}
@@ -393,9 +393,9 @@ static TaxCalculation *shared;
 		
 	}
 	
-	else
+	else 
 	{
-		if([arrProductIds count]==1)
+		if([arrProductIds count]==1)   
 		{
 			
 			if ([[[arrProductIds objectAtIndex:0]valueForKey:@"quantity"]intValue]==1)
@@ -426,12 +426,12 @@ static TaxCalculation *shared;
 	
 	if([arrProductsInCart count]>1)    //If total products in cart are more than one we will apply use fOther charges for shipping
 	{
-		shippingCharges=[[[_dict valueForKey:@"shipping"]valueForKey:@"fOthers"]floatValue];
+		shippingCharges=[[[_dict valueForKey:@"shipping"]valueForKey:@"fOthers"]floatValue];	
 	}
 	else {
 		if(_quantity==1)
 		{
-			//Here we are checking if we user is  purchasing multiple same product
+			//Here we are checking if we user is  purchasing multiple same product 
 			shippingCharges=[[[_dict valueForKey:@"shipping"]valueForKey:@"fAlone"]floatValue];
 		}
 		else
@@ -444,11 +444,11 @@ static TaxCalculation *shared;
 	return shippingCharges;
 	
 }
-//--------------------------------Price-----------------
+//--------------------------------pPrice-----------------
 -(NSString*)caluatePriceOptionProduct:(NSDictionary*)_dict pPrice:(float)optionPrice
 {
 	float productCost=0;
-	NSString *strFinalPrice=@"";
+	NSString *strFinalPrice;
 	NSString *discount = [NSString stringWithFormat:@"%@", [_dict objectForKey:@"fDiscountedPrice"]];
 	
 	
@@ -468,7 +468,7 @@ static TaxCalculation *shared;
     productCost=productCost+optionPrice;
     
 	
-	if(![[_dict objectForKey:@"bTaxable"]isEqual:[NSNull null]])
+	if(![[_dict objectForKey:@"bTaxable"]isEqual:[NSNull null]])	
 	{
 		if([[_dict objectForKey:@"bTaxable"] intValue]==1)
 		{

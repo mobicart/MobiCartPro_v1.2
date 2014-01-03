@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "Constants.h"
+#import "EbookScrollView.h"
 #import <QuartzCore/CAAnimation.h>
 #import <QuartzCore/CAMediaTimingFunction.h>
 #import "ServerAPI.h"
 #import "CustomImageView.h"
 #import "TaxCalculation.h"
 #import <CoreLocation/CoreLocation.h>
-#import "ContentScrollview.h"
-
+UILabel *lblCart;
 UIImageView *backgroundImg;
 UIScrollView *ZoomScrollView;
 NSMutableArray *arrBanners;
@@ -29,7 +29,7 @@ NSString *selectedDepartment;
 	UILabel *lblPrice[200];
 	UILabel *lblProductName[200];
 	UIButton *btnBackToDepts;
-	UILabel *lblCart;
+	
 	NSMutableArray *clothImg;
 	CLLocationCoordinate2D tempLocation;
 	int startX;
@@ -54,7 +54,6 @@ NSString *selectedDepartment;
 	NSMutableArray *showNoArray, *arrDeptIDs, *showArray_Searched, *showNoArray_Searched, *arrDeptIDs_Searched,*arrNumberofProducts,*arrNumberofProducts_Search,*arrSubDeptName_Search,*arrSubCategoryCount;
 	UISearchBar *_searchBar;
 	UIButton *	btnCart;
-    ContentScrollview *scroll;
 	
 }
 @property (nonatomic, retain) NSMutableArray *arrTempImage;
@@ -67,7 +66,7 @@ NSString *selectedDepartment;
 -(void)showDepartments;
 -(void)fetchDataForDepartments;
 -(void)createTableView;
- 
+-(void)createSubDeptsTable;
 
 
 @end

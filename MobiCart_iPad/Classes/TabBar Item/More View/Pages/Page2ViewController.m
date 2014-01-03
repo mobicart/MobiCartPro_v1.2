@@ -93,7 +93,6 @@
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
 	lblCart.textColor = [UIColor whiteColor];	 
 	[btnCart addSubview:lblCart];
-    [btnCart release];
 	UIImageView *imgHorizontalDottedLine=[[UIImageView alloc]initWithFrame:CGRectMake(5, 42, 414,2)];
 	[imgHorizontalDottedLine setImage:[UIImage imageNamed:@"dot_line.png"]];
 	[viewTopBar addSubview:imgHorizontalDottedLine];
@@ -144,15 +143,15 @@
 #pragma mark - fetchDataFromServer
 -(void)fetchDataFromServer
 {
-	
+	NSAutoreleasePool* autoReleasePool = [[NSAutoreleasePool alloc] init];
 	if (!arrAllData)
 		arrAllData = [[NSArray alloc] init];
 	
-	arrAllData = (NSArray *)[GlobalPrefrences getDictStaticPages];
+	arrAllData = [[ServerAPI fetchStaticPages:iCurrentAppId] objectForKey:@"static-pages"];
 	
 	
 	[self performSelectorOnMainThread:@selector(updateControls) withObject:nil waitUntilDone:YES];
-	
+	[autoReleasePool release];
 	
 }
 

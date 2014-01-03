@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "Constants.h"
 extern UIViewController * nextController;
 @interface MoreTableViewDataSource : NSObject<UITableViewDataSource,UITableViewDelegate> {

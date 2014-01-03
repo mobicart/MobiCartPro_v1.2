@@ -18,6 +18,9 @@
 	//Color Schemes of Controls
 	UIColor *bgColor, *fgColor, *textheadingColor,*txtLabelColor;
 	
+	//Gradient Colors
+
+	
 	//App Details
 	UIImage *imgLogo;
 	NSInteger _iCurrentAppId, _iCurrentStoreId, _iCurrentMerchantId;

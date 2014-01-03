@@ -1,4 +1,4 @@
-//
+    //
 //  AboutUsViewController.m
 //  Mobicart
 //
@@ -9,25 +9,25 @@
 #import "AboutUsViewController.h"
 #import "Constants.h"
 #import "MobicartStart.h"
-
+      
 @implementation AboutUsViewController
 
-// The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
+ // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization.
-        
-        if( isMorePage==NO)
-            self.tabBarItem.image=[UIImage imageNamed:@"About_Us.png"];
+	 
+			if( isMorePage==NO)
+	           self.tabBarItem.image=[UIImage imageNamed:@"About_Us.png"];
 		
 	}
-    
+
 	
     return self;
 }
--(void)viewWillAppear:(BOOL)animated {
+-(void)viewWillAppear:(BOOL)animated { 
 	[super viewWillAppear:animated];
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
 	if( isMorePage==NO)
@@ -43,7 +43,7 @@
 {
 	if( isMorePage==NO)
 	{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"removedPoweredByMobicart" object:nil];
+	  [[NSNotificationCenter defaultCenter] postNotificationName:@"removedPoweredByMobicart" object:nil];
 	}
 	for (UIView *view in [self.navigationController.navigationBar subviews]) {
 		
@@ -54,10 +54,10 @@
 
 
 /*
- // Implement loadView to create a view hierarchy programmatically, without using a nib.
- - (void)loadView {
- }
- */
+// Implement loadView to create a view hierarchy programmatically, without using a nib.
+- (void)loadView {
+}
+*/
 
 
 
@@ -65,14 +65,14 @@
 - (void)viewDidLoad {
 	
 	NSInvocationOperation *operationFetchDataFromServer= [[NSInvocationOperation alloc] initWithTarget:self
-																							  selector:@selector(fetchDataFromServer)
+																							  selector:@selector(fetchDataFromServer) 
 																								object:nil];
-    
+		
 	[GlobalPrefrences addToOpertaionQueue:operationFetchDataFromServer];
 	[operationFetchDataFromServer release];
 	
 	[self.navigationController.navigationBar setHidden:YES];
-    
+		
 	UIView *contentView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 500,636)];
 	contentView.tag = 101010;
 	[self.view  addSubview: contentView];
@@ -81,7 +81,7 @@
 	if( isMorePage==NO)
 	{
 		contentView.frame = CGRectMake(0, 0, 500,636);
-        [GlobalPrefrences setBackgroundTheme_OnView:contentView];
+	  [GlobalPrefrences setBackgroundTheme_OnView:contentView];
 		viewTopBar.frame = CGRectMake(50,10, 450, 40);
 	}
 	UIButton *btnCart = [[UIButton alloc]init];
@@ -96,10 +96,8 @@
 	lblCart.textAlignment = UITextAlignmentCenter;
 	lblCart.font = [UIFont boldSystemFontOfSize:16];
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
-	lblCart.textColor = [UIColor whiteColor];
-	[btnCart addSubview:lblCart];
-    [btnCart release];
-    [lblCart release];
+	lblCart.textColor = [UIColor whiteColor];	 
+	[btnCart addSubview:lblCart];	
 	
 	viewTopBar.backgroundColor=[UIColor clearColor];
 	[contentView addSubview:viewTopBar];
@@ -108,12 +106,12 @@
 	[imgHorizontalDottedLine setImage:[UIImage imageNamed:@"dot_line.png"]];
 	[viewTopBar addSubview:imgHorizontalDottedLine];
 	[imgHorizontalDottedLine release];
-	[viewTopBar release];
+	
 	
 	UILabel *aboutLbl=[[UILabel alloc]initWithFrame:CGRectMake(0, 8, 310, 30)];
 	
 	[aboutLbl setBackgroundColor:[UIColor clearColor]];
-	[aboutLbl setText:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.more.aboutus"]];
+	[aboutLbl setText:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.more.aboutus"]];	
 	aboutLbl.textColor=headingColor;
 	[aboutLbl setFont:[UIFont boldSystemFontOfSize:15]];
 	[viewTopBar addSubview:aboutLbl];
@@ -131,7 +129,7 @@
 	[aboutDetailLbl setNumberOfLines:0];
 	[aboutDetailLbl setLineBreakMode:UILineBreakModeWordWrap];
 	[aboutDetailLbl setBackgroundColor:[UIColor clearColor]];
-    aboutDetailLbl.text=@" Loading...";
+	 aboutDetailLbl.text=@" Loading...";
 	[contentScrollView addSubview:aboutDetailLbl];
 	
     aboutDetailLbltext=[[UIWebView alloc]initWithFrame:CGRectMake( 0, 0, 420, 590)];
@@ -140,7 +138,7 @@
     [aboutDetailLbltext setBackgroundColor:[UIColor clearColor]];
     aboutDetailLbltext.dataDetectorTypes=UIDataDetectorTypeAll;
     [contentScrollView addSubview:aboutDetailLbltext];
-    
+    	
 	[contentScrollView setContentSize:CGSizeMake(420, 600)];
 	
 	[contentView release];
@@ -151,14 +149,14 @@
 #pragma mark - fetchDataFromServer
 -(void)fetchDataFromServer
 {
-	
+	NSAutoreleasePool* autoReleasePool = [[NSAutoreleasePool alloc] init];
 	if (!arrAllData)
 		arrAllData = [[NSArray alloc] init];
 	
-	arrAllData=(NSArray *)[GlobalPrefrences getDictStaticPages];
+	arrAllData=[[ServerAPI fetchStaticPages:iCurrentAppId]objectForKey:@"static-pages"];
 	
 	[self performSelectorOnMainThread:@selector(updateControls) withObject:nil waitUntilDone:YES];
-	
+	[autoReleasePool release];
 	
 }
 
@@ -167,7 +165,7 @@
 -(void)updateControls
 {
 	
-	if ([arrAllData count] >0)
+	if ([arrAllData count] >0) 
 	{
 		NSDictionary *dictTemp = [arrAllData objectAtIndex:0];
 		if ((![[dictTemp objectForKey:@"sDescription"] isEqualToString:@""]) && (![[dictTemp objectForKey:@"sDescription"] isEqual:[NSNull null]]))
@@ -180,10 +178,10 @@
             
             aboutDetailLbl.hidden=YES;
             NSString * htmlString = [NSString stringWithFormat:@"<html><head><script> document.ontouchmove = function(event) { if (document.body.scrollHeight == document.body.clientHeight) event.preventDefault(); } </script><style type='text/css'>* { margin:0; padding:0; } p { color:%@; font-family:Helvetica; font-size:14px; } a { color:%@; text-decoration:none; }</style></head><body><p>%@</p></body></html>", _savedPreferences.hexLabelcolor,_savedPreferences.hexcolor,[dictTemp objectForKey:@"sDescription"]];
-            
+          
             [aboutDetailLbltext loadHTMLString:htmlString baseURL:nil];
             [contentScrollView setContentSize:CGSizeMake(320, 600)];
-            
+	
 			
 		}
         else{
@@ -200,7 +198,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
 	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-    
+
 }
 
 
@@ -231,27 +229,27 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 
 {
+   
     
-    
-    
+        
     return YES;
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    
+   
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    
+  
     
     
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    aboutDetailLbltext.scalesPageToFit=YES;
-    
+        aboutDetailLbltext.scalesPageToFit=YES; 
+   
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
-    
+   
     
     
     

@@ -61,7 +61,6 @@ extern BOOL isWishlistLogin;
 	[wishlistLbl setText:[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.wishlist.wishlist"]];
 	[wishlistLbl setFont:[UIFont boldSystemFontOfSize:15]];
 	[contentView addSubview:wishlistLbl];
-    [wishlistLbl release];
 	
    if([arrWishlist count]==0)
 	{
@@ -173,10 +172,9 @@ extern BOOL isWishlistLogin;
 	
 	[showWishlistArray removeAllObjects];	
 	int countryID=0,stateID=0;
-	NSMutableArray *arrInfoAccount=nil;
+	NSMutableArray *arrInfoAccount=[[NSMutableArray alloc]init];
 	arrInfoAccount=[[SqlQuery shared] getAccountData:[GlobalPrefrences getUserDefault_Preferences:@"userEmail"]];
-	NSDictionary *dictSettingsDetails=nil;
-   dictSettingsDetails =[[GlobalPrefrences getSettingsOfUserAndOtherDetails]retain];
+	NSDictionary *dictSettingsDetails=[[GlobalPrefrences getSettingsOfUserAndOtherDetails]retain];
 	if([arrInfoAccount count]>0)
 	{
 		stateID=[[[NSUserDefaults standardUserDefaults] valueForKey:@"stateID"]intValue];
@@ -185,8 +183,8 @@ extern BOOL isWishlistLogin;
 	}
 	else
 	{
-		countryID=[[dictSettingsDetails valueForKey:@"territoryId"]intValue];
-		NSArray *arrtaxCountries=[dictSettingsDetails valueForKey:@"taxList"];
+		countryID=[[[dictSettingsDetails valueForKey:@"store"]valueForKey:@"territoryId"]intValue];
+		NSArray *arrtaxCountries=[[dictSettingsDetails valueForKey:@"store"]valueForKey:@"taxList"];
 		for(int index=0;index<[arrtaxCountries count];index++)
 		{
 			if([[[arrtaxCountries objectAtIndex:index]valueForKey:@"sState"]isEqualToString:@"Other"]&& [[[arrtaxCountries objectAtIndex:index]valueForKey:@"territoryId"]intValue]==countryID)
@@ -196,7 +194,7 @@ extern BOOL isWishlistLogin;
 			}
 		}		
 	}
-		
+	[arrInfoAccount release];	
 	
 	for(int i=0; i<[arrWishlist count]; i++)
 	{
@@ -287,7 +285,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 		if([[[arrWishlist objectAtIndex:indexPath.row] valueForKey:@"pOptionId"] intValue]==0)
 			[[SqlQuery shared] deleteItemFromWishList:[[[arrWishlist objectAtIndex:indexPath.row] valueForKey:@"id"]integerValue]];
 		else
-			[[SqlQuery shared] deleteItemFromWishList:[[[arrWishlist objectAtIndex:indexPath.row] valueForKey:@"id"]integerValue] :[[arrWishlist objectAtIndex:indexPath.row] valueForKey:@"pOptionId"]];
+			[[SqlQuery shared] deleteItemFromWishList:[[[arrWishlist objectAtIndex:indexPath.row] valueForKey:@"id"]integerValue]:[[arrWishlist objectAtIndex:indexPath.row] valueForKey:@"pOptionId"]];
 		
 		[arrWishlist removeObjectAtIndex:indexPath.row];
 		[showWishlistArray removeObjectAtIndex:indexPath.row];
@@ -309,24 +307,23 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 	
 }
 
--(void)markStarRating:(UITableViewCell *)cell :(int)index
+-(void)markStarRating:(UITableViewCell *)cell:(int)index
 {
 	
     int xValue=355;
 	
-	float rating=0;
+	float rating;
 	NSDictionary *dictProducts=[showWishlistArray objectAtIndex:index];
   	
     if([[dictProducts valueForKey:@"categoryName"] isEqual:[NSNull null]])
 		isFeaturedProductWithoutCatogery=YES;
     
-	if(![dictProducts isKindOfClass:[NSNull class]]){
+	if(![dictProducts isKindOfClass:[NSNull class]])
 		if([[dictProducts valueForKey:@"fAverageRating"] isEqual:[NSNull null]])
 			rating = 0.0;
 		else
 			rating = [[dictProducts valueForKey:@"fAverageRating"] floatValue];
-    }
-	float tempRating=0;
+	float tempRating;
 	tempRating=floor(rating);
 	tempRating=rating-tempRating;
 	
@@ -514,7 +511,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 	}
 
 	
-   
+		
 	float	finalProductPrice=0;
 	if((dictTemp) || (![dictTemp isEqual:[NSNull null]]))
 	{
@@ -576,7 +573,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     }
     
 	[dictTemp retain];
-	NSArray *interOptionDict= nil;
+	NSArray *interOptionDict = [[NSArray alloc]init];
 	interOptionDict = [dictTemp objectForKey:@"productOptions"];
 	[interOptionDict retain];
 	
@@ -616,9 +613,22 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
             
             
             pOPrice =pOPrice+[[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"pPrice"]floatValue];
-         
+            
+            //pOPrice=   pOPrice* [[[arrDatabaseCart objectAtIndex:indexPath.row]valueForKey:@"quantity"] intValue];
             finalProductPrice+=pOPrice;
-        	CGSize size=[[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"sTitle"]sizeWithFont:[UIFont boldSystemFontOfSize:13]];
+           
+           
+            
+            
+          
+            
+
+            
+            
+            
+            
+            
+			CGSize size=[[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"sTitle"]sizeWithFont:[UIFont boldSystemFontOfSize:13]];
 			int width=size.width;
 			if(width>100)
 				width=100;
@@ -764,6 +774,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     }
 	
     NSString *strFinalProductPrice=@"";
+	NSString *strOriginalTaxType=@"";
+	strOriginalTaxType=[[showWishlistArray objectAtIndex:indexPath.row]valueForKey:@"sTaxType"] ;
+	if([strOriginalTaxType isEqualToString:@"default"])
+    {
+        strOriginalTaxType=@"";
+    }
+	else
+    {
+        strOriginalTaxType=[NSString stringWithFormat:@" (Inc. %@)",strOriginalTaxType];
+    }
 	
 	if([[dictTemp objectForKey:@"bTaxable"]intValue]==1)
 	{
@@ -802,7 +822,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 	}
 	else
 	{
-		[cell setProductName:[[showWishlistArray objectAtIndex:indexPath.row] valueForKey:@"sName"] :[NSString stringWithFormat:@"%@%0.2f", _savedPreferences.strCurrencySymbol, strFinalProductPrice.floatValue ]:strStatus :[NSString stringWithFormat:@""]];
+		[cell setProductName:[[showWishlistArray objectAtIndex:indexPath.row] valueForKey:@"sName"] :[NSString stringWithFormat:@"%@%0.2f", _savedPreferences.strCurrencySymbol, strFinalProductPrice ]:strStatus :[NSString stringWithFormat:@""]];
 	}
     
 	[self markStarRating:cell :indexPath.row];

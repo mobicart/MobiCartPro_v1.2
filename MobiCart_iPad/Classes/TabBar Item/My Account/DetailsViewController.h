@@ -63,7 +63,7 @@ BOOL isLoadingTableFooter;
 -(void)methodLogin;
 -(void)btnCreateAccount_Clicked;
 -(void)setStates;
-//-(void)setStatesCountry;
+-(void)setStatesCountry;
 -(void)AccountInfoToEdit;
 - (void)getStatesOfaCountry:(NSString*)strCountryVal;
 @end

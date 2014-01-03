@@ -92,7 +92,6 @@
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
 	lblCart.textColor = [UIColor whiteColor];	 
 	[btnCart addSubview:lblCart];
-    [btnCart release];
 	viewTopBar.backgroundColor=[UIColor clearColor];
 	//setting gradient effect on view
 	[contentView addSubview:viewTopBar];
@@ -144,14 +143,14 @@
 #pragma mark - fetchDataFromServer
 -(void)fetchDataFromServer
 {
-	
+	NSAutoreleasePool* autoReleasePool = [[NSAutoreleasePool alloc] init];
 	if (!arrAllData)
 		arrAllData = [[NSArray alloc] init];
 	
-	arrAllData = (NSArray *)[GlobalPrefrences getDictStaticPages];
+	arrAllData = [[ServerAPI fetchStaticPages:iCurrentAppId] objectForKey:@"static-pages"];
 	
 	[self performSelectorOnMainThread:@selector(updateControls) withObject:nil waitUntilDone:YES];
-	
+	[autoReleasePool release];
 	
 }
 

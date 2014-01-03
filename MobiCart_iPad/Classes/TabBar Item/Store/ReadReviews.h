@@ -27,7 +27,6 @@
 	UIView *viewforAccount;
 	UIButton *btnShowPostReview;
 	UILabel *lblNoReview, *lblCart;
-    UIButton *btnBackToDepts;
 }
 @property (readwrite) int selectedProductId;
 -(void)createRatingView;

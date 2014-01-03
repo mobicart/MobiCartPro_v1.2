@@ -46,8 +46,8 @@ BOOL isLoggedInStatuschanged;
 +(void)setCurrentCategoryId:(NSInteger )_iCurrentCategoryId;
 +(void)setCurrentProductId:(NSInteger )_iCurrentProductId;
 +(void)setNextProductDetails:(NSDictionary *)_dictTemp;
-//+(void) setPaypal_TOKEN_CHECK:(NSString *)_paypalToken;
-//+(NSString *) getPaypal_TOKEN_CHECK;
++(void) setPaypal_TOKEN_CHECK:(NSString *)_paypalToken;
++(NSString *) getPaypal_TOKEN_CHECK;
 +(void) setMerchant_Secret_Key:(NSString *)_secretKey;
 +(NSString *) getMerchant_Secret_Key;
 
@@ -148,35 +148,5 @@ BOOL isLoggedInStatuschanged;
 
 +(void) setPaypalModeEnable:(NSString *)isPayPalEnable;
 +(NSString *) getPaypalModeEnable;
-
-
-//----------------------------Mobicart start up-----setter/getter
-+(void)setAllDataDictionary;
-
-+(void)setDictAppStoreUser:(NSDictionary*)_dictAppStoreUser;
-+(NSDictionary*)getDictAppStoreUser;
-
-+(void)setDictFeatures:(NSDictionary*)_dictFeatures;
-+(NSDictionary*)getDictFeatures;
-
-+(void)setDictColorScheme:(NSDictionary*)_dictColorScheme;
-+(NSDictionary*)getDictColorScheme;
-
-+(void)setDictVitals:(NSDictionary*)_dictVitals;
-+(NSDictionary*)getDictVitals;
-
-+(void)setDictSettings:(NSDictionary*)_dictSettings;
-+(NSDictionary*)getDictSettings;
-
-+(void)setDictGalleryImages:(NSDictionary*)_dictGalleryImages;
-+(NSDictionary*)getDictGalleryImages;
-
-+(void)setDictStaticPages:(NSDictionary*)_dictStaticPages;
-+(NSDictionary*)getDictStaticPages;
-
-//+(NSInteger*)isFromMoreTab:(NSInteger*)isMoreTab;
-
-+(void)setIsMoreTab:(BOOL)_isMore;
-+(BOOL)getIsMoreTab;
 
 @end

@@ -129,7 +129,7 @@
 	
 	if(dicAppSettings)
 	{
-		self.strStoreName = [NSString stringWithFormat:@"%@", [dicAppSettings  objectForKey:@"sSName"]];
+		self.strStoreName = [NSString stringWithFormat:@"%@", [[dicAppSettings objectForKey:@"store"] objectForKey:@"sSName"]];
 	}
 	else
 	{
@@ -184,7 +184,7 @@
 	if (!arrAllData)
 		arrAllData = [[NSArray alloc] init];
 	
-	arrAllData = (NSArray *)[GlobalPrefrences getDictStaticPages];
+	arrAllData = [[ServerAPI fetchStaticPages:iCurrentAppId] objectForKey:@"static-pages"];
 
 	
 	[self performSelectorOnMainThread:@selector(updateControls) withObject:nil waitUntilDone:YES];

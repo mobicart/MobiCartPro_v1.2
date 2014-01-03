@@ -35,7 +35,7 @@ BOOL showSegmentCtrl;
 int myintcurrentpage; 
 #pragma mark leaves
 - (NSUInteger) numberOfPagesInLeavesView:(LeavesView*)leavesView1 {
-	
+	leavesView1=[[LeavesView alloc] init];
 	
 	float numOfPages2=[arrSearch count]/18.0;
 	NSNumber *numOfPages3 = [NSNumber numberWithFloat:(numOfPages2+0.9)];
@@ -265,7 +265,8 @@ int myintcurrentpage;
 		objDetails.dicProduct = dictTemp;
 		objDetails.dicNextProduct = dicNextProduct;
 		[[self navigationController]pushViewController:objDetails animated:YES];
-    }
+		[objDetails release];
+	}
 }
 #pragma mark - Product Analytics
 -(void) sendDataForAnalytics:(NSString *)sProductId
@@ -294,6 +295,8 @@ int myintcurrentpage;
 -(void)allocateMemoryToObjects
 {
 	arrAllData=[[NSArray alloc]init];
+	//arrSearch=[[NSMutableArray alloc]init];
+	
 	if(!showArray)
 		showArray=[[NSMutableArray alloc]init];
 	if(!showNoArray)
@@ -723,6 +726,8 @@ int myintcurrentpage;
 		objProductDetails.dicNextProduct=_dictNextProduct;						
 	
 	[[GlobalPrefrences getCurrentNavigationController] pushViewController:objProductDetails animated:YES];
+	[objProductDetails release];
+	objProductDetails = nil;
 }
 // Fetching Departments from Server
 #pragma mark fetchDataFromServer
@@ -737,7 +742,7 @@ int myintcurrentpage;
 		NSArray *arrCountryAndStateID=[[TaxCalculation shared]getStateAndCountryIDForTax];
 		int countryID=[[arrCountryAndStateID objectAtIndex:1] intValue];
 		int stateID=[[arrCountryAndStateID objectAtIndex:0]intValue];
-		dictCategories=[ServerAPI fetchAllProductsInStore:countryID stateID :stateID :iCurrentStoreId];
+		dictCategories=[ServerAPI fetchAllProductsInStore:countryID stateID:stateID:iCurrentStoreId];
 		arrAllData=[[NSMutableArray alloc]initWithArray:[[dictCategories objectForKey:@"productsResponse"]objectForKey:@"productList"]];
 	}
 	else
@@ -748,11 +753,11 @@ int myintcurrentpage;
 		if(isProductWithoutSubCategory==YES)
 		{
             
-            dictCategories=[ServerAPI fetchProductsWithoutCategories:iCurrentAppId :countryID :stateID :iCurrentStoreId];
+            dictCategories=[ServerAPI fetchProductsWithoutCategories:iCurrentAppId :countryID :stateID:iCurrentStoreId];
             	}
         
 		else {
-		    dictCategories = [ServerAPI fetchProductsWithCategories:iCurrentCategoryId :countryID :stateID :iCurrentStoreId :iCurrentDepartmentId];
+		    dictCategories = [ServerAPI fetchProductsWithCategories:iCurrentCategoryId :countryID :stateID:iCurrentStoreId:iCurrentDepartmentId];
 		}
         
 		arrAllData=[[NSMutableArray alloc]initWithArray:[dictCategories objectForKey:@"products"]];
@@ -786,20 +791,19 @@ int myintcurrentpage;
 
 
 #pragma mark rating
--(void)markStarRating:(UIView *)_scrollView :(int)index
+-(void)markStarRating:(UIView *)_scrollView:(int)index
 {
 	
     int xValue=0;
-	float rating=0;
+	float rating;
 	NSDictionary *dictProducts=[arrSearch objectAtIndex:index];
 	
-	if(![dictProducts isKindOfClass:[NSNull class]]){
+	if(![dictProducts isKindOfClass:[NSNull class]])
 		if([[dictProducts valueForKey:@"fAverageRating"] isEqual:[NSNull null]])
 			rating = 0.0;
 		else
 			rating = [[dictProducts valueForKey:@"fAverageRating"] floatValue];
-    }
-	float tempRating=0;
+	float tempRating;
 	tempRating=floor(rating);
 	tempRating=rating-tempRating;
 	

@@ -79,12 +79,10 @@ NSMutableArray *arrSelectedTitles;
 
 +(void)setBackgroundTheme_OnView:(UIView*)setInView
 {
-	UIImageView	*bookBackGround=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 1024, 699)];
+	UIImageView	*bookBackGround=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 1024, 719)];
 	[bookBackGround setImage:[UIImage imageNamed:@"book.png"]];
 	bookBackGround.backgroundColor = backGroundColor;
 	[setInView addSubview:bookBackGround];
-    [bookBackGround release];
-    
 }
 
 
@@ -98,7 +96,7 @@ NSMutableArray *arrSelectedTitles;
 	if (!arrSelectedTitles) {
 		arrSelectedTitles = [[NSMutableArray alloc] init];
 	}
-	NSArray *arrTemp  = (NSArray *) dictFeatures;
+	NSArray *arrTemp  = [dictFeatures objectForKey:@"features"];
 	for (NSDictionary *dictData in arrTemp) {
 		[arrSelectedTabs addObject:[dictData objectForKey:@"sIphoneHandle"]];
 		[arrSelectedTitles addObject:[dictData objectForKey:@"sName"]];
@@ -184,7 +182,7 @@ NSMutableArray *arrSelectedTitles;
 +(NSArray *)getAllNavigationTitles
 {
 	
-	NSArray *arrAllData = (NSArray *)[GlobalPrefrences getDictFeatures];
+	NSArray *arrAllData = [[ServerAPI fetchTabbarPreferences:iCurrentAppId]objectForKey:@"features"];
 	
 	//Set title of "Privacy View Controller"	
 	
@@ -309,42 +307,42 @@ NSMutableArray *arrSelectedTitles;
 +(void)setColorScheme_SelectedByUser:(NSDictionary *)dictFeatures
 {
 	
-#define colorDict dictFeatures //objectForKey:@"colorscheme"]
+#define colorDict [dictFeatures objectForKey:@"colorscheme"]
 	
 	if(![colorDict isEqual:[NSNull null]])
 	{
-		if(![[colorDict objectForKey:@"sBgColor"] isEqual:[NSNull null]])
+		if(![[colorDict objectForKey:@"theme_color"] isEqual:[NSNull null]])
 		{
-			UIColor *bgColor = [GlobalPrefrences colorWithHexString:[dictFeatures objectForKey:@"sBgColor"]];
+			UIColor *bgColor = [GlobalPrefrences colorWithHexString:[[dictFeatures objectForKey:@"colorscheme"]objectForKey:@"theme_color"]];
 			
 			_savedPreferences.bgColor = bgColor;
 			backGroundColor = _savedPreferences.bgColor;
 		}		
 		
-		if(![[colorDict objectForKey:@"sFgColor"] isEqual:[NSNull null]])
+		if(![[colorDict objectForKey:@"sub_header_color"] isEqual:[NSNull null]])
 		{
-			UIColor *fgColor = [GlobalPrefrences colorWithHexString:[dictFeatures objectForKey:@"sFgColor"]];
+			UIColor *fgColor = [GlobalPrefrences colorWithHexString:[[dictFeatures objectForKey:@"colorscheme"]objectForKey:@"sub_header_color"]];
 			_savedPreferences.fgColor = fgColor;
 			subHeadingColor=_savedPreferences.fgColor;
-			_savedPreferences.hexcolor = [dictFeatures  objectForKey:@"sub_header_color"];
+			_savedPreferences.hexcolor = [[dictFeatures objectForKey:@"colorscheme"]objectForKey:@"sub_header_color"];
 			HexVAlueForsubHeadingColor = _savedPreferences.hexcolor;
 		}
 		
-		if(![[colorDict objectForKey:@"sProductItemBgColor"] isEqual:[NSNull null]])
+		if(![[colorDict objectForKey:@"header_color"] isEqual:[NSNull null]])
 		{
-			UIColor *textColor = [GlobalPrefrences colorWithHexString:[dictFeatures objectForKey:@"sProductItemBgColor"]];
+			UIColor *textColor = [GlobalPrefrences colorWithHexString:[[dictFeatures objectForKey:@"colorscheme"]objectForKey:@"header_color"]];
 			_savedPreferences.textheadingColor = textColor;
 			headingColor=_savedPreferences.textheadingColor;
-			_savedPreferences.hexHeadingcolor = [dictFeatures objectForKey:@"sProductItemBgColor"];
+			_savedPreferences.hexHeadingcolor = [[dictFeatures objectForKey:@"colorscheme"]objectForKey:@"header_color"];
 			HexVAlueForHeadingColor = _savedPreferences.hexHeadingcolor;
 		}
 		
-		if(![[colorDict objectForKey:@"sProductItemBgColor"] isEqual:[NSNull null]])
+		if(![[colorDict objectForKey:@"label_color"] isEqual:[NSNull null]])
 		{
-			UIColor *textColor = [GlobalPrefrences colorWithHexString:[dictFeatures objectForKey:@"sProductItemBgColor"]];
+			UIColor *textColor = [GlobalPrefrences colorWithHexString:[[dictFeatures objectForKey:@"colorscheme"]objectForKey:@"label_color"]];
 			_savedPreferences.txtLabelColor=textColor;
            labelColor=_savedPreferences.txtLabelColor;
-			_savedPreferences.hexLabelcolor = [dictFeatures objectForKey:@"sProductItemBgColor"];
+			_savedPreferences.hexLabelcolor = [[dictFeatures objectForKey:@"colorscheme"]objectForKey:@"label_color"];
 			HexVAlueForLabelColor = _savedPreferences.hexLabelcolor;
 		}
 		
@@ -524,8 +522,7 @@ UIView *loadingView;
 +(void)addLoadingBar_AtBottom:(UIView *)showInView withTextToDisplay:(NSString *)strText
 {
 	loadingView = showInView;
-	[loadingView setUserInteractionEnabled:NO];
-	
+		
     viewLoading = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1024, 768)];
     [viewLoading setBackgroundColor:[UIColor blackColor]];
     [viewLoading setAlpha:0.4];
@@ -547,9 +544,7 @@ UIView *loadingView;
 +(void)addLoadingBar_AtWindow:(UIView *)showInView withTextToDisplay:(NSString *)strText
 {
 	loadingView = showInView;
-	[loadingView setUserInteractionEnabled:NO];
-	
-    viewLoading = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 768, 1024)];
+     viewLoading = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 768, 1024)];
     [viewLoading setBackgroundColor:[UIColor blackColor]];
     [viewLoading setAlpha:0.4];
     [loadingView addSubview:viewLoading];
@@ -613,42 +608,42 @@ NSDictionary *dictUserSettings;
 	[dictUserSettings retain];
     
     //***********************************Merchant Email Address**************
-    NSString *payPalEmailAddress=[dictUserSettings  valueForKey:@"sPaypalEmail"];
+    NSString *payPalEmailAddress=[[dictUserSettings valueForKey:@"store"] valueForKey:@"sPaypalEmail"];
     if(![payPalEmailAddress isKindOfClass:[NSNull class]])
         [GlobalPrefrences setPaypalRecipientEmail:payPalEmailAddress];
     
     //***********************************PayPal Token*******************
-    NSString *payPalToken=[dictUserSettings  valueForKey:@"iphonePaypalToken"];
+    NSString *payPalToken=[[dictUserSettings valueForKey:@"store"] valueForKey:@"iphonePaypalToken"];
     if(![payPalToken isKindOfClass:[NSNull class]])
         [GlobalPrefrences setPaypalLiveToken:payPalToken];
     
     //********************************PalPal Live Mode****************
-    NSString *isPayPallive=[dictUserSettings  valueForKey:@"sPayPalLive"];
+    NSString *isPayPallive=[[dictUserSettings valueForKey:@"store"] valueForKey:@"sPayPalLive"];
     if(![isPayPallive isKindOfClass:[NSNull class]])
         [GlobalPrefrences setPaypalModeIsLive:isPayPallive];
     //**************************PayPal Mode enable***************************
-    NSString *payPalModeEnable=[dictUserSettings  valueForKey:@"paypalUsed"] ;
+    NSString *payPalModeEnable=[[dictUserSettings valueForKey:@"store" ] valueForKey:@"paypalUsed"] ;
     if(![payPalModeEnable isKindOfClass:[NSNull class]])
         [GlobalPrefrences setPaypalModeEnable:payPalModeEnable];
     
     //********************************Zooz Mode enable****************
-    NSString *zoozModeEnable=[dictUserSettings  valueForKey:@"zoozUsed"];
+    NSString *zoozModeEnable=[[dictUserSettings valueForKey:@"store" ] valueForKey:@"zoozUsed"];
     if(![zoozModeEnable isKindOfClass:[NSNull class]])
         [GlobalPrefrences setZoozModeEnable:zoozModeEnable];
 
     
     //***********************************iPad ZooZ Token**********
-    NSString *iPhoneAppKey=[dictUserSettings  valueForKey:@"iPadAppKey"];
+    NSString *iPhoneAppKey=[[dictUserSettings valueForKey:@"store"] valueForKey:@"iPadAppKey"];
     if(![iPhoneAppKey isKindOfClass:[NSNull class]])
         [GlobalPrefrences setZoozToken:iPhoneAppKey];
     
     //************************************ZooZ Live Mode*************
-    NSString *isZoozModeToken=[dictUserSettings  valueForKey:@"zoozLive"];
+    NSString *isZoozModeToken=[[dictUserSettings valueForKey:@"store"] valueForKey:@"zoozLive"];
     if(![isZoozModeToken isKindOfClass:[NSNull class]])
         [GlobalPrefrences setZooZModeIsLive:isZoozModeToken];
 
 	
-	_savedPreferences.strCurrency = [dictUserSettings  valueForKey:@"sCurrency"];
+	_savedPreferences.strCurrency = [[dictUserSettings valueForKey:@"store"] valueForKey:@"sCurrency"];
 	NSLog(@"Currency is: %@",_savedPreferences.strCurrency);
 	
 	if((_savedPreferences.strCurrency==nil)||([_savedPreferences.strCurrency isKindOfClass:[NSNull class]]))
@@ -719,7 +714,7 @@ int iMerchantCountryID;
 
 +(float) getRoundedOffValue:(float)_num
 {
-	NSDecimalNumber *testNumber = (NSDecimalNumber*)[NSDecimalNumber numberWithFloat:_num];
+	NSDecimalNumber *testNumber = [NSDecimalNumber numberWithFloat:_num];
 	NSDecimalNumberHandler *roundingStyle = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
 	NSDecimalNumber *roundedNumber = [testNumber decimalNumberByRoundingAccordingToBehavior:roundingStyle];
 	NSString *stringValue = [roundedNumber descriptionWithLocale:[NSLocale currentLocale]];
@@ -845,13 +840,15 @@ NSString *isZooZModeLive;
 +(BOOL) updateInterfaceWithReachability: (Reachability*) curReach
 {
 	NetworkStatus netStatus = [curReach currentReachabilityStatus];
- 	BOOL connectionStatus = NO;
+    BOOL connectionRequired= [curReach connectionRequired];
+	BOOL connectionStatus = NO;
 	
     switch (netStatus)
     {
         case NotReachable:
         {
-         	connectionStatus = NO;
+            connectionRequired = NO;  
+			connectionStatus = NO;
             break;
         }
             
@@ -914,6 +911,7 @@ NSMutableArray* arrDeptNameHome;
 		arrDeptNameHome = [[NSMutableArray alloc] init];
     }
     [arrDeptNameHome addObject:nameStr];
+   // [arrDeptName retain];  
 }
 +(NSString*)getLastDepartmentNameHomes
 {
@@ -1003,6 +1001,7 @@ NSString *SECRETKEY;
     return iCurrentAppId;
 }
 
+//------------cureent  version
 +(float)getCureentSystemVersion
 {
     return  [[[UIDevice currentDevice] systemVersion] floatValue];
@@ -1039,149 +1038,5 @@ NSString * _isPayPalEnable;
     return _isPayPalEnable;
 }
 
-
-
-NSDictionary*dictAppStoreUser;
-+(void)setDictAppStoreUser:(NSDictionary*)_dictAppStoreUser
-{
-    
-    dictAppStoreUser=_dictAppStoreUser;
-    [dictAppStoreUser retain];
-}
-
-+(NSDictionary*)getDictAppStoreUser{
-    
-    return dictAppStoreUser;
-}
-
-
-NSDictionary*dictFeatures;
-+(void)setDictFeatures:(NSDictionary*)_dictFeatures{
-    dictFeatures=_dictFeatures;
-    [dictFeatures retain];
-}
-+(NSDictionary*)getDictFeatures{
-    
-    return dictFeatures;
-}
-
-NSDictionary*dictColorScheme;
-+(void)setDictColorScheme:(NSDictionary*)_dictColorScheme{
-    
-    dictColorScheme=_dictColorScheme;
-    [dictColorScheme retain];
-}
-+(NSDictionary*)getDictColorScheme{
-    return dictColorScheme;
-    
-}
-
-NSDictionary*dictVitals;
-+(void)setDictVitals:(NSDictionary*)_dictVitals{
-    dictVitals=_dictVitals;
-    [dictVitals retain];
-}
-+(NSDictionary*)getDictVitals{
-    
-    return dictVitals;
-    
-}
-
-NSDictionary*dictSettings;
-+(void)setDictSettings:(NSDictionary*)_dictSettings{
-    
-    dictSettings=_dictSettings;
-    [dictSettings retain];
-}
-+(NSDictionary*)getDictSettings{
-    
-    return dictSettings;
-    
-}
-
-NSDictionary*dictGalleryImages;
-+(void)setDictGalleryImages:(NSDictionary*)_dictGalleryImages{
-    dictGalleryImages=_dictGalleryImages;
-    [dictGalleryImages retain];
-    
-    
-}
-+(NSDictionary*)getDictGalleryImages{
-    
-    return dictGalleryImages;
-    
-    
-}
-
-NSDictionary*dictStaticPages;
-+(void)setDictStaticPages:(NSDictionary*)_dictStaticPages{
-    
-    dictStaticPages=_dictStaticPages;
-    [dictStaticPages retain];
-}
-+(NSDictionary*)getDictStaticPages{
-    return dictStaticPages;
-    
-}
-
-#pragma mark Set All Data in AppDelegate
-+(void)setAllDataDictionary
-{
-    /*
-     hit to server and get all data
-     */
-    NSString *strUrl = [NSString stringWithFormat:@"%@/%@/getAllData.json",[ServerAPI getImageUrl],[GlobalPrefrences getMerchantEmailId]];
-    NSDictionary *dictAllData = [[ServerAPI fetchDataFromServer:strUrl] retain];
-    
-    /*
-     store all data in respective dictionaries for further use
-     */
-    
-    //app store user data
-    NSDictionary *dictAppStoreUser=[dictAllData valueForKey:@"app_store_user"];
-    if(dictAppStoreUser)
-        [GlobalPrefrences setDictAppStoreUser:dictAppStoreUser];
-    
-    //features data
-    NSDictionary *dictFeatures=[dictAllData valueForKey:@"features"];
-    if(dictFeatures)
-        [GlobalPrefrences setDictFeatures:dictFeatures];
-    
-    //color scheme data
-    NSDictionary *dictColorScheme=[dictAllData valueForKey:@"color_scheme"];
-    if(dictColorScheme)
-        [ GlobalPrefrences setDictColorScheme:dictColorScheme];
-    
-    //app vitals data
-    NSDictionary *dictVitals=[dictAllData valueForKey:@"app_vitals"];
-    if(dictVitals)
-        [GlobalPrefrences setDictVitals:dictVitals];
-    
-    //settings data
-    NSDictionary *dictSettings=[dictAllData valueForKey:@"settings"];
-    if(dictSettings)
-        [GlobalPrefrences setDictSettings:dictSettings];
-    
-    //galary images data
-    NSDictionary *dictGalleryImages=[dictAllData valueForKey:@"gallery_images"];
-    if(dictGalleryImages)
-        [GlobalPrefrences setDictGalleryImages:dictGalleryImages];
-    
-    //static pages data
-    NSDictionary *dictStaticPages=[dictAllData valueForKey:@"static_pages"];
-    if(dictStaticPages)
-        [GlobalPrefrences setDictStaticPages:dictStaticPages];
-    
-    [dictAllData release];
-}
-
-BOOL  isMoreTab;
-+(void)setIsMoreTab:(BOOL)_isMore{
-    isMoreTab=_isMore;
-    
-}
-+(BOOL)getIsMoreTab{
-    return isMoreTab;
-}
 
 @end

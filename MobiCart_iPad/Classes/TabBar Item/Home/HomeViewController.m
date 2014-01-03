@@ -36,45 +36,127 @@ int count=0;
 }
 
 
+/*
+ // Implement loadView to create a view hierarchy programmatically, without using a nib.
+ - (void)loadView {
+ }
+ */
+//- (NSUInteger)supportedInterfaceOrientations
+//{
+//    return UIInterfaceOrientationMaskLandscape |UIInterfaceOrientationLandscapeRight ;}
+//
+//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation { return UIInterfaceOrientationLandscapeRight; }
+-(void)updateImage
+{
+    
+    NSAutoreleasePool *pool=[[NSAutoreleasePool alloc]init];
+    //   float currSysVer = [[[UIDevice currentDevice] systemVersion] floatValue];
+	
+    NSString* tempString;
+    // isUpdateControlsCalled=TRUE;
+	if (backgroundImg && !isUpdateControlsCalled)
+	{
+        arrTempImage = [dictBanners objectForKey:@"gallery-images"];
+        
+        if([arrTempImage count]>0)
+        {
+            
+            tempString=[[arrTempImage objectAtIndex:0 ] objectForKey:@"galleryImageIpad"];
+            
+            
+            NSData *dataBannerImages = [ServerAPI fetchBannerImage:tempString];
+            if(!dataBannerImages)
+                dataBannerImages = [ServerAPI fetchBannerImage:tempString];
+            
+            [arrBanners addObject:dataBannerImages] ;
+            [arrBanners retain];
+            UIImage *imgprod = [UIImage imageWithData:[arrBanners objectAtIndex:0]];
+            int y2= (325 - imgprod.size.height)/2;
+            int x2 = (430 - imgprod.size.width)/2;
+            
+            [backgroundImg setFrame:CGRectMake(x2+43, y2+22, imgprod.size.width, imgprod.size.height)];
+            
+            
+            [backgroundImg setImage:[UIImage imageWithData:[arrBanners objectAtIndex:0]]];
+            [backgroundImg setContentMode:UIViewContentModeScaleAspectFit];
+            [ZoomScrollView addSubview:backgroundImg];
+        }
+    }
+    [arrTempImage retain];
+    [pool release];
+    
+}
+
 
 #pragma mark -
 -(void)updateControls
 {
-    NSLog(@"Gallery...");
-       int i;
- 		NSArray *arrTemp = (NSArray *)dictBanners;
-        int posX=0;
-        int posY=0;
+	int i;
+    // [backgroundImg reloadInputViews];
+	if(backgroundImg && !isUpdateControlsCalled)
+	{
+		NSArray *arrTemp = [dictBanners objectForKey:@"gallery-images"];
 		for(i=0;i<[arrTemp count];i++)
 		{
 			NSDictionary *dictTemp=[arrTemp objectAtIndex:i];
 			NSString *string=[dictTemp objectForKey:@"galleryImageIpad"];
-            
-            //check in
-            CGRect rect=CGRectMake(posX, posY, 430, 325);
-            //imageView for fullscreen image
-            NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[ServerAPI getImageUrl],string]];
-            CustomImageView *customView=[[CustomImageView alloc]initWithUrl:url frame:CGRectMake(0, posY, 430, 325) isFrom:0];
-              customView.isFromGallery=YES;
-            
-            //scrollView for holding image
-            scroll=[[ContentScrollview alloc] initWithFrame:rect];
-            [scroll addImageView:customView];
-            
-            //add imageView to the scrollView
-            [scroll addSubview:customView];
-            
-            //add scrollView to the main-scrollView
-            [ZoomScrollView addSubview:scroll];
-            
-            [scroll release];
-            [customView release];
-            posX+=430;
-        }
-        ZoomScrollView.contentSize=CGSizeMake([arrTemp count]*430, 325);
-    
-    isUpdateControlsCalled=TRUE;
+			
+			NSData *dataBannerImage = [ServerAPI fetchBannerImage:string];
+			
+			if(dataBannerImage)
+				[arrBanners addObject:dataBannerImage];
+			else
+			{
+				NSData *dataBannerTemp= [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"noImage_l" ofType:@"png"]];
+				[arrBanners addObject:dataBannerTemp];
+			}
+			
+		}
+		if([arrBanners count]>0)
+		{
+			if([arrBanners objectAtIndex:0])
+			{
+				UIImage *imgprod = [UIImage imageWithData:[arrBanners objectAtIndex:0]];
+				int	y1= (325 - imgprod.size.height)/2;
+				int x1 = (430 - imgprod.size.width)/2;
+				
+				[backgroundImg setFrame:CGRectMake(x1+43, y1+22, imgprod.size.width, imgprod.size.height)];
+				
+				[backgroundImg setImage:[UIImage imageWithData:[arrBanners objectAtIndex:0]]];
+				//[backgroundImg setContentMode:UIViewContentModeScaleToFill];
+			}
+			
+		}
+	}
 	
+	
+	if((isUpdateControlsCalled) && (![arrBanners count]>0))
+	{
+		CGContextRef context = UIGraphicsGetCurrentContext();
+		CATransition *animation = [CATransition animation];
+		[animation setDelegate:self];
+		[animation setType: kCATransitionMoveIn];
+		[animation setSubtype:kCATransitionFromTop];
+		[animation setDuration:2.0f];
+		[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+		[UIView beginAnimations:nil context:context];
+		[[backgroundImg layer] addAnimation:animation forKey:kCATransition];
+		
+		UILabel *lblErrorMsg =[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, backgroundImg.bounds.size.height)];
+		lblErrorMsg.textColor=[UIColor lightTextColor];
+		[lblErrorMsg setNumberOfLines:0];
+		[lblErrorMsg setFont:[UIFont boldSystemFontOfSize:15]];
+		[lblErrorMsg setTextAlignment:UITextAlignmentCenter];
+		[lblErrorMsg setLineBreakMode:UILineBreakModeWordWrap];
+		[lblErrorMsg setBackgroundColor:[UIColor clearColor]];
+		//[lblErrorMsg setText:@""];
+		[backgroundImg addSubview:lblErrorMsg];
+		[UIView commitAnimations];
+		
+		
+	}
+	
+	isUpdateControlsCalled = TRUE;
 }
 
 
@@ -137,7 +219,12 @@ int count=0;
 #pragma mark viewDidLoad
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-	   
+	//[self init];
+    
+    
+    
+    
+    
 	[GlobalPrefrences setCurrentNavigationController:self.navigationController];
 	[self.navigationController.navigationBar setHidden:YES];
 	
@@ -152,10 +239,15 @@ int count=0;
 	
 	
 	
-    
+	//[self allocateMemoryToObjects];
     [self performSelector:@selector(allocateMemoryToObjects) withObject:nil];
 	selectedDepartment=[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.store.tab.all"];
-    NSInvocationOperation *operationFetchSettings = [[NSInvocationOperation alloc] initWithTarget:self
+	//[NSThread detachNewThreadSelector:@selector(fetchSettingsFromServer) toTarget:self withObject:nil];
+	
+    
+	//[GlobalPrefrences addLoadingBar_AtBottom: self.tabBarController.view withTextToDisplay:[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.LoaderText"]];
+	
+	NSInvocationOperation *operationFetchSettings = [[NSInvocationOperation alloc] initWithTarget:self
 																						 selector:@selector(fetchSettingsFromServer)
 																						   object:nil];
 	
@@ -179,25 +271,33 @@ int count=0;
 	[GlobalPrefrences addToOpertaionQueue:operationFetchDepartments];
 	[operationFetchDepartments release];
     
-
+	//[self performSelector:@selector(fetchDataForDepartments) withObject:nil];
     [self performSelector:@selector(createBasicControls) withObject:nil];
     
-
-
+    // [self performSelector:@selector(showDepartments) withObject:nil];
+    
+    //  [NSThread detachNewThreadSelector:@selector(showDepartments) toTarget:self withObject:nil];
+    
+    
+	//[userLocation release];
+    
+	
 	[super viewDidLoad];
 }
 
-
+//-(void)createSwipeGuesture
+//{
+//
+//	UISwipeGestureRecognizer *leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(showListOfDepts)];
+//	leftSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
+//	[tblSubDepts addGestureRecognizer:leftSwipeGesture];
+//	[leftSwipeGesture release];
+//}
 -(void)viewWillAppear:(BOOL)animated
 {
-    if([GlobalPrefrences getIsMoreTab])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCartLabel" object:nil];
-    }
-    
-    lblCart.text=[NSString stringWithFormat:@"%d",iNumOfItemsInShoppingCart];
-    
-    if([GlobalPrefrences getPersonLoginStatus])
+	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
+    // [NSThread detachNewThreadSelector:@selector(showLoading) toTarget:self withObject:nil];
+	if([GlobalPrefrences getPersonLoginStatus])
 	{
 		[NSThread detachNewThreadSelector:@selector(showLoading) toTarget:self withObject:nil];
 		[self fetchFeaturedProducts];
@@ -207,6 +307,7 @@ int count=0;
 									   userInfo:nil
 										repeats:NO];
 	}
+    
 	
 }
 -(void)hideLoadingView
@@ -222,22 +323,25 @@ int count=0;
     
 	self.view = contentView;
 	
-	ZoomScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(43, 22,  430, 325)];
+	ZoomScrollView = [[EbookScrollView alloc]initWithFrame:CGRectMake(43, 22,  430, 325)];
+	ZoomScrollView.contentSize = CGSizeMake(430, 325);
 	[ZoomScrollView setBackgroundColor:[UIColor clearColor]];
-	ZoomScrollView.showsHorizontalScrollIndicator = NO;
-	ZoomScrollView.showsVerticalScrollIndicator = NO;
+	ZoomScrollView.showsHorizontalScrollIndicator = YES;
+	ZoomScrollView.showsVerticalScrollIndicator = YES;
 	ZoomScrollView.maximumZoomScale=1.0;
 	ZoomScrollView.minimumZoomScale=1.0;
 	ZoomScrollView.clipsToBounds=YES;
 	ZoomScrollView.delegate=self;
-	ZoomScrollView.scrollEnabled=YES;
+	ZoomScrollView.scrollEnabled=NO;
 	ZoomScrollView.pagingEnabled=YES;
-   
 	[ZoomScrollView setUserInteractionEnabled:YES];
 	[contentView addSubview:ZoomScrollView];
     
 	
 	backgroundImg=[[UIImageView alloc]initWithFrame:CGRectMake(43, 22, 430, 325)];
+	[contentView addSubview:backgroundImg];
+	
+	
 	int x =  472 -(_savedPreferences.imgLogo.size.width+2);
 	int y =  345 -(_savedPreferences.imgLogo.size.height+2);
 	UIImageView *imgViewLogo=[[UIImageView alloc]initWithFrame:CGRectMake(x, y, _savedPreferences.imgLogo.size.width, _savedPreferences.imgLogo.size.height)];
@@ -245,16 +349,14 @@ int count=0;
 	[imgViewLogo setBackgroundColor:[UIColor clearColor]];
 	[contentView addSubview:imgViewLogo];
 	[contentView bringSubviewToFront:imgViewLogo];
-    [imgViewLogo release];
 	
 	bottomHorizontalView=[[UIScrollView alloc]initWithFrame:CGRectMake(34.5, 347, 440, 330)];
 	bottomHorizontalView.backgroundColor=[UIColor clearColor];
 	[bottomHorizontalView setContentSize:CGSizeMake(440, 70)];
 	[bottomHorizontalView setShowsHorizontalScrollIndicator:NO];
 	[contentView addSubview:bottomHorizontalView];
-    [bottomHorizontalView release];
 	
-    btnCart = [[UIButton alloc]init];
+	btnCart = [[UIButton alloc]init];
 	btnCart.frame = CGRectMake(907, 18, 78,34);
 	[btnCart setBackgroundColor:[UIColor clearColor]];
 	[btnCart setImage:[UIImage imageNamed:@"add_cart.png"] forState:UIControlStateNormal];
@@ -268,6 +370,7 @@ int count=0;
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
 	lblCart.textColor = [UIColor whiteColor];
 	[btnCart addSubview:lblCart];
+	
 	
 	UILabel *lblDepartments=[[UILabel alloc]initWithFrame:CGRectMake(547, 82, 350, 40)];
 	[lblDepartments setBackgroundColor:[UIColor clearColor]];
@@ -296,7 +399,18 @@ int count=0;
 	[contentView addSubview:_searchBar];
     
     [self performSelectorOnMainThread:@selector(showDepartments) withObject:self waitUntilDone:YES];
-    
+    //	 btnBackToDepts=[UIButton buttonWithType:UIButtonTypeCustom];
+    //	[btnBackToDepts setTitle:[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.home.back"] forState:UIControlStateNormal];
+    //	[btnBackToDepts setFrame:CGRectMake(920, 90, 70, 30)];
+    //	[btnBackToDepts setHidden:YES];
+    //	[btnBackToDepts setTitleColor:subHeadingColor forState:UIControlStateNormal];
+    //	[btnBackToDepts setBackgroundImage:[UIImage imageNamed:@"edit_cart_btn.png"] forState:UIControlStateNormal];
+    //	btnBackToDepts.backgroundColor = [UIColor clearColor];
+    //
+    //    [btnBackToDepts addTarget:self action:@selector(showListOfDepts) forControlEvents:UIControlEventTouchUpInside];
+    //	[contentView addSubview:btnBackToDepts];
+	//[self createSubDeptsTable];
+	//[self createSwipeGuesture];
 	
 }
 -(void)showDepartments
@@ -327,7 +441,7 @@ int count=0;
         [NSThread detachNewThreadSelector:@selector(showLoading) toTarget:self withObject:nil];
 	isShoppingCart_TableStyle =YES;
 	ShoppingCartViewController *objShopping = [[ShoppingCartViewController alloc] init];
-    [[self navigationController] pushViewController:objShopping animated:YES];
+	[[self navigationController]pushViewController:objShopping animated:YES];
 	[objShopping release];
 	
 }
@@ -335,6 +449,7 @@ int count=0;
 -(void)showListOfDepts
 {
     count--;
+    //  NSLog(@"%d",count);
     [arrDepartmentData removeAllObjects];
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     NSArray *arrTemp=[GlobalPrefrences getDepartmentsDataHomes];
@@ -380,27 +495,33 @@ int count=0;
 -(void)fetchDataFromServer
 {
 	
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     [NSThread detachNewThreadSelector:@selector(fetchBannerImages) toTarget:self withObject:nil];
     [NSThread detachNewThreadSelector:@selector(fetchFeaturedProducts) toTarget:self withObject:nil];
-   	[pool release];
+    
+    // NSLog(@"fetch data from server home controller");
+	[pool release];
 	
 }
 -(void)fetchSettingsFromServer
 {
 	//  Set the user settings into the global preferences (like tax type, tax charges for user's country etc)
-	NSDictionary *dicTemp=nil;
-	dicTemp=[GlobalPrefrences getDictSettings];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSDictionary *dicTemp;
+	dicTemp=[ServerAPI fetchSettings:iCurrentStoreId];
     [dicTemp retain];
     [GlobalPrefrences setSettingsOfUserAndOtherDetails:dicTemp];
+	[pool release];
 }
 
 
 -(void)fetchSubDepartments
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSDictionary* dictCategories = [ServerAPI fetchSubDepartments:iCurrentDepartmentId :iCurrentStoreId];
-  	NSArray *arrTemp  = [dictCategories objectForKey:@"categories"];
+    NSDictionary* dictCategories = [ServerAPI fetchSubDepartments:iCurrentDepartmentId:iCurrentStoreId];
+    // [dictdataFeatures removeAllObjects];
+    //  [dictdataFeatures addEntriesFromDictionary:dictCategories];
+	NSArray *arrTemp  = [dictCategories objectForKey:@"categories"];
     [arrDepartmentData removeAllObjects];
 	[arrDepartmentData addObject:arrTemp];
 	[showArray removeAllObjects];
@@ -436,6 +557,8 @@ BOOL isTryingSecondTime;
 {	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	//fetch data from server
 	NSDictionary *dictFeatures = [ServerAPI fetchDepartments:iCurrentStoreId];
+    //  [dictdataFeatures removeAllObjects];
+    // [dictdataFeatures addEntriesFromDictionary:dictFeatures];
 	NSArray *arrTemp  = [dictFeatures objectForKey:@"departments"];
     [arrDepartmentData removeAllObjects];
     [arrDepartmentData addObject:arrTemp];
@@ -485,6 +608,10 @@ BOOL isTryingSecondTime;
 		
 	}
 	
+	
+	
+	//[self createTableView];
+	//[self performSelector:@selector(createTableView)];
     [NSThread detachNewThreadSelector:@selector(createTableView) toTarget:self withObject:nil];
 	
     [pool release];
@@ -517,6 +644,7 @@ BOOL isTryingSecondTime;
 	@catch (NSException * e) {
 		NSLog(@"Exception Occured");
 	}
+    // [GlobalPrefrences performSelector:@selector(dismissLoadingBar_AtBottom)];
     [pool release];
 	
 }
@@ -525,12 +653,21 @@ BOOL isTryingSecondTime;
 -(void)fetchBannerImages
 {
     
-  dictBanners= [GlobalPrefrences  getDictGalleryImages];
-  [dictBanners retain];
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	dictBanners=[ServerAPI fetchGallaryImages:iCurrentStoreId];
+	[dictBanners retain];
     
-    [self updateControls];
+    // [self performSelectorOnMainThread:@selector(updateImage) withObject:nil waitUntilDone:NO];
     
-	
+    [self performSelector:@selector(updateControls)];    //
+    
+	[pool release];
+    //	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    //	dictBanners=[ServerAPI fetchGallaryImages];
+    //	[dictBanners retain];
+    //
+    //	[NSThread detachNewThreadSelector:@selector(updateControls) toTarget:self withObject:nil];
+    //	[pool release];
 }
 #pragma mark TableView Delegate Method
 
@@ -562,13 +699,14 @@ BOOL isTryingSecondTime;
         [imgSeprator setImage:[UIImage imageNamed:@"seperator.png"]];
         [imgSeprator setBackgroundColor:[UIColor clearColor]];
         [cell addSubview:imgSeprator];
-        [imgSeprator release];
         cell.detailTextLabel.textColor=subHeadingColor;
         
         UIImageView *imgOval=[[UIImageView alloc]initWithFrame:CGRectMake(345, 12, 45, 28)];
         [imgOval setImage:[UIImage imageNamed:@"number_oval.png"]];
         [imgOval setBackgroundColor:[UIColor clearColor]];
-        [imgOval release];
+        //[cell addSubview:imgOval];
+        
+        
         UILabel	*lblText = [[UILabel alloc] initWithFrame:CGRectMake(10, 16,300, 20)];
         lblText.textColor = subHeadingColor;
         lblText.backgroundColor = [UIColor clearColor];
@@ -632,9 +770,6 @@ BOOL isTryingSecondTime;
     
 	[cell setAccessoryType:UITableViewCellAccessoryNone];
 	[cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
-    
-    
 	return  cell;
 }
 
@@ -657,6 +792,8 @@ BOOL isTryingSecondTime;
         [self fetchSubDepartments];
         [btnBackToDepts setHidden:NO];
         count++;
+        /// NSLog(@"%d",count);
+        
     }
     else
     {
@@ -664,6 +801,7 @@ BOOL isTryingSecondTime;
         [GlobalPrefrences setCurrentCategoryId:[[arrDeptIDs objectAtIndex:indexWhileSearching] integerValue] ];
         StoreViewController *objStore=[[ StoreViewController alloc]init];
         objStore.isComingFromHomePage=YES;
+        //objStore.isProductWithoutSubCategory=YES;
         [[self navigationController]pushViewController:objStore animated:YES];
         [objStore release];
     }
@@ -680,11 +818,38 @@ BOOL isTryingSecondTime;
 	int stateID=[[arrStateAndCountryID objectAtIndex:0] intValue];
 	int countryID=[[arrStateAndCountryID objectAtIndex:1] intValue];
 	
-	dictFeaturedProducts=[ServerAPI fetchFeaturedproducts:countryID :stateID :iCurrentAppId];
+	dictFeaturedProducts=[ServerAPI fetchFeaturedproducts:countryID :stateID:iCurrentAppId];
 	[self performSelectorOnMainThread:@selector(createDynamicControls) withObject:nil waitUntilDone:YES];
 	
 	[pool release];
 	
+	if(!dictFeaturedProducts)
+	{
+		CGContextRef context = UIGraphicsGetCurrentContext();
+		CATransition *animation = [CATransition animation];
+		[animation setDelegate:self];
+		[animation setType: kCATransitionPush];
+		[animation setSubtype:kCATransitionFromLeft];
+		[animation setDuration:1.0f];
+		[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+		[UIView beginAnimations:nil context:context];
+		[[bottomHorizontalView layer] addAnimation:animation forKey:kCATransition];
+		
+		
+		UILabel *lblErrorMsg =[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 95)];
+		lblErrorMsg.textColor=[UIColor lightTextColor];
+		[lblErrorMsg setNumberOfLines:0];
+		[lblErrorMsg setFont:[UIFont boldSystemFontOfSize:15]];
+		[lblErrorMsg setTextAlignment:UITextAlignmentCenter];
+		[lblErrorMsg setLineBreakMode:UILineBreakModeWordWrap];
+		[lblErrorMsg setBackgroundColor:[UIColor clearColor]];
+		[lblErrorMsg setText:@""];
+		[bottomHorizontalView addSubview:lblErrorMsg];
+		[lblErrorMsg release];
+		[UIView commitAnimations];
+		
+	}
+	[pool release];
 }
 #pragma mark - Image Thumbnail selected
 
@@ -707,16 +872,16 @@ BOOL isTryingSecondTime;
         if(![[dictTempNextProduct objectForKey:@"categoryId"]isKindOfClass:[NSNull class]])
         {
             if([[dictTempNextProduct objectForKey:@"categoryId"] intValue]>0)
-                dictDataForNextProduct = [ServerAPI fetchnextfeatureProductwithcategory:[[dictTempNextProduct objectForKey:@"departmentId"] intValue] catId:[[dictTempNextProduct objectForKey:@"categoryId"] intValue] countryId:[[arrStateAndCountryID objectAtIndex:1]intValue] stateId:[[arrStateAndCountryID objectAtIndex:0]intValue] :iCurrentStoreId];
+                dictDataForNextProduct = [ServerAPI fetchnextfeatureProductwithcategory:[[dictTempNextProduct objectForKey:@"departmentId"] intValue] catId:[[dictTempNextProduct objectForKey:@"categoryId"] intValue] countryId:[[arrStateAndCountryID objectAtIndex:1]intValue] stateId:[[arrStateAndCountryID objectAtIndex:0]intValue]:iCurrentStoreId];
             else
             {
-                dictDataForNextProduct = [ServerAPI fetchnextfeatureProduct:[[dictTempNextProduct objectForKey:@"departmentId"] intValue] countryId:[[arrStateAndCountryID objectAtIndex:1]intValue] stateId:[[arrStateAndCountryID objectAtIndex:0]intValue] :iCurrentStoreId];
+                dictDataForNextProduct = [ServerAPI fetchnextfeatureProduct:[[dictTempNextProduct objectForKey:@"departmentId"] intValue] countryId:[[arrStateAndCountryID objectAtIndex:1]intValue] stateId:[[arrStateAndCountryID objectAtIndex:0]intValue]:iCurrentStoreId];
                 
             }
         }
         else
         {
-            dictDataForNextProduct = [ServerAPI fetchnextfeatureProduct:[[dictTempNextProduct objectForKey:@"departmentId"] intValue] countryId:[[arrStateAndCountryID objectAtIndex:1]intValue] stateId:[[arrStateAndCountryID objectAtIndex:0]intValue] :iCurrentStoreId];
+            dictDataForNextProduct = [ServerAPI fetchnextfeatureProduct:[[dictTempNextProduct objectForKey:@"departmentId"] intValue] countryId:[[arrStateAndCountryID objectAtIndex:1]intValue] stateId:[[arrStateAndCountryID objectAtIndex:0]intValue]:iCurrentStoreId];
         }
 		
         NSArray *arrProducts=[dictDataForNextProduct objectForKey:@"products"];
@@ -764,16 +929,16 @@ BOOL isTryingSecondTime;
 	{
         if ([[dictTemp objectForKey:@"categoryId"] intValue]>0)
         {
-			dictDataForCurrentProduct = [ServerAPI fetchnextfeatureProductwithcategory:[[dictTemp objectForKey:@"departmentId"] intValue] catId:[[dictTemp objectForKey:@"categoryId"] intValue] countryId:countryID stateId:stateID :iCurrentStoreId];
+			dictDataForCurrentProduct = [ServerAPI fetchnextfeatureProductwithcategory:[[dictTemp objectForKey:@"departmentId"] intValue] catId:[[dictTemp objectForKey:@"categoryId"] intValue] countryId:countryID stateId:stateID:iCurrentStoreId];
         }
         else
         {
-			dictDataForCurrentProduct =  [ServerAPI fetchnextfeatureProduct:[[dictTemp objectForKey:@"departmentId"] intValue] countryId:countryID stateId:stateID :iCurrentStoreId];
+			dictDataForCurrentProduct =  [ServerAPI fetchnextfeatureProduct:[[dictTemp objectForKey:@"departmentId"] intValue] countryId:countryID stateId:stateID:iCurrentStoreId];
         }
 	}
 	else
 	{
-		dictDataForCurrentProduct =  [ServerAPI fetchnextfeatureProduct:[[dictTemp objectForKey:@"departmentId"] intValue] countryId:countryID stateId:stateID :iCurrentStoreId];
+		dictDataForCurrentProduct =  [ServerAPI fetchnextfeatureProduct:[[dictTemp objectForKey:@"departmentId"] intValue] countryId:countryID stateId:stateID:iCurrentStoreId];
 	}
     
 	
@@ -799,7 +964,6 @@ BOOL isTryingSecondTime;
 	[GlobalPrefrences setCurrentDepartmentId:iCurrentDeptID];
 	
 	[GlobalPrefrences setCanPopToRootViewController: YES];
-  
 	self.tabBarController.selectedIndex = 4;
 	
 }
@@ -829,7 +993,11 @@ BOOL isTryingSecondTime;
             {
                 newFeturedCount=7;
             }
-          
+            
+            
+            // CustomImageView *img[newFeturedCount];
+            
+			
 			int x=3,y=8.5;
 			
 			for (int i=0; i<newFeturedCount; i++)
@@ -855,7 +1023,10 @@ BOOL isTryingSecondTime;
 				[btnBlue[i] addTarget:self action:@selector(imageDetails:) forControlEvents:UIControlEventTouchUpInside];
 				NSDictionary *dictTemp = [arrAllData objectAtIndex:i];
 				NSString *strImageUrl;
-			
+				NSData *dataBannerImage;
+				
+				
+				
 				//img[i]=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 115, 115)];
 				if([[dictTemp objectForKey:@"productImages"] count] >0)
 				{
@@ -897,7 +1068,9 @@ BOOL isTryingSecondTime;
 			[bottomHorizontalView setContentSize:CGSizeMake(x, 70)];
             
 			//calling this method again to update aal the images recenlty fetct, if in case, this method has called already
-			         
+			if(isUpdateControlsCalled)
+                [NSThread detachNewThreadSelector:@selector(updateControls) toTarget:self withObject:nil];
+            
 		}
 		else
 			NSLog(@"No Featured Products available (Home View Controller");
@@ -1000,7 +1173,46 @@ BOOL isTryingSecondTime;
         [pool release];
     }
     [self createTableView];
-		
+	//}
+	/*else {
+     [arrSubDepatermentsSearch removeAllObjects];
+     [arrSubDeptID_Search removeAllObjects];
+     [arrNumofProductsSearch removeAllObjects];
+     
+     if([searchText isEqualToString:@""] || searchText==nil)
+     {
+     [arrSubDepatermentsSearch addObjectsFromArray:arrSubDepartments];
+     [arrSubDeptID_Search addObjectsFromArray:arrSubDeptID];
+     [arrNumofProductsSearch addObjectsFromArray:arrNumofProducts];
+     [self createTableView];
+     return;
+     }
+     
+     
+     NSInteger counter = 0;
+     for(NSString *name in arrSubDepartments)
+     {
+     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc]init];
+     NSRange r = [[name uppercaseString] rangeOfString:[searchText uppercaseString]] ;
+     if(r.location != NSNotFound)
+     {
+     if(r.location==0)//that is we are checking only the start of the names.
+     {
+     [arrSubDepatermentsSearch addObject:name];
+     
+     [arrNumofProductsSearch addObject:[arrNumofProducts objectAtIndex:[arrSubDepartments indexOfObject:name]]];
+     
+     [arrSubDeptID_Search addObject:[arrSubDeptID objectAtIndex:[arrSubDepartments indexOfObject:name]]];
+     
+     }
+     }
+     counter++;
+     [pool release];
+     }
+     [self createSubDeptsTable];
+     }
+     */
+	
 }
 
 
@@ -1100,7 +1312,7 @@ BOOL isTryingSecondTime;
 			if ([GlobalPrefrences isInternetAvailable])
 			{
                 NSString *response = [ServerAPI SQLServerAPI:[[arrIndividualProducts objectAtIndex:i] objectForKey:@"sUrl"] :dataToSave];
-				NSLog(@"%@",response);
+				//response;
 				
 				// Delete sold item from the cart
 				[[SqlQuery shared] deleteItemFromIndividualQueue:[[[arrIndividualProducts objectAtIndex:i] objectForKey:@"iProductId"] intValue]];

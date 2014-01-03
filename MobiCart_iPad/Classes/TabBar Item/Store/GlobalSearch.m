@@ -168,7 +168,6 @@
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
 	lblCart.textColor = [UIColor whiteColor];	 
 	[btnCart addSubview:lblCart];
-    [btnCart release];
 	
 	
 	UILabel *searchLbl=[[UILabel alloc]initWithFrame:CGRectMake(43, 23, 150, 15)];
@@ -221,13 +220,12 @@
 		objProductDetails.dicNextProduct=_dictNextProduct;
 	
 	[[self navigationController]pushViewController:objProductDetails animated:YES];
-    [objProductDetails release];
 }
 // Fetching Search Results From Server
 #pragma mark fetch Data
 -(void)fetchDataFromServer:(NSString *) _url
 {
-	arrSearchedData = [[ServerAPI fetchGlobalSearchProducts:_url :iCurrentAppId] objectForKey:@"products"];
+	arrSearchedData = [[ServerAPI fetchGlobalSearchProducts:_url:iCurrentAppId] objectForKey:@"products"];
 	[arrSearchedData retain];
 	[self performSelectorOnMainThread:@selector(loadSearchResults) withObject:nil waitUntilDone:YES];
 	
@@ -237,7 +235,7 @@
 -(void)loadSearchResults
 {
 	
-	NSArray *arr=nil;
+	NSArray *arr=[[NSArray alloc]init];
 	arr=	[contentScrollView subviews];
 	
 	for(int i=0;i<[arr count];i++)
@@ -269,7 +267,6 @@
 		[[imgProductView layer] setBorderColor:[[UIColor clearColor] CGColor]];
 		[imgProductView setTag:index+100];
 		[contentScrollView addSubview:imgProductView];
-        [imgProductView release];
 		[self loadStart:index+100];
 		
 		UIButton *btnProductImage=[[UIButton alloc]initWithFrame:CGRectMake(x, y, 100, 100)];
@@ -277,7 +274,6 @@
 		[btnProductImage setTag:index+100];
 		[btnProductImage addTarget:self action:@selector(showProductDetails:) forControlEvents:UIControlEventTouchUpInside];
 		[contentScrollView addSubview:btnProductImage];
-        [btnProductImage release];
 		
 		
 		UILabel *lblProductName=[[UILabel alloc]initWithFrame:CGRectMake(x, y+114, 100, 25)];
@@ -286,7 +282,6 @@
 		[lblProductName setFont:[UIFont boldSystemFontOfSize:14]];
 		[lblProductName setTextColor:subHeadingColor];
 		[contentScrollView addSubview:lblProductName];
-        [lblProductName release];
 		
 		UILabel *lblProductPrice=[[UILabel alloc]initWithFrame:CGRectMake(x, y+130, 100, 25)];
 		[lblProductPrice setBackgroundColor:[UIColor clearColor]];
@@ -294,10 +289,9 @@
         [lblProductPrice setFont:[UIFont systemFontOfSize:12]];
 		[lblProductPrice setText:[[TaxCalculation shared]caluateTaxForProduct:dicTemp]];
 		[contentScrollView addSubview:lblProductPrice];
-        [lblProductPrice release];
 		
 		
-		NSString *strStatus=@"", *strTemp=@"";
+		NSString *strStatus, *strTemp;
 		
 		if(dicTemp)
 			strTemp = [dicTemp objectForKey:@"sIPhoneStatus"];
@@ -358,8 +352,7 @@
 			[lblStatus setFrame:CGRectMake(x, y+168, 81, 16)];
 			[imgStockStatus setFrame:CGRectMake(x, y+168, 81, 16)];
 		}
-		[imgStockStatus release];
-        [lblStatus release];
+		
 		
 		[self markStarRating:productPlaceHolderView :index];
 		
@@ -387,23 +380,21 @@
 	[contentScrollView setContentSize:CGSizeMake(1024, y+240)];
 	
 }
--(void)markStarRating:(UIView *)_scrollView :(int)index
+-(void)markStarRating:(UIView *)_scrollView:(int)index
 {
 	
     int xValue=0;
 	
-	float rating=0;
+	float rating;
 	NSDictionary *dictProducts=[arrSearchedData objectAtIndex:index];
   	
     
 	if(![dictProducts isKindOfClass:[NSNull class]])
-    {
 		if([[dictProducts valueForKey:@"fAverageRating"] isEqual:[NSNull null]])
 			rating = 0.0;
 		else
 			rating = [[dictProducts valueForKey:@"fAverageRating"] floatValue];
-    }
-	float tempRating=0;
+	float tempRating;
 	tempRating=floor(rating);
 	tempRating=rating-tempRating;
 	

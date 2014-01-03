@@ -121,7 +121,7 @@ BOOL isAccount;
 	[showArray addObject:[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.myaccount.wishlist"]];
 	[showArray addObject:[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.myaccount.myaccount"]];
 	[showArray addObject:[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.myaccount.orderhistory"]];
-	[self createTableView];//Creating table of My Account
+	[self createTableView];
 	
 	
 }
@@ -348,7 +348,6 @@ BOOL isAccount;
 - (void)dealloc 
 {
 	[lblCart release];
-    
 	[contentView release];
 	contentView=nil;
     [super dealloc];

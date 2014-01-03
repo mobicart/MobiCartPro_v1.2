@@ -126,7 +126,7 @@
     return self;
 }
 
-- (void) setProductName:(NSString*)productName :(NSString *)productPrice : (NSString *)availability : (NSString *)discount
+- (void) setProductName:(NSString*)productName:(NSString *)productPrice: (NSString *)availability: (NSString *)discount
 {		
     if(![productName isEqual:[NSNull null]])
     {

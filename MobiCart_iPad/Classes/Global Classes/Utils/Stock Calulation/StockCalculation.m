@@ -21,7 +21,8 @@
 	{
 		dropDownCount=0;
 		strTitle= [NSString stringWithFormat:@"%@",[[arrOptionsData objectAtIndex:0] objectForKey:@"sTitle"]];
-    }
+		//NSLog(@"%@",strTitle);
+	}	
 	else
 	{
 		isOutOfStock=YES;	

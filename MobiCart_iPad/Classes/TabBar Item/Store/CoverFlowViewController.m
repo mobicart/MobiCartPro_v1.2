@@ -11,7 +11,7 @@
 
 @implementation CoverFlowViewController
 
-
+@synthesize PickerPopover;
 @synthesize arrImages, dataForProductImage,tempdic;
 
 - (void)displayProductImage:(NSMutableArray *)arrImagesUrls picToShowAtAIndex:(NSInteger)_picNum 
@@ -106,7 +106,6 @@
 {
 
 }
-
 - (void)openFlowView: (AFOpenFlowView *)openFlowView imageSelected:(int)index
 {
     [self displayProductImage:arrImages picToShowAtAIndex:index];

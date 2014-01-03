@@ -1,6 +1,5 @@
-
 //
-
+//  CustomImageView.h
 #import <UIKit/UIKit.h>
 
 
@@ -11,11 +10,13 @@
     UIActivityIndicatorView * _indicator;
     
 }
-@property (nonatomic) int isFromGallery;
+
 @property (nonatomic, retain) UIImage * imageObject;
 @property (nonatomic) int isFromCart;
 
 - (id)initWithUrl:(NSURL *)url frame:(CGRect)frame isFrom:(int)isFromCart;
 - (void) showImage:(NSURL *)url;
+
+
 
 @end

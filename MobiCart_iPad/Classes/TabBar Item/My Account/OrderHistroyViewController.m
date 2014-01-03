@@ -120,7 +120,7 @@ extern BOOL isOrderLogin;
         self.arrAllOrderHistory = [[NSArray alloc] init];
     }
 	
-	self.arrAllOrderHistory = [[ServerAPI fetchOrderDetails:[GlobalPrefrences getUserDefault_Preferences:@"userEmail"] :iCurrentAppId :iCurrentStoreId] objectForKey:@"product-orders"]; 
+	self.arrAllOrderHistory = [[ServerAPI fetchOrderDetails:[GlobalPrefrences getUserDefault_Preferences:@"userEmail"]:iCurrentAppId:iCurrentStoreId] objectForKey:@"product-orders"]; 
 	
 	if(![self.arrAllOrderHistory isEqual:[NSNull null]])
 	{
@@ -132,7 +132,6 @@ extern BOOL isOrderLogin;
             }
 			else 
             {
-                //creating table
 				[self performSelectorOnMainThread:@selector(createTableView) withObject:nil waitUntilDone:YES];
 			}
 		}

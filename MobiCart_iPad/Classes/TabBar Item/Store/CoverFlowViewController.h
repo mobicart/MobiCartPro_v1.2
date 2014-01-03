@@ -19,7 +19,7 @@
 	NSOperationQueue *loadImagesOperationQueue;
 
 }
-
+@property (nonatomic, retain) UIPopoverController *PickerPopover;
 -(void)LoadCoverflow;
 @property (nonatomic,retain) NSMutableArray *arrImages;
 @property (nonatomic,retain) NSData *dataForProductImage;

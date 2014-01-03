@@ -80,7 +80,6 @@
 @end
 
 @protocol AFOpenFlowViewDataSource <NSObject>
-@optional
 - (void)openFlowView:(AFOpenFlowView *)openFlowView requestImageForIndex:(int)index;
 
 - (UIImage *)defaultImage;

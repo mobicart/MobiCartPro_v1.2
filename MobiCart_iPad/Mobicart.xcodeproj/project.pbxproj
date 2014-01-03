@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07A45E591876AFF50030933B /* EbookScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A45E581876AFF50030933B /* EbookScrollView.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -252,7 +253,6 @@
 		4EE0C9E4165CE0E100F6D7C4 /* ShoppingCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE0C9E2165CE0E100F6D7C4 /* ShoppingCartViewController.m */; };
 		4EE0FE10164A7234007407EB /* shop_box.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EE0FE0F164A7234007407EB /* shop_box.png */; };
 		4EE5435116636BD700809A4D /* MobicartStart.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE5435016636BD700809A4D /* MobicartStart.m */; };
-		4EE5435816636BFC00809A4D /* ContentScrollview.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE5435316636BFC00809A4D /* ContentScrollview.m */; };
 		4EE5435916636BFC00809A4D /* GlobalPrefrences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE5435516636BFC00809A4D /* GlobalPrefrences.m */; };
 		4EE5435A16636BFC00809A4D /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE5435716636BFC00809A4D /* HomeViewController.m */; };
 		4EE5436316636CFA00809A4D /* Page1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE5435C16636CFA00809A4D /* Page1ViewController.m */; };
@@ -277,6 +277,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		07A45E571876AFF50030933B /* EbookScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EbookScrollView.h; sourceTree = "<group>"; };
+		07A45E581876AFF50030933B /* EbookScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EbookScrollView.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Mobi-Cart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mobi-Cart.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -627,8 +629,6 @@
 		4EE0C9E2165CE0E100F6D7C4 /* ShoppingCartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingCartViewController.m; sourceTree = "<group>"; };
 		4EE0FE0F164A7234007407EB /* shop_box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shop_box.png; sourceTree = "<group>"; };
 		4EE5435016636BD700809A4D /* MobicartStart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobicartStart.m; sourceTree = "<group>"; };
-		4EE5435216636BFC00809A4D /* ContentScrollview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentScrollview.h; sourceTree = "<group>"; };
-		4EE5435316636BFC00809A4D /* ContentScrollview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentScrollview.m; sourceTree = "<group>"; };
 		4EE5435416636BFC00809A4D /* GlobalPrefrences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalPrefrences.h; sourceTree = "<group>"; };
 		4EE5435516636BFC00809A4D /* GlobalPrefrences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalPrefrences.m; sourceTree = "<group>"; };
 		4EE5435616636BFC00809A4D /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -1312,8 +1312,8 @@
 		4ECF9BA515F9EE430007A29B /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				4EE5435216636BFC00809A4D /* ContentScrollview.h */,
-				4EE5435316636BFC00809A4D /* ContentScrollview.m */,
+				07A45E571876AFF50030933B /* EbookScrollView.h */,
+				07A45E581876AFF50030933B /* EbookScrollView.m */,
 				4EE5435416636BFC00809A4D /* GlobalPrefrences.h */,
 				4EE5435516636BFC00809A4D /* GlobalPrefrences.m */,
 				4EE5435616636BFC00809A4D /* HomeViewController.h */,
@@ -1738,11 +1738,11 @@
 				4ECF9C3C15F9EE430007A29B /* webViewVideo.m in Sources */,
 				4ECF9C3D15F9EE430007A29B /* MobicartViewController.m in Sources */,
 				4ECF9C3F15F9EE430007A29B /* MobicartAppDelegate.m in Sources */,
+				07A45E591876AFF50030933B /* EbookScrollView.m in Sources */,
 				4ECDAF0E16313F0A007B32C4 /* CustomImageView.m in Sources */,
 				4EE0C9E3165CE0E100F6D7C4 /* CheckoutViewController.m in Sources */,
 				4EE0C9E4165CE0E100F6D7C4 /* ShoppingCartViewController.m in Sources */,
 				4EE5435116636BD700809A4D /* MobicartStart.m in Sources */,
-				4EE5435816636BFC00809A4D /* ContentScrollview.m in Sources */,
 				4EE5435916636BFC00809A4D /* GlobalPrefrences.m in Sources */,
 				4EE5435A16636BFC00809A4D /* HomeViewController.m in Sources */,
 				4EE5436316636CFA00809A4D /* Page1ViewController.m in Sources */,
@@ -1762,8 +1762,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp.";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1783,8 +1783,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = armv7;
@@ -1796,8 +1796,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp.";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1815,8 +1815,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = armv7;
@@ -1901,8 +1901,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp.";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1922,8 +1922,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = armv7;

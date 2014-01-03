@@ -4,9 +4,10 @@
 //
 
 #import "CustomImageView.h"
+//#import "Constant.h"
 
 @implementation CustomImageView
-@synthesize isFromGallery=_isFromGallery;
+
 @synthesize isFromCart = _isFromCart;
 
 @synthesize imageObject = _imageObject;
@@ -20,7 +21,6 @@
     NSData * data = [[NSData alloc]initWithContentsOfURL:url];
     UIImage * image = [[UIImage alloc]initWithData:data];
     int x1,y1;
-    
     if(_isFromCart)
     {
         y1= (90-image.size.height)/2;
@@ -29,15 +29,10 @@
         
     }
     else{
-        if(_isFromGallery)
-        {  if(image.size.width<200 || image.size.height<150)
-            [self setFrame:CGRectMake((430-image.size.width/2)/2,(325-image.size.height/2)/2-2.5,image.size.width/2,image.size.height/2)];
-        }
-        else{
-            y1= (115-image.size.height)/2;
-            x1 = (115 - image.size.width)/2;
-            [self setFrame:CGRectMake(x1, y1, image.size.width, image.size.height)];
-        }
+        y1= (115-image.size.height)/2;
+        x1 = (115 - image.size.width)/2;
+        [self setFrame:CGRectMake(x1, y1, image.size.width, image.size.height)];
+        
         
     }
     [self performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:NO];
@@ -105,6 +100,13 @@
     [super dealloc];
 }
 
+//- (void)didReceiveMemoryWarning {
+//
+//    // Releases the view if it doesn't have a superview.
+//    [super didReceiveMemoryWarning];
+//
+//    // Release any cached data, images, etc that aren't in use.
+//}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

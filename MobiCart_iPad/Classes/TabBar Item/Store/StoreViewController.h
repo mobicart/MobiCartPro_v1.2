@@ -14,7 +14,7 @@
 #import "Constants.h"
 #import "AppRecord.h"
 #include "LeavesView.h"
-#import "Utilities.h"
+
 @class StoreViewController;
 @class LeavesView;
 
@@ -45,7 +45,9 @@ LeavesView *leavesView;
 	
 	NSMutableArray *showArray_Searched,*showNoArray_Searched,*arrCategoryIDs_Searched,*arrAppRecordsAllEntries;
 	NSArray *arrAllData;
-
+    
+    //NSMutableArray *arrAllData;
+	
 	UIActivityIndicatorView *indicator;
 	SegmentControl_Customized *sortSegCtrl;
 	UIImageView *imgRatingsTemp[5], *imgRatings[5];
@@ -79,7 +81,7 @@ LeavesView *leavesView;
 -(void)fetchDataFromServer;
 -(void)allocateMemoryToObjects;
 -(void)loadStart:(int)intValue;
--(void)markStarRating:(UIView *)_scrollView :(int)index;
+-(void)markStarRating:(UIView *)_scrollView:(int)index;
 @end
 
 

@@ -11,24 +11,26 @@
 #import "MobicartViewController.h"
 #import "MobicartStart.h"
 #import "UserDetails.h"
-#import "Constants.h"
-
+#import "ServerAPI.h"
+#import "SqlQuery.h"
+#import "GlobalPrefrences.h"
 
 @implementation MobicartAppDelegate
 
 @synthesize window;
-@synthesize viewController,tabController,arrAllData,loadingIndicator,backgroundImage,imgloadView;
+//@synthesize viewController,tabController;
+@synthesize viewController,tabController,arrAllData,loadingIndicator,backgroundImage;
 
 #pragma mark -
 #pragma mark Application lifecycle
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    //Override point for customization after app launch. 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //Override point for customization after app launch.
     [viewController showSplash];
     [viewController hideSplash];
-
-	  [self performSelector:@selector(loading) withObject:nil];  
-   	 [self.window makeKeyAndVisible];
+    
+    [self performSelector:@selector(loading) withObject:nil];
+    [self.window makeKeyAndVisible];
     
 	return YES;
 }
@@ -40,7 +42,7 @@
     [[MobicartStart sharedApplication]startMobicartOnMainWindow:(UIWindow *)window withMerchantEmail:(NSString *)strMobicartEmail];
 	
 	// For getting geo coordinates of user location
-	CLLocationManager *userLocation = [[CLLocationManager alloc] init];
+	userLocation = [[CLLocationManager alloc] init];
 	userLocation.delegate = self;
     
 	const CLLocationAccuracy * ptr = &kCLLocationAccuracyBestForNavigation;
@@ -60,25 +62,11 @@
     {
         
         [[NSUserDefaults standardUserDefaults]setValue:@"Not First Time" forKey:@"isFirstTime"];
-        [[SqlQuery shared]setTblAccountDetails:@"demo" :@"demo@123.com" :@"demo123" :@"St123" :@"city" :@"United Kingdom" :@"NewCastle" :@"1" :@"" :@"" :@"" :@"" :@""];        
+        [[SqlQuery shared]setTblAccountDetails:@"demo" :@"demo@123.com" :@"demo123" :@"St123" :@"city" :@"United Kingdom" :@"NewCastle" :@"1" :@"" :@"" :@"" :@"" :@""];
     }
     [pool release];
-
+    
 }
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-	tempLocation = newLocation.coordinate;
-	
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
-}
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-	NSLog(@"Error in Location Services. Error:-- %@", error);
-}
-     
-
-
 
 
 #pragma mark Push Notification Delegation methods
@@ -93,12 +81,12 @@
 	
 	NSString *strLatitude=[NSString stringWithFormat:@"%lf",tempLocation.latitude];
 	NSString *strLongitude=[NSString stringWithFormat:@"%lf",tempLocation.longitude];
-	[ServerAPI pushNotifications:strLatitude :strLongitude :tokenString :[GlobalPrefrences getCurrentAppId]];
+	[ServerAPI pushNotifications:strLatitude :strLongitude :tokenString:[GlobalPrefrences getCurrentAppId]];
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err 
 {
-	//NSLog(@"Error in registration. Error: %@", err);
+	NSLog(@"Error in registration. Error: %@", err);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
@@ -147,12 +135,6 @@
     [viewController release];
     [window release];
     [super dealloc];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Overriden to allow any orientation.
-    
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 

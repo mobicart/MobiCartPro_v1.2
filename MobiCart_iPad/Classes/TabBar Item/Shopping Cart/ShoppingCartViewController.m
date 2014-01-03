@@ -11,6 +11,7 @@
 
 BOOL isLoginClicked;
 BOOL isRegisterClicked;
+//extern BOOL AccCreated;//, AccUpdated;
 @implementation ShoppingCartViewController
 @synthesize isEditCommit=_isEditCommit;
 
@@ -118,10 +119,10 @@ BOOL isRegisterClicked;
 	[imgHorizontalDottedLine release];
 	
 	interDict = [[NSMutableArray alloc]init];
-	NSMutableArray *arrTemp=nil;
+	NSMutableArray *arrTemp=[[NSMutableArray alloc]init];
 	arrTempShippingCountries=[[NSMutableArray alloc]init];
 	
-	NSDictionary *contentDict = dictSettingsDetails ;
+	NSDictionary *contentDict = [dictSettingsDetails objectForKey:@"store"];
 	arrTemp = [contentDict objectForKey:@"taxList"];
 	arrTempShippingCountries=[[contentDict objectForKey:@"shippingList"]retain];
 	arrStates=[[NSMutableArray alloc]init];
@@ -232,7 +233,6 @@ BOOL isRegisterClicked;
 	lblrightSubView.textColor= subHeadingColor;
 	lblrightSubView.font = [UIFont boldSystemFontOfSize:17];
 	[rightSubView addSubview:lblrightSubView];
-    [lblrightSubView release];
 	
 	UIButton *btnLogin=[UIButton buttonWithType:UIButtonTypeCustom];
 	btnLogin.backgroundColor=[UIColor clearColor];
@@ -342,19 +342,24 @@ BOOL isRegisterClicked;
 	
 	if([arrShoppingCart count]==1)
     {
-               
+        // tableViewCGRectMake(43, 70, 454, 140) style:UITableViewStylePlain];
+        
         tableView.frame=CGRectMake(43, 70, 454, 140) ;
+        
+        
         
     }
     else if([arrShoppingCart count]==2)
         
     {
+        //tableView=[[UITableView alloc]initWithFrame:CGRectMake(43, 70, 454, 300) style:UITableViewStylePlain];
         tableView.frame=CGRectMake(43, 70, 454, 300) ;
         
     }
 	else
     {
-       tableView.frame=CGRectMake(43, 70, 454, 400) ;
+        //tableView=[[UITableView alloc]initWithFrame:CGRectMake(43, 70, 454, 400) style:UITableViewStylePlain];
+        tableView.frame=CGRectMake(43, 70, 454, 400) ;
     }
     int i=[interDict count];
     if([interDict count]<12)
@@ -391,8 +396,8 @@ BOOL isRegisterClicked;
 	arrInfoAccount=[[SqlQuery shared] getAccountData:[GlobalPrefrences getUserDefault_Preferences:@"userEmail"]];
 	
 	int lcountryID=0,stateID=0;
-	NSMutableArray *arrTemp=[dictSettingsDetails valueForKey:@"taxList" ];
-	NSMutableArray *arrTempShppingStates=[dictSettingsDetails valueForKey:@"shippingList" ];
+	NSMutableArray *arrTemp=[[dictSettingsDetails objectForKey:@"store"]valueForKey:@"taxList" ];
+	NSMutableArray *arrTempShppingStates=[[dictSettingsDetails objectForKey:@"store"]valueForKey:@"shippingList" ];
 	NSMutableArray *tempDict = [[NSMutableArray alloc] init];
 	if ([arrInfoAccount count]>0)
 	{
@@ -593,12 +598,13 @@ BOOL isRegisterClicked;
 			NSDictionary *dictTemp = [interDict objectAtIndex:0];
 			
 			lcountryID=[[dictTemp valueForKey:@"territoryId"]intValue];
+			//countryID = lcountryID;
 			stateID=[[dictTemp valueForKey:@"stateId"]intValue];
 			
 		}
 	}
 	
-	dictTaxAndShippingDetails = [[ServerAPI fetchTaxShippingDetails:lcountryID :stateID :iCurrentStoreId] retain];
+	dictTaxAndShippingDetails = [[ServerAPI fetchTaxShippingDetails:lcountryID :stateID:iCurrentStoreId] retain];
 	
 	
 	
@@ -641,8 +647,10 @@ BOOL isRegisterClicked;
 	[imgbackground setImage:[UIImage imageNamed:@"bgview.png"]];
 	imgbackground.backgroundColor=backGroundColor;
 	imgbackground.alpha = 0.2;
+	//[contentView addSubview:imgbackground];
 	[imgbackground release];
-	 if(viewFooter)
+	//NSLog(@"hight %f",tableView.frame.size.height+tableView.frame.origin.x+10);
+    if(viewFooter)
     {
         [viewFooter removeFromSuperview];
         viewFooter=nil;
@@ -805,7 +813,7 @@ BOOL isRegisterClicked;
 	}
 	else
 	{
-		NSString *strCountryname=@"";
+		NSString *strCountryname=[[NSString alloc]init];
 		if([interDict count]>0)
 		{
 			NSDictionary *dictTemp = [interDict objectAtIndex:0];
@@ -1155,7 +1163,8 @@ BOOL isRegisterClicked;
         {
             cell=nil;
         }
-      if (cell==nil)
+        // cell=nil;
+		if (cell==nil)
 		{
 			cell = [[TableViewCell_Common alloc] initWithStyleFor_Store_ProductView:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier];
             
@@ -1195,6 +1204,8 @@ BOOL isRegisterClicked;
                     
                     
                     pOPrice =pOPrice+[[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"pPrice"]floatValue];
+                    
+                    //pOPrice=   pOPrice* [[[arrDatabaseCart objectAtIndex:indexPath.row]valueForKey:@"quantity"] intValue];
                     productCost+=pOPrice;
                     productSubTotal = productCost * [[[arrDatabaseCart objectAtIndex:indexPath.row]valueForKey:@"quantity"] intValue];
                     productCost=[GlobalPrefrences getRoundedOffValue:productCost];
@@ -1253,7 +1264,7 @@ BOOL isRegisterClicked;
 			[imgSeprator setImage:[UIImage imageNamed:@"dotted_line_02.png"]];
 			[imgSeprator setBackgroundColor:[UIColor clearColor]];
 			[cell addSubview:imgSeprator];
-			[imgSeprator release];
+			
 			
 			NSString *strText=[NSString stringWithFormat:@"%@%0.2f", _savedPreferences.strCurrencySymbol, productSubTotal];
 			CGSize size=[strText sizeWithFont:[UIFont boldSystemFontOfSize:12.00] constrainedToSize:CGSizeMake(500,500) lineBreakMode:UILineBreakModeWordWrap];
@@ -1360,7 +1371,7 @@ BOOL isRegisterClicked;
             [imgPlaceHolder addSubview:cellProductImageView];
             
             [imgPlaceHolder release];
-            [cellProductImage release];
+            
 			NSString *srtTaxType;
             srtTaxType=[[arrShoppingCart objectAtIndex:indexPath.row] valueForKey:@"sTaxType"];
             
@@ -1419,7 +1430,7 @@ BOOL isRegisterClicked;
 	{
 		NSDictionary *dictTemp = [interDict objectAtIndex:indexPath.row];
 		countryID=[[dictTemp valueForKey:@"territoryId"]intValue];
-		NSDictionary *contentDict = dictSettingsDetails ;
+		NSDictionary *contentDict = [dictSettingsDetails objectForKey:@"store"];
 		NSArray* arrTemp = [contentDict objectForKey:@"taxList"];
 		
 		[arrStates removeAllObjects];
@@ -1454,7 +1465,7 @@ BOOL isRegisterClicked;
 			[dictTaxAndShippingDetails release];
 			dictTaxAndShippingDetails=nil;
 		}
-		dictTaxAndShippingDetails = [ServerAPI fetchTaxShippingDetails:countryID:stateID :iCurrentStoreId];
+		dictTaxAndShippingDetails = [ServerAPI fetchTaxShippingDetails:countryID:stateID:iCurrentStoreId];
 		[tblStates reloadData];
         _isEditCommit=NO;
 		[tableView reloadData];
@@ -1471,7 +1482,7 @@ BOOL isRegisterClicked;
 			[dictTaxAndShippingDetails release];
 			dictTaxAndShippingDetails=nil;
 		}
-		dictTaxAndShippingDetails=[ServerAPI fetchTaxShippingDetails:countryID :stateID :iCurrentStoreId];
+		dictTaxAndShippingDetails=[ServerAPI fetchTaxShippingDetails:countryID :stateID:iCurrentStoreId];
 		[tblStates setHidden:YES];
 		[lblStateName setText:[[arrStates valueForKey:@"sState"]objectAtIndex:indexPath.row]];
         _isEditCommit=NO;
@@ -1526,20 +1537,6 @@ static int kAnimationType;
         
 		[arrDatabaseCart removeObjectAtIndex:indexPath.row];
 		[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:kAnimationType];
-       //-----remove picker view if open 
-        UIToolbar *pickerBar = (UIToolbar *)[contentView viewWithTag:5656];
-        
-        [pickerBar removeFromSuperview];
-        pickerViewQuantity.hidden=YES;
-        
-        if(pickerViewQuantity)
-        {
-            [pickerViewQuantity removeFromSuperview];
-            [pickerViewQuantity release];
-            pickerViewQuantity = nil;
-        }
-        
-        
 		[GlobalPrefrences setCurrentItemsInCart:NO];  ///USING "NO" TO REDUCE ONE ELEMENT FROM THE SHOPPING CART's COUNTER
 		
 		if([arrDatabaseCart count]>0)
@@ -1596,13 +1593,13 @@ static int kAnimationType;
 		viewFooter.hidden = NO;
 		for (int index=0; index<[arrDatabaseCart count]; index++) {
 			
-			
+			float productCost;
 			
 			if([arrShoppingCart count]>0)
 			{
 				
 				NSMutableArray *arrCalculatedTaxDetails=	[[TaxCalculation shared]calculateTaxForItemsInShoppingCart:arrShoppingCart arrDatabaseCart:arrDatabaseCart tax:tax forIndex:index];
-			
+				productCost=[[arrCalculatedTaxDetails objectAtIndex:0]floatValue];
 				subTotal=[[arrCalculatedTaxDetails objectAtIndex:1]floatValue ];
 				totalTaxApplied+=[[arrCalculatedTaxDetails objectAtIndex:2]floatValue];
 				
@@ -1617,9 +1614,9 @@ static int kAnimationType;
 			
 			totalTaxApplied = [GlobalPrefrences getRoundedOffValue:totalTaxApplied];
 			
-			if ([[dictSettingsDetails valueForKey:@"bIncludeTax"]intValue]==0)
+			if ([[[dictSettingsDetails valueForKey:@"store"]valueForKey:@"bIncludeTax"]intValue]==0)
 				totalTaxApplied=0;
-			if ([[dictSettingsDetails valueForKey:@"bTaxShipping"]intValue]==0)
+			if ([[[dictSettingsDetails valueForKey:@"store"]valueForKey:@"bTaxShipping"]intValue]==0)
 				fShippingtax=0;
 			else
 				fShippingtax=(shippingCharges*tax)/100;
@@ -1757,8 +1754,8 @@ static int kAnimationType;
 					
 					
 				}
-			
-            
+				//NSLog(@"%d", minQuantityCheck[count]);
+				
 			}
 			
 			
@@ -1848,7 +1845,6 @@ static int kAnimationType;
     btnTemp.enabled=FALSE;
 	[contentView addSubview:toolbarForPicker];
 	[barItems release];
-    [toolbarForPicker release];
 }
 
 

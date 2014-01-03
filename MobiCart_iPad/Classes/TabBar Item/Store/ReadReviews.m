@@ -46,9 +46,8 @@ int rating=0;
 	[lblHeading setText:[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.read.reviews.customer"]];
 	lblHeading.textColor = headingColor;
 	
-	btnBackToDepts=[UIButton buttonWithType:UIButtonTypeCustom];
+	UIButton *btnBackToDepts=[UIButton buttonWithType:UIButtonTypeCustom];
 	[btnBackToDepts setTitle:[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.home.back"] forState:UIControlStateNormal];
-    btnBackToDepts.enabled=true;
 	[btnBackToDepts setFrame:CGRectMake(400, 15, 70, 30)];
 	[btnBackToDepts.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
 	[btnBackToDepts setTitleColor:btnTextColor forState:UIControlStateNormal];
@@ -230,15 +229,6 @@ int rating=0;
 
 -(void)showListOfDepts
 {
-    btnBackToDepts.enabled=false;
-    [NSThread detachNewThreadSelector:@selector(showLoading) toTarget:self withObject:nil];
-   
-    [NSTimer scheduledTimerWithTimeInterval:1
-                                     target:self
-                                   selector:@selector(hideLoadingView)
-                                   userInfo:nil
-                                    repeats:NO];
-
 	NSArray *arrTemp = self.navigationController.viewControllers;
 	if([arrTemp count]>0)
 	{
@@ -348,7 +338,7 @@ int rating=0;
 	int xValue=340;
 	
 	
-	float rating=0;
+	float rating;
 	
 	NSDictionary *dictProducts = [ServerAPI fetchDetailsOfProductWithID:[[dicProduct valueForKey:@"id"]intValue]];	
 	
@@ -356,13 +346,12 @@ int rating=0;
 	if([[[dictProducts valueForKey:@"product"]valueForKey:@"categoryName"] isEqual:[NSNull null]])
 		isFeaturedProductWithoutCatogery=YES;
     
-	if(![dictProducts isKindOfClass:[NSNull class]]){
+	if(![dictProducts isKindOfClass:[NSNull class]])
 		if([[[dictProducts valueForKey:@"product"]valueForKey:@"fAverageRating"] isEqual:[NSNull null]])
 			rating = 0.0;
 		else
 			rating = [[[dictProducts valueForKey:@"product"]valueForKey:@"fAverageRating"] floatValue];
-    }
-	float tempRating=0;
+	float tempRating;
 	tempRating=floor(rating);
 	tempRating=rating-tempRating;
     
@@ -487,10 +476,10 @@ int rating=0;
 		strReview=[strReview stringByReplacingOccurrencesOfString:@"<" withString:@"%3C"];
 		strReview=[strReview stringByReplacingOccurrencesOfString:@">" withString:@"%3E"];
 		
-	//	NSString* escapedUrlString =[strReview stringByAddingPercentEscapesUsingEncoding:
-									// NSASCIIStringEncoding];
+		NSString* escapedUrlString =[strReview stringByAddingPercentEscapesUsingEncoding:
+									 NSASCIIStringEncoding];
 		
-		NSString *strDataToPost = [NSString stringWithFormat:@"{\"productId\":%d,\"sReveiwerName\":\"%@\",\"sReviewerEmail\":\"%@\",\"iRating\":%d, \"sReview\":\"%@\"}",selectedProductId , [[arrUserDetails objectAtIndex:0] objectForKey:@"sUserName"], [[arrUserDetails objectAtIndex:0] objectForKey:@"sEmailAddress"],rating,strReview];
+		NSString *strDataToPost = [NSString stringWithFormat:@"{\"productId\":%d,\"sReveiwerName\":\"%@\",\"sReviewerEmail\":\"%@\",\"iRating\":%d, \"sReview\":\"%@\"}",selectedProductId , [[arrUserDetails objectAtIndex:0] objectForKey:@"sUserName"], [[arrUserDetails objectAtIndex:0] objectForKey:@"sEmailAddress"],rating,escapedUrlString];
 		
 		if(![GlobalPrefrences isInternetAvailable])
 		{

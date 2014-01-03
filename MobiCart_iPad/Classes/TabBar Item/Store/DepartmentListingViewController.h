@@ -25,6 +25,6 @@
 }
 -(void)allocateMemoryToObjects;
 -(void)createTableView;
-//-(void)createSubDeptsTable;
+-(void)createSubDeptsTable;
 -(void)fetchDataForDepartments;
 @end

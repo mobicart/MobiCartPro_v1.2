@@ -179,7 +179,7 @@ UILabel *lblHeading;
 	for(int i =0; i<count; i++)
 	{
 		NSDictionary *dictcontent = [arrdict objectAtIndex:i];
-		NSString *strType =@"";
+		NSString *strType = [[NSString alloc] init];	
 		strType = [strType stringByAppendingString:[dictcontent objectForKey:@"sType"]];
 		
 		if([strType isEqualToString:@"custom"])
@@ -290,6 +290,7 @@ UILabel *lblHeading;
 	SegmentControl_Customized *sortSegCtrl = [[SegmentControl_Customized alloc] initWithItems:toggleItems offColor:[UIColor blackColor] onColor:[UIColor grayColor]];
     if([GlobalPrefrences getCureentSystemVersion]>=6)
         sortSegCtrl.tintColor=[UIColor blackColor];
+    
 	[sortSegCtrl addTarget:self action:@selector(sortSegementChanged:) forControlEvents:UIControlEventValueChanged];
 	
 	if([Twitter count]!=0 &&[News count]!=0)
@@ -508,7 +509,7 @@ static BOOL isErrorShowed1stTime = YES;
 	{
 		int count = [arrEntriesCount count]/2;
 		
-		// there's no data yet, return enough rows to fill the screen
+		// ff there's no data yet, return enough rows to fill the screen
 		if (count == 0)
 		{
 			return 1;
@@ -531,7 +532,7 @@ static BOOL isErrorShowed1stTime = YES;
 			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: CellIdentifier]autorelease];
 			cell.backgroundColor = [UIColor clearColor];
 			NSString *strImageURL=[[[arrSearch objectAtIndex:indexPath.row] valueForKey:@"value"] valueForKey: @"sImage"];
-			NSData *dataCellImage=nil;
+			NSData *dataCellImage;
 			if(strImageURL!=nil )
 			{
 				dataCellImage  = [ServerAPI fetchBannerImage:[[[arrSearch objectAtIndex:indexPath.row] valueForKey:@"value"] valueForKey: @"sImage"]];
@@ -541,14 +542,12 @@ static BOOL isErrorShowed1stTime = YES;
 					UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage imageWithData:dataCellImage]];
 					[img setFrame:CGRectMake(cell.contentView.frame.origin.x+10, cell.contentView.frame.origin.y+15, 80, 80)];
 					[cell.contentView addSubview:img];
-                    [img release];
 				}
 			}
 			UIImageView *imgSeprator=[[UIImageView alloc]initWithFrame:CGRectMake(5, 148, 410, 2)];
 			[imgSeprator setImage:[UIImage imageNamed:@"dotted_line_02.png"]];
 			[imgSeprator setBackgroundColor:[UIColor clearColor]];
 			[cell addSubview:imgSeprator];
-            [imgSeprator release];
 			
 			UILabel *lblNewsDate = [[UILabel alloc]init];
 			
@@ -574,7 +573,7 @@ static BOOL isErrorShowed1stTime = YES;
 			lblNewsDate.backgroundColor=[UIColor clearColor];
 			lblNewsDate.textColor=subHeadingColor;
 			lblNewsDate.font=[UIFont boldSystemFontOfSize:10];
-			NSString *strDate=@"";
+			NSString *strDate;
 			if(!isTwitter)
 			{
 				if(![[[arrSearch objectAtIndex:indexPath.row] valueForKey:@"type"] isEqualToString:@"custom"] && [[[arrSearch objectAtIndex:indexPath.row] valueForKey:@"value"] valueForKey:@"sTitle"])
@@ -602,8 +601,7 @@ static BOOL isErrorShowed1stTime = YES;
 				
 				
 				
-				[cell addSubview:lblNewsDate];
-                
+				[cell addSubview:lblNewsDate]; 
 				
 			}
 			
@@ -611,44 +609,43 @@ static BOOL isErrorShowed1stTime = YES;
 			{
 				if([[[arrSearch objectAtIndex:indexPath.row] valueForKey:@"type"] isEqualToString:@"custom"])
 				{
-					UILabel *tempLblNewsDetail = [[UILabel alloc]init];
+					UILabel *lblNewsDetail = [[UILabel alloc]init];
 					if(dataCellImage && [[[[arrSearch objectAtIndex:indexPath.row] valueForKey:@"value"] valueForKey: @"sImage"] length]!=0)
 					{
-						tempLblNewsDetail.frame = CGRectMake( 105, 40, 310, 70);
+						lblNewsDetail.frame = CGRectMake( 105, 40, 310, 70);
 					}
 					else {
-						tempLblNewsDetail.frame = CGRectMake( 10, 40, 410, 70);
+						lblNewsDetail.frame = CGRectMake( 10, 40, 410, 70);
 					}
-					tempLblNewsDetail.backgroundColor=[UIColor clearColor];
-					[tempLblNewsDetail setLineBreakMode:UILineBreakModeWordWrap];
-					[tempLblNewsDetail setNumberOfLines:0];
-					tempLblNewsDetail.textColor=labelColor;	
-					tempLblNewsDetail.font=[UIFont boldSystemFontOfSize:13];
+					lblNewsDetail.backgroundColor=[UIColor clearColor];
+					[lblNewsDetail setLineBreakMode:UILineBreakModeWordWrap];
+					[lblNewsDetail setNumberOfLines:0];
+					lblNewsDetail.textColor=labelColor;	
+					lblNewsDetail.font=[UIFont boldSystemFontOfSize:13];
 					NSString *strNewsDetail = [[[arrSearch objectAtIndex:indexPath.row] valueForKey:@"value"] valueForKey:@"sBody"];
 					
 					if (([strNewsDetail isEqual:[NSNull null]]) || ([strNewsDetail length] ==0))  
-						[tempLblNewsDetail setText:@""];
+						[lblNewsDetail setText:@""];
 					else
-						[tempLblNewsDetail setText:strNewsDetail];
-					[cell addSubview:tempLblNewsDetail];
-                    [tempLblNewsDetail release];
+						[lblNewsDetail setText:strNewsDetail];
+					[cell addSubview:lblNewsDetail];
 				}
 				else
 				{
-					UIWebView *webNewsDetail=[[UIWebView alloc]init];
+					UIWebView *lblNewsDetail=[[UIWebView alloc]init];
 					if(dataCellImage && [[[[arrSearch objectAtIndex:indexPath.row] valueForKey:@"value"] valueForKey: @"sImage"] length]!=0)
 					{
-						webNewsDetail.frame = CGRectMake( 100, 40, 310, 70);
+						lblNewsDetail.frame = CGRectMake( 100, 40, 310, 70);
 					}
 					else {
-						webNewsDetail.frame = CGRectMake(5, 40, 410, 70);
+						lblNewsDetail.frame = CGRectMake(5, 40, 410, 70);
 					}
-					[webNewsDetail setUserInteractionEnabled:NO];
-					[webNewsDetail setOpaque:0];
-					[webNewsDetail setBackgroundColor:[UIColor clearColor]];	
+					[lblNewsDetail setUserInteractionEnabled:NO];
+					[lblNewsDetail setOpaque:0];
+					[lblNewsDetail setBackgroundColor:[UIColor clearColor]];	
 					
                         
-                    NSString *temp;
+                    NSString *temp=[NSString new]; 
                     temp=[[[arrSearch objectAtIndex:indexPath.row] valueForKey:@"value"] valueForKey:@"summary"];
                         
                     if ([temp rangeOfString:@"src=\""].location== NSNotFound) 
@@ -669,9 +666,8 @@ static BOOL isErrorShowed1stTime = YES;
                     
 
 					NSString *FeedsDetail = [NSString stringWithFormat:@"<html><head><style type='text/css'>body { color:%@;}</style></head><body><font face='Helvetica-Bold' size=2.65>%@</font></body></html>",HexVAlueForLabelColor, temp];
-					[webNewsDetail loadHTMLString:FeedsDetail baseURL:nil];
-					[cell addSubview:webNewsDetail];
-                    [webNewsDetail release];
+					[lblNewsDetail loadHTMLString:FeedsDetail baseURL:nil];
+					[cell addSubview:lblNewsDetail];
 				}
 				
 				
@@ -753,7 +749,8 @@ static BOOL isErrorShowed1stTime = YES;
 			
 			return cell;
 		}
-			
+		cell = [tblTweets dequeueReusableCellWithIdentifier:CellIdentifier];
+		
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
 									   reuseIdentifier:CellIdentifier] autorelease];
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -821,16 +818,14 @@ static BOOL isErrorShowed1stTime = YES;
 			[lblNewsDate setTag:44004400];
 			lblNewsDate.backgroundColor=[UIColor clearColor];
 			lblNewsDate.textColor=subHeadingColor;
-			[cell addSubview:lblNewsDate];
-            [lblNewsDate release];
+			[cell addSubview:lblNewsDate]; 
 			
 			UILabel *lblNewsDatetwo = [[UILabel alloc]init];
 			[lblNewsDatetwo setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12]];
 			[lblNewsDatetwo setTag:00440044];
 			lblNewsDatetwo.backgroundColor=[UIColor clearColor];
 			lblNewsDatetwo.textColor=subHeadingColor;
-			[cell addSubview:lblNewsDatetwo];
-            [lblNewsDatetwo release];
+			[cell addSubview:lblNewsDatetwo]; 
 			
 		}
 		
@@ -950,10 +945,9 @@ static BOOL isErrorShowed1stTime = YES;
 			NSDate *prevday2 = [formatter dateFromString:date2];
 		    NSString *displayString = [formatter stringFromDate:Datetoday];
 			NSDate *curday = [formatter dateFromString:displayString];
-            [formatter release];
 			
 			
-			NSCalendar *gregorian = [[NSCalendar alloc]
+			NSCalendar *gregorian = [[NSCalendar alloc] 
 									 initWithCalendarIdentifier:NSGregorianCalendar];	
 		    NSUInteger unitFlags = NSYearCalendarUnit |NSMonthCalendarUnit| NSDayCalendarUnit| NSHourCalendarUnit|NSMinuteCalendarUnit |NSSecondCalendarUnit;	
 		    NSDateComponents *components1 = [gregorian components:unitFlags 
@@ -965,7 +959,7 @@ static BOOL isErrorShowed1stTime = YES;
 														 fromDate:prevday2 toDate:curday options:0];
 			NSInteger day2 = [components2 day];
 			NSInteger hours2 = [components2 hour];	
-			[gregorian release];
+			
 			NSString *timeDiff1;
 			NSString *timeDiff2;
 			
@@ -996,18 +990,17 @@ static BOOL isErrorShowed1stTime = YES;
 			
 			[lblNewsDatetwo setText:timeDiff2];
 			
-					
+			//NSLog(@"line height cell for row %d  for cell %d",j,indexPath.row);
+			
 			UIImageView *imgSeprator=[[UIImageView alloc]initWithFrame:CGRectMake(5, j, 420, 2)];
 			[imgSeprator setImage:[UIImage imageNamed:@"dotted_line_02.png"]];
 			[imgSeprator setBackgroundColor:[UIColor clearColor]];
 			[cell addSubview:imgSeprator];
-            [imgSeprator release];
 			
 			UIImageView *imgSeprator4=[[UIImageView alloc]initWithFrame:CGRectMake(496, j, 420, 2)];
 			[imgSeprator4 setImage:[UIImage imageNamed:@"dotted_line_02.png"]];
 			[imgSeprator4 setBackgroundColor:[UIColor clearColor]];
 			[cell addSubview:imgSeprator4];
-            [imgSeprator4 release];
 		}
 	}
 	return cell;
@@ -1106,7 +1099,8 @@ static BOOL isErrorShowed1stTime = YES;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-		
+	//NSLog(@"%d", indexPath.row);
+	
 	if(tableView==tblNews)
 	{
 		if(contentView1)
@@ -1167,29 +1161,29 @@ static BOOL isErrorShowed1stTime = YES;
 	CGSize size1=[strNewsDetail sizeWithFont:[UIFont systemFontOfSize:12.00] constrainedToSize:CGSizeMake(440,400) lineBreakMode:UILineBreakModeWordWrap];
 	int x=size1.height;
 		
-	UILabel *lblNewsDetailLocal = [[UILabel alloc]initWithFrame:CGRectMake( 5, lblNewsTitle.frame.origin.y+lblNewsTitle.frame.size.height+10, 440, x+20)];
-	lblNewsDetailLocal.backgroundColor=[UIColor clearColor];
-	[lblNewsDetailLocal setLineBreakMode:UILineBreakModeWordWrap];
-	[lblNewsDetailLocal setNumberOfLines:0];
-	lblNewsDetailLocal.textColor=labelColor;
-	lblNewsDetailLocal.font=[UIFont fontWithName:@"Helvetica" size:13];
+	UILabel *lblNewsDetail = [[UILabel alloc]initWithFrame:CGRectMake( 5, lblNewsTitle.frame.origin.y+lblNewsTitle.frame.size.height+10, 440, x+20)];
+	lblNewsDetail.backgroundColor=[UIColor clearColor];
+	[lblNewsDetail setLineBreakMode:UILineBreakModeWordWrap];
+	[lblNewsDetail setNumberOfLines:0];
+	lblNewsDetail.textColor=labelColor;
+	lblNewsDetail.font=[UIFont fontWithName:@"Helvetica" size:13];
 	
 	if (([strNewsDetail isEqual:[NSNull null]]) || ([strNewsDetail length] ==0))  
-		[lblNewsDetailLocal setText:@""];
+		[lblNewsDetail setText:@""];
 	else
-		[lblNewsDetailLocal setText:strNewsDetail];
+		[lblNewsDetail setText:strNewsDetail];
 	
 	
-	[scrollView addSubview:lblNewsDetailLocal];
+	[scrollView addSubview:lblNewsDetail];
 	
-	frame = [lblNewsDetailLocal frame];
-	size = [lblNewsDetailLocal.text sizeWithFont:lblNewsDetailLocal.font
+	frame = [lblNewsDetail frame];
+	size = [lblNewsDetail.text sizeWithFont:lblNewsDetail.font
 						  constrainedToSize:CGSizeMake(frame.size.width, 9999)
 							  lineBreakMode:UILineBreakModeWordWrap];
 	frame.size.height = size.height;
-	[lblNewsDetailLocal setFrame:frame];
+	[lblNewsDetail setFrame:frame];
 	
-	UILabel *lblNewsDate = [[UILabel alloc]initWithFrame:CGRectMake( 5, lblNewsDetailLocal.frame.origin.y+lblNewsDetailLocal.frame.size.height, 250, 40)];
+	UILabel *lblNewsDate = [[UILabel alloc]initWithFrame:CGRectMake( 5, lblNewsDetail.frame.origin.y+lblNewsDetail.frame.size.height, 250, 40)];
 	lblNewsDate.backgroundColor=[UIColor clearColor];
 	lblNewsDate.textColor=subHeadingColor;
 	lblNewsDate.font=[UIFont boldSystemFontOfSize:10];
@@ -1206,7 +1200,6 @@ static BOOL isErrorShowed1stTime = YES;
 	
 	[scrollView setContentSize:CGSizeMake( 440, lblNewsDate.frame.origin.y+lblNewsDate.frame.size.height+10)];
 	
-    
 }
 
 
@@ -1370,9 +1363,8 @@ static BOOL isErrorShowed1stTime = YES;
 	suffix1=[suffix1 uppercaseString];
 	
 	[suffix1 capitalizedString];
-   
+	
 	NSString *strDateFinal=[NSString stringWithFormat:@"%@ %@",dateString,suffix1];
-   
 	return strDateFinal;
 }
 
@@ -1405,7 +1397,6 @@ static BOOL isErrorShowed1stTime = YES;
 	[suffix1 capitalizedString];
 	
 	NSString *strDateFinal=[NSString stringWithFormat:@"%@ %@",dateString,suffix1];
-    [formatSuffix release];
 	return strDateFinal;
 }
 
@@ -1419,6 +1410,56 @@ NSDate *day= [NSDate dateWithTimeIntervalSince1970:([strDate longLongValue]/1000
     
     return _dateString;
     
+
+	/*NSString *day = [strDate substringWithRange:NSMakeRange(5,2)];				
+	NSString *month = [strDate substringWithRange:NSMakeRange(8,3)];				
+	NSString *year = [strDate substringWithRange:NSMakeRange(12,4)];
+	NSString *hr =  [strDate substringWithRange:NSMakeRange(17,2)];
+	NSString *min = [strDate substringWithRange:NSMakeRange(20,2)];
+	NSString *sec = [strDate substringWithRange:NSMakeRange(23,2)];
+	int iMonth=0;
+	if ([month isEqualToString:@"Jan"]) 
+		iMonth=1;
+	else if([month isEqualToString:@"Feb"])
+		iMonth=2;
+	else if([month isEqualToString:@"Mar"])
+		iMonth=3;
+	else if([month isEqualToString:@"Apr"])
+		iMonth=4;
+	else if([month isEqualToString:@"May"])
+		iMonth=5;
+	else if([month isEqualToString:@"Jun"])
+		iMonth=6;
+	else if([month isEqualToString:@"Jul"])
+		iMonth=7;
+	else if([month isEqualToString:@"Aug"])
+		iMonth=8;
+	else if([month isEqualToString:@"Sep"])
+		iMonth=9;
+	else if([month isEqualToString:@"Oct"])
+		iMonth=10;
+	else if([month isEqualToString:@"Nov"])
+		iMonth=11;
+	else if([month isEqualToString:@"Dec"])
+		iMonth=12;
+	
+	NSCalendar *calendar=[NSCalendar currentCalendar];
+	
+	NSDateComponents *dateComponents=[[NSDateComponents alloc] init];
+	[dateComponents setDay:[day integerValue]];
+	[dateComponents setMonth:iMonth];
+	[dateComponents setYear:[year integerValue]];
+	[dateComponents setHour:[hr integerValue]];
+	[dateComponents setMinute:[min integerValue]];
+	[dateComponents setSecond:[sec integerValue]];
+	
+	NSDate *date=[calendar dateFromComponents:dateComponents];
+	
+	NSDateFormatter *prefixDateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+	[prefixDateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+	[prefixDateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+	NSString *strDateFinal=[prefixDateFormatter stringFromDate:date];
+	return strDateFinal;*/
    
 }
 
@@ -1593,7 +1634,7 @@ NSDate *day= [NSDate dateWithTimeIntervalSince1970:([strDate longLongValue]/1000
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
 	lblCart.textColor = [UIColor whiteColor];	 
 	[btnCart addSubview:lblCart];
-	[btnCart release];
+	
     [super viewDidLoad];
 }
 
