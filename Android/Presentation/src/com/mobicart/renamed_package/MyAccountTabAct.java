@@ -19,6 +19,7 @@ import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.renamed_package.database.MobicartDbConstants;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
+import com.mobicart.renamed_package.R;
 
 /**
  * This activity class is used for the Account tab section which manage Login

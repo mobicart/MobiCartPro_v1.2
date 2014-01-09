@@ -1,6 +1,7 @@
 package com.mobicart.renamed_package;
 
 import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityGroup;
@@ -8,6 +9,7 @@ import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
+
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.renamed_package.constants.MobiCartConstantIds;
 import com.paypal.android.MEP.PayPalActivity;

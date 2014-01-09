@@ -5,8 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -28,6 +30,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+
 import com.mobicart.android.communication.CustomException;
 import com.mobicart.android.communication.MobicartLogger;
 import com.mobicart.android.core.ProductOrder;
@@ -303,7 +306,7 @@ public class CheckoutAct extends Activity implements OnClickListener {
 			try {
 				checkPaypalStatus();
 			} catch (JSONException e) {
-				// e.printStackTrace();
+				 e.printStackTrace();
 			}
 			break;
 		case R.id.checkout_listPayZooZ_Btn:
@@ -382,6 +385,10 @@ public class CheckoutAct extends Activity implements OnClickListener {
 		String appKey = "null";
 		String isSandBox = "null";
 		appKey = MobiCartConstantIds.ZOOZ_APP_TOKEN;
+//		Log.d(">>>>>>>>", "ZOOZ Token>>>>>> "+appKey);
+//		appKey="9b744721-604f-49d1-8b49-9a9dc5bee8ad";
+//		appKey="457d0230-8efb-4b05-91a2-7f1c33d727d3";
+		
 		isSandBox = MobiCartConstantIds.ZOOZ_SERVER_MODE;
 		ParentActivityGroup parentActivity = (ParentActivityGroup) getParent();
 		Intent intent = new Intent(this, CheckoutActivity.class);
@@ -421,11 +428,12 @@ public class CheckoutAct extends Activity implements OnClickListener {
 	@SuppressLint("NewApi")
 	@Override
 	public void onBackPressed() {
+//		super.onBackPressed();
 		MobicartCommonData.isFromStart = "NotSplash";
 		backBtn.setVisibility(View.GONE);
 		backBtn.setText(backStr);
 		finish();
-		super.onBackPressed();
+		
 	}
 
 	@Override
@@ -552,10 +560,11 @@ public class CheckoutAct extends Activity implements OnClickListener {
 	 * @throws JSONException
 	 */
 	private void sendPaypalStaus_toSever() throws JSONException {
+		Log.d(">>>>>>>>>>",">>>>>>>>Inside sendPaypalStaus_toSever>>>>>");
 		int merchantId = MobicartCommonData.appIdentifierObj.getUserId();
 		double fTaxAmount, fShippingAmount, fTotalAmount, fAmount;
 		objDataBaseAccess = new DataBaseAccess(CheckoutAct.this);
-
+		
 		String sBuyerName = objAccountVO.getsUserName();
 		String sBuyerEmail = objAccountVO.geteMailAddress();
 		String iBuyerPhone = null;
@@ -603,15 +612,19 @@ public class CheckoutAct extends Activity implements OnClickListener {
 		OBj.put("paymentMode", paymentMode);
 		int orderId;
 		try {
+			
 			orderId = productOrder.postOrder(CheckoutAct.this, OBj.toString());
+			
 			if (orderId != 0) {
-				sendOrederItemJson_toSever(orderId);
+			sendOrederItemJson_toSever(orderId);
 			}
-		} catch (CustomException e) {
+		} catch (Exception e) {
+			Log.e(">>>>>>>>>>","EXCEPTION>>>> "+e);
 			showNetworkError();
 		}
 	}
 
+	
 	/**
 	 * This Method is used for send order for multiple Items to server.
 	 * 
@@ -619,6 +632,7 @@ public class CheckoutAct extends Activity implements OnClickListener {
 	 * @throws JSONException
 	 */
 	private void sendOrederItemJson_toSever(int orderId2) throws JSONException {
+		Log.d(">>>>>>>>>>",">>>>>>>>Inside sendOrederItemJson_toSever>>>>>");
 		JSONObject OBj = null;
 		for (int iIndex = 0; iIndex < checkOutList.size(); iIndex++) {
 			OBj = new JSONObject();
@@ -654,25 +668,35 @@ public class CheckoutAct extends Activity implements OnClickListener {
 	/**
 	 * This method shows Network related errors.
 	 */
+	@SuppressWarnings("deprecation")
 	private void showNetworkError() {
-		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-		alertDialog.setTitle(MobicartCommonData.keyValues.getString(
-				"key.iphone.nointernet.title", "Alert"));
-		alertDialog.setMessage(MobicartCommonData.keyValues.getString(
-				"key.iphone.nointernet.text", "Network Error"));
-		alertDialog.setButton(MobicartCommonData.keyValues.getString(
-				"key.iphone.nointernet.cancelbutton", "Ok"),
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						Intent intent = new Intent(Intent.ACTION_MAIN);
-						intent.addCategory(Intent.CATEGORY_HOME);
-						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						CheckoutAct.this.startActivity(intent);
-						CheckoutAct.this.finish();
-					}
-				});
-		alertDialog.show();
-	}
+		this.runOnUiThread(new Runnable() {
+			  public void run() {
+				  AlertDialog alertDialog = new AlertDialog.Builder(getParent()).create();
+					alertDialog.setTitle(MobicartCommonData.keyValues.getString(
+							"key.iphone.nointernet.title", "Alert"));
+					alertDialog.setMessage(MobicartCommonData.keyValues.getString(
+							"key.iphone.nointernet.text", "Network Error"));
+					alertDialog.setButton(MobicartCommonData.keyValues.getString(
+							"key.iphone.nointernet.cancelbutton", "Ok"),
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+									Intent intent = new Intent(Intent.ACTION_MAIN);
+									intent.addCategory(Intent.CATEGORY_HOME);
+									intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+									CheckoutAct.this.startActivity(intent);
+									CheckoutAct.this.finish();
+								}
+							});
+					alertDialog.show();
+			  }
+			});
+		
+		    	
+		    }
+		
+		
+	
 
 	/**
 	 * This Class is used for sending order status to server in json form.
@@ -696,12 +720,18 @@ public class CheckoutAct extends Activity implements OnClickListener {
 
 		@Override
 		protected void onPreExecute() {
+			 
 			progressDialog.show();
+			
 			super.onPreExecute();
 		}
 
 		@Override
 		protected String doInBackground(String... params) {
+//			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+//		      .permitAll().build();
+//		    StrictMode.setThreadPolicy(policy);
+			Log.d(">>>>>>>>>>",">>>>>>>>Inside SendStatusToServerTask>>>>>");
 			try {
 				sendPaypalStaus_toSever();
 			} catch (JSONException e) {
@@ -713,23 +743,29 @@ public class CheckoutAct extends Activity implements OnClickListener {
 
 		@Override
 		protected void onPostExecute(String result) {
+			
 			progressDialog.dismiss();
-			AlertDialog.Builder builder = new AlertDialog.Builder(getParent());
-			builder.setTitle(MobicartCommonData.keyValues.getString(
-					"key.iphone.review.rating.posted.title", ""));
-			builder.setMessage(MobicartCommonData.keyValues.getString(
-					"key.iphone.order.completed.sucess.text", ""));
-			builder.setCancelable(false).setPositiveButton(
-					MobicartCommonData.keyValues.getString(
-							"key.iphone.nointernet.cancelbutton", ""),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							deleteCartItem();
-							dialog.dismiss();
-						}
-					});
-			builder.show();
+			runOnUiThread(new Runnable() {
+			    public void run() {
+			    	AlertDialog.Builder builder = new AlertDialog.Builder(getParent());
+					builder.setTitle(MobicartCommonData.keyValues.getString(
+							"key.iphone.review.rating.posted.title", ""));
+					builder.setMessage(MobicartCommonData.keyValues.getString(
+							"key.iphone.order.completed.sucess.text", ""));
+					builder.setCancelable(false).setPositiveButton(
+							MobicartCommonData.keyValues.getString(
+									"key.iphone.nointernet.cancelbutton", ""),
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									deleteCartItem();
+									dialog.dismiss();
+								}
+							});
+					builder.show();
+			    }
+			});
+			
 			super.onPostExecute(result);
 		}
 	}
@@ -737,10 +773,18 @@ public class CheckoutAct extends Activity implements OnClickListener {
 	/**
 	 * This Method is used for displaying dialog to show paypal status.
 	 */
+	
 	private void payPalStatusDailogOk() {
-		@SuppressWarnings("unused")
-		SendStatusToServerTask objSendStatusToServerTask = (SendStatusToServerTask) new SendStatusToServerTask(
-				this).execute("");
+	
+		SendStatusToServerTask objSendStatusToServerTask=new SendStatusToServerTask(CheckoutAct.this);
+		//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			//objSendStatusToServerTask
+		   //    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+		 //   } else {
+		    	objSendStatusToServerTask.execute();
+		    //}
+		
+		
 	}
 
 	private void payPalStatusDailog() {

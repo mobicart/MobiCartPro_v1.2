@@ -5,6 +5,7 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
   android:background="@drawable/account_bg">
+  
   <com.mobicart.renamed_package.utils.MyCommonView
   android:id="@+id/review_title_TV"
   style="@style/TitleFont"

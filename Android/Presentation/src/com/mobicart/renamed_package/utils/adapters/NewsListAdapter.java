@@ -4,10 +4,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +22,9 @@ import android.widget.TextView;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.android.model.NewsVO;
-import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.constants.MobiCartConstantIds;
 import com.mobicart.renamed_package.utils.ImageLoader;
+import com.mobicart.renamed_package.R;
 
 /**
  * @author mobicart
@@ -110,7 +112,9 @@ public class NewsListAdapter extends BaseAdapter {
 		}		
 		DateFormat formatter;
 		Date date;
-		formatter = new SimpleDateFormat("E,dd MMM yy");
+		//formatter = new SimpleDateFormat("E,dd MMM yy");
+		//Sa Vo fix bug, add locate US
+		formatter = new SimpleDateFormat("E,dd MMM yy", Locale.US);
 		try {
 			if(str_date==null){
 				date=newsList.get(position).getdDate();
@@ -124,6 +128,7 @@ public class NewsListAdapter extends BaseAdapter {
 			dayStrNew = dayNew + MobiCartConstantIds.suffixes[dayNew] + " "
 					+ day2New;
 		} catch (java.text.ParseException e) {
+			Log.i("Debug", e.toString());
 		}
 		}
 		holder.titleTV.setText(newsList.get(position).getsTitle());

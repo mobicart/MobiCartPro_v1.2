@@ -5,9 +5,9 @@ package com.mobicart.renamed_package.utils;
 
 import android.content.Context;
 
-import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.android.model.CartItemVO;
 import com.mobicart.android.model.MobicartCommonData;
+import com.mobicart.renamed_package.database.DataBaseAccess;
 
 /**
  * This Class is used to get count of cart items.

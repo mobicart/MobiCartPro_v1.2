@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +21,11 @@ import com.mobicart.android.communication.MobicartLogger;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.renamed_package.GetCountryNStateAct;
-import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.ImageLoader;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.ProductTax;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetImagesTask;
+import com.mobicart.renamed_package.R;
 
 /**
  * @author mobicart
@@ -46,7 +47,8 @@ public class FeaturedGalleryAdapter extends BaseAdapter {
 	 * @param activity
 	 */
 	public FeaturedGalleryAdapter(Activity activity) {
-
+		
+		Log.e("gsize","FeaturedGalleryAdapter");
 		mContext = activity;
 		layoutInflater = mContext.getLayoutInflater();
 		objMobicartLogger = new MobicartLogger("MobicartServiceLogger");
@@ -105,24 +107,24 @@ public class FeaturedGalleryAdapter extends BaseAdapter {
 	}
 
 	public int getCount() {
+		
 		return MobicartCommonData.featuredPrducts.size();
 	}
 
 	public Object getItem(int position) {
-		return null;
+		return position;
 	}
 
 	public long getItemId(int position) {
-		return 0;
+		return position;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
+		
 		RelativeLayout galleryPriceRL = null;
 		RelativeLayout imgRL = null;
 		ViewHolder holder = new ViewHolder();
-		if (MobicartCommonData.featuredPrducts.size() == 1) {
-			position = 0;
-		}
+		
 		if (convertView == null) {
 			convertView = layoutInflater.inflate(R.layout.home_gallery_layout,
 					null);

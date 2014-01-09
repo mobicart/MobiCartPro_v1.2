@@ -2,6 +2,7 @@ package com.mobicart.renamed_package;
 
 import java.io.IOException;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityGroup;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -23,13 +25,13 @@ import android.view.View.OnTouchListener;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ViewFlipper;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.ViewFlipper;
 
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.renamed_package.utils.CartItemCount;
@@ -38,6 +40,7 @@ import com.mobicart.renamed_package.utils.AsyncTasks.GetBannersTask;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetColorSchemeTask;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetImagesTask;
 import com.mobicart.renamed_package.utils.listeners.HomeBannersGestureListener;
+import com.mobicart.renamed_package.R;
 
 /**
  * This activity class is for the home tab section which hosts the banners and
@@ -138,6 +141,7 @@ public class HomeTabAct extends ActivityGroup implements OnClickListener {
 		ParentActivityGroup.fromHome = false;
 		backBtn.setVisibility(View.GONE);
 		MobicartCommonData.isFromStart = "NotSplash";
+		 
 		super.onDestroy();
 	}
 
@@ -171,6 +175,22 @@ public class HomeTabAct extends ActivityGroup implements OnClickListener {
 				+ MobicartCommonData.keyValues.getString("key.iphone.cancel",
 						"Cancel") + " ");
 		homeGallery = (Gallery) findViewById(R.id.home_tab_gallery_view);
+		/*
+		 * set gallery
+		 * 
+		 */
+		
+		 DisplayMetrics metrics = new DisplayMetrics();
+		 this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		 float density = this.getResources().getDisplayMetrics().density;
+		 
+		 android.view.ViewGroup.MarginLayoutParams mlp = (android.view.ViewGroup.MarginLayoutParams) homeGallery.getLayoutParams();
+			mlp.setMargins(-(metrics.widthPixels/2+100), 
+			               mlp.topMargin, 
+			               mlp.rightMargin, 
+			               mlp.bottomMargin
+			);
+			
 		homeTopRL = (RelativeLayout) findViewById(R.id.home_tab_Top_RL);
 		searchButton.setOnClickListener(this);
 		homeSearchET.setOnClickListener(this);
@@ -338,6 +358,7 @@ public class HomeTabAct extends ActivityGroup implements OnClickListener {
 		return false;
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public void onBackPressed() {
 		if (isInSearchMode) {

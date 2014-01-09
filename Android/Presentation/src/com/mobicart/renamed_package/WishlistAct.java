@@ -1,6 +1,7 @@
 package com.mobicart.renamed_package;
 
 import java.util.concurrent.TimeUnit;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -10,10 +11,12 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetWishListProductTask;
+import com.mobicart.renamed_package.R;
 
 /**
  * This Activity Class shows the list of products which are added to wishlist by

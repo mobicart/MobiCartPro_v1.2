@@ -629,9 +629,9 @@ public class DataBaseAccess {
 		} finally {
 			if (cursor != null && !cursor.isClosed()) {
 				cursor.close();
-				db.close();
+//				db.close();
 			}
-			db.close();
+//			db.close();
 		}
 		return arrIModelVo;
 	}

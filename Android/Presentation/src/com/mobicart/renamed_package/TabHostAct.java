@@ -9,21 +9,23 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
+
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.renamed_package.utils.ImageLoader;
 import com.mobicart.renamed_package.utils.MyCommonView;
+import com.mobicart.renamed_package.R;
 
 /**
  * This Activity is used to host all TabGroup Activities.
@@ -67,11 +69,11 @@ public class TabHostAct extends TabActivity {
 		productIV.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT));
 		productIV.setTag(MobicartUrlConstants.baseUrl.substring(0,
-				MobicartUrlConstants.baseUrl.length() - 1)
-				+ imageUrl);
-		imageLoader.DisplayImage(MobicartUrlConstants.baseUrl.substring(0,
-				MobicartUrlConstants.baseUrl.length() - 1)
-				+ imageUrl, this, productIV);
+				MobicartUrlConstants.baseUrl.length() - 1) + imageUrl);
+		imageLoader.DisplayImage(
+				MobicartUrlConstants.baseUrl.substring(0,
+						MobicartUrlConstants.baseUrl.length() - 1) + imageUrl,
+				this, productIV);
 		companyLogoIV.addView(productIV);
 		try {
 			if (MobicartCommonData.colorSchemeObj.getThemeColor().length() > 0) {
@@ -142,8 +144,8 @@ public class TabHostAct extends TabActivity {
 							.get(i).getId());
 
 				} else {
-					if (!MobicartCommonData.appVitalsObj.getFeaturesList().get(
-							2).getName().equalsIgnoreCase("News"))
+					if (!MobicartCommonData.appVitalsObj.getFeaturesList()
+							.get(2).getName().equalsIgnoreCase("News"))
 						createTab(MobicartCommonData.appVitalsObj
 								.getFeaturesList().get(i).getId());
 				}

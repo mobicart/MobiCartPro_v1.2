@@ -58,7 +58,6 @@
   android:singleLine="true"
   />
  <TableLayout 
- xmlns:android="http://schemas.android.com/apk/res/android"
  android:layout_width="150dip"
  android:layout_height="wrap_content"
  android:layout_below="@+id/cart_list_price_tv"

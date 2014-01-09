@@ -7,10 +7,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.ListView;
 
-import com.mobicart.renamed_package.ProductsListAct;
-import com.mobicart.renamed_package.StoreTabGroupAct;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.android.model.ProductVO;
+import com.mobicart.renamed_package.ProductsListAct;
+import com.mobicart.renamed_package.StoreTabGroupAct;
 import com.mobicart.renamed_package.utils.adapters.DepartmentsListAdapter;
 
 /**

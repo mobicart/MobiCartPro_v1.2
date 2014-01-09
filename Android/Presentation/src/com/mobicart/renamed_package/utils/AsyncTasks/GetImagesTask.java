@@ -76,8 +76,9 @@ public class GetImagesTask extends AsyncTask<String, String, String> {
 				showserverError();
 		} else {
 			gallery.setAdapter(featuredGalleryAdapter);
-			gallery.setSelection(1);
+			gallery.setSelection(0);
 			gallery.setAnimation(inFromLeftAnimation());
+			
 		}
 		super.onPostExecute(result);
 	}
@@ -137,7 +138,7 @@ public class GetImagesTask extends AsyncTask<String, String, String> {
 				isFeaturedListUpdated = true;
 				flag = fillFeaturedList();
 			}
-			featuredGalleryAdapter = new FeaturedGalleryAdapter(currentContext);
+			//featuredGalleryAdapter = new FeaturedGalleryAdapter(currentContext);
 			return flag;
 		} else {
 			flag = fillFeaturedList();

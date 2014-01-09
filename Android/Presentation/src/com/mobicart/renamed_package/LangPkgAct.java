@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import com.google.android.gcm.GCMRegistrar;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.renamed_package.constants.MobiCartConstantIds;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetLangPackTask;
+import com.mobicart.renamed_package.R;
 
 /**
  * This Activity is used to call Async Task to get data from service to
@@ -29,7 +31,7 @@ public class LangPkgAct extends Activity {
 		MobicartCommonData.isFromStart = "";
 		backgroundView = new View(this);
 		backgroundView
-				.setBackgroundResource(com.mobicart.renamed_package.R.drawable.default_mobicart);
+				.setBackgroundResource(R.drawable.default_mobicart);
 		setContentView(backgroundView);
 		register();
 		/*if (GetAppIdentifierTask.isFirstTime) {

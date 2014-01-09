@@ -6,12 +6,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+
 import com.bugsense.trace.BugSenseHandler;
 import com.mobicart.android.communication.MobicartLogger;
 import com.mobicart.android.communication.Oauth;
@@ -19,6 +21,7 @@ import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.renamed_package.constants.MobiCartConstantIds;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetAppIdentifierTask;
+import com.mobicart.renamed_package.R;
 
 /**
  * This activity is the launcher activity for the app. In this activity, all the

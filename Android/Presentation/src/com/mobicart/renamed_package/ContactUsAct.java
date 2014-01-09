@@ -31,6 +31,7 @@ import com.mobicart.android.model.UserAddressVO;
 import com.mobicart.renamed_package.constants.MobiCartConstantIds;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
+import com.mobicart.renamed_package.R;
 
 /**
  * This Activity is used to show user address on Google Map.

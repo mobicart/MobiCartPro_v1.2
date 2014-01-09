@@ -9,10 +9,10 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.mobicart.android.core.MobicartUrlConstants;
@@ -23,6 +23,7 @@ import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.MyRadioButton;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetNewsTask;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetTwitterTask;
+import com.mobicart.renamed_package.R;
 /**
  * This activity class is for the News tab section which host news feed and twitter feeds.
  * @author mobicart

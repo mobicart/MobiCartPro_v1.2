@@ -1,5 +1,7 @@
 package com.mobicart.renamed_package;
 
+import com.mobicart.renamed_package.R;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;

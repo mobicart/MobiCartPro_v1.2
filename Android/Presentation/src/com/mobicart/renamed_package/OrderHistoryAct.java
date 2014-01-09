@@ -9,13 +9,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import com.mobicart.renamed_package.database.DataBaseAccess;
+
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.AccountVO;
 import com.mobicart.android.model.MobicartCommonData;
+import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetProductOrder;
+import com.mobicart.renamed_package.R;
 
 /**
  * This Activity class is used for showing list of order.

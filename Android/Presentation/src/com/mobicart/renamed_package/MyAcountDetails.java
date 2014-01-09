@@ -16,12 +16,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.AccountVO;
@@ -30,6 +30,7 @@ import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetAppIdentifierTask;
+import com.mobicart.renamed_package.R;
 
 /**
  * This Activity class is used to display all account related details of

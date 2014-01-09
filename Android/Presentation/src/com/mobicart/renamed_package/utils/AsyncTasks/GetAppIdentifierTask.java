@@ -3,13 +3,17 @@ package com.mobicart.renamed_package.utils.AsyncTasks;
 import java.text.SimpleDateFormat;
 import java.util.Currency;
 import java.util.Date;
+
 import org.json.JSONException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
+
 import com.mobicart.android.communication.CustomException;
 import com.mobicart.android.communication.MobicartLogger;
 import com.mobicart.android.core.AppColorScheme;
@@ -64,8 +68,11 @@ public class GetAppIdentifierTask extends AsyncTask<String, String, String> {
 						.getStoreIdAndAppIdByUserName(activity,
 								MobiCartConstantIds.userName);
 			}
+			
+			
 			MobicartCommonData.storeVO = new Store().getStoreSettings(activity,
 					MobicartCommonData.appIdentifierObj.getStoreId());
+			Log.d(">>>>>>>>>>","Got Data in STOREVO: "+MobicartCommonData.storeVO.getId());
 			MobicartCommonData.appVitalsObj = appVitals.getAppVitals(activity,
 					MobicartCommonData.appIdentifierObj.getAppId());
 			MobicartCommonData.colorSchemeObj = appColorScheme
@@ -102,16 +109,29 @@ public class GetAppIdentifierTask extends AsyncTask<String, String, String> {
 			}
 			MobicartCommonData.keyValues = activity.getSharedPreferences(
 					"KeyValue", Context.MODE_PRIVATE);
-			if(MobicartCommonData.storeVO!=null){
-			MobicartCommonData.shippingObj =MobicartCommonData.storeVO.getShippingList();
-			MobicartCommonData.taxObj = MobicartCommonData.storeVO.getTaxList();
-			// fetching details from zooz fields
-			MobiCartConstantIds.ZOOZ_APP_ID =(MobicartCommonData.storeVO.getsAndroidUniqueID()==null)?"":MobicartCommonData.storeVO.getsAndroidUniqueID();
-			MobiCartConstantIds.ZOOZ_APP_TOKEN = (MobicartCommonData.storeVO.getsAndroidAppKey()==null)?"":MobicartCommonData.storeVO.getsAndroidAppKey();
-			MobiCartConstantIds.ZOOZ_SERVER_MODE = (MobicartCommonData.storeVO.getZoozLive()==null)?"":MobicartCommonData.storeVO.getZoozLive();
-			MobiCartConstantIds.PAYPAL_APP_ID =(MobicartCommonData.storeVO.getsPaypalToken()==null)?"":MobicartCommonData.storeVO.getsPaypalToken();
-			MobiCartConstantIds.PAYPAL_EMAIL_ID = (MobicartCommonData.storeVO.getsPaypalEmail()==null)?"":MobicartCommonData.storeVO.getsPaypalEmail();
-			MobiCartConstantIds.PAYPAL_SERVER_MODE = (MobicartCommonData.storeVO.getPaypalLive())?1:0;
+			if (MobicartCommonData.storeVO != null) {
+				MobicartCommonData.shippingObj = MobicartCommonData.storeVO
+						.getShippingList();
+				MobicartCommonData.taxObj = MobicartCommonData.storeVO
+						.getTaxList();
+				// fetching details from zooz fields
+				MobiCartConstantIds.ZOOZ_APP_ID = (MobicartCommonData.storeVO
+						.getsAndroidUniqueID() == null) ? ""
+						: MobicartCommonData.storeVO.getsAndroidUniqueID();
+				MobiCartConstantIds.ZOOZ_APP_TOKEN = (MobicartCommonData.storeVO
+						.getsAndroidAppKey() == null) ? ""
+						: MobicartCommonData.storeVO.getsAndroidAppKey();
+				MobiCartConstantIds.ZOOZ_SERVER_MODE = (MobicartCommonData.storeVO
+						.getZoozLive() == null) ? ""
+						: MobicartCommonData.storeVO.getZoozLive();
+				MobiCartConstantIds.PAYPAL_APP_ID = (MobicartCommonData.storeVO
+						.getsPaypalToken() == null) ? ""
+						: MobicartCommonData.storeVO.getsPaypalToken();
+				MobiCartConstantIds.PAYPAL_EMAIL_ID = (MobicartCommonData.storeVO
+						.getsPaypalEmail() == null) ? ""
+						: MobicartCommonData.storeVO.getsPaypalEmail();
+				MobiCartConstantIds.PAYPAL_SERVER_MODE = (MobicartCommonData.storeVO
+						.getPaypalLive()) ? 1 : 0;
 			}
 			activity.startActivity(new Intent(activity, LangPkgAct.class));
 			try {
@@ -120,8 +140,8 @@ public class GetAppIdentifierTask extends AsyncTask<String, String, String> {
 						.getSymbol();
 				MobicartCommonData.currencySymbol = applicationCurrency;
 			} catch (NullPointerException e) {
-				objMobicartLogger.LogExceptionMsg(reqDateFormat
-						.format(new Date()), e.getMessage());
+				objMobicartLogger.LogExceptionMsg(
+						reqDateFormat.format(new Date()), e.getMessage());
 				showServerError();
 			}
 			activity.finish();
@@ -130,43 +150,61 @@ public class GetAppIdentifierTask extends AsyncTask<String, String, String> {
 	}
 
 	private void showNetworkError() {
-		AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-		alertDialog.setTitle(MobicartCommonData.keyValues.getString(
-				"key.iphone.nointernet.title", "Alert"));
-		alertDialog.setMessage(MobicartCommonData.keyValues.getString(
-				"key.iphone.nointernet.text", "Network Error"));
-		alertDialog.setButton(MobicartCommonData.keyValues.getString(
-				"key.iphone.nointernet.cancelbutton", "Ok"),
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						Intent intent = new Intent(Intent.ACTION_MAIN);
-						intent.addCategory(Intent.CATEGORY_HOME);
-						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						activity.startActivity(intent);
-						activity.finish();
-					}
-				});
-		alertDialog.show();
+		activity.runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				AlertDialog alertDialog = new AlertDialog.Builder(activity)
+						.create();
+				alertDialog.setTitle(MobicartCommonData.keyValues.getString(
+						"key.iphone.nointernet.title", "Alert"));
+				alertDialog.setMessage(MobicartCommonData.keyValues.getString(
+						"key.iphone.nointernet.text", "Network Error"));
+				alertDialog.setButton(MobicartCommonData.keyValues.getString(
+						"key.iphone.nointernet.cancelbutton", "Ok"),
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								Intent intent = new Intent(Intent.ACTION_MAIN);
+								intent.addCategory(Intent.CATEGORY_HOME);
+								intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+								activity.startActivity(intent);
+								activity.finish();
+							}
+						});
+				alertDialog.show();
+			}
+		});
+
 	}
 
 	private void showServerError() {
-		AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-		alertDialog.setTitle(MobicartCommonData.keyValues.getString(
-				"key.iphone.server.notresp.title.error", "Alert"));
-		alertDialog.setMessage(MobicartCommonData.keyValues.getString(
-				"key.iphone.server.notresp.text", "Server not Responding"));
-		alertDialog.setButton(MobicartCommonData.keyValues.getString(
-				"key.iphone.nointernet.cancelbutton", "OK"),
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						Intent intent = new Intent(Intent.ACTION_MAIN);
-						intent.addCategory(Intent.CATEGORY_HOME);
-						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						activity.startActivity(intent);
-						activity.finish();
-					}
-				});
-		alertDialog.show();
+		activity.runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				AlertDialog alertDialog = new AlertDialog.Builder(activity)
+						.create();
+				alertDialog.setTitle(MobicartCommonData.keyValues.getString(
+						"key.iphone.server.notresp.title.error", "Alert"));
+				alertDialog.setMessage(MobicartCommonData.keyValues.getString(
+						"key.iphone.server.notresp.text",
+						"Server not Responding"));
+				alertDialog.setButton(MobicartCommonData.keyValues.getString(
+						"key.iphone.nointernet.cancelbutton", "OK"),
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								Intent intent = new Intent(Intent.ACTION_MAIN);
+								intent.addCategory(Intent.CATEGORY_HOME);
+								intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+								activity.startActivity(intent);
+								activity.finish();
+							}
+						});
+				alertDialog.show();
+			}
+		});
 	}
 
 	@Override

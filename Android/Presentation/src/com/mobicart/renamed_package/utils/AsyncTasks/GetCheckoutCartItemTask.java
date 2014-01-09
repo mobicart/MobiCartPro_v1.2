@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.json.JSONException;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -16,10 +18,10 @@ import android.widget.ListView;
 import com.mobicart.android.communication.CustomException;
 import com.mobicart.android.communication.MobicartLogger;
 import com.mobicart.android.core.Product;
-import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.android.model.CartItemVO;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.android.model.ProductVO;
+import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.renamed_package.utils.adapters.CheckoutListAdapter;
 
 /**
@@ -58,12 +60,20 @@ public class GetCheckoutCartItemTask extends AsyncTask<String, String, String> {
 
 	@Override
 	protected void onPreExecute() {
+		if(progressDialog != null)
+			progressDialog.dismiss();
 		progressDialog.show();
+		
 		super.onPreExecute();
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	protected String doInBackground(String... params) {
+		
+//		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+//	      .permitAll().build();
+//	    StrictMode.setThreadPolicy(policy);
 		if (!getCartListItem()) {
 			return "FALSE";
 		} else {
@@ -71,6 +81,7 @@ public class GetCheckoutCartItemTask extends AsyncTask<String, String, String> {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private boolean getCartListItem() {
 		database = new DataBaseAccess(currentactivity);
 		cartListVO = database.GetRows("SELECT * from "
@@ -103,14 +114,22 @@ public class GetCheckoutCartItemTask extends AsyncTask<String, String, String> {
 
 	@Override
 	protected void onPostExecute(String result) {
+		
+	
+		
 		if (result.equalsIgnoreCase("FALSE")) {
 			if (isNetworkNotAvailable)
 				showNetworkError();
 			else
 				showServerError();
 		} else {
-			checkoutListView.setAdapter(new CheckoutListAdapter(
-					currentactivity, cartListVO, cartProduct));
+			currentactivity.runOnUiThread(new Runnable() {
+		        public void run() {
+		        	checkoutListView.setAdapter(new CheckoutListAdapter(
+							currentactivity, cartListVO, cartProduct));
+		        }
+		    });
+			
 		}
 		try {
 			progressDialog.dismiss();
@@ -122,7 +141,12 @@ public class GetCheckoutCartItemTask extends AsyncTask<String, String, String> {
 	}
 
 	private void showNetworkError() {
-		AlertDialog alertDialog = new AlertDialog.Builder(this.currentactivity)
+		
+		
+		currentactivity.runOnUiThread(new Runnable() {
+	        @SuppressWarnings("deprecation")
+			public void run() {
+	        	AlertDialog alertDialog = new AlertDialog.Builder(currentactivity)
 				.create();
 		alertDialog.setTitle(MobicartCommonData.keyValues.getString(
 				"key.iphone.nointernet.title", "Alert"));
@@ -140,22 +164,33 @@ public class GetCheckoutCartItemTask extends AsyncTask<String, String, String> {
 					}
 				});
 		alertDialog.show();
+	        }
+	    });
+		
+		
 	}
 
 	private void showServerError() {
-		final AlertDialog alertDialog = new AlertDialog.Builder(
-				this.currentactivity).create();
-		alertDialog.setTitle(MobicartCommonData.keyValues.getString(
-				"key.iphone.server.notresp.title.error", "Alert"));
-		alertDialog.setMessage(MobicartCommonData.keyValues.getString(
-				"key.iphone.server.notresp.text", "Server not Responding"));
-		alertDialog.setButton(MobicartCommonData.keyValues.getString(
-				"key.iphone.nointernet.cancelbutton", "OK"),
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						alertDialog.cancel();
-					}
-				});
-		alertDialog.show();
+		currentactivity.runOnUiThread(new Runnable() {
+	        @SuppressWarnings("deprecation")
+			public void run() {
+	        	final AlertDialog alertDialog = new AlertDialog.Builder(
+	    				currentactivity).create();
+	    		alertDialog.setTitle(MobicartCommonData.keyValues.getString(
+	    				"key.iphone.server.notresp.title.error", "Alert"));
+	    		alertDialog.setMessage(MobicartCommonData.keyValues.getString(
+	    				"key.iphone.server.notresp.text", "Server not Responding"));
+	    		alertDialog.setButton(MobicartCommonData.keyValues.getString(
+	    				"key.iphone.nointernet.cancelbutton", "OK"),
+	    				new DialogInterface.OnClickListener() {
+	    					public void onClick(DialogInterface dialog, int which) {
+	    						alertDialog.cancel();
+	    					}
+	    				});
+	    		alertDialog.show();
+	        }
+	    });
+		
+		
 	}
 }

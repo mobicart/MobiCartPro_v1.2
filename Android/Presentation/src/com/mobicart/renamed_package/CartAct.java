@@ -1,7 +1,9 @@
 package com.mobicart.renamed_package;
 
 import java.util.ArrayList;
+
 import org.json.JSONException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -24,6 +26,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import com.mobicart.android.communication.CustomException;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.core.Product;
@@ -41,6 +44,7 @@ import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.ProductTax;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetCartItemTask;
 import com.mobicart.renamed_package.utils.adapters.CartListAdapter;
+import com.mobicart.renamed_package.R;
 
 /**
  * This Activity Class List all the items added in Cart by user.

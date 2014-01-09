@@ -2,7 +2,9 @@ package com.mobicart.renamed_package.utils.AsyncTasks;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.json.JSONException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,6 +13,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+
 import com.mobicart.android.communication.CustomException;
 import com.mobicart.android.communication.MobicartLogger;
 import com.mobicart.android.core.AppColorScheme;

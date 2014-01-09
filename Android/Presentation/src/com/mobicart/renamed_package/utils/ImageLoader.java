@@ -6,9 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.ref.SoftReference;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Stack;
+
+import com.mobicart.renamed_package.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,15 +20,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
-import com.mobicart.renamed_package.R;
-
  /**
  * This class is used for simplest in-memory cache implementation. This should be replaced with something like SoftReference or BitmapOptions.inPurgeable(since 1.6)
  * 
  */
 public class ImageLoader {
 
-	private HashMap<String, Bitmap> cache = new HashMap<String, Bitmap>();
+	//private HashMap<String, Bitmap> cache = new HashMap<String, Bitmap>();
+	private static HashMap<String, SoftReference<Bitmap>> cache = 
+		    new HashMap<String, SoftReference<Bitmap>>();
 	private File cacheDir;
 
 	/**
@@ -56,8 +60,8 @@ public class ImageLoader {
 	
 	public void DisplayImage(String url, Activity activity, ImageView imageView) {
 		if (cache.containsKey(url)){
-			Bitmap bitmap=cache.get(url);
-			imageView.setImageBitmap(bitmap);
+			SoftReference<Bitmap> bitmap=cache.get(url);
+			imageView.setImageBitmap(bitmap.get());
 		  }
 		else {
 			queuePhoto(url, activity, imageView);
@@ -78,6 +82,7 @@ public class ImageLoader {
 			photoLoaderThread.start();
 	}
 
+	@SuppressWarnings("null")
 	private Bitmap getBitmap(String url) {
 		// I identify images by hashcode. Not a perfect solution, good for the
 		// demo.
@@ -86,18 +91,33 @@ public class ImageLoader {
 		// from SD cache
 		Bitmap b = decodeFile(f);
 		if (b != null)
+		{
 			return b;
+			
 		// from web
+		}
 		try {
 			Bitmap bitmap = null;
-			InputStream is = new URL(url).openStream();
+			
+			/*InputStream is = new URL(url).openStream();
 			OutputStream os = new FileOutputStream(f);
 			ImageUtils.CopyStream(is, os);
-			os.close();
+			os.close();*/
+			URL imageUrl = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection)imageUrl.openConnection();
+            conn.setConnectTimeout(30000);
+            conn.setReadTimeout(30000);
+            conn.setInstanceFollowRedirects(true);
+            InputStream is=conn.getInputStream();
+            OutputStream os = new FileOutputStream(f);
+            ImageUtils.CopyStream(is, os);
+            os.close();
 			bitmap = decodeFile(f);
 			return bitmap;
-		} catch (Exception ex) {
+		} catch (Throwable ex) {
 			ex.printStackTrace();
+			if(ex instanceof OutOfMemoryError)
+	               cache.clear();
 			return null;
 		}
 	}
@@ -107,6 +127,7 @@ public class ImageLoader {
 		try {
 			// decode image size
 			BitmapFactory.Options o = new BitmapFactory.Options();
+			o.inTempStorage = new byte[16*1024];
 			o.inJustDecodeBounds = true;
 			BitmapFactory.decodeStream(new FileInputStream(f), null, o);
 			// Find the correct scale value. It should be the power of 2.
@@ -172,7 +193,7 @@ public class ImageLoader {
 						try {
 							bmp = getBitmap(photoToLoad.url);
 							
-							cache.put(photoToLoad.url, bmp);
+							cache.put(photoToLoad.url, new SoftReference<Bitmap>(bmp));
 							if (((String) photoToLoad.imageView.getTag())
 									.equals(photoToLoad.url)) {
 								BitmapDisplayer bd = new BitmapDisplayer(bmp,
@@ -221,4 +242,6 @@ public class ImageLoader {
 		for (File f : files)
 			f.delete();
 	}
+	
+	
 }

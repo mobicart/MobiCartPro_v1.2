@@ -11,6 +11,7 @@ import android.webkit.WebViewClient;
 
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.renamed_package.utils.MyCommonView;
+import com.mobicart.renamed_package.R;
 
 /**
  * This activity is used to play videos of product in webView.

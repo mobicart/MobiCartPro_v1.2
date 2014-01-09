@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.CategoryVO;
 import com.mobicart.android.model.DepartmentVO;
@@ -23,13 +24,13 @@ import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.android.model.ProductVO;
 import com.mobicart.android.model.SubCategoryVO;
 import com.mobicart.renamed_package.ProductsListAct;
-import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.SplashAct;
 import com.mobicart.renamed_package.StoreTabGroupAct;
 import com.mobicart.renamed_package.SubCategoryTabAct;
 import com.mobicart.renamed_package.utils.ImageLoader;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.ProductTax;
+import com.mobicart.renamed_package.R;
 
 /**
  * @author mobicart

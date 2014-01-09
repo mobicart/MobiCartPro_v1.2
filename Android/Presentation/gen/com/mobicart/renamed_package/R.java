@@ -720,7 +720,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:first_name
+          @attr name com.mobicart.renamed_package:first_name
         */
         public static final int MyTextView_first_name = 0;
         /**
@@ -734,7 +734,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:last_name
+          @attr name com.mobicart.renamed_package:last_name
         */
         public static final int MyTextView_last_name = 1;
         /**
@@ -748,7 +748,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:rajni_img
+          @attr name com.mobicart.renamed_package:rajni_img
         */
         public static final int MyTextView_rajni_img = 3;
         /**
@@ -762,7 +762,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:ttf_name
+          @attr name com.mobicart.renamed_package:ttf_name
         */
         public static final int MyTextView_ttf_name = 2;
     };

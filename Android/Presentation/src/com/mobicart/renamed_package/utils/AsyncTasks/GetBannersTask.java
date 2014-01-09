@@ -3,7 +3,9 @@ package com.mobicart.renamed_package.utils.AsyncTasks;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import org.json.JSONException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -16,6 +18,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ViewFlipper;
+
 import com.mobicart.android.communication.CustomException;
 import com.mobicart.android.communication.MobicartLogger;
 import com.mobicart.android.core.GalleryImage;
@@ -52,11 +55,11 @@ public class GetBannersTask extends
 		currentContext = activity;
 		objMobicartLogger = new MobicartLogger("MobicartServiceLogger");
 		reqDateFormat = new SimpleDateFormat("MMM. dd,yyyy kk:mm:ss ");
-		progressDialog = new ProgressDialog(activity.getParent());
-		progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		progressDialog.setMessage(MobicartCommonData.keyValues.getString(
-				"key.iphone.LoaderText", "Loader"));
-		progressDialog.setCancelable(false);
+		//progressDialog = new ProgressDialog(activity.getParent());
+		//.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		//progressDialog.setMessage(MobicartCommonData.keyValues.getString(
+			//	"key.iphone.LoaderText", "Loader"));
+		//progressDialog.setCancelable(false);
 		imageLoader = new ImageLoader(activity.getApplicationContext());
 	}
 
@@ -151,7 +154,8 @@ public class GetBannersTask extends
 
 	@Override
 	protected void onPreExecute() {
-		progressDialog.show();
+		progressDialog=ProgressDialog.show(currentContext.getParent(), "", MobicartCommonData.keyValues.getString(
+				"key.iphone.LoaderText", ""));
 		super.onPreExecute();
 	}
 

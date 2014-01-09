@@ -2,14 +2,15 @@ package com.mobicart.renamed_package.utils.adapters;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.RotateAnimation;
 import android.widget.BaseAdapter;
@@ -18,19 +19,20 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.android.model.ProductVO;
 import com.mobicart.android.model.WishListVO;
 import com.mobicart.renamed_package.ParentActivityGroup;
 import com.mobicart.renamed_package.ProductDetailAct;
-import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.WishlistAct;
 import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.renamed_package.database.MobicartDbConstants;
 import com.mobicart.renamed_package.utils.ImageLoader;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.ProductTax;
+import com.mobicart.renamed_package.R;
 
 /**
  * @author mobicart

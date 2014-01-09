@@ -1,7 +1,9 @@
 package com.mobicart.renamed_package.utils.adapters;
 
 import java.util.ArrayList;
+
 import org.json.JSONException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,15 +20,16 @@ import android.widget.ListAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
 import com.mobicart.android.communication.CustomException;
 import com.mobicart.android.core.Product;
 import com.mobicart.android.model.CartItemVO;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.android.model.ProductVO;
 import com.mobicart.renamed_package.CheckoutAct;
-import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.ProductTax;
+import com.mobicart.renamed_package.R;
 
 /**
  * @author mobicart

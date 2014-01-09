@@ -12,10 +12,10 @@ import android.widget.RelativeLayout.LayoutParams;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.renamed_package.CartAct;
 import com.mobicart.renamed_package.ParentActivityGroup;
-import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.TabHostAct;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
+import com.mobicart.renamed_package.R;
 
 /**
  * This Activity class is used for showing cover flow images of a product.

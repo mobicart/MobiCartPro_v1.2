@@ -5,7 +5,6 @@ import java.util.Date;
 
 import org.json.JSONException;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -16,13 +15,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+
 import com.mobicart.android.communication.CustomException;
 import com.mobicart.android.communication.MobicartLogger;
 import com.mobicart.android.core.News;
 import com.mobicart.android.model.MobicartCommonData;
-import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.adapters.NewsListAdapter;
+import com.mobicart.renamed_package.R;
 
 /**
  * This is News Task retrive news from web service
@@ -60,18 +60,19 @@ public class GetNewsTask extends AsyncTask<String, String, String> {
 		this.headerTitle = headerTitle;
 		objMobicartLogger = new MobicartLogger("MobicartServiceLogger");
 		reqDateFormat = new SimpleDateFormat("MMM. dd,yyyy kk:mm:ss ");
-		progressDialog = new ProgressDialog(activity.getParent());
-		progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		progressDialog.setMessage(MobicartCommonData.keyValues.getString(
-				"key.iphone.LoaderText", ""));
-		progressDialog.setCancelable(false);
+		//progressDialog = new ProgressDialog(activity.getParent());
+	//	progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		//progressDialog.setMessage(MobicartCommonData.keyValues.getString(
+			//	"key.iphone.LoaderText", ""));
+	//	progressDialog.setCancelable(false);
 		reqDateFormat = new SimpleDateFormat("MMM. dd,yyyy kk:mm:ss ");
 		objMobicartLogger = new MobicartLogger("MobicartServiceLogger");
 	}
 
 	@Override
 	protected void onPreExecute() {
-		progressDialog.show();
+		progressDialog=ProgressDialog.show(currentactivity.getParent(), "", MobicartCommonData.keyValues.getString(
+				"key.iphone.LoaderText", ""));
 		super.onPreExecute();
 	}
 

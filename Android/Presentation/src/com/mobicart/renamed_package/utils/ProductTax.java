@@ -206,6 +206,8 @@ public class ProductTax {
 		} else {
 			productCost = product.getfPrice();
 		}
+		
+		
 		if (MobicartCommonData.storeVO.isbIncludeTax()) {
 			if (product.getbTaxable()) {
 				if (product.getfPrice() >= discount) {
