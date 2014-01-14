@@ -32,11 +32,11 @@ import android.widget.Toast;
 
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetAppIdentifierTask;
-import com.mobicart.renamed_package.R;
 
 /**
  * This Activity Class is used for creating Account.
@@ -87,6 +87,8 @@ public class SignUpAct extends Activity implements OnClickListener {
 		backStr = extra.getString("backBtn");
 		gredientButtonDrawable = (GradientDrawable) this.getResources()
 				.getDrawable(R.drawable.rounded_button);
+		
+		//Sa Vo fix bug
 		gredientButtonDrawable.setColor(Color.parseColor("#"
 				+ MobicartCommonData.colorSchemeObj.getThemeColor()));
 		prepareViewControls();
@@ -97,6 +99,9 @@ public class SignUpAct extends Activity implements OnClickListener {
 		} catch (NullPointerException e) {
 		}
 		submitBtn.setBackgroundDrawable(gredientButtonDrawable);
+		//Sa Vo fix bug
+		submitBtn.setTextColor(Color.parseColor("#"
+				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 		submitBtn.setOnClickListener(this);
 		if (IsFrom.equalsIgnoreCase("CartAct")) {
 			String backStrTitle = MobicartCommonData.keyValues.getString(
@@ -488,6 +493,10 @@ public class SignUpAct extends Activity implements OnClickListener {
 				"key.iphone.signup.submit", "Submit"));
 
 		submitBtn.setBackgroundDrawable(gredientButtonDrawable);
+		
+		//Sa Vo fix bug
+		submitBtn.setTextColor(Color.parseColor("#"
+				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 		cartEditBtn = TabHostAct.prepareCartButton(this);
 		cartEditBtn.setVisibility(View.GONE);
 		cartBtn = TabHostAct.prepareCartButton(this);
@@ -545,6 +554,10 @@ public class SignUpAct extends Activity implements OnClickListener {
 				"key.iphone.signup.submit", "Submit"));
 
 		submitBtn2.setBackgroundDrawable(gredientButtonDrawable);
+		
+		//Sa Vo fix bug
+		submitBtn2.setTextColor(Color.parseColor("#"
+				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 		deliveryCityET = (EditText) findViewById(R.id.Delivery_city_ET);
 		dCountrySV = (ScrollView) findViewById(R.id.Delivery_country_SV);
 		dStateSV = (ScrollView) findViewById(R.id.Delivery_state_SV);

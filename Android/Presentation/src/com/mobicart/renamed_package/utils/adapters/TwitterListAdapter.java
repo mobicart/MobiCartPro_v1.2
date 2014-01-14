@@ -25,8 +25,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.mobicart.android.model.MobicartCommonData;
-import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.R;
+import com.mobicart.renamed_package.utils.MyCommonView;
 
 /**
  * This is TwitterListAdapter to display tweets in List.

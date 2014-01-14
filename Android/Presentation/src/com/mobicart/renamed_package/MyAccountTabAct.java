@@ -15,11 +15,11 @@ import android.view.View.OnClickListener;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.android.model.WishListVO;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.renamed_package.database.MobicartDbConstants;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
-import com.mobicart.renamed_package.R;
 
 /**
  * This activity class is used for the Account tab section which manage Login

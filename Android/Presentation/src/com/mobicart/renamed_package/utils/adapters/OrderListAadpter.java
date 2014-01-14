@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 
 import com.mobicart.android.model.MobicartCommonData;
-import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.R;
+import com.mobicart.renamed_package.utils.MyCommonView;
 
 /**
  * @author mobicart

@@ -21,11 +21,11 @@ import com.mobicart.android.communication.MobicartLogger;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.renamed_package.GetCountryNStateAct;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.ImageLoader;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.ProductTax;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetImagesTask;
-import com.mobicart.renamed_package.R;
 
 /**
  * @author mobicart

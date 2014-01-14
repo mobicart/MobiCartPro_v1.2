@@ -26,13 +26,13 @@ import com.mobicart.android.model.ProductVO;
 import com.mobicart.android.model.WishListVO;
 import com.mobicart.renamed_package.ParentActivityGroup;
 import com.mobicart.renamed_package.ProductDetailAct;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.WishlistAct;
 import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.renamed_package.database.MobicartDbConstants;
 import com.mobicart.renamed_package.utils.ImageLoader;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.ProductTax;
-import com.mobicart.renamed_package.R;
 
 /**
  * @author mobicart

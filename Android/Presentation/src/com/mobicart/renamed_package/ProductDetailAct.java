@@ -62,7 +62,6 @@ import com.mobicart.renamed_package.utils.SoundManager;
 import com.mobicart.renamed_package.utils.adapters.CartListAdapter;
 import com.mobicart.renamed_package.utils.adapters.DepartmentsListAdapter;
 import com.mobicart.renamed_package.utils.coverflow.CoverFlowExample;
-import com.mobicart.renamed_package.R;
 
 /**
  * This activity class is used for displaying Details of selected product.
@@ -608,6 +607,10 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 		priceTaxTV.setTextColor(Color.parseColor("#"
 				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 		addToCartBtn.setBackgroundDrawable(drawable);
+		
+		//Sa Vo fix bug
+		addToCartBtn.setTextColor(Color.parseColor("#"
+				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 		productTextTV.setTextColor(Color.parseColor("#"
 				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 		postReviewBtn.setText(MobicartCommonData.keyValues.getString(

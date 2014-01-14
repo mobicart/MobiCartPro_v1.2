@@ -20,10 +20,10 @@ import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.core.Product;
 import com.mobicart.android.model.AccountVO;
 import com.mobicart.android.model.MobicartCommonData;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
-import com.mobicart.renamed_package.R;
 
 /**
  * This activity class is used for Posting Reviews on Product.

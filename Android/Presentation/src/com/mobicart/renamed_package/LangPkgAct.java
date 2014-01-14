@@ -8,9 +8,9 @@ import android.view.View;
 
 import com.google.android.gcm.GCMRegistrar;
 import com.mobicart.android.model.MobicartCommonData;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.constants.MobiCartConstantIds;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetLangPackTask;
-import com.mobicart.renamed_package.R;
 
 /**
  * This Activity is used to call Async Task to get data from service to

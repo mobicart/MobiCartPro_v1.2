@@ -19,9 +19,9 @@ import com.mobicart.android.communication.MobicartLogger;
 import com.mobicart.android.communication.Oauth;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.constants.MobiCartConstantIds;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetAppIdentifierTask;
-import com.mobicart.renamed_package.R;
 
 /**
  * This activity is the launcher activity for the app. In this activity, all the

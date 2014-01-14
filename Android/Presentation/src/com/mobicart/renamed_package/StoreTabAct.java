@@ -31,11 +31,11 @@ import com.mobicart.android.communication.MobicartLogger;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.DepartmentVO;
 import com.mobicart.android.model.MobicartCommonData;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetProductsTask;
 import com.mobicart.renamed_package.utils.adapters.DepartmentsListAdapter;
-import com.mobicart.renamed_package.R;
 
 /**
  * This activity group is for store tab. Displays list of department->categories

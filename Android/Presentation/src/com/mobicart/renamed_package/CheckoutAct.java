@@ -38,13 +38,13 @@ import com.mobicart.android.core.ProductOrderItem;
 import com.mobicart.android.model.AccountVO;
 import com.mobicart.android.model.CartItemVO;
 import com.mobicart.android.model.MobicartCommonData;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.Paypal.ResultDelegate;
 import com.mobicart.renamed_package.constants.MobiCartConstantIds;
 import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetCheckoutCartItemTask;
 import com.mobicart.renamed_package.utils.adapters.CheckoutListAdapter;
-import com.mobicart.renamed_package.R;
 import com.paypal.android.MEP.PayPal;
 import com.paypal.android.MEP.PayPalPayment;
 import com.zooz.android.lib.CheckoutActivity;
@@ -212,6 +212,13 @@ public class CheckoutAct extends Activity implements OnClickListener {
 	
 		zoozCheckout.setBackgroundDrawable(gradienatCheckoutBtnDrawable);
 		paypalCheckout.setBackgroundDrawable(gradienatCheckoutBtnDrawable);
+		
+		//Sa Vo fix bugs 
+		zoozCheckout.setTextColor(Color.parseColor("#"
+				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
+		paypalCheckout.setTextColor(Color.parseColor("#"
+				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
+		
 		if (!MobicartCommonData.storeVO.isPaypalUsed()||MobiCartConstantIds.PAYPAL_APP_ID.length()==0||MobiCartConstantIds.PAYPAL_EMAIL_ID.length()==0){
 			paypalCheckout.setVisibility(View.GONE);
 		} else {
@@ -232,6 +239,10 @@ public class CheckoutAct extends Activity implements OnClickListener {
 		} else {
 			codBtn.setVisibility(View.VISIBLE);
 			codBtn.setBackgroundDrawable(gradienatCheckoutBtnDrawable);
+			
+			//Sa Vo fix bug
+			codBtn.setTextColor(Color.parseColor("#"
+					+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 			codBtn.setText(MobicartCommonData.keyValues.getString(
 					"key.iphone.CashOnDelivery", "COD"));
 			codBtn.setOnClickListener(this);

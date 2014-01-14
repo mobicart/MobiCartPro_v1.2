@@ -26,11 +26,11 @@ import android.widget.Toast;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.AccountVO;
 import com.mobicart.android.model.MobicartCommonData;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.database.DataBaseAccess;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetAppIdentifierTask;
-import com.mobicart.renamed_package.R;
 
 /**
  * This Activity class is used to display all account related details of
@@ -251,6 +251,9 @@ public class MyAcountDetails extends ActivityGroup implements OnClickListener {
 		dStateSV = (ScrollView) findViewById(R.id.Delivery_state_SV);
 		deliveryZipET = (EditText) findViewById(R.id.Delivery_zip_ET);
 		edit.setBackgroundDrawable(gradientButtonDrawable);
+		//Sa vo fix bug missing checkout
+		edit.setTextColor(Color.parseColor("#"
+				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 		edit.setText(MobicartCommonData.keyValues.getString(
 				"key.iphone.createaccount.edit", "Edit"));
 		cartBtn = TabHostAct.prepareCartButton(this);

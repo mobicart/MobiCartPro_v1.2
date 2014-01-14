@@ -28,11 +28,11 @@ import android.widget.TextView.OnEditorActionListener;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.android.model.SubCategoryVO;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetProductsTask;
 import com.mobicart.renamed_package.utils.adapters.DepartmentsListAdapter;
-import com.mobicart.renamed_package.R;
 
 /**
  * This activity is used for listing all available categories in a store.

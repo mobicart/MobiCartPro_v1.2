@@ -39,12 +39,12 @@ import android.widget.TextView.OnEditorActionListener;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.android.model.ProductVO;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.LocalSearchEtTextWatcher;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetProductsTask;
 import com.mobicart.renamed_package.utils.adapters.DepartmentsListAdapter;
-import com.mobicart.renamed_package.R;
 
 /**
  * This activity class is used for displaying list of products in a store with

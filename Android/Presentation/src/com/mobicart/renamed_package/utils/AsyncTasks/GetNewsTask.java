@@ -20,9 +20,9 @@ import com.mobicart.android.communication.CustomException;
 import com.mobicart.android.communication.MobicartLogger;
 import com.mobicart.android.core.News;
 import com.mobicart.android.model.MobicartCommonData;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.adapters.NewsListAdapter;
-import com.mobicart.renamed_package.R;
 
 /**
  * This is News Task retrive news from web service

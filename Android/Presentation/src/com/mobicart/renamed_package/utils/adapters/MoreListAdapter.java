@@ -15,8 +15,8 @@ import android.widget.ImageView;
 
 import com.mobicart.android.model.FeatureVO;
 import com.mobicart.android.model.MobicartCommonData;
-import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.R;
+import com.mobicart.renamed_package.utils.MyCommonView;
 
 /**
  * @author mobicart

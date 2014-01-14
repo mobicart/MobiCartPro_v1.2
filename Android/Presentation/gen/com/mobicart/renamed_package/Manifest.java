@@ -11,6 +11,6 @@ public final class Manifest {
     public static final class permission {
         /**  @@@@@@@@@@@ C2DM  Permissions @@@@@@@@@@ 
          */
-        public static final String C2D_MESSAGE="com.example.gcm.permission.C2D_MESSAGE";
+        public static final String C2D_MESSAGE="com.mobicart.renamed_package.permission.C2D_MESSAGE";
     }
 }

@@ -18,12 +18,12 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.android.model.NewsVO;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.MyRadioButton;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetNewsTask;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetTwitterTask;
-import com.mobicart.renamed_package.R;
 /**
  * This activity class is for the News tab section which host news feed and twitter feeds.
  * @author mobicart

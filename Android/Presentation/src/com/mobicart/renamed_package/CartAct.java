@@ -39,12 +39,12 @@ import com.mobicart.android.model.ShippingVO;
 import com.mobicart.android.model.TaxShippingVO;
 import com.mobicart.android.model.TaxVO;
 import com.mobicart.android.model.TerritoryVO;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.ProductTax;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetCartItemTask;
 import com.mobicart.renamed_package.utils.adapters.CartListAdapter;
-import com.mobicart.renamed_package.R;
 
 /**
  * This Activity Class List all the items added in Cart by user.
@@ -129,7 +129,7 @@ public class CartAct extends Activity implements OnClickListener,
 		backBtn.setVisibility(View.VISIBLE);
 		backBtn.setText(isFrom);
 		gradienatCheckoutBtnDrawable = (GradientDrawable) this.getResources()
-				.getDrawable(R.drawable.rounded_button);
+				.getDrawable(R.drawable.rounded_button);		
 		gradienatCheckoutBtnDrawable.setColor(Color.parseColor("#"
 				+ MobicartCommonData.colorSchemeObj.getThemeColor()));
 		getCountryNState = new GetCountryNStateAct(this);
@@ -332,6 +332,10 @@ public class CartAct extends Activity implements OnClickListener,
 		chkoutBt.setText(MobicartCommonData.keyValues.getString(
 				"key.iphone.shoppingcart.checkout", "Checkout"));
 		chkoutBt.setBackgroundDrawable(gradienatCheckoutBtnDrawable);
+		//Sa Vo fix bug missing checkout button
+		
+		chkoutBt.setTextColor(Color.parseColor("#"
+				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 	}
 
 	/**

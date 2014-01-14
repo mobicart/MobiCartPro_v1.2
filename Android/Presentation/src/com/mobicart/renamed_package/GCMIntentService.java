@@ -22,8 +22,8 @@ import android.content.Intent;
 import com.google.android.gcm.GCMBaseIntentService;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
-import com.mobicart.renamed_package.constants.MobiCartConstantIds;
 import com.mobicart.renamed_package.R;
+import com.mobicart.renamed_package.constants.MobiCartConstantIds;
 
 
 /**

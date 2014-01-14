@@ -14,8 +14,8 @@ import com.mobicart.android.communication.CustomException;
 import com.mobicart.android.core.Product;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.android.model.ProductVO;
-import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.R;
+import com.mobicart.renamed_package.utils.MyCommonView;
 
 /**
  * @author mobicart

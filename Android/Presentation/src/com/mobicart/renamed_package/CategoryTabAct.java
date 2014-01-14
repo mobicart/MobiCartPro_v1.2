@@ -30,11 +30,11 @@ import android.widget.TextView.OnEditorActionListener;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.CategoryVO;
 import com.mobicart.android.model.MobicartCommonData;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetProductsTask;
 import com.mobicart.renamed_package.utils.adapters.DepartmentsListAdapter;
-import com.mobicart.renamed_package.R;
 
 /**
  * This Activity class shows all categories of Department selected by user.

@@ -34,13 +34,13 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.ViewFlipper;
 
 import com.mobicart.android.model.MobicartCommonData;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetBannersTask;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetColorSchemeTask;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetImagesTask;
 import com.mobicart.renamed_package.utils.listeners.HomeBannersGestureListener;
-import com.mobicart.renamed_package.R;
 
 /**
  * This activity class is for the home tab section which hosts the banners and
