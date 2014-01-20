@@ -36,6 +36,8 @@ public class SplashAct extends Activity {
 	public static final int MDPI = 4;
 	public static final int HDPI = 6;
 	public static final int XHDPI = 6;
+	//Sa Vo add code
+	public static final int XXHDPI = 7;
 	public static int screenHeight=0;
 	public static boolean xhdpi = false;
 	private View backgroundView;
@@ -120,11 +122,21 @@ public class SplashAct extends Activity {
 			break;
 		case DisplayMetrics.DENSITY_LOW:
 			MobicartUrlConstants.resolution = LDPI;
-			break;
+			break;	
+			
 		default: {
-			MobicartUrlConstants.resolution = XHDPI;
-			xhdpi = true;
+			//Sa vo add code
+			final float scale = getResources().getDisplayMetrics().density;		
+			
+			if(scale==3){
+				MobicartUrlConstants.resolution = XXHDPI;
+			}else{
+				MobicartUrlConstants.resolution = XHDPI;
+				xhdpi = true;
+			}
+			break;
 		}
+		
 		}
 	}
 

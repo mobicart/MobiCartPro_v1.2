@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -217,6 +218,11 @@ public class TabHostAct extends TabActivity {
 	 */
 	private void addTab(String string, int addToCartBtnSelector,
 			Intent tabIntent2) {
+		//Sa Vo add code
+		RelativeLayout.LayoutParams xxhdpi = new RelativeLayout.LayoutParams(216,
+				225);
+		RelativeLayout.LayoutParams xxhdpiNew = new RelativeLayout.LayoutParams(270,
+				225);
 		RelativeLayout.LayoutParams xhdpi = new RelativeLayout.LayoutParams(144,
 				150);
 		RelativeLayout.LayoutParams xhdpiNew = new RelativeLayout.LayoutParams(
@@ -239,11 +245,36 @@ public class TabHostAct extends TabActivity {
 		RelativeLayout rl = (RelativeLayout) tabIndicator
 				.findViewById(R.id.tabsLayout);
 		if (MobicartCommonData.appVitalsObj.getFeaturesList().size() < 5) {
+			//Sa Vo add code
+			LayoutParams layoutParams = MobicartUrlConstants.resolution == 6 ? SplashAct.xhdpi?xhdpiNew:hdpiNew
+					: MobicartUrlConstants.resolution == 4 ? mdpiNew : ldpiNew;
+			if(MobicartUrlConstants.resolution == SplashAct.XXHDPI){
+				layoutParams = xxhdpiNew;
+			}
+			rl.setLayoutParams(layoutParams);
+			
+					/*
 			rl.setLayoutParams(MobicartUrlConstants.resolution == 6 ? SplashAct.xhdpi?xhdpiNew:hdpiNew
 					: MobicartUrlConstants.resolution == 4 ? mdpiNew : ldpiNew);
-		} else
+					*/
+					
+		} else{
+			
+			LayoutParams layoutParams = MobicartUrlConstants.resolution == 6 ? SplashAct.xhdpi?xhdpiNew:hdpiNew
+					: MobicartUrlConstants.resolution == 4 ? mdpiNew : ldpiNew;
+			if(MobicartUrlConstants.resolution == SplashAct.XXHDPI){
+				layoutParams = xxhdpi;
+			}
+			rl.setLayoutParams(layoutParams);
+			
+			/*
 			rl.setLayoutParams(MobicartUrlConstants.resolution == 6 ?SplashAct.xhdpi?xhdpi: hdpi
 					: MobicartUrlConstants.resolution == 4 ? mdpi : ldpi);
+					*/
+		}
+			
+			
+		
 
 		ImageView icon = (ImageView) tabIndicator.findViewById(R.id.icon1);
 		icon.setImageResource(addToCartBtnSelector);
