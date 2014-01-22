@@ -260,8 +260,8 @@ public class TabHostAct extends TabActivity {
 					
 		} else{
 			
-			LayoutParams layoutParams = MobicartUrlConstants.resolution == 6 ? SplashAct.xhdpi?xhdpiNew:hdpiNew
-					: MobicartUrlConstants.resolution == 4 ? mdpiNew : ldpiNew;
+			LayoutParams layoutParams = MobicartUrlConstants.resolution == 6 ?SplashAct.xhdpi?xhdpi: hdpi
+					: MobicartUrlConstants.resolution == 4 ? mdpi : ldpi;
 			if(MobicartUrlConstants.resolution == SplashAct.XXHDPI){
 				layoutParams = xxhdpi;
 			}
