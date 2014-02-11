@@ -506,6 +506,10 @@ static MobiCartStart *shared;
 	
 	NSMutableArray *arrSelectedTitles = [[[NSMutableArray alloc] init] autorelease];
 	
+    //Sa Vo fix bug display wrong title of More pages on iOS 7.0
+    
+    NSMutableArray *arrTitleMorePage = [[[NSMutableArray alloc] init] autorelease];
+    
 	for(int i =0; i<[arrAllNavigationTitles count]; i++)
 	{
 		if (![[arrAllNavigationTitles objectAtIndex:i] isEqual: @""])
@@ -513,6 +517,18 @@ static MobiCartStart *shared;
             [arrSelectedTitles addObject:[arrAllNavigationTitles objectAtIndex:i]];
         }
 	}
+    
+    //Sa Vo fix bug display wrong title of More pages on iOS 7.0
+    
+    for (int i=0; i<[arrSelectedTitles count]; i++) {
+        if(i>3){
+            [arrTitleMorePage addObject:[arrSelectedTitles objectAtIndex:i]];
+            
+        }
+    }
+    
+    _objMobicartAppDelegate.arrMoreTitles = [NSArray arrayWithArray:arrTitleMorePage];
+
 	
     // For adding add to cart button
 	UIButton *btnCart[[arrControllersToCreate count]];

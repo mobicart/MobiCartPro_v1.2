@@ -14,7 +14,8 @@
 @implementation MobicartAppAppDelegate
 @synthesize window;  
 @synthesize mobicartView,viewController,tabController,arrAllData,loadingIndicator,backgroundImage,alert;
-
+//Sa Vo fix bug display wrong title of More page on iOS 7.0
+@synthesize arrMoreTitles = _arrMoreTitles;
 
 
 
