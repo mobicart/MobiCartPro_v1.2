@@ -8,6 +8,7 @@
 
 #import "MoreTableViewDataSource.h"
 #import "Constants.h"
+#import "MobicartAppDelegate.h"
 
 
 @implementation MoreTableViewDataSource
@@ -53,6 +54,10 @@
 	cell.selectionStyle=UITableViewCellSelectionStyleNone;
 	cell.accessoryType=UITableViewCellAccessoryNone;
 
+    //Sa Vo fix bug display wrong titles of More pages on iOS 7.0
+    MobicartAppDelegate *appDelegate = (MobicartAppDelegate *)[UIApplication sharedApplication].delegate;
+
+    cell.textLabel.text = [appDelegate.arrMoreTitles objectAtIndex:indexPath.row];
 	
 	UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(90, 15, 200, 30)];
 	[btn setTitle:[NSString stringWithFormat:@"%@",cell.textLabel.text] forState:UIControlStateNormal];

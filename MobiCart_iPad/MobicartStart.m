@@ -62,7 +62,10 @@ static MobicartStart *shared;
 	self=[super init];
     if (self)
     {
-        _objMobicartAppDelegate = [[MobicartAppDelegate alloc] init];
+        //Sa Vo fix bug display wrong title of More pages on iOS 7.0
+        //_objMobicartAppDelegate = [[MobicartAppDelegate alloc] init];
+        _objMobicartAppDelegate = (MobicartAppDelegate*)[UIApplication sharedApplication].delegate;
+
         // Custom initialization.
         if(_merchantEmail)
             [GlobalPrefrences setMerchantEmailID:_merchantEmail];
@@ -446,11 +449,28 @@ static MobicartStart *shared;
 	[arrSelectedTitles addObject:@""];
 	[arrSelectedTitles addObject:@""];
 	[arrSelectedTitles addObject:@""];
+    
+    //Sa Vo fix bug display wrong title of More pages on iOS 7.0
+    
+    NSMutableArray *arrTitleMorePage = [[[NSMutableArray alloc] init] autorelease];
+    
 	for(int i =0; i<[arrAllNavigationTitles count]; i++)
 	{
-		if([arrAllNavigationTitles objectAtIndex:i] != @"")
+		if(![[arrAllNavigationTitles objectAtIndex:i] isEqual: @""])
 			[arrSelectedTitles addObject:[arrAllNavigationTitles objectAtIndex:i]];
 	}
+    
+    //Sa Vo fix bug display wrong title of More pages on iOS 7.0
+    
+    for (int i=0; i<[arrSelectedTitles count]; i++) {
+        if(i>6){
+            [arrTitleMorePage addObject:[arrSelectedTitles objectAtIndex:i]];
+            
+        }
+    }
+    
+    _objMobicartAppDelegate.arrMoreTitles = [NSArray arrayWithArray:arrTitleMorePage];
+
 	for(int i=0;i< [arrControllersToCreate count]; i++)
 	{
 		UINavigationController *localNavigationController = [[UINavigationController alloc] initWithRootViewController:[arrControllersToCreate objectAtIndex:i]];

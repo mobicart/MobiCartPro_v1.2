@@ -19,8 +19,11 @@
     if (self) {
         // Custom initialization.
 	 
-			if( isMorePage==NO)
-	           self.tabBarItem.image=[UIImage imageNamed:@"About_Us.png"];
+        if( isMorePage==NO){
+            //Sa Vo fix bug display wrong title of More pages on iOS 7.0
+	           //self.tabBarItem.image=[UIImage imageNamed:@"About_Us.png"];
+            self.tabBarItem.image=[UIImage imageNamed:@"about_us.png"];
+        }
 		
 	}
 

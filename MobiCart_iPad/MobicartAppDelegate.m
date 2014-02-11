@@ -20,7 +20,8 @@
 @synthesize window;
 //@synthesize viewController,tabController;
 @synthesize viewController,tabController,arrAllData,loadingIndicator,backgroundImage;
-
+//Sa Vo fix bug display wrong title of More page on iOS 7.0
+@synthesize arrMoreTitles = _arrMoreTitles;
 #pragma mark -
 #pragma mark Application lifecycle
 

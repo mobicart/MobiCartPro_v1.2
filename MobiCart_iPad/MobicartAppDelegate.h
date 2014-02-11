@@ -19,6 +19,9 @@
 	UIImageView *backgroundImage;
 	UIActivityIndicatorView *loadingIndicator;
     CLLocationCoordinate2D tempLocation;
+    
+    //Sa Vo fix bug display wrong title of More page on iOS 7.0
+    NSArray *_arrMoreTitles;
 	
 }
 
@@ -28,6 +31,7 @@
 @property (nonatomic, retain) NSArray *arrAllData;
 @property (nonatomic, retain) UIActivityIndicatorView *loadingIndicator;
 @property (nonatomic, retain) UIImageView *backgroundImage;
-
+//Sa Vo fix bug display wrong title of More page on iOS 7.0
+@property (nonatomic, retain)  NSArray *arrMoreTitles;
 @end
 
