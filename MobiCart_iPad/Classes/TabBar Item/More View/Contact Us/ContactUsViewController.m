@@ -268,19 +268,19 @@
 	if((![dictUserDetails isEqual:[NSNull null]]) && (dictUserDetails !=nil))
 	{
 		NSString *strMerchantAddress = [NSString stringWithFormat:@"%@,%@,%@,%@",[dictUserDetails objectForKey:@"sAddress"],[dictUserDetails objectForKey:@"sCity"],[dictUserDetails objectForKey:@"sState"],[dictUserDetails objectForKey:@"sCountry"]];
-		NSString *urlString = [NSString stringWithFormat:@"http://maps.google.com/maps/geo?q=%@&output=csv&key=%@", 
-							   [strMerchantAddress stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],google_key];
-		NSError *err;
-    	NSString *locationString = [NSString stringWithContentsOfURL:[NSURL URLWithString:urlString] encoding:NSASCIIStringEncoding error:&err];
-		NSArray *listItems = [locationString componentsSeparatedByString:@","];
-		
-		double latitude = 0.0;
-		double longitude = 0.0;
-		
-		if([listItems count] >= 4 && [[listItems objectAtIndex:0] isEqualToString:@"200"]) {
-			latitude = [[listItems objectAtIndex:2] doubleValue];
-			longitude = [[listItems objectAtIndex:3] doubleValue];
-		}
+        
+		//Sa Vo fix bug google map doesn't display address exactly
+        
+        double latitude = 0, longitude = 0;
+        NSString *esc_addr =  [strMerchantAddress stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *req = [NSString stringWithFormat:@"http://maps.google.com/maps/api/geocode/json?sensor=false&address=%@", esc_addr];
+        NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:req] encoding:NSUTF8StringEncoding error:NULL];
+        
+        SBJSON *_JSONParser=[[[SBJSON alloc]init] autorelease];
+        NSDictionary *dictJson = (NSDictionary*)[_JSONParser objectWithString:result error:nil];
+        NSDictionary *locationDict = [[[[dictJson objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
+        longitude = [[locationDict objectForKey:@"lng"] doubleValue];
+        latitude = [[locationDict objectForKey:@"lat"] doubleValue];
 		
 		CLLocationCoordinate2D location;
 		location.latitude = latitude;
