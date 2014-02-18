@@ -12,5 +12,6 @@ public final class Manifest {
         /**  @@@@@@@@@@@ C2DM  Permissions @@@@@@@@@@ 
          */
         public static final String C2D_MESSAGE="com.mobicart.renamed_package.permission.C2D_MESSAGE";
+        public static final String MAPS_RECEIVE="com.mobicart.renamed_package.MAPS_RECEIVE";
     }
 }

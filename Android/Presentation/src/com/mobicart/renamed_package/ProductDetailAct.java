@@ -21,6 +21,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,10 +84,10 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 	@SuppressWarnings("unused")
 	private Double optionPrice = 0.0;
 	private int qtyInCart = 0;
-	private Double productPrice=0.0;
-	private Double actualPrice=0.0;
+	private Double productPrice = 0.0;
+	private Double actualPrice = 0.0;
 	private ArrayList<ProductOptionVO> productOptions = null;
-	private int currentProductPosition=0;
+	private int currentProductPosition = 0;
 	private int WishlistId = 0;
 	private int reviewSize, pOptAvailableQuantity = 0, selectedPosition;
 	private int count, optionSize;
@@ -115,7 +116,7 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 	public static float fAvRating;
 	public static long iRating;
 	private static String productOptionId;
-	private static int productId = 0, GetProductId=0;
+	private static int productId = 0, GetProductId = 0;
 	public static ProductVO currentProduct;
 	private Product objProduct;
 	private static RatingBar ratingView;
@@ -140,6 +141,12 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// Sa Vo add code to strict thread in background for Android SDK 11 to
+		// upper
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+		StrictMode.setThreadPolicy(policy);
 
 		setContentView(R.layout.product_detail_layout);
 		cartEditBtn = TabHostAct.prepareCartEditButton(this);
@@ -335,8 +342,7 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 				&& MobicartCommonData.storeVO.isbIncludeTax())
 			priceTaxTV.setText("(Inc. " + currentProduct.getsTaxType() + ")");
 		if (ProductTax
-				.caluateTaxForProductWithoutIncByUserLocation(currentProduct) >  0) 
-		          {
+				.caluateTaxForProductWithoutIncByUserLocation(currentProduct) > 0) {
 			Double tax = ProductTax
 					.caluateTaxForProductWithoutIncByUserLocation(currentProduct);
 			actualPrice = tax;
@@ -347,8 +353,7 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 					&& MobicartCommonData.storeVO.isbIncludeTax())
 				actualPriceTaxTV.setText("(Inc. "
 						+ currentProduct.getsTaxType() + ")");
-		}
-		else {
+		} else {
 			actualPriceTV
 					.setText(String.valueOf(MobicartCommonData.currencySymbol
 							+ String.format("%.2f", currentProduct.getfPrice())));
@@ -539,11 +544,10 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 			ratingView.setRating(fAvRating);
 			if (fromFeature || fromWishlist) {
 			} else
-				try{
-				DepartmentsListAdapter.ratingBar.setRating(fAvRating);
+				try {
+					DepartmentsListAdapter.ratingBar.setRating(fAvRating);
+				} catch (Exception e) {
 				}
-			catch (Exception e) {
-			}
 		} else {
 			iRating = 0;
 			productReviewTV.setText(iRating
@@ -607,8 +611,8 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 		priceTaxTV.setTextColor(Color.parseColor("#"
 				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 		addToCartBtn.setBackgroundDrawable(drawable);
-		
-		//Sa Vo fix bug
+
+		// Sa Vo fix bug
 		addToCartBtn.setTextColor(Color.parseColor("#"
 				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 		productTextTV.setTextColor(Color.parseColor("#"
@@ -1014,20 +1018,22 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 		database.insertWishList(
 				currentProduct.getId(),
 				currentProduct.getsName(),
-				actualPriceTV.getText().toString().equalsIgnoreCase("")?0.0:Double
-						.parseDouble(actualPriceTV
+				actualPriceTV.getText().toString().equalsIgnoreCase("") ? 0.0
+						: Double.parseDouble(actualPriceTV
 								.getText()
 								.toString()
 								.substring(
-										MobicartCommonData.currencySymbol.toString().length(),
+										MobicartCommonData.currencySymbol
+												.toString().length(),
 										actualPriceTV.getText().toString()
 												.length())),
-				productPriceTV.getText().toString().equalsIgnoreCase("")?0.0:Double
-						.parseDouble(productPriceTV
+				productPriceTV.getText().toString().equalsIgnoreCase("") ? 0.0
+						: Double.parseDouble(productPriceTV
 								.getText()
 								.toString()
 								.substring(
-										MobicartCommonData.currencySymbol.toString().length(),
+										MobicartCommonData.currencySymbol
+												.toString().length(),
 										productPriceTV.getText().toString()
 												.length())),
 				currentProduct.getProductImages().size() > 0 ? currentProduct
@@ -1053,7 +1059,8 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 	 */
 	private void doCartTask() {
 		if (!checkDB()) {
-			productOptionId=currentProduct.getbUseOptions()?productOptionId:"0";
+			productOptionId = currentProduct.getbUseOptions() ? productOptionId
+					: "0";
 			database.insertCartList(currentProduct.getId(), productOptionId, 1,
 					MaxAvlQty);
 			select = true;

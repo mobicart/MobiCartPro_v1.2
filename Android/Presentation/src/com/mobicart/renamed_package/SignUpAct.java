@@ -87,8 +87,8 @@ public class SignUpAct extends Activity implements OnClickListener {
 		backStr = extra.getString("backBtn");
 		gredientButtonDrawable = (GradientDrawable) this.getResources()
 				.getDrawable(R.drawable.rounded_button);
-		
-		//Sa Vo fix bug
+
+		// Sa Vo fix bug
 		gredientButtonDrawable.setColor(Color.parseColor("#"
 				+ MobicartCommonData.colorSchemeObj.getThemeColor()));
 		prepareViewControls();
@@ -99,7 +99,7 @@ public class SignUpAct extends Activity implements OnClickListener {
 		} catch (NullPointerException e) {
 		}
 		submitBtn.setBackgroundDrawable(gredientButtonDrawable);
-		//Sa Vo fix bug
+		// Sa Vo fix bug
 		submitBtn.setTextColor(Color.parseColor("#"
 				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 		submitBtn.setOnClickListener(this);
@@ -145,8 +145,7 @@ public class SignUpAct extends Activity implements OnClickListener {
 			if (countries.size() > 0) {
 				adapter = new ArrayAdapter<String>(SignUpAct.this,
 						android.R.layout.simple_spinner_item, countries);
-				adapter
-						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			} else
 				showDialog();
 		} else {
@@ -154,8 +153,7 @@ public class SignUpAct extends Activity implements OnClickListener {
 			adapter = new ArrayAdapter<String>(SignUpAct.this,
 					android.R.layout.simple_spinner_item,
 					countryStateNotAvaliable);
-			adapter
-					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		}
 	}
 
@@ -169,7 +167,13 @@ public class SignUpAct extends Activity implements OnClickListener {
 		countrySpinner.setPrompt(MobicartCommonData.keyValues.getString(
 				"key.iphone.shoppingcart.choosecountry", "Choose Country"));
 		countrySpinner.setAdapter(adapter);
-		countrySpinner.setPadding(10, 0, 0, 0);
+
+		// Sa Vo fix bug display Country and State value not nice
+		int leftCountryPadding = 10;
+		if (MobicartUrlConstants.resolution == SplashAct.XXHDPI) {
+			leftCountryPadding = 20;
+		}
+		countrySpinner.setPadding(leftCountryPadding, 0, 0, 0);
 
 		if (countries.contains(MobicartCommonData.storeVO.getTerritoryName())) {
 			countrySpinner.setSelection(countries
@@ -184,8 +188,7 @@ public class SignUpAct extends Activity implements OnClickListener {
 				final ProgressDialog dialog = new ProgressDialog(getParent());
 				dialog.setCancelable(false);
 				dialog.setMessage(MobicartCommonData.keyValues.getString(
-						"key.iphone.LoaderText", "Loading")
-						+ "...");
+						"key.iphone.LoaderText", "Loading") + "...");
 				dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 				dialog.show();
 				Thread myThread = new Thread(new Runnable() {
@@ -207,19 +210,24 @@ public class SignUpAct extends Activity implements OnClickListener {
 				sAdapter1 = new ArrayAdapter<String>(
 						getParent(),
 						android.R.layout.simple_spinner_item,
-						(MobicartCommonData.shippingObj == null&&MobicartCommonData.taxObj==null) ? countryStateNotAvaliable
+						(MobicartCommonData.shippingObj == null && MobicartCommonData.taxObj == null) ? countryStateNotAvaliable
 								: statesAL);
 				sAdapter1
 						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 				stateSpinner
 						.setBackgroundResource(R.drawable.dropdown_selector);
-				stateSpinner
-						.setPrompt(MobicartCommonData.keyValues.getString(
-								"key.iphone.shoppingcart.choose.state",
-								"Choose State"));
+				stateSpinner.setPrompt(MobicartCommonData.keyValues.getString(
+						"key.iphone.shoppingcart.choose.state", "Choose State"));
 				stateSpinner.setAdapter(sAdapter1);
-				stateSpinner.setPadding(10, 0, 49, 0);
+				
+				// Sa Vo fix bug display Country and State value not nice
+				int lefStatetPadding = 10;
+				if (MobicartUrlConstants.resolution == SplashAct.XXHDPI) {
+					lefStatetPadding = 20;
+				}
+				
+				stateSpinner.setPadding(lefStatetPadding, 0, 49, 0);
 				if (MobicartCommonData.storeVO.getTaxList() != null) {
 					for (int pos = 0; pos < MobicartCommonData.storeVO
 							.getTaxList().size(); pos++) {
@@ -241,7 +249,8 @@ public class SignUpAct extends Activity implements OnClickListener {
 							@Override
 							public void onItemSelected(AdapterView<?> arg0,
 									View arg1, int arg2, long arg3) {
-								if (MobicartCommonData.shippingObj != null||MobicartCommonData.taxObj!=null) {
+								if (MobicartCommonData.shippingObj != null
+										|| MobicartCommonData.taxObj != null) {
 									stateSelected = (String) stateSpinner
 											.getSelectedItem();
 								}
@@ -253,6 +262,7 @@ public class SignUpAct extends Activity implements OnClickListener {
 						});
 				stateSV.addView(stateSpinner);
 			}
+
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
@@ -344,8 +354,7 @@ public class SignUpAct extends Activity implements OnClickListener {
 			if (dCountries.size() > 0) {
 				dAdapter = new ArrayAdapter<String>(SignUpAct.this,
 						android.R.layout.simple_spinner_item, dCountries);
-				dAdapter
-						.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				dAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			} else
 				showDialog();
 		} else {
@@ -353,8 +362,7 @@ public class SignUpAct extends Activity implements OnClickListener {
 			dAdapter = new ArrayAdapter<String>(SignUpAct.this,
 					android.R.layout.simple_spinner_item,
 					dcountryStateNotAvaliable);
-			dAdapter
-					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			dAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		}
 	}
 
@@ -394,27 +402,24 @@ public class SignUpAct extends Activity implements OnClickListener {
 				final Spinner dStateSpinner = new Spinner(getParent());
 				dStateSpinner
 						.setBackgroundResource(R.drawable.dropdown_selector);
-				dStateSpinner
-						.setPrompt(MobicartCommonData.keyValues.getString(
-								"key.iphone.shoppingcart.choose.state",
-								"Choose State"));
+				dStateSpinner.setPrompt(MobicartCommonData.keyValues.getString(
+						"key.iphone.shoppingcart.choose.state", "Choose State"));
 				dStateSpinner.setAdapter(dSAdapter);
 				dStateSpinner.setPadding(10, 0, 49, 0);
-				if(MobicartCommonData.storeVO.getTaxList()!=null){
-				for (int pos = 0; pos < MobicartCommonData.storeVO.getTaxList()
-						.size(); pos++) {
-					if (MobicartCommonData.storeVO.getTaxList().get(pos)
-							.getsState().equalsIgnoreCase("Other")) {
-						if (statesAL.contains(MobicartCommonData.storeVO
-								.getTaxList().get(pos).getsState())) {
-							dStateSpinner
-									.setSelection(statesAL
-											.indexOf(MobicartCommonData.storeVO
-													.getTaxList().get(pos)
-													.getsState()));
+				if (MobicartCommonData.storeVO.getTaxList() != null) {
+					for (int pos = 0; pos < MobicartCommonData.storeVO
+							.getTaxList().size(); pos++) {
+						if (MobicartCommonData.storeVO.getTaxList().get(pos)
+								.getsState().equalsIgnoreCase("Other")) {
+							if (statesAL.contains(MobicartCommonData.storeVO
+									.getTaxList().get(pos).getsState())) {
+								dStateSpinner.setSelection(statesAL
+										.indexOf(MobicartCommonData.storeVO
+												.getTaxList().get(pos)
+												.getsState()));
+							}
 						}
 					}
-				}
 				}
 				dStateSpinner
 						.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -493,8 +498,8 @@ public class SignUpAct extends Activity implements OnClickListener {
 				"key.iphone.signup.submit", "Submit"));
 
 		submitBtn.setBackgroundDrawable(gredientButtonDrawable);
-		
-		//Sa Vo fix bug
+
+		// Sa Vo fix bug
 		submitBtn.setTextColor(Color.parseColor("#"
 				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 		cartEditBtn = TabHostAct.prepareCartButton(this);
@@ -554,8 +559,8 @@ public class SignUpAct extends Activity implements OnClickListener {
 				"key.iphone.signup.submit", "Submit"));
 
 		submitBtn2.setBackgroundDrawable(gredientButtonDrawable);
-		
-		//Sa Vo fix bug
+
+		// Sa Vo fix bug
 		submitBtn2.setTextColor(Color.parseColor("#"
 				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 		deliveryCityET = (EditText) findViewById(R.id.Delivery_city_ET);
@@ -702,7 +707,7 @@ public class SignUpAct extends Activity implements OnClickListener {
 					Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		
+
 		if (!deliveryAddChk.isChecked()) {
 			if (sDeliveryCity.length() == 0 || sDeliveryPincode.length() == 0
 					|| sDeliveryStreetAddress.length() == 0) {
@@ -715,16 +720,7 @@ public class SignUpAct extends Activity implements OnClickListener {
 				return false;
 			}
 		}
-		if (sCountry.length()==0) {
-			Toast.makeText(
-						SignUpAct.this,
-						MobicartCommonData.keyValues.getString(
-								"key.iphone.textfield.notempty.text",
-								"Text Field must not be empty."),
-						Toast.LENGTH_SHORT).show();
-				return false;
-		}
-		if (sState.length()==0) {
+		if (sCountry.length() == 0) {
 			Toast.makeText(
 					SignUpAct.this,
 					MobicartCommonData.keyValues.getString(
@@ -732,7 +728,16 @@ public class SignUpAct extends Activity implements OnClickListener {
 							"Text Field must not be empty."),
 					Toast.LENGTH_SHORT).show();
 			return false;
-	}
+		}
+		if (sState.length() == 0) {
+			Toast.makeText(
+					SignUpAct.this,
+					MobicartCommonData.keyValues.getString(
+							"key.iphone.textfield.notempty.text",
+							"Text Field must not be empty."),
+					Toast.LENGTH_SHORT).show();
+			return false;
+		}
 		if (sUserName.length() != 0) {
 			if (!sUserName.matches("[a-zA-Z ]*")) {
 				Toast.makeText(
@@ -789,9 +794,12 @@ public class SignUpAct extends Activity implements OnClickListener {
 			cartEditBtn.setBackgroundResource(R.drawable.button_without_color);
 			cartEditBtn.setText(MobicartCommonData.keyValues.getString(
 					"key.iphone.shoppingcart.edit", "Edit"));
-			if (cartEditBtn.getText().toString().equalsIgnoreCase(
-					MobicartCommonData.keyValues.getString(
-							"key.iphone.shoppingcart.edit", "Edit"))) {
+			if (cartEditBtn
+					.getText()
+					.toString()
+					.equalsIgnoreCase(
+							MobicartCommonData.keyValues.getString(
+									"key.iphone.shoppingcart.edit", "Edit"))) {
 				cartEditBtn.setGravity(Gravity.CENTER);
 				cartEditBtn.setPadding(0, 0, 0, 0);
 			}

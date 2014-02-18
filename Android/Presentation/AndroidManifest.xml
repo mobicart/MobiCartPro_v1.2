@@ -12,27 +12,30 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
     </uses-permission>
 
+     <permission
+        android:name="com.mobicart.renamed_package.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+     
     <!-- @@@@@@@@@@@ C2DM  Permissions @@@@@@@@@@ -->
     <permission
         android:name="com.mobicart.renamed_package.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-  <uses-permission
-        android:name="com.mobicart.renamed_package.permission.C2D_MESSAGE" />
-    
-      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-
-  
-    
+    <uses-permission android:name="com.mobicart.renamed_package.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:icon="@drawable/mobicart_logo"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
         <uses-library android:name="com.google.android.maps" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <activity
             android:name="com.mobicart.renamed_package.SplashAct"
@@ -90,7 +93,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".utils.coverflow.CoverFlowExample"
+            android:name="com.mobicart.renamed_package.utils.coverflow.CoverFlowExample"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -98,7 +101,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".ContactUsAct"
+            android:name="com.mobicart.renamed_package.ContactUsAct"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -146,7 +149,7 @@
             android:name="MyAcountDetails"
             android:screenOrientation="portrait" >
         </activity>
-<!-- android:theme="@android:style/Theme.Dialog" -->
+        <!-- android:theme="@android:style/Theme.Dialog" -->
 
         <activity
             android:name="WatchVideoAct"
@@ -188,9 +191,8 @@
             android:name="com.paypal.android.MEP.PayPalActivity"
             android:configChanges="keyboardHidden|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".Paypal.PaypalAct" >
+        <activity android:name=".Pcom.mobicart.renamed_package.Paypal.PaypalAct" >
         </activity>
-       
         <activity
             android:name="videoAct"
             android:screenOrientation="portrait" >
@@ -209,17 +211,21 @@
         </activity>
 
         <!-- @@@@@@@@@ C2DM  Activity and Receivers @@@@@@@@@@ -->
-      <!--   <receiver
+        <!--
+        <receiver
             android:name=".C2DMRegistrationReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" >
                 </action>
 
-                <category android:name="com.mobicart.renamed_package" />
+                <category android:name="com.mobicart.renamed_packagee" />
             </intent-filter>
-        </receiver> -->
-       <!--   <receiver
+        </receiver>
+
+        -->
+        <!--
+        <receiver
             android:name=".MyBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
@@ -227,16 +233,22 @@
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
                 <category android:name="com.example.gcm" />
             </intent-filter>
-        </receiver> -->
-         <receiver android:name="com.google.android.gcm.GCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
-  <intent-filter>
-    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-    <category android:name="com.mobicart.renamed_package" />
-  </intent-filter>
-</receiver>
-<service android:name=".GCMIntentService" />
-       
+        </receiver>
+
+        -->
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.mobicart.renamed_packagee" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.mobicart.renamed_package.GCMIntentService" />
+
         <activity android:name="RegistrationResultActivity" >
         </activity>
         <activity android:name="MessageReceivedActivity" >
@@ -244,22 +256,38 @@
         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
         <activity android:name="newAct" >
         </activity>
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDq0pBkA4q6XlWhGPWNrLHiudK6rlozgkY" />
+        <activity android:name="ContactUsActVersion2"></activity>
     </application>
 
-    <uses-sdk android:minSdkVersion="4" />
-<uses-permission android:name="android.permission.INTERNET" />
+    <uses-sdk android:minSdkVersion="11" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-   <!--  <permission android:name="com.example.gcm.permission.C2D_MESSAGE" 
-        android:protectionLevel="signature" /> -->
-    <uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />
+    <!--
+         <permission android:name="com.example.gcm.permission.C2D_MESSAGE" 
+        android:protectionLevel="signature" />
+
+    -->
+    <uses-permission android:name="com.mobicart.renamed_package.gcm.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
     </uses-permission>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
     </uses-permission>
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
 </manifest>

@@ -1,37 +1,43 @@
 package com.mobicart.renamed_package;
+//Sa Vo fix bug map not dislay. Implement map in new way, change to Google Map API v2
+import java.io.IOException;
+import java.io.InputStream;
 
-import java.util.List;
-
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.location.Address;
-import android.location.Geocoder;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
-import com.mobicart.android.communication.CustomException;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.mobicart.android.core.MobicartUrlConstants;
-import com.mobicart.android.core.UserAddress;
 import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.android.model.UserAddressVO;
-import com.mobicart.renamed_package.R;
-import com.mobicart.renamed_package.constants.MobiCartConstantIds;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
+import com.mobicart.renamed_package.utils.AsyncTasks.GetUserAddressTask;
+import com.mobicart.renamed_package.utils.AsyncTasks.GetUserAddressTask.GetUserAddressTaskDelegate;
 
 /**
  * This Activity is used to show user address on Google Map.
@@ -39,17 +45,45 @@ import com.mobicart.renamed_package.utils.MyCommonView;
  * @author mobicart
  * 
  */
-public class ContactUsAct extends MapActivity implements OnClickListener {
+public class ContactUsAct extends Activity implements OnClickListener,
+		GetUserAddressTaskDelegate {
 
-	private MyCommonView TitleTV, backButton, contact_addressInfo_TV, cartBtn,cartEditBtn;
+	private class GetLocationTask extends AsyncTask<String, String, String> {
+
+		@Override
+		protected String doInBackground(String... params) {
+			// TODO Auto-generated method stub
+
+			LatLng location;
+			try {
+				location = getLocationFromString(finalCompleteAddress);
+				latitude = location.latitude;
+				longitude = location.longitude;
+				return "true";
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			navigateToLocation((latitude), (longitude),
+					myMapView, finalCompleteAddress);
+			super.onPostExecute(result);
+			
+		}
+
+	}
+
+	private MyCommonView TitleTV, backButton, contact_addressInfo_TV, cartBtn,
+			cartEditBtn;
 	private ImageView TitleImageView;
-	private MapView myMapView;
-	private MapController myMC = null;
-	private Geocoder geoCoder;
+	private GoogleMap myMapView;
 	private double latitude, longitude;
-	private List<Overlay> mapOverlays;
-	private Drawable drawable;
-	private MarkerItemizedOverlay markerOverlay;
 	private String finalCompleteAddress = "";
 	private String sAddress = null;
 	private String sCity = null;
@@ -58,64 +92,26 @@ public class ContactUsAct extends MapActivity implements OnClickListener {
 	private String title;
 	private String description;
 	private UserAddressVO uAddVO;
+	Location userLocation;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.contact_us_layout);
 		Bundle extra = getIntent().getExtras();
 		title = extra.getString("Title");
 		description = extra.getString("Descripition");
-		UserAddress uaddress = new UserAddress();
-		try {
-			uAddVO = uaddress.getUserAddress(ContactUsAct.this,
-					MobiCartConstantIds.userName);
-			if (uAddVO.getsAddress().equals("") || uAddVO.getsAddress() == null)
-				sAddress = "";
-			else
-				sAddress = uAddVO.getsAddress();
-			sCity = uAddVO.getsCity();
-			sState = uAddVO.getsState();
-			sCountry = uAddVO.getsCountry();
-		} catch (NullPointerException e1) {
-			showServerError();
-		} catch (JSONException e1) {
-			showServerError();
-		} catch (CustomException e) {
-			showNetworkError();
-		}
-		finalCompleteAddress = finalCompleteAddress
-				.concat(!sAddress.equals("") ? sAddress != null ? sAddress
-						+ "," : "" : "");
-		finalCompleteAddress = finalCompleteAddress
-				.concat(!sCity.equals("") ? sCity != null ? sCity + "," : ""
-						: "");
-		finalCompleteAddress = finalCompleteAddress
-				.concat(!sState.equals("") ? sState != null ? sState + "," : ""
-						: "");
-		finalCompleteAddress = finalCompleteAddress
-				.concat(!sCountry.equals("") ? sCountry != null ? sCountry : ""
-						: "");
+
+		GetUserAddressTask userAddressTask = new GetUserAddressTask(this);
+		userAddressTask.execute("");
+
 		int TitleImage = extra.getInt("Image");
-		myMapView = (MapView) findViewById(R.id.myGMap);
 
-		geoCoder = new Geocoder(this);
-		try {
+		myMapView = ((MapFragment) getFragmentManager().findFragmentById(
+				R.id.contactUs_map)).getMap();
 
-			List<Address> foundAdresses = geoCoder.getFromLocationName(
-					finalCompleteAddress, 5);
-			for (int i = 0; i < foundAdresses.size(); i++) {
-				Address x = foundAdresses.get(i);
-				latitude = x.getLatitude();
-				longitude = x.getLongitude();
-			}
-			navigateToLocation((latitude * 1000000), (longitude * 1000000),
-					myMapView, finalCompleteAddress);
-		} catch (Exception e) {
-		}
-		myMapView.setBuiltInZoomControls(true);
+
 		cartEditBtn = TabHostAct.prepareCartButton(this);
 		cartEditBtn.setVisibility(View.GONE);
 		cartBtn = TabHostAct.prepareCartButton(this);
@@ -142,14 +138,15 @@ public class ContactUsAct extends MapActivity implements OnClickListener {
 		contact_addressInfo_TV.setText(description);
 		contact_addressInfo_TV.setTextColor(Color.parseColor("#"
 				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
+
 	}
 
 	/**
 	 * This Method is used to show Network related errors.
 	 */
 	private void showNetworkError() {
-		AlertDialog alertDialog = new AlertDialog.Builder(ContactUsAct.this)
-				.create();
+		AlertDialog alertDialog = new AlertDialog.Builder(
+				ContactUsAct.this).create();
 		alertDialog.setTitle(MobicartCommonData.keyValues.getString(
 				"key.iphone.nointernet.title", "Alert"));
 		alertDialog.setMessage(MobicartCommonData.keyValues.getString(
@@ -202,61 +199,64 @@ public class ContactUsAct extends MapActivity implements OnClickListener {
 	 * @param myMapView2
 	 * @param cAddress
 	 */
-	private void navigateToLocation(double d, double e, MapView myMapView2,
+	private void navigateToLocation(double d, double e, GoogleMap map,
 			String cAddress) {
-		drawable = this.getResources().getDrawable(R.drawable.bubble);
-		markerOverlay = new MarkerItemizedOverlay(drawable, this, cAddress);
-		GeoPoint geoPoint = new GeoPoint((int) d, (int) e); // new GeoPoint
-		mapOverlays = myMapView2.getOverlays();// done
-		OverlayItem overlayitem = new OverlayItem(geoPoint, "Hi", "Hello");
-		mapOverlays.add(markerOverlay);
-		markerOverlay.addOverlay(overlayitem);
-		myMC = myMapView.getController();
-		myMC.setCenter(geoPoint);
-		myMC.setZoom(15);
-		myMC.animateTo(geoPoint);
-		myMapView2.setBuiltInZoomControls(true);
-		myMapView2.displayZoomControls(true);
-		myMapView2.setSatellite(false);
+
+		LatLng newLocation = new LatLng(d, e);
+		myMapView.addMarker(new MarkerOptions().position(newLocation).title(
+				cAddress));
+
+		int zoom = 0;
+		if(d!=0 && e!=0){
+			zoom = 15;
+		}
+		myMapView.animateCamera( CameraUpdateFactory.newLatLngZoom(newLocation, zoom), 2000, null);
+
 	}
 
 	@Override
 	protected void onResume() {
+
 		backButton.setVisibility(View.VISIBLE);
 		backButton.setText(MobicartCommonData.keyValues.getString(
 				"key.iphone.tabbar.more", ""));
 		cartBtn.setText("" + CartItemCount.getCartCount(this));
 		backButton.setOnClickListener(this);
+
 		super.onResume();
 	}
 
-	@Override
-	protected boolean isRouteDisplayed() {
-		return false;
-	}
 
 	@Override
 	protected void onDestroy() {
+
 		MobicartCommonData.isFromStart = "NotSplash";
 		backButton.setVisibility(View.GONE);
+
 		super.onDestroy();
 	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		float zoomLevel = myMapView.getCameraPosition().zoom;
 		if (keyCode == KeyEvent.KEYCODE_I) {
-			myMapView.getController().setZoom(myMapView.getZoomLevel() + 1);
+			// myMapView.getController().setZoom(myMapView.getZoomLevel() + 1);
+			myMapView.animateCamera(CameraUpdateFactory.zoomTo(zoomLevel + 1));
 			return true;
 		} else if (keyCode == KeyEvent.KEYCODE_O) {
-			myMapView.getController().setZoom(myMapView.getZoomLevel() - 1);
+			// myMapView.getController().setZoom(myMapView.getZoomLevel() - 1);
+			myMapView.animateCamera(CameraUpdateFactory.zoomTo(zoomLevel - 1));
 			return true;
 		} else if (keyCode == KeyEvent.KEYCODE_S) {
-			myMapView.setSatellite(true);
+			// myMapView.setSatellite(true);
+			myMapView.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 			return true;
 		} else if (keyCode == KeyEvent.KEYCODE_M) {
-			myMapView.setSatellite(false);
+			// myMapView.setSatellite(false);
+			myMapView.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 			return true;
 		}
+
 		return false;
 	}
 
@@ -276,5 +276,69 @@ public class ContactUsAct extends MapActivity implements OnClickListener {
 			parentActivity.startChildActivity("CartAct", cartAct);
 			break;
 		}
+	}
+
+	public LatLng getLocationFromString(String address) throws JSONException {
+
+		HttpGet httpGet = new HttpGet(
+				"http://maps.google.com/maps/api/geocode/json?address="
+						+ address + "&ka&sensor=false");
+		HttpClient client = new DefaultHttpClient();
+		HttpResponse response;
+		StringBuilder stringBuilder = new StringBuilder();
+
+		try {
+			response = client.execute(httpGet);
+			HttpEntity entity = response.getEntity();
+			InputStream stream = entity.getContent();
+			int b;
+			while ((b = stream.read()) != -1) {
+				stringBuilder.append((char) b);
+			}
+		} catch (ClientProtocolException e) {
+		} catch (IOException e) {
+		}
+
+		JSONObject jsonObject = new JSONObject();
+		jsonObject = new JSONObject(stringBuilder.toString());
+
+		double lng = ((JSONArray) jsonObject.get("results")).getJSONObject(0)
+				.getJSONObject("geometry").getJSONObject("location")
+				.getDouble("lng");
+
+		double lat = ((JSONArray) jsonObject.get("results")).getJSONObject(0)
+				.getJSONObject("geometry").getJSONObject("location")
+				.getDouble("lat");
+
+		return new LatLng(lat, lng);
+	}
+
+	@Override
+	public void didGetUserAddress(UserAddressVO userAddress) {
+		// TODO Auto-generated method stub
+		if (userAddress != null) {
+			uAddVO = userAddress;
+			if (uAddVO.getsAddress().equals("") || uAddVO.getsAddress() == null)
+				sAddress = "";
+			else
+				sAddress = uAddVO.getsAddress();
+			sCity = uAddVO.getsCity();
+			sState = uAddVO.getsState();
+			sCountry = uAddVO.getsCountry();
+
+			finalCompleteAddress = finalCompleteAddress.concat(!sAddress
+					.equals("") ? sAddress != null ? sAddress + "," : "" : "");
+			finalCompleteAddress = finalCompleteAddress.concat(!sCity
+					.equals("") ? sCity != null ? sCity + "," : "" : "");
+			finalCompleteAddress = finalCompleteAddress.concat(!sState
+					.equals("") ? sState != null ? sState + "," : "" : "");
+			finalCompleteAddress = finalCompleteAddress.concat(!sCountry
+					.equals("") ? sCountry != null ? sCountry : "" : "");
+			
+			GetLocationTask getLocationTask = new GetLocationTask();
+			getLocationTask.execute("");
+			
+		}
+
 	}
 }

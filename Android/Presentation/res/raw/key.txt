@@ -1,2 +1,2 @@
-auth#nsitester@gmail.com#367f07eeee4831d4ec5178ef7f1fb504#paypal#com.mobicart.renamed_package#dff895e1-0909-457d-aa50-decb84331b4c#"http://www.exampleapp.com/ipn"#use_paypal_livemode#false#notification_sender_id#sdtg
+auth#info@bumeno.com#367f07eeee4831d4ec5178ef7f1fb504#paypal#com.mobicart.renamed_package#dff895e1-0909-457d-aa50-decb84331b4c#"http://www.exampleapp.com/ipn"#use_paypal_livemode#false#notification_sender_id#sdtg
 

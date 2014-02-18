@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Sa Vo fix bug not display map, implement in new way, change to Google map v2 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:mobicart="http://schemas.android.com/apk/res/com.mobicart.renamed_package"
     android:layout_width="fill_parent"
@@ -66,14 +67,20 @@
         android:paddingRight="2dip"
         android:paddingTop="10dip" >
 
-        <com.google.android.maps.MapView
+       <!--  <com.google.android.maps.MapView
             android:id="@+id/myGMap"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:apiKey="@string/map_api_key"
             android:clickable="true"
             android:enabled="true"
-            android:padding="1dip" />
+            android:padding="1dip" /> -->
+            
+            <fragment
+                android:id="@+id/contactUs_map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:name="com.google.android.gms.maps.MapFragment"/>
 
         <LinearLayout
             android:id="@+id/zoom"
