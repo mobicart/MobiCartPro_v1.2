@@ -1762,8 +1762,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp.";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp. (CH3EWM6K7J)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp. (CH3EWM6K7J)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1783,8 +1783,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
+				PROVISIONING_PROFILE = "B47EA297-147C-4182-B6BB-01F89693980B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B47EA297-147C-4182-B6BB-01F89693980B";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = armv7;
@@ -1796,8 +1796,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp.";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp. (CH3EWM6K7J)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp. (CH3EWM6K7J)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1815,8 +1815,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
+				PROVISIONING_PROFILE = "B47EA297-147C-4182-B6BB-01F89693980B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B47EA297-147C-4182-B6BB-01F89693980B";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = armv7;
@@ -1830,8 +1830,8 @@
 					armv6,
 					armv7,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Wladimir Baranoff-Rossine (XVTB378K7Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Wladimir Baranoff-Rossine (XVTB378K7Q)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp. (CH3EWM6K7J)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp. (CH3EWM6K7J)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1839,8 +1839,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "2A90B29B-BCC3-419E-8574-6DFFA335644A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2A90B29B-BCC3-419E-8574-6DFFA335644A";
+				PROVISIONING_PROFILE = "B47EA297-147C-4182-B6BB-01F89693980B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B47EA297-147C-4182-B6BB-01F89693980B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALID_ARCHS = "armv6 armv7";
@@ -1854,8 +1854,8 @@
 					armv6,
 					armv7,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Wladimir Baranoff-Rossine (XVTB378K7Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Wladimir Baranoff-Rossine (XVTB378K7Q)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp. (CH3EWM6K7J)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp. (CH3EWM6K7J)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1864,8 +1864,8 @@
 				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "2A90B29B-BCC3-419E-8574-6DFFA335644A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2A90B29B-BCC3-419E-8574-6DFFA335644A";
+				PROVISIONING_PROFILE = "B47EA297-147C-4182-B6BB-01F89693980B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B47EA297-147C-4182-B6BB-01F89693980B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALID_ARCHS = "armv6 armv7";
@@ -1879,8 +1879,8 @@
 					armv6,
 					armv7,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Wladimir Baranoff-Rossine (XVTB378K7Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Wladimir Baranoff-Rossine (XVTB378K7Q)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp. (CH3EWM6K7J)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp. (CH3EWM6K7J)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1888,8 +1888,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "2A90B29B-BCC3-419E-8574-6DFFA335644A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2A90B29B-BCC3-419E-8574-6DFFA335644A";
+				PROVISIONING_PROFILE = "B47EA297-147C-4182-B6BB-01F89693980B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B47EA297-147C-4182-B6BB-01F89693980B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALID_ARCHS = "armv6 armv7";
@@ -1901,8 +1901,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp.";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp. (CH3EWM6K7J)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp. (CH3EWM6K7J)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1922,8 +1922,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
+				PROVISIONING_PROFILE = "B47EA297-147C-4182-B6BB-01F89693980B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B47EA297-147C-4182-B6BB-01F89693980B";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = armv7;
