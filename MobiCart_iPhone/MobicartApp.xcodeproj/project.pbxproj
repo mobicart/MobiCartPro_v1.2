@@ -2268,8 +2268,8 @@
 					armv6,
 				);
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2291,8 +2291,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
+				PROVISIONING_PROFILE = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/ZooZSDK.embeddedframework\" \"$(SRCROOT)\"";
@@ -2308,8 +2308,8 @@
 					armv6,
 				);
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2328,8 +2328,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
+				PROVISIONING_PROFILE = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/ZooZSDK.embeddedframework\" \"$(SRCROOT)\"";
@@ -2345,8 +2345,8 @@
 					armv6,
 				);
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CURRENT_PROJECT_VERSION = 1.1;
@@ -2355,8 +2355,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
+				PROVISIONING_PROFILE = "B47EA297-147C-4182-B6BB-01F89693980B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
 				SDKROOT = iphoneos;
 			};
 			name = Distribution;
@@ -2370,8 +2370,8 @@
 					armv6,
 				);
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2391,8 +2391,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
+				PROVISIONING_PROFILE = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/ZooZSDK.embeddedframework\" \"$(SRCROOT)\"";
@@ -2408,8 +2408,8 @@
 					armv6,
 				);
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2417,8 +2417,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
+				PROVISIONING_PROFILE = "B47EA297-147C-4182-B6BB-01F89693980B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -2431,8 +2431,8 @@
 					armv6,
 				);
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: IMT Solutions Corp.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: IMT Solutions Corp.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2441,8 +2441,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "70AC9E98-8257-4BC6-8118-B07C3B46306B";
+				PROVISIONING_PROFILE = "B47EA297-147C-4182-B6BB-01F89693980B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
 				SDKROOT = iphoneos;
 			};
 			name = Release;

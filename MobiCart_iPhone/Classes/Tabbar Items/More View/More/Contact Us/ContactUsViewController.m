@@ -138,10 +138,7 @@ extern int controllersCount;
     [[_mapView layer] setCornerRadius:10];
 	[contentView addSubview:_mapView];
 	_mapView.delegate = self;
-	[SingletonLocation sharedInstance].delegate = self;
-	[SingletonLocation sharedInstance].distanceFilter = 1000;
-	[SingletonLocation sharedInstance].desiredAccuracy = kCLLocationAccuracyBest;
-	[[SingletonLocation sharedInstance] startUpdatingLocation];
+	
 	NSDictionary *dictMerchantDetails =[ServerAPI fetchAddressOfMerchant:[GlobalPreferences getMerchantEmailId]];
 	dictUserDetails = [dictMerchantDetails objectForKey:@"user-address"];
 	[self addressLocation];
@@ -156,6 +153,14 @@ extern int controllersCount;
     {
         self.strStoreName = @"Store Location";
     }
+    
+    //Sa Vo fix bug not display pointer if location turn off
+    //Set Zoom level using Span
+	annot= [[CSMapAnnotation alloc]initWithCoordinate:coord title:self.strStoreName subTitle:nil];
+	[_mapView addAnnotation:annot];
+	
+	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord,1000,1000);
+	[_mapView setRegion:region animated:YES];
     
     
 	UIView *viewTopBar=[[UIView alloc]initWithFrame:CGRectMake(0,-1, 320, 31)];
@@ -250,48 +255,6 @@ extern int controllersCount;
     [super dealloc];
 }
 
-#pragma mark CLLocationManagerDelegate Methods
-
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
-{
-	
-}
-
-
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
-{
-	
-	
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation
-		   fromLocation:(CLLocation *)oldLocation
-{
-	//Set Zoom level using Span
-	annot= [[CSMapAnnotation alloc]initWithCoordinate:coord title:self.strStoreName subTitle:nil];
-	[_mapView addAnnotation:annot];
-	
-	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord,1000,1000);
-	[_mapView setRegion:region animated:YES];
-}
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-	DLog(@"MAP ERROR %@", [error description]);
-	
-}
-
-#pragma mark -
-#pragma mark Reverse Delegates
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark
-{
-	[_mapView addAnnotation:placemark];
-    [_mapView selectAnnotation:placemark animated:YES];
-}
-
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
-{
-}
 
 #pragma mark - Address Locator
 - (void)addressLocation {
