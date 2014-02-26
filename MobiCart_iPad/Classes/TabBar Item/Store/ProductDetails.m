@@ -9,10 +9,16 @@
 #import "ProductDetails.h"
 #import "ReadReviews.h"
 #import "CoverFlowViewController.h"
+#import "NSString+HTML.h"
+
+#define WEBVIEWFIRST_TAG 300
+#define WEBVIEWSECOND_TAG 301
 
 @implementation ProductDetails
 @synthesize productID,nextProductID,dicProduct,dicNextProduct;
 @synthesize isWishlist, optionIndex,lblProductPrice,strPriceCurrentProduct,lblProductPriceSecond,strPriceNxtProduct;
+@synthesize  hexColor = _hexColor;
+
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
  - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -947,39 +953,15 @@
 	else {
 		Yval = countTemp*45+50;
 	}
+    
 
-	UILabel *txtProductDescription=[[UILabel alloc]initWithFrame:CGRectMake(10, Yval,300, 150)];
-	[txtProductDescription setTextColor:labelColor];
-	[txtProductDescription setBackgroundColor:[UIColor clearColor]];
-	[txtProductDescription setFont:[UIFont fontWithName:@"HelveticaNeue" size:12]];
-	[txtProductDescription setTag:555];
-	NSString *strDescription=[dicProduct objectForKey:@"sDescription"];
-	if(![strDescription isEqual:[NSNull null]])
-		[txtProductDescription setText:[dicProduct objectForKey:@"sDescription"]];
-	else
-		[txtProductDescription setText:@"No Description Available"];
-	[currentDescriptionScrollView addSubview:txtProductDescription];
-	
-	
-	NSString *text = [txtProductDescription text];
-    txtProductDescription.textAlignment = UITextAlignmentLeft;
-    txtProductDescription.lineBreakMode = UILineBreakModeWordWrap;
-	
-    CGSize expectedLabelSize = [text sizeWithFont:txtProductDescription.font 
-                                constrainedToSize:txtProductDescription.frame.size
-                                    lineBreakMode:UILineBreakModeWordWrap];
-	
-    newFrame = txtProductDescription.frame;
-    newFrame.size.height = expectedLabelSize.height;
-	
-    txtProductDescription.frame = newFrame;
-    txtProductDescription.numberOfLines = 0;
-    [txtProductDescription sizeToFit];		
-	[txtProductDescription release];
-	
-	[currentDescriptionScrollView setContentSize:CGSizeMake(330, txtProductDescription.frame.origin.y+txtProductDescription.frame.size.height+50)];
-	
-	
+    //Sa Vo fix bug display discription on webview instead of label
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:WEBVIEWFIRST_TAG],
+                                                      [NSNumber numberWithFloat:Yval], nil]
+                                             forKeys:[NSArray arrayWithObjects:@"tag",@"yPosition", nil]];
+    [self performSelectorInBackground:@selector(decodeDescription:) withObject:dictionary];
+    
+    
 	
 	UILabel *lblDepartmets=[[UILabel alloc]initWithFrame:CGRectMake(45, 16, 150, 30)];
 	[lblDepartmets setBackgroundColor:[UIColor clearColor]];
@@ -1461,40 +1443,14 @@
 		Yval2 = countTempNext*45+50;
 	}
 	
-	
-	
-	UILabel *txtProductDescriptionSecond=[[UILabel alloc]initWithFrame:CGRectMake(10, Yval2,300, 150)];
-	[txtProductDescriptionSecond setTag:666];
-	[txtProductDescriptionSecond setTextColor:labelColor];
-	[txtProductDescriptionSecond setBackgroundColor:[UIColor clearColor]];
-	[txtProductDescriptionSecond setFont:[UIFont fontWithName:@"HelveticaNeue" size:12]];
-	
-	NSString *strDescriptionSecond=[dicNextProduct objectForKey:@"sDescription"];
-	if(![strDescriptionSecond isEqual:[NSNull null]])
-		[txtProductDescriptionSecond setText:[dicNextProduct objectForKey:@"sDescription"]];
-	else
-		[txtProductDescriptionSecond setText:@"No Description Available"];
-	
-	[nextDescriptionScrollView addSubview:txtProductDescriptionSecond];
-	
-	NSString *text2 = [txtProductDescriptionSecond text];
-    txtProductDescriptionSecond.textAlignment = UITextAlignmentLeft;
-    txtProductDescriptionSecond.lineBreakMode = UILineBreakModeWordWrap;
-	
-    CGSize expectedLabelSize2 = [text2 sizeWithFont:txtProductDescriptionSecond.font 
-								  constrainedToSize:txtProductDescriptionSecond.frame.size
-									  lineBreakMode:UILineBreakModeWordWrap];
-	
-    newFrame2 = txtProductDescriptionSecond.frame;
-    newFrame2.size.height = expectedLabelSize2.height;
-    txtProductDescriptionSecond.frame = newFrame2;
-    txtProductDescriptionSecond.numberOfLines = 0;
-    [txtProductDescriptionSecond sizeToFit];		
-	[txtProductDescriptionSecond release];
-	
-	
-	[nextDescriptionScrollView setContentSize:CGSizeMake(330, txtProductDescriptionSecond.frame.origin.y+txtProductDescriptionSecond.frame.size.height+50)];
-	
+    //Sa Vo fix bug display discription on webview instead of label
+
+    if (dicNextProduct) {
+        dictionary = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:WEBVIEWSECOND_TAG],
+                                                          [NSNumber numberWithFloat:Yval2], nil]
+                                                 forKeys:[NSArray arrayWithObjects:@"tag",@"yPosition", nil]];
+        [self performSelectorInBackground:@selector(decodeDescription:) withObject:dictionary];
+    }
 	
 	
 	[self markStarRating_onView:currentProductScrollView withTag:100];
@@ -1553,6 +1509,66 @@
 	
 }
 
+- (void)decodeDescription:(NSDictionary*)dictionary{
+    //Sa Vo fix bug display discription on webview instead of label
+    
+    NSString *string;
+    NSData *data;
+    NSString *htmlString;
+    int tag = [[dictionary objectForKey:@"tag"] intValue];
+    if (tag == WEBVIEWFIRST_TAG) {
+        string = [dicProduct objectForKey:@"sDescription"];
+        data = [string dataUsingEncoding:NSUTF8StringEncoding];
+        htmlString = [string kv_decodeHTMLCharacterEntities];
+        NSDictionary *dictionaryTemp = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[dictionary objectForKey:@"tag"],[dictionary objectForKey:@"yPosition"],htmlString, nil] forKeys:[NSArray arrayWithObjects:@"tag",@"yPosition",@"htmlString", nil]];
+
+        [self performSelectorOnMainThread:@selector(createWebViewDescription:) withObject:dictionaryTemp waitUntilDone:NO];
+    }else if (tag == WEBVIEWSECOND_TAG){
+        string = [dicNextProduct objectForKey:@"sDescription"];
+        data = [string dataUsingEncoding:NSUTF8StringEncoding];
+        htmlString = [string kv_decodeHTMLCharacterEntities];
+         NSDictionary *dictionaryTemp = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[dictionary objectForKey:@"tag"],[dictionary objectForKey:@"yPosition"],htmlString, nil] forKeys:[NSArray arrayWithObjects:@"tag",@"yPosition",@"htmlString", nil]];
+        [self performSelectorOnMainThread:@selector(createWebViewDescription:) withObject:dictionaryTemp waitUntilDone:NO];
+
+    }
+    
+}
+
+- (NSString *) hexFromUIColor:(UIColor *)color {
+    if (CGColorGetNumberOfComponents(color.CGColor) < 4) {
+        const CGFloat *components = CGColorGetComponents(color.CGColor);
+        color = [UIColor colorWithRed:components[0] green:components[0] blue:components[0] alpha:components[1]];
+    }
+    if (CGColorSpaceGetModel(CGColorGetColorSpace(color.CGColor)) != kCGColorSpaceModelRGB) {
+        return [NSString stringWithFormat:@"#FFFFFF"];
+    }
+    return [NSString stringWithFormat:@"#%02X%02X%02X", (int)((CGColorGetComponents(color.CGColor))[0]*255.0), (int)((CGColorGetComponents(color.CGColor))[1]*255.0), (int)((CGColorGetComponents(color.CGColor))[2]*255.0)];
+}
+
+- (void)createWebViewDescription:(NSDictionary*)dictionary{
+    
+    //Sa Vo fix bug display discription on webview instead of label
+
+    int tag = [[dictionary objectForKey:@"tag"] intValue];
+    float yPosition = [[dictionary objectForKey:@"yPosition"] floatValue];
+    NSString *htmlString = [NSString stringWithFormat:@"<html><body text=\"%@\">%@</body></html>",self.hexColor,[dictionary objectForKey:@"htmlString"]];
+    UIWebView *wvDescriptionDetails = [[UIWebView alloc] initWithFrame:CGRectMake(10,yPosition, 300, 29)];
+    [wvDescriptionDetails setBackgroundColor:[UIColor clearColor]];
+    [wvDescriptionDetails setOpaque:NO];
+    [wvDescriptionDetails loadHTMLString:htmlString baseURL:nil];
+    [wvDescriptionDetails setDelegate:self];
+    [wvDescriptionDetails setTag:tag];
+    [wvDescriptionDetails setUserInteractionEnabled:NO];
+    if (tag == WEBVIEWFIRST_TAG) {
+        [currentDescriptionScrollView addSubview:wvDescriptionDetails];
+
+    }else if (tag == WEBVIEWSECOND_TAG){
+        [nextDescriptionScrollView addSubview:wvDescriptionDetails];
+    }
+    [wvDescriptionDetails release];
+    
+}
+
 
 -(void)showListOfDepts
 {
@@ -1599,6 +1615,10 @@
 }
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
+    
+    //Sa Vo fix bug display discription on webview instead of label
+
+    self.hexColor =[self hexFromUIColor:labelColor];
     
    
     [[NSNotificationCenter defaultCenter] addObserver: self
@@ -3767,8 +3787,21 @@
 	[currentDescriptionScrollView release];
 	[nextDescriptionScrollView release];
 	[_searchBar release];
+    [_hexColor release];
     [super dealloc];
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    int tag = webView.tag;
+    CGSize webViewContentSize = webView.scrollView.contentSize;
+    CGRect frame = [webView frame];
+    [webView setFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, webViewContentSize.height)];
+
+    if (tag == WEBVIEWFIRST_TAG) {
+        [currentDescriptionScrollView setContentSize:CGSizeMake(currentDescriptionScrollView.contentSize.width, frame.origin.y + webViewContentSize.height)];
+    }else if (tag == WEBVIEWSECOND_TAG){
+         [nextDescriptionScrollView setContentSize:CGSizeMake(nextDescriptionScrollView.contentSize.width, frame.origin.y + webViewContentSize.height)];
+    }
+}
 
 @end

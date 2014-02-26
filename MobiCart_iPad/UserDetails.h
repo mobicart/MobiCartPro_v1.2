@@ -11,5 +11,5 @@
 
 /*-------------------------MobiCart Email Id----------------------------------------------------------*/
 
-#define merchant_email @"mikeo@totalwebsystems.co.uk"
+#define merchant_email @"nil"
 

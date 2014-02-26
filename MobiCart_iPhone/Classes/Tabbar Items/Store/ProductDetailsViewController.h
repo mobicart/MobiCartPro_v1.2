@@ -81,11 +81,13 @@ UIActionSheet *loadingActionSheet;
     UIButton *sendMailBtn;
     UILabel *lblWishlist;
     BOOL isToBeCartShown;
+    NSString *_hexColor;
 }
  @property (nonatomic, retain) NSArray  *arrImagesUrls ;
 @property (nonatomic, retain) NSDictionary *dicProduct;
 @property (readwrite) BOOL isWishlist;
 @property (nonatomic,retain) NSString *optionIndex;
+@property (nonatomic, retain) NSString *hexColor;
 
 - (void)allocateMemoryToObjects;
 - (void)dataValidationChecks;
@@ -110,8 +112,6 @@ UIActionSheet *loadingActionSheet;
 -(void)createSearchAndDropdownViews;
 -(void)isInWishList;
 -(void)checkStockControll;
--(void)checkForVideoUrl:(UILabel *)lblDescriptionDetails;
--(void)createSendEmailView:(UILabel *)lblDescriptionDetails;
 -(void)createReadPostReview;
 
 //refactoring--addToCartMethod

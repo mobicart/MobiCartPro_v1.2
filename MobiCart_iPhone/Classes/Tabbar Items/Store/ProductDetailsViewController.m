@@ -15,6 +15,7 @@
 #import "CoverFlowViewController.h"
 #import "ProductModel.h"
 #import "ProductSingleton.h"
+#import "NSString+HTML.h"
 
 BOOL isZoomIn;
 BOOL isShowOptionTable;
@@ -24,10 +25,11 @@ BOOL isProductDetails;
 BOOL fromProductDetails;
 extern int categoryCount;
 iProductSingleton *productObj;
-
+#define INDICATOR_TAG 100
 @implementation ProductDetailsViewController
 
 @synthesize dicProduct, isWishlist, optionIndex,arrImagesUrls;
+@synthesize hexColor = _hexColor;
 
 #pragma mark View Controller Delegates
 
@@ -54,7 +56,7 @@ iProductSingleton *productObj;
 	
 	for(int count=0;count<[arrTempOptions count];count++)
 	{
-		//DLog(@"%@",[[NSString stringWithFormat:@"%@",[[arrTempOptions objectAtIndex:count]objectForKey:@"sTitle"]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] lowercaseString]);
+		
 		
 		if([[[[NSString stringWithFormat:@"%@",[[arrTempOptions objectAtIndex:count]objectForKey:@"sTitle"]]stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] lowercaseString] isEqualToString:strTitle])
 		{
@@ -113,13 +115,12 @@ iProductSingleton *productObj;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+	if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    
+
 	self.title=[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.home.back"];
 	if([GlobalPreferences getPersonLoginStatus])
     {
@@ -212,6 +213,7 @@ iProductSingleton *productObj;
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView
 {
+    self.hexColor = [self hexFromUIColor:_savedPreferences.labelColor];
     FeaturedProductFromHomePage=[GlobalPreferences isClickedOnFeaturedProductFromHomeTab];
     
 	if ([GlobalPreferences isClickedOnFeaturedProductFromHomeTab])
@@ -538,62 +540,51 @@ iProductSingleton *productObj;
     
     //determine stock controll and set wishlist label accordingly
     [self checkStockAndWishList];
-	
-	UILabel *lblDescriptionDetails = [[UILabel alloc]initWithFrame:CGRectMake(10,185, 300, 29)];
-    [lblDescriptionDetails setBackgroundColor:[UIColor clearColor]];
-	lblDescriptionDetails.textColor=_savedPreferences.labelColor;
-	lblDescriptionDetails.font =[UIFont fontWithName:@"Helvetica" size:13.0];
-    [lblDescriptionDetails setNumberOfLines:0];
-	[lblDescriptionDetails setLineBreakMode:UILineBreakModeWordWrap];
-	[lblDescriptionDetails setText:[dicProduct objectForKey:@"sDescription"]];
-	[contentScrollView addSubview:lblDescriptionDetails];
-	
-	CGRect frame = [lblDescriptionDetails frame];
-	CGSize sizeName = [lblDescriptionDetails.text sizeWithFont:lblDescriptionDetails.font constrainedToSize:CGSizeMake(frame.size.width-10, 9999) lineBreakMode:UILineBreakModeWordWrap];
-	frame.size.height = sizeName.height;
-	[lblDescriptionDetails setFrame:frame];
-	
-	if(addToCartBtn.hidden==NO)
-	{
-		int y=addToCartBtn.frame.origin.y+addToCartBtn.frame.size.height;
-		if(y>175)
-		{
-			[lblDescriptionDetails setFrame:CGRectMake(frame.origin.x,addToCartBtn.frame.origin.y+addToCartBtn.frame.size.height+20, frame.size.width-20, frame.size.height)];
-		}
-	}
-	else if(optionBtn[0].hidden==NO)
-	{
-		int y=optionBtn[dropDownCount].frame.origin.y+optionBtn[dropDownCount].frame.size.height;
-		if(y>175)
-		{
-			[lblDescriptionDetails setFrame:CGRectMake(frame.origin.x,optionBtn[dropDownCount].frame.size.height+optionBtn[dropDownCount].frame.origin.y+20, frame.size.width, frame.size.height)];
-		}
-	}
-	else
-    {
-		[lblDescriptionDetails setFrame:CGRectMake(frame.origin.x,185, frame.size.width, frame.size.height)];
-	}
-	
-    [self checkForVideoUrl:lblDescriptionDetails];
-	lblStock.text = [lblStock.text uppercaseString];
-    [self createSendEmailView:lblDescriptionDetails];
     
-    if ([[dicProduct valueForKey:@"productReviews"]count]>1)
-    {
-        [lblReadReviews setText:[NSString stringWithFormat:@"%d %@",[[dicProduct valueForKey:@"productReviews"]count],[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.mainproduct.reviews"]]];
-    }
-    else
-    {
-        [lblReadReviews setText:[NSString stringWithFormat:@"%d %@",[[dicProduct valueForKey:@"productReviews"]count],[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.mainproduct.reviews"]]];
-    }
+    //Sa Vo fix bug display discription on webview instead of label
+    UIActivityIndicatorView *aivIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [aivIndicator setFrame:CGRectMake(CGRectGetWidth(self.view.frame)/2.0, CGRectGetHeight(self.view.frame)/2.0+70, 25.0, 25.0)];
+    [self performSelectorInBackground:@selector(decodeDescription) withObject:nil];
+    [aivIndicator setTag:INDICATOR_TAG];
+    [self.view addSubview:aivIndicator];
+    [aivIndicator startAnimating];
+    [aivIndicator release];
     
-    [lblReadReviews setBackgroundColor:[UIColor clearColor]];
-    [contentView addSubview:lblReadReviews];
-	
-    [self createReadPostReview];
+   
 }
 
+- (void)decodeDescription{
+    //Sa Vo fix bug display discription on webview instead of label
+    NSString *string = [dicProduct objectForKey:@"sDescription"];
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *htmlString = [string kv_decodeHTMLCharacterEntities];
+    [self performSelectorOnMainThread:@selector(createWebViewDescription:) withObject:htmlString waitUntilDone:NO];
+}
 
+- (NSString *) hexFromUIColor:(UIColor *)color {
+    if (CGColorGetNumberOfComponents(color.CGColor) < 4) {
+        const CGFloat *components = CGColorGetComponents(color.CGColor);
+        color = [UIColor colorWithRed:components[0] green:components[0] blue:components[0] alpha:components[1]];
+    }
+    if (CGColorSpaceGetModel(CGColorGetColorSpace(color.CGColor)) != kCGColorSpaceModelRGB) {
+        return [NSString stringWithFormat:@"#FFFFFF"];
+    }
+    return [NSString stringWithFormat:@"#%02X%02X%02X", (int)((CGColorGetComponents(color.CGColor))[0]*255.0), (int)((CGColorGetComponents(color.CGColor))[1]*255.0), (int)((CGColorGetComponents(color.CGColor))[2]*255.0)];
+}
+
+- (void)createWebViewDescription:(NSString*)htmlString{
+    
+     NSString *string = [NSString stringWithFormat:@"<html><body text=\"%@\">%@</body></html>",self.hexColor,htmlString];
+    
+    UIWebView *wvDescriptionDetails = [[UIWebView alloc] initWithFrame:CGRectMake(10,185, 300, 29)];
+    [wvDescriptionDetails setBackgroundColor:[UIColor clearColor]];
+    [wvDescriptionDetails setOpaque:NO];
+    [wvDescriptionDetails loadHTMLString:string baseURL:nil];
+    [wvDescriptionDetails setDelegate:self];
+    [wvDescriptionDetails setUserInteractionEnabled:NO];
+    [contentScrollView addSubview:wvDescriptionDetails];
+    [wvDescriptionDetails release];
+}
 -(void)createViews
 {
     UIImageView *imgPlaceholder=[[UIImageView alloc]initWithFrame:CGRectMake(6, 20, 133, 150)];
@@ -1070,11 +1061,11 @@ iProductSingleton *productObj;
 }
 
 
--(void)checkForVideoUrl:(UILabel *)lblDescriptionDetails
+-(void)checkForVideoUrl:(CGRect)descriptionRect
 {
     if ((![[dicProduct objectForKey:@"sVideoUrl"] isEqual:[NSNull null]]) && (![[dicProduct objectForKey:@"sVideoUrl"] isEqualToString:@""]))
 	{
-		UIImageView *imgVideo = [[UIImageView alloc]initWithFrame:CGRectMake(9,lblDescriptionDetails.frame.origin.y+lblDescriptionDetails.frame.size.height+20,91,40)];
+		UIImageView *imgVideo = [[UIImageView alloc]initWithFrame:CGRectMake(9,descriptionRect.origin.y+descriptionRect.size.height+20,91,40)];
 		[imgVideo setBackgroundColor:[UIColor clearColor]];
 		[imgVideo setImage:[UIImage imageNamed:@"new_youtube.png"]];
 		[contentScrollView addSubview:imgVideo];
@@ -1096,15 +1087,16 @@ iProductSingleton *productObj;
 		[videoBtn setBackgroundColor:[UIColor clearColor]];
 		[videoBtn addTarget:self action:@selector(navToVideo) forControlEvents:UIControlEventTouchUpInside];
 		[videoBtn setShowsTouchWhenHighlighted:YES];
-		[videoBtn setFrame:CGRectMake( 5, lblDescriptionDetails.frame.origin.y+lblDescriptionDetails.frame.size.height+20, 95,40)];
+		[videoBtn setFrame:CGRectMake( 5, descriptionRect.origin.y+descriptionRect.size.height+20, 95,40)];
 		[contentScrollView addSubview:videoBtn];
 	}
 }
 
 
--(void)createSendEmailView:(UILabel *)lblDescriptionDetails
+
+-(void)createSendEmailView:(CGRect )descriptionRect
 {
-    UIImageView *imgMail = [[UIImageView alloc]initWithFrame:CGRectMake(113, lblDescriptionDetails.frame.origin.y+lblDescriptionDetails.frame.size.height+20,94, 40)];
+    UIImageView *imgMail = [[UIImageView alloc]initWithFrame:CGRectMake(113, descriptionRect.origin.y+descriptionRect.size.height+20,94, 40)];
 	[imgMail setBackgroundColor:[UIColor clearColor]];
 	[imgMail setImage:[UIImage imageNamed:@"new_email.png"]];
 	[contentScrollView addSubview:imgMail];
@@ -1125,12 +1117,12 @@ iProductSingleton *productObj;
 	[sendMailBtn setBackgroundColor:[UIColor clearColor]];
 	[sendMailBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[sendMailBtn addTarget:self action:@selector(sendFeedBack) forControlEvents:UIControlEventTouchUpInside];
-	[sendMailBtn setFrame:CGRectMake( 113, lblDescriptionDetails.frame.origin.y+lblDescriptionDetails.frame.size.height+20,95,40)];
+	[sendMailBtn setFrame:CGRectMake( 113, descriptionRect.origin.y+descriptionRect.size.height+20,95,40)];
 	[contentScrollView addSubview:sendMailBtn];
 	[sendMailBtn setShowsTouchWhenHighlighted:YES];
     
     //make wishlist button
-    [addToWishBtn setFrame:CGRectMake(220,lblDescriptionDetails.frame.origin.y+lblDescriptionDetails.frame.size.height+20,96,40)];
+    [addToWishBtn setFrame:CGRectMake(220,descriptionRect.origin.y+descriptionRect.size.height+20,96,40)];
 	[lblWishlist setFrame:CGRectMake(addToWishBtn.frame.origin.x+38, addToWishBtn.frame.origin.y+2, 55, 32)];
 	[lblWishlist release];
     UIView *viewBottomBar=[[UIView alloc]initWithFrame:[GlobalPreferences setDimensionsAsPerScreenSize:CGRectMake(0,330, 320, 40) chageHieght:NO]];
@@ -2078,11 +2070,11 @@ iProductSingleton *productObj;
 	
 	if (currentX-startX>45)
     {
-     //   [self previousImageSwap];
+        //[self previousImageSwap];
     }
 	else if (startX-currentX>45)
     {
-     //   [self nextImageSwap];
+        //[self nextImageSwap];
     }
 }
 
@@ -2322,6 +2314,7 @@ iProductSingleton *productObj;
 	}
 	
 	resetIndex=NO;
+    [_hexColor release];
 	[super dealloc];
 }
 
@@ -2424,4 +2417,37 @@ iProductSingleton *productObj;
 	}
     //[productObj release];
 }
+#pragma mark UIWebViewDelegate
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    
+    UIActivityIndicatorView *aivIndicator = (UIActivityIndicatorView*)[self.view viewWithTag:INDICATOR_TAG];
+    [aivIndicator stopAnimating];
+    //Sa Vo fix bug display discription on webview instead of label
+    
+    CGSize scrollViewContentSize = contentScrollView.contentSize;
+    CGSize webViewContentSize = webView.scrollView.contentSize;
+    CGRect frame = [webView frame];
+   
+
+    [webView setFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, webViewContentSize.height)];
+    
+    [self checkForVideoUrl:webView.frame];
+	lblStock.text = [lblStock.text uppercaseString];
+    [self createSendEmailView:webView.frame];
+    
+    if ([[dicProduct valueForKey:@"productReviews"]count]>1)
+    {
+        [lblReadReviews setText:[NSString stringWithFormat:@"%d %@",[[dicProduct valueForKey:@"productReviews"]count],[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.mainproduct.reviews"]]];
+    }
+    else
+    {
+        [lblReadReviews setText:[NSString stringWithFormat:@"%d %@",[[dicProduct valueForKey:@"productReviews"]count],[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.mainproduct.reviews"]]];
+    }
+    
+    [lblReadReviews setBackgroundColor:[UIColor clearColor]];
+    [contentView addSubview:lblReadReviews];
+	
+    [self createReadPostReview];
+}
+
 @end

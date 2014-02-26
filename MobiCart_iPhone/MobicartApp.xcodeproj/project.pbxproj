@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		070C6E4318BDFDC800509ABA /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 070C6E4218BDFDC800509ABA /* NSString+HTML.m */; };
 		0AA1DCA6127AA97A00EF0952 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1DCA5127AA97A00EF0952 /* OpenGLES.framework */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -399,6 +400,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		070C6E4118BDFDC800509ABA /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
+		070C6E4218BDFDC800509ABA /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		0AA1DCA5127AA97A00EF0952 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -1309,6 +1312,8 @@
 		4ECF979315F9ADB40007A29B /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				070C6E4118BDFDC800509ABA /* NSString+HTML.h */,
+				070C6E4218BDFDC800509ABA /* NSString+HTML.m */,
 				4ECF979415F9ADB40007A29B /* NSMutableURLRequest+Parameters.h */,
 				4ECF979515F9ADB40007A29B /* NSMutableURLRequest+Parameters.m */,
 				4ECF979615F9ADB40007A29B /* NSString+URLEncoding.h */,
@@ -2194,6 +2199,7 @@
 				4ECF9A9015F9B5280007A29B /* ASIDownloadCache.m in Sources */,
 				4ECF9A9115F9B5280007A29B /* ASIFormDataRequest.m in Sources */,
 				4ECF9A9215F9B5280007A29B /* ASIHTTPRequest.m in Sources */,
+				070C6E4318BDFDC800509ABA /* NSString+HTML.m in Sources */,
 				4ECF9A9315F9B5280007A29B /* ASIInputStream.m in Sources */,
 				4ECF9A9415F9B5280007A29B /* ASINetworkQueue.m in Sources */,
 				4ECF9AE915F9CC780007A29B /* OAAttachment.m in Sources */,

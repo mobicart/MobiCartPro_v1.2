@@ -68,6 +68,7 @@ extern NSString *selectedDepartment;
 	int selectedIndexNext[100];
 	int pastIndexNext;
 	int indexNext;
+    NSString *_hexColor;
 }
 @property (nonatomic,retain) NSString *optionIndex;
 @property (readwrite) BOOL isWishlist;
@@ -79,6 +80,7 @@ extern NSString *selectedDepartment;
 @property(nonatomic ,retain)NSString *strPriceCurrentProduct;
 @property(nonatomic ,retain)NSString *strPriceNxtProduct;
 @property(nonatomic ,retain)UILabel *lblProductPriceSecond;
+@property (nonatomic, retain) NSString *hexColor;
 
 -(void)createDropDownsNext;
 -(void)createDropDowns;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		070C6E4018BDFBF600509ABA /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 070C6E3F18BDFBF600509ABA /* NSString+HTML.m */; };
 		07A45E591876AFF50030933B /* EbookScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A45E581876AFF50030933B /* EbookScrollView.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -277,6 +278,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		070C6E3E18BDFBF600509ABA /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
+		070C6E3F18BDFBF600509ABA /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		07A45E571876AFF50030933B /* EbookScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EbookScrollView.h; sourceTree = "<group>"; };
 		07A45E581876AFF50030933B /* EbookScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EbookScrollView.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1053,6 +1056,8 @@
 		4ECF9B2415F9EE430007A29B /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				070C6E3E18BDFBF600509ABA /* NSString+HTML.h */,
+				070C6E3F18BDFBF600509ABA /* NSString+HTML.m */,
 				4ECF9B2515F9EE430007A29B /* NSMutableURLRequest+Parameters.h */,
 				4ECF9B2615F9EE430007A29B /* NSMutableURLRequest+Parameters.m */,
 				4ECF9B2915F9EE430007A29B /* NSString+URLEncode.h */,
@@ -1678,6 +1683,7 @@
 				4ECF9BF015F9EE430007A29B /* ASIInputStream.m in Sources */,
 				4ECF9BF115F9EE430007A29B /* ASINetworkQueue.m in Sources */,
 				4ECF9BF215F9EE430007A29B /* NSMutableURLRequest+Parameters.m in Sources */,
+				070C6E4018BDFBF600509ABA /* NSString+HTML.m in Sources */,
 				4ECF9BF315F9EE430007A29B /* NSString+URLEncode.m in Sources */,
 				4ECF9BF415F9EE430007A29B /* NSString+URLEncoding.m in Sources */,
 				4ECF9BF515F9EE430007A29B /* NSURL+Base.m in Sources */,
