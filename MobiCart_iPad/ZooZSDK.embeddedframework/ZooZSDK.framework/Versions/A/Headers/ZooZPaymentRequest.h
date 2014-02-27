@@ -1,6 +1,6 @@
 //
 //  ZooZPaymentRequest.h
-//  
+//
 //
 //  Created by Ronen Morecki on 6/16/11.
 //  Copyright 2011 ZooZ.com All rights reserved.
@@ -10,12 +10,12 @@
 #import "ZooZUser.h"
 #import "ZooZInvoice.h"
 
-@interface ZooZPaymentRequest : NSObject 
+@interface ZooZPaymentRequest : NSObject
 
 +(ZooZPaymentRequest *)requestWithAmount:(float)value andInvoiceReference:(NSString *)invNumber;
 -(void)addItem:(ZooZInvoiceItem *)item;
 
-//Private internal ZooZ usage 
+//Private internal ZooZ usage
 -(BOOL)isRegisterOnly;
 
 //Private properties for ZooZ use
@@ -34,7 +34,8 @@
 @property (nonatomic, readonly) ZooZUser *payerDetails;
 @property (nonatomic, readonly) ZooZInvoice *invoice;
 
-
+//For internal use only - Use requestWithAmount:andInvoiceReference: only.
+-(id)initWithAmount:(float)value andInvoiceReference:(NSString *)invNumber;
 
 
 @end

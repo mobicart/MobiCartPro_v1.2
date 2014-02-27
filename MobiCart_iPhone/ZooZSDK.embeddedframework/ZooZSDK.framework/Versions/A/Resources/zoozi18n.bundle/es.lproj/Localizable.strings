@@ -68,6 +68,7 @@
 "Add +"="Agregar +";
 "Authorization completed"="Autorizado";
 "Payment is pending approval"="Payment is pending approval";
+"Finish"="Finalizar";
 "HOW WOULD YOU LIKE TO PAY"="Cómo le gustaría para pagar";
 
 "zooz.fundtype.creditcard" = "Tarjeta de crédito";

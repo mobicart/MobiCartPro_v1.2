@@ -70,7 +70,8 @@
 "Add +"="Ajouter +";
 "Authorization completed"="Autorisé";
 "Payment is pending approval"="Payment is pending approval";
-"HOW WOULD YOU LIKE TO PAY"="COMMENT VOULEZ-VOUS PAYER";
+"Finish"="Terminer";
+"HOW WOULD YOU LIKE TO PAY"="COMMENT VOULEZ VOUS PAYER";
 "zooz.fundtype.creditcard" = "Carte de Crédit";
 "zooz.fundtype.paypal" = "PayPal";
 "zooz.fundtype.dwolla" = "Bank transfer";

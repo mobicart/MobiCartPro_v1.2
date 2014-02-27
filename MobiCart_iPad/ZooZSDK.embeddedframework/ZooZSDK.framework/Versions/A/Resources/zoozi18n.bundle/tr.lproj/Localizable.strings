@@ -62,6 +62,7 @@
 "Add +"="Eklemek +";
 "Authorization completed"="Yetkilendirme tamamlandı";
 "Payment is pending approval"="Payment is pending approval";
+"Finish"="bitirmek";
 "HOW WOULD YOU LIKE TO PAY"="SİZE NASIL ÖDEME YAPMAK İSTİYORUM";
 "zooz.fundtype.creditcard" = "Kredi Kartı";
 "zooz.fundtype.paypal" = "PayPal";

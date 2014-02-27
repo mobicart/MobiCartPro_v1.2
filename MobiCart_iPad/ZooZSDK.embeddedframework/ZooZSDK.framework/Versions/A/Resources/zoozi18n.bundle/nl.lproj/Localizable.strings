@@ -64,6 +64,7 @@
 "Add +" = "Toevoegen +";
 "Authorization completed" = "Autorisatie voltooid";
 "Payment is pending approval"="Betaling wachtend op goedkeuring";
+"Finish"="Afmaken";
 "HOW WOULD YOU LIKE TO PAY"="HOE WILT U BETALEN";
 "zooz.fundtype.creditcard" = "Creditcard";
 "zooz.fundtype.paypal" = "PayPal";

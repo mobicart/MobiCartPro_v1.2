@@ -11,5 +11,5 @@
 
 /*-------------------------MobiCart Email Id----------------------------------------------------------*/
 
-#define merchant_email @"nil"
+#define merchant_email @"nsitester@gmail.com"
 

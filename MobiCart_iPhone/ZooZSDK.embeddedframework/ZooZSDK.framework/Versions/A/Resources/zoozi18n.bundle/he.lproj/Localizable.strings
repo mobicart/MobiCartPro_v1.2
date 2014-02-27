@@ -68,6 +68,7 @@
 "Add +"="הוסף +";
 "Authorization completed"="אושר בהצלחה";
 "Payment is pending approval"="בקשת תשלום התקבלה, ממתין לאישור סופי";
+"Finish"="סיום";
 "HOW WOULD YOU LIKE TO PAY"="כיצד ברצונך לשלם";
 "zooz.fundtype.creditcard" = "כרטיס אשראי";
 "zooz.fundtype.paypal" = "פייפאל";

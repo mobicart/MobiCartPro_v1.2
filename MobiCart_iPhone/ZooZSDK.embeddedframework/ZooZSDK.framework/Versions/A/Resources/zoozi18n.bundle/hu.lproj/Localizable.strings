@@ -68,6 +68,7 @@
 "Add +"="Hozzáad +";
 "Authorization completed"="Felhatalmazott";
 "Payment is pending approval"="Payment is pending approval";
+"Finish"="Befejezés";
 "HOW WOULD YOU LIKE TO PAY"="Hogyan szeretné fizetni";
 "zooz.fundtype.creditcard" = "Bankkártya";
 "zooz.fundtype.paypal" = "PayPal";

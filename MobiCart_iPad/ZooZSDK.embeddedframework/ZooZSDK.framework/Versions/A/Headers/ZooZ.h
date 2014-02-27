@@ -1,6 +1,6 @@
 //
 //  ZooZ.h
-// 
+//
 //
 //  Created by Ronen Morecki on 6/16/11.
 //  Copyright 2011 ZooZ.com. All rights reserved.
@@ -9,19 +9,21 @@
 #import  <UIKit/UIKit.h>
 #import "ZooZPaymentRequest.h"
 #import "ZooZPaymentResponse.h"
+#import "ZooZSubscriptionRequest.h"
+#import "ZooZSubscriptionResponse.h"
 
 
 @protocol ZooZPaymentCallbackDelegate<NSObject>
 
 @required
 //The payment finished successfully call back to dialog is on background thread, no need to auto release pool, as this been taken care of. (The dialog is still open since v1.3.2). You shouldn't update your UI on this, just process the payment data
-- (void)paymentSuccessWithResponse:(ZooZPaymentResponse *)response; 
+- (void)paymentSuccessWithResponse:(ZooZPaymentResponse *)response;
 
 //Dialog is closed after payment finished successfully (see paymentSuccessWithResponse:) - this is where you should update your UI on success transaction
-- (void)paymentSuccessDialogClosed; 
+- (void)paymentSuccessDialogClosed;
 
 //User closed the dialog without paying
-- (void)paymentCanceled; 
+- (void)paymentCanceled;
 
 //Some error occured in calling ZooZ to open the payment request
 - (void)openPaymentRequestFailed:(ZooZPaymentRequest *)request withErrorCode:(int)errorCode andErrorMessage:(NSString *)errorMessage;
@@ -40,11 +42,12 @@
 
 -(ZooZPaymentRequest *)createManageFundSourcesRequestWithDelegate:(id<ZooZPaymentCallbackDelegate>)del;
 
+-(ZooZSubscriptionRequest *)createSubscriptionRequestWithTotal:(float)amount andCurrencyCode:(NSString *)currencyCode every:(int)periodNumber periodUnit:(ZooZSubscriptionPeriodUnit	)unit forNumberOfPeriods:(int)recurring  invoiceRefNumber:(NSString *)invoiceNumber delegate:(id<ZooZPaymentCallbackDelegate>)del;
 
 //To fasten the dialog opening in openPayment:forAppKey: you can call this method in the background when your app starts or anytime else before the payment
 //If you want to call open dialog again after successful payment then this functions should be called again. Returns YES or NO if succeeded or failed in init.
-//@autorleasepool is handled inside. 
--(BOOL)preInitialize:(NSString *)appKey isSandboxEnv:(BOOL)isSandbox;
+//@autorleasepool is handled inside.
+-(BOOL)preInitialize:(NSString *)appKey isSandboxEnv:(BOOL)isSandbox withCurrencyCode:(NSString *)currencyCode;
 
 //Opens the payment dialog
 -(void)openPayment:(ZooZPaymentRequest *)request forAppKey:(NSString *)appKey;
@@ -61,6 +64,7 @@
 @property (nonatomic, retain) UIImage *barTitleImage;
 //Possibility to override the font name that is used in ZooZ UI
 @property(nonatomic, retain) NSString *fontName;
+@property(nonatomic, retain) UIColor *overlayBackgroundColor;
 
 //Kiosk mode - never remeber card detaild for next usage.
 @property (nonatomic) BOOL kioskMode;
@@ -70,8 +74,8 @@
 
 //Net swipe - Jumio properties - //available only for the ZooZ SDK with camera scan feature
 @property (nonatomic) BOOL autoOpenScanWithCamera;
-@property (nonatomic, retain) NSString *netSWipeMerchantToken;
-@property (nonatomic, retain) NSString *netSwipeMerchantApiSecret; 
+@property (nonatomic, retain) NSString *netSWipeMerchantToken __deprecated;
+@property (nonatomic, retain) NSString *netSwipeMerchantApiSecret __deprecated;
 
 
 
