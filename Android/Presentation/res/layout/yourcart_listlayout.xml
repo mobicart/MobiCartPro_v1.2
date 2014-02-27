@@ -9,8 +9,8 @@
  <ImageView
      
   android:id="@+id/cart_list_row_red_icon_iv"
-  android:layout_width="30px"
-  android:layout_height="30px"
+  android:layout_width="30dp"
+  android:layout_height="30dp"
   android:layout_marginLeft="30dip"
   android:layout_marginTop="33dip"
   android:src="@drawable/red_icon_horizontal"
