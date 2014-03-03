@@ -20,8 +20,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,8 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -73,6 +77,33 @@ import com.mobicart.renamed_package.utils.coverflow.CoverFlowExample;
 @SuppressWarnings("unchecked")
 public class ProductDetailAct extends Activity implements OnClickListener {
 
+	private class DecodeDescriptionTask extends AsyncTask<String, String, String>{
+
+		@Override
+		protected String doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			String decodeHtml = Html.fromHtml(currentProduct.getsDescription()).toString();
+			return decodeHtml;
+		}
+
+		@Override
+		protected void onPostExecute(String decodeString) {
+			// TODO Auto-generated method stub
+			String startHTML = "<html><body text=\"#"
+					+ MobicartCommonData.colorSchemeObj.getLabelColor() + "\">";
+			String endHTML = "</body></html>";
+			String htmlString = startHTML
+					+ decodeString
+					+ endHTML;
+			
+			productTextTV.loadData(htmlString, "text/html; charset=UTF-8", null);
+			sendToFriendBtn.setVisibility(View.VISIBLE);
+			
+			addToWishListBtn.setVisibility(View.VISIBLE);
+			
+			super.onPostExecute(decodeString);
+		}
+	}
 	@SuppressWarnings("unused")
 	private String productName, pOptID, optionIdStr = "";
 	private String option = "", status = null;
@@ -97,8 +128,9 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 	private static boolean fromWishlist = false;
 	private boolean select = true, optionSelected = true, itemAdded = false;
 	private MyCommonView backButton, postReviewBtn, addToCartBtn,
-			productTextTV, productTitleTV, productPriceTV, cartBtn,
-			actualPriceTV, actualPriceTaxTV, priceTaxTV;
+			productTitleTV, productPriceTV, cartBtn, actualPriceTV,
+			actualPriceTaxTV, priceTaxTV;
+	private WebView productTextTV;
 	private MyCommonView sendToFriendBtn, addToWishListBtn, watchVideoBtn;
 	private MyCommonView statusIV, cartEditBtn;
 	private LoaderImageView productIV, productIVDummy;
@@ -332,13 +364,17 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 		addToWishListBtn.setOnClickListener(this);
 		addToCartBtn.setOnClickListener(this);
 		watchVideoBtn.setOnClickListener(this);
-		productTextTV.setText(currentProduct.getsDescription());
+
+		
+
+		DecodeDescriptionTask decodeDescriptionTask = new DecodeDescriptionTask();
+		decodeDescriptionTask.execute("");
 
 		productPrice = ProductTax
 				.calculateFinalPriceByUserLocation(currentProduct);
 		productPriceTV.setText(MobicartCommonData.currencySymbol
 				+ String.format("%.2f", productPrice));
-		if (!currentProduct.getsTaxType().equalsIgnoreCase("Default")
+		if (!currentProduct.getsTaxType().equalsIgnoreCase("Default") 
 				&& MobicartCommonData.storeVO.isbIncludeTax())
 			priceTaxTV.setText("(Inc. " + currentProduct.getsTaxType() + ")");
 		if (ProductTax
@@ -571,14 +607,26 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 		productReviewTV = (MyCommonView) findViewById(R.id.productDetail_review_TV);
 		imgRl = (RelativeLayout) findViewById(R.id.productDetail_productimg_RL);
 		zoomBtn = (Button) findViewById(R.id.productDetail_searchicon_Btn);
-		productTextTV = (MyCommonView) findViewById(R.id.productDetail_text_TV);
+	    //Sa Vo fix bug display discription on webview instead of label
+		productTextTV = (WebView) findViewById(R.id.productDetail_text_TV);
+		productTextTV.setBackgroundColor(0x00000000);
+		productTextTV.setVerticalScrollBarEnabled(false);
+		productTextTV.setHorizontalScrollBarEnabled(false);
+		
+		
 		productTitleTV = (MyCommonView) findViewById(R.id.productDetail_title_TV);
 		productPriceTV = (MyCommonView) findViewById(R.id.productDetail_price_TV);
 		actualPriceTV = (MyCommonView) findViewById(R.id.productDetail_actualPrice_TV);
 		postReviewBtn = (MyCommonView) findViewById(R.id.productDetail_postReview_Btn);// productDetail_postReview_Btn
 		addToCartBtn = (MyCommonView) findViewById(R.id.productDetail_AddToCart_Btn);
 		sendToFriendBtn = (MyCommonView) findViewById(R.id.productDetail_sendtofrend_Btn);
+		
+	    //Sa Vo fix bug display discription on webview instead of label
+		sendToFriendBtn.setVisibility(View.INVISIBLE);
 		addToWishListBtn = (MyCommonView) findViewById(R.id.productDetail_addtoWishlist_Btn);
+		
+	    //Sa Vo fix bug display discription on webview instead of label
+		addToWishListBtn.setVisibility(View.INVISIBLE);
 		productIV = (LoaderImageView) findViewById(R.id.productDetail_productimg_IV);
 		productIVDummy = (LoaderImageView) findViewById(R.id.productDetail_productimg_IV1);
 		watchVideoBtn = (MyCommonView) findViewById(R.id.productDetail_watchVideo_Btn);
@@ -612,11 +660,13 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
 		addToCartBtn.setBackgroundDrawable(drawable);
 
-		// Sa Vo fix bug
+	    //Sa Vo fix bug display discription on webview instead of label
 		addToCartBtn.setTextColor(Color.parseColor("#"
 				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
-		productTextTV.setTextColor(Color.parseColor("#"
-				+ MobicartCommonData.colorSchemeObj.getLabelColor()));
+		// productTextTV.setTextColor(Color.parseColor("#"
+		// + MobicartCommonData.colorSchemeObj.getLabelColor()));
+		
+		
 		postReviewBtn.setText(MobicartCommonData.keyValues.getString(
 				"key.iphone.mainproduct.postreview", "Post Review"));
 		addToCartBtn.setText(MobicartCommonData.keyValues.getString(
