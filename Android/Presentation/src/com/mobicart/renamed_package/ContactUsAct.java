@@ -2,6 +2,8 @@ package com.mobicart.renamed_package;
 //Sa Vo fix bug map not dislay. Implement map in new way, change to Google Map API v2
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -280,9 +282,16 @@ public class ContactUsAct extends Activity implements OnClickListener,
 
 	public LatLng getLocationFromString(String address) throws JSONException {
 
-		HttpGet httpGet = new HttpGet(
-				"http://maps.google.com/maps/api/geocode/json?address="
-						+ address + "&ka&sensor=false");
+		String encodedJson = "";
+		try {
+			encodedJson = URLEncoder.encode(address, "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String url = "http://maps.google.com/maps/api/geocode/json?address="
+				+ encodedJson + "&ka&sensor=false";
+		HttpGet httpGet = new HttpGet(url);
 		HttpClient client = new DefaultHttpClient();
 		HttpResponse response;
 		StringBuilder stringBuilder = new StringBuilder();
