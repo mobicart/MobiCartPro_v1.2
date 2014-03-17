@@ -560,6 +560,14 @@ static MobiCartStart *shared;
 			[objTemp.navigationController.navigationBar addSubview:btnCart[i]];
 		}
 		localNavigationController.navigationBar.tintColor=navBarColor;
+        
+        //Sa Vo fix bug not display tint color of navigation bar on iOS 7.x
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+        {
+            localNavigationController.navigationBar.barTintColor = navBarColor;
+            localNavigationController.navigationBar.translucent = NO;
+        }
+
 		
 		[localNavigationController release];
 	}

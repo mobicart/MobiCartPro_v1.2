@@ -281,9 +281,16 @@ extern BOOL isNewsSection;
 	if([GlobalPreferences getCureentSystemVersion]>=6.0)
         [sortSegCtrl setTintColor:[UIColor colorWithRed:81.6/100 green:81.6/100 blue:81.6/100 alpha:1.0]];
 	
+    //Sa Vo fix bug not highlight sortby toolbar at initial
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [UIFont fontWithName:@"Helvetica" size:12], UITextAttributeFont,
+                                [UIColor colorWithRed:58.0/255.0 green:67.0/255.0 blue:67.0/255.0 alpha:1], UITextAttributeTextColor,
+                                nil];
+    [sortSegCtrl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:[UIColor colorWithRed:81.6/100 green:81.6/100 blue:81.6/100 alpha:1.0] forKey:UITextAttributeTextColor];
+    [sortSegCtrl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
     
-    
-	[self setTextColors:sortSegCtrl];
+	//[self setTextColors:sortSegCtrl];
 	
 	[sortSegCtrl addTarget:self action:@selector(sortSegementChanged:) forControlEvents:UIControlEventValueChanged];
 	[sortSegCtrl setFrame:CGRectMake(95,5,220, 30)];
@@ -380,7 +387,8 @@ extern BOOL isNewsSection;
 {
 	@try
 	{
-		[self setTextColors:sender];
+        //Sa Vo fix bug not highlight sortby toolbar at initial
+		//[self setTextColors:sender];
 		UISegmentedControl *segTemp = sender;
 		switch (segTemp.selectedSegmentIndex)
 		{
