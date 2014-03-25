@@ -433,6 +433,21 @@ static MobiCartStart *shared;
 	_obj.title = strTitle;
 }
 
+-(BOOL)isDarkColor:(UIColor*)backgroundColor {
+    
+    const CGFloat *componentColors = CGColorGetComponents(backgroundColor.CGColor);
+    
+    CGFloat colorBrightness = ((componentColors[0] * 299) + (componentColors[1] * 587) + (componentColors[2] * 114)) / 1000;
+    if (colorBrightness < 0.5)
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
 // Initialize tabbar controllers, as per selected by user
 - (void)createTabbarContorllers
 {//DLog(@"6");
@@ -501,6 +516,12 @@ static MobiCartStart *shared;
 	_objMobicartAppDelegate.tabController = [[UITabBarController alloc] init];
 	
 	_objMobicartAppDelegate.tabController.delegate=self;
+    
+    //Sa Vo set default tint color of tabbar is black for both iOS 6.x and iOS 7.x
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
+    }
 	
 	NSArray *arrAllNavigationTitles = [NSArray arrayWithArray:[GlobalPreferences getAllNavigationTitles]];
 	
@@ -566,6 +587,14 @@ static MobiCartStart *shared;
         {
             localNavigationController.navigationBar.barTintColor = navBarColor;
             localNavigationController.navigationBar.translucent = NO;
+            
+            //Sa Vo fix bug not display status bar text on dark background on iOS 7.x
+            if ([self isDarkColor:navBarColor]) {
+                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+            }else{
+                [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+                
+            }
         }
 
 		

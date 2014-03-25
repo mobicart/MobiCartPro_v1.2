@@ -539,7 +539,16 @@ int userStateID=0;
 		[_searchBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"searchback.png"]]];
 	}
 	else {
-		[_searchBar setBackgroundColor:_savedPreferences.searchBgColor];
+		//Sa Vo fix bug search bar not get search theme color from Mobicart website
+        //[_searchBar setBackgroundColor:_savedPreferences.searchBgColor];
+        
+        _searchBar.tintColor =_savedPreferences.searchBgColor;
+        
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+        {
+            _searchBar.barTintColor = _savedPreferences.searchBgColor;
+        }
+
 	}
     
     // [_searchBar setTintColor:navBarColor];

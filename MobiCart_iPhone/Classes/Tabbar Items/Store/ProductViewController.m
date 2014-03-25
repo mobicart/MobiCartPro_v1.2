@@ -290,6 +290,10 @@ extern BOOL isNewsSection;
     NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:[UIColor colorWithRed:81.6/100 green:81.6/100 blue:81.6/100 alpha:1.0] forKey:UITextAttributeTextColor];
     [sortSegCtrl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
     
+    //Sa Vo fix bug the currently selected button’s text isn’t legible
+    NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObject:[UIColor colorWithRed:227/255.0 green:230/255.0 blue:228/255.0 alpha:1.0] forKey:UITextAttributeTextColor];
+    [sortSegCtrl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
+    
 	//[self setTextColors:sortSegCtrl];
 	
 	[sortSegCtrl addTarget:self action:@selector(sortSegementChanged:) forControlEvents:UIControlEventValueChanged];
@@ -309,10 +313,12 @@ extern BOOL isNewsSection;
 }
 #pragma mark Sort handlers
 //Called to Change The Text of Segment Controller when Clicked
+/*
 - (void)setTextColors:(id)sender
 {
 	UISegmentedControl *sg = (UISegmentedControl*)sender;
 	
+    
 	int eg=0;
     for (id seg in [sg subviews])
     {
@@ -353,9 +359,10 @@ extern BOOL isNewsSection;
         }
         eg++;
     }
-	
+    
+    
 }
-
+*/
 - (void)sortingHandlers
 {
 	NSString *sortByName = @"sName";
@@ -388,6 +395,7 @@ extern BOOL isNewsSection;
 	@try
 	{
         //Sa Vo fix bug not highlight sortby toolbar at initial
+
 		//[self setTextColors:sender];
 		UISegmentedControl *segTemp = sender;
 		switch (segTemp.selectedSegmentIndex)
