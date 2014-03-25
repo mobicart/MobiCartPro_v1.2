@@ -118,6 +118,15 @@
     return cell;
 }
 
+//Sa Vo fix crash bug when tap on More button on iOS 7.1
+
+- (void) _layoutCells
+{
+    // HACK ALERT: on iOS 7.1, this method will be called from deep within the bowels of iOS.  The problem is that
+    // the method is not implemented and it results in an unrecognized selected crash. So we implement it...
+    //
+    // What could go wrong?
+}
 
 
 @end
