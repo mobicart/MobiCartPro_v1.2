@@ -99,7 +99,7 @@
 		0762929918C4691200AB46DA /* ZooZPassCodeSave_ipad.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0762923D18C4691200AB46DA /* ZooZPassCodeSave_ipad.nib */; };
 		0762929A18C4691200AB46DA /* ZooZPasscodeVerify.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0762923E18C4691200AB46DA /* ZooZPasscodeVerify.nib */; };
 		0762929B18C4691200AB46DA /* ZooZPasscodeVerify_ipad.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0762923F18C4691200AB46DA /* ZooZPasscodeVerify_ipad.nib */; };
-		0762929D18C4693300AB46DA /* ZooZSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0762924018C4691200AB46DA /* ZooZSDK.framework */; };
+		079AAC8618E2CA79005A0322 /* ZooZSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0762924018C4691200AB46DA /* ZooZSDK.framework */; };
 		07A45E591876AFF50030933B /* EbookScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A45E581876AFF50030933B /* EbookScrollView.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -670,7 +670,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0762929D18C4693300AB46DA /* ZooZSDK.framework in Frameworks */,
+				079AAC8618E2CA79005A0322 /* ZooZSDK.framework in Frameworks */,
 				4E3275BF1795431E0098AD5B /* AdSupport.framework in Frameworks */,
 				CC59BED915107F46007A4FC2 /* libxml2.dylib in Frameworks */,
 				31AAE5C41469767700EAAE17 /* libz.1.1.3.dylib in Frameworks */,
@@ -1777,8 +1777,8 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\"$(SRCROOT)/ZooZSDK.embeddedframework\\\\\\\"",
-					"/Users/ifixlaptop/Sa\\ Vo/Backup/SA\\ Vo/Project/Mobi\\ Card/Source/MobicartPro_v1.2/MobiCartPro_v1.2/trunk/MobiCart_iPad/ZooZSDK.embeddedframework",
+					"\"$(SRCROOT)/ZooZSDK.embeddedframework\"",
+					"$(PROJECT_DIR)/ZooZSDK.embeddedframework",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1812,8 +1812,8 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\"$(SRCROOT)/ZooZSDK.embeddedframework\\\\\\\"",
-					"/Users/ifixlaptop/Sa\\ Vo/Backup/SA\\ Vo/Project/Mobi\\ Card/Source/MobicartPro_v1.2/MobiCartPro_v1.2/trunk/MobiCart_iPad/ZooZSDK.embeddedframework",
+					"\"$(SRCROOT)/ZooZSDK.embeddedframework\"",
+					"$(PROJECT_DIR)/ZooZSDK.embeddedframework",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Mobicart_Prefix.pch;
@@ -1918,8 +1918,8 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\"$(SRCROOT)/ZooZSDK.embeddedframework\\\\\\\"",
-					"/Users/ifixlaptop/Sa\\ Vo/Backup/SA\\ Vo/Project/Mobi\\ Card/Source/MobicartPro_v1.2/MobiCartPro_v1.2/trunk/MobiCart_iPad/ZooZSDK.embeddedframework",
+					"\"$(SRCROOT)/ZooZSDK.embeddedframework\"",
+					"$(PROJECT_DIR)/ZooZSDK.embeddedframework",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;

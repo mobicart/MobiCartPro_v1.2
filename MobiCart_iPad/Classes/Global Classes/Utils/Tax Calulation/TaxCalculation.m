@@ -63,8 +63,11 @@ static TaxCalculation *shared;
 		 state id and in this case tax will be 0
 		 */
 		
-		
-		countryID=[[[dictSettingsDetails valueForKey:@"store"]valueForKey:@"territoryId"]intValue];
+		//Sa Vo fix bug iPad not load tax type
+        
+		//countryID=[[[dictSettingsDetails valueForKey:@"store"]valueForKey:@"territoryId"]intValue];
+        int territoryId = [[[dictSettingsDetails valueForKey:@"store"]valueForKey:@"territoryId"]intValue];
+        
 		NSArray *arrtaxCountries=[[dictSettingsDetails valueForKey:@"store"]valueForKey:@"taxList"];
 		NSArray *arrShippingCountries=[[dictSettingsDetails valueForKey:@"store"]valueForKey:@"shippingList"];
 		
@@ -81,11 +84,22 @@ static TaxCalculation *shared;
 		
 		for(int index=0;index<[arrTaxAndShippingCountries count];index++)
 		{
+            //Sa Vo fix bug iPad not load tax type
+
+            /*
 			if([[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"sState"]isEqualToString:@"Other"]&& [[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"territoryId"]intValue]==countryID)
 			{
 				stateID=[[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"id"]intValue];
 			    break;
 			}
+             */
+            if([[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"sState"]isEqualToString:@"Other"]&& [[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"territoryId"]intValue]==territoryId)
+			{
+				stateID=[[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"id"]intValue];
+                countryID = territoryId;
+			    break;
+			}
+            
 		}
 		
 	}
