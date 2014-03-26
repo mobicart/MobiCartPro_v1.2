@@ -654,6 +654,14 @@ public class GetLangPackTask extends AsyncTask<String, String, String> {
 				"key.application.appearance.staticpages.page2",
 				MobicartCommonData.labelsVO.getLabelsMap()
 						.getKeyIphoneStaticpagesPage2());
+		
+		//Sa Vo fix bug not load detail email by add email detail key
+		/// key.iphone.product.detail.email.content
+		keyValuesEditor.putString(
+				"key.iphone.product.detail.email.content",
+				MobicartCommonData.labelsVO.getLabelsMap()
+						.getKeyiphoneProductDetailEmailContent());
+		
 		keyValuesEditor.commit();
 	}
 

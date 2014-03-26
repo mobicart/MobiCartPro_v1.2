@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -18,7 +19,6 @@ import com.mobicart.android.communication.CustomException;
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.core.StaticPage;
 import com.mobicart.android.model.MobicartCommonData;
-import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
 
@@ -30,7 +30,7 @@ import com.mobicart.renamed_package.utils.MyCommonView;
  */
 public class AboutUsTabAct extends ActivityGroup implements OnClickListener {
 
-	private MyCommonView TitleTV, desc, backBtn, cartBtn,cartEditBtn;
+	private MyCommonView TitleTV, desc, backBtn, cartBtn, cartEditBtn;
 	private StaticPage spage = null;
 	private ImageView TitleIV;
 	private String title, details;
@@ -39,13 +39,19 @@ public class AboutUsTabAct extends ActivityGroup implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// Sa Vo add code to strict thread in background for Android SDK 11 to
+		// upper
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+
 		setContentView(R.layout.about_us_tab_layout);
 		prepareViewControls();
 		spage = new StaticPage();
 		try {
 			MobicartCommonData.sPagesVO = spage.getStaticPagesByApp(
-					AboutUsTabAct.this, MobicartCommonData.appIdentifierObj
-							.getAppId());
+					AboutUsTabAct.this,
+					MobicartCommonData.appIdentifierObj.getAppId());
 		} catch (CustomException e) {
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setTitle(MobicartCommonData.keyValues.getString(
@@ -95,7 +101,7 @@ public class AboutUsTabAct extends ActivityGroup implements OnClickListener {
 				});
 		alertDialog.show();
 	}
-	
+
 	/**
 	 * This method is called in onCreate() to link the views declared in xml to
 	 * the view variables in activity.

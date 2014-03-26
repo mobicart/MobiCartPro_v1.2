@@ -1,4 +1,5 @@
 package com.mobicart.renamed_package;
+
 //Sa Vo fix bug map not dislay. Implement map in new way, change to Google Map API v2
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +24,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -66,17 +68,17 @@ public class ContactUsAct extends Activity implements OnClickListener,
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
-			navigateToLocation((latitude), (longitude),
-					myMapView, finalCompleteAddress);
+			navigateToLocation((latitude), (longitude), myMapView,
+					finalCompleteAddress);
 			super.onPostExecute(result);
-			
+
 		}
 
 	}
@@ -100,6 +102,8 @@ public class ContactUsAct extends Activity implements OnClickListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+
 		setContentView(R.layout.contact_us_layout);
 		Bundle extra = getIntent().getExtras();
 		title = extra.getString("Title");
@@ -112,7 +116,6 @@ public class ContactUsAct extends Activity implements OnClickListener,
 
 		myMapView = ((MapFragment) getFragmentManager().findFragmentById(
 				R.id.contactUs_map)).getMap();
-
 
 		cartEditBtn = TabHostAct.prepareCartButton(this);
 		cartEditBtn.setVisibility(View.GONE);
@@ -147,8 +150,8 @@ public class ContactUsAct extends Activity implements OnClickListener,
 	 * This Method is used to show Network related errors.
 	 */
 	private void showNetworkError() {
-		AlertDialog alertDialog = new AlertDialog.Builder(
-				ContactUsAct.this).create();
+		AlertDialog alertDialog = new AlertDialog.Builder(ContactUsAct.this)
+				.create();
 		alertDialog.setTitle(MobicartCommonData.keyValues.getString(
 				"key.iphone.nointernet.title", "Alert"));
 		alertDialog.setMessage(MobicartCommonData.keyValues.getString(
@@ -209,10 +212,12 @@ public class ContactUsAct extends Activity implements OnClickListener,
 				cAddress));
 
 		int zoom = 0;
-		if(d!=0 && e!=0){
+		if (d != 0 && e != 0) {
 			zoom = 15;
 		}
-		myMapView.animateCamera( CameraUpdateFactory.newLatLngZoom(newLocation, zoom), 2000, null);
+		myMapView.animateCamera(
+				CameraUpdateFactory.newLatLngZoom(newLocation, zoom), 2000,
+				null);
 
 	}
 
@@ -227,7 +232,6 @@ public class ContactUsAct extends Activity implements OnClickListener,
 
 		super.onResume();
 	}
-
 
 	@Override
 	protected void onDestroy() {
@@ -343,10 +347,10 @@ public class ContactUsAct extends Activity implements OnClickListener,
 					.equals("") ? sState != null ? sState + "," : "" : "");
 			finalCompleteAddress = finalCompleteAddress.concat(!sCountry
 					.equals("") ? sCountry != null ? sCountry : "" : "");
-			
+
 			GetLocationTask getLocationTask = new GetLocationTask();
 			getLocationTask.execute("");
-			
+
 		}
 
 	}

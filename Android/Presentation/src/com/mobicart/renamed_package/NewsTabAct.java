@@ -47,12 +47,13 @@ public class NewsTabAct extends Activity implements OnCheckedChangeListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		// Sa Vo add code to strict thread in background for Android SDK 11 to
 		// upper
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 		StrictMode.setThreadPolicy(policy);
-		
+
 		setContentView(R.layout.news_layout);
 		initializeControls();
 		newsListBind();

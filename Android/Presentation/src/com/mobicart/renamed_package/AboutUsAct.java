@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +17,7 @@ import android.widget.ImageView;
 
 import com.mobicart.android.core.MobicartUrlConstants;
 import com.mobicart.android.model.MobicartCommonData;
+import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.utils.CartItemCount;
 import com.mobicart.renamed_package.utils.MyCommonView;
 import com.mobicart.renamed_package.utils.URLInHtmlHrefUtil;
@@ -43,12 +43,6 @@ public class AboutUsAct extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Sa Vo add code to strict thread in background for Android SDK 11 to
-		// upper
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-				.permitAll().build();
-		StrictMode.setThreadPolicy(policy);
-
 		setContentView(R.layout.aboutus_layout);
 		Bundle extra = getIntent().getExtras();
 		Title = extra.getString("Title");
@@ -58,7 +52,7 @@ public class AboutUsAct extends Activity implements OnClickListener {
 		TitleTV.setText(Title);
 		backBtn.setOnClickListener(this);
 		cartBtn.setOnClickListener(this);
-		Desc = URLInHtmlHrefUtil.getStringInHtmlHrefFormat(Desc);
+		Desc=URLInHtmlHrefUtil.getStringInHtmlHrefFormat(Desc);
 		String webDesc = "<html><body><font face='Helvetica-Bold' size=2.95 "
 				+ "'>" + Desc + "</font></body></html>";
 		webDesc = "<html><body><font face='Helvetica-Bold' size=2.95 color='"
@@ -75,14 +69,13 @@ public class AboutUsAct extends Activity implements OnClickListener {
 		descWV.setBackgroundResource(R.drawable.main_bg);
 		descWV.requestFocus(View.FOCUS_DOWN);
 	}
-
+	
 	private class InsideWebViewClient extends WebViewClient {
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
 			view.loadUrl(url);
 			return true;
 		}
-
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
 			super.onPageStarted(view, url, favicon);
@@ -97,14 +90,13 @@ public class AboutUsAct extends Activity implements OnClickListener {
 			}
 			firstTime = false;
 		}
-
+		
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			super.onPageFinished(view, url);
 			progressDialog.dismiss();
 		}
 	}
-
 	private int getScale(Double width2) {
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
@@ -112,7 +104,6 @@ public class AboutUsAct extends Activity implements OnClickListener {
 		Double val = new Double(width) / 12;
 		return val.intValue();
 	}
-
 	/**
 	 * This method is called in onCreate() to link the views declared in xml to
 	 * the view variables in activity.

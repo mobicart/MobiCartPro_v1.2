@@ -167,7 +167,6 @@ public class SignUpAct extends Activity implements OnClickListener {
 		countrySpinner.setPrompt(MobicartCommonData.keyValues.getString(
 				"key.iphone.shoppingcart.choosecountry", "Choose Country"));
 		countrySpinner.setAdapter(adapter);
-
 		// Sa Vo fix bug display Country and State value not nice
 		int leftCountryPadding = 10;
 		if (MobicartUrlConstants.resolution == SplashAct.XXHDPI) {
@@ -220,14 +219,14 @@ public class SignUpAct extends Activity implements OnClickListener {
 				stateSpinner.setPrompt(MobicartCommonData.keyValues.getString(
 						"key.iphone.shoppingcart.choose.state", "Choose State"));
 				stateSpinner.setAdapter(sAdapter1);
-				
+
 				// Sa Vo fix bug display Country and State value not nice
 				int lefStatetPadding = 10;
 				if (MobicartUrlConstants.resolution == SplashAct.XXHDPI) {
 					lefStatetPadding = 20;
 				}
-				
 				stateSpinner.setPadding(lefStatetPadding, 0, 49, 0);
+
 				if (MobicartCommonData.storeVO.getTaxList() != null) {
 					for (int pos = 0; pos < MobicartCommonData.storeVO
 							.getTaxList().size(); pos++) {
