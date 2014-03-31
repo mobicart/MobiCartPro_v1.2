@@ -15,8 +15,11 @@ extern 	MobicartAppAppDelegate *_objMobicartAppDelegate;
 
 -(MoreTableViewDelegate *) initWithDelegate:(id<UITableViewDelegate>) delegate
 {
+    
     originalDelegate=delegate;
     [super init];
+    
+
     return self;
 }
 

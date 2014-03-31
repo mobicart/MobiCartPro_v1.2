@@ -20,7 +20,7 @@
 NSArray *optionArray,*optionsArrayNextProduct;
 extern NSString *selectedDepartment;
 
-@interface ProductDetails : UIViewController<MFMailComposeViewControllerDelegate,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate> {
+@interface ProductDetails : UIViewController<MFMailComposeViewControllerDelegate,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UIWebViewDelegate> {
 	int productID;
 	int nextProductID;
 	CGRect newFrame, newFrame2;

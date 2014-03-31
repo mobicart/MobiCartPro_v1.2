@@ -35,6 +35,7 @@ BOOL isOnlyTwitter;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    
 	isNewsSection = NO;
 	// Stoping the loading indicator
 	//[GlobalPreferences stopLoadingIndicator];
@@ -49,6 +50,7 @@ BOOL isOnlyTwitter;
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+
     
     [GlobalPreferences showLoadingIndicator];
 	[super viewWillAppear:animated];
@@ -57,7 +59,7 @@ BOOL isOnlyTwitter;
     
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateShoppingLabel) name:@"updateLabelNews" object:nil];
     [self hideLoadingBar];
-    
+
 }
 
 - (void)updateShoppingLabel
@@ -74,11 +76,6 @@ BOOL isOnlyTwitter;
 - (void)loadView
 {
 	
-	
-    
-	//[GlobalPreferences addLoadingBar_AtBottom:self.tabBarController.view withTextToDisplay:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.LoaderText"]];
-	
-	//[GlobalPreferences startLoadingIndicator];
 	
 	self.navigationItem.titleView = [GlobalPreferences createLogoImage];
 	
@@ -170,7 +167,6 @@ BOOL isOnlyTwitter;
 	[contentView addSubview:viewLoading];
 	[viewLoading setHidden:YES];
 	
-	
     [self performSelectorInBackground:@selector(fetchDataFromServer) withObject:nil];
 	
 	if ([Twitter count]!=0)
@@ -205,16 +201,15 @@ BOOL isOnlyTwitter;
 	
 	
     for(int i =0; i<[self.arrTwitter count] ;i++)
-	{
-		AppRecord *_currentRecord = [[AppRecord alloc] init];
-		_currentRecord.tweetSenderName = [[self.arrTwitter objectAtIndex:i] valueForKey:@"name"];
-		_currentRecord.tweetMsg = [[self.arrTwitter objectAtIndex:i] valueForKey:@"text"];
+    {
+        AppRecord *_currentRecord = [[AppRecord alloc] init];
+        _currentRecord.tweetSenderName = [[self.arrTwitter objectAtIndex:i] valueForKey:@"name"];
+        _currentRecord.tweetMsg = [[self.arrTwitter objectAtIndex:i] valueForKey:@"text"];
         _currentRecord.requestImg=[ServerAPI createTweetImageRequest:[[self.arrTwitter objectAtIndex:i] valueForKey:@"image"]];
-		[self.arrAppRecordsAllEntries addObject:_currentRecord];
-		[_currentRecord release];
-		[arrEntriesCount addObject:[NSNumber numberWithInt:i]];
-	}
-    
+        [self.arrAppRecordsAllEntries addObject:_currentRecord];
+        [_currentRecord release];
+        [arrEntriesCount addObject:[NSNumber numberWithInt:i]];
+    }    
     
 	[arrCountTweets addObjectsFromArray:arrEntriesCount];
 	
@@ -236,7 +231,7 @@ BOOL isOnlyTwitter;
 	[tblTweets setHidden:NO];
 	//[GlobalPreferences dismissLoadingBar_AtBottom];
 	[tblTweets performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-	
+
 	[autoReleasePool release];
 }
 
@@ -311,12 +306,15 @@ BOOL isOnlyTwitter;
 	[arrSearch removeAllObjects];
 	[arrSearch addObjectsFromArray:arrayData];
 	[tblNews performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+
 	[autoReleasePool release];
 	
 	[self createSegmentCtrl];
-	//[GlobalPreferences stopLoadingIndicator];
-	//[GlobalPreferences performSelector:@selector(dismissLoadingBar_AtBottom)];
+
+
 	[pool release];
+    
+    
 }
 
 - (void)createSegmentCtrl
@@ -430,20 +428,15 @@ BOOL isOnlyTwitter;
                 [arrayData release];
             }
             
-			//[GlobalPreferences addLoadingBar_AtBottom:self.tabBarController.view withTextToDisplay:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.LoaderText"]];
+			
 			[viewLoading setHidden:NO];
             
             [self performSelector:@selector(fetchDataFromTwitter) withObject:nil];
-            //			NSInvocationOperation *operationFetchMainData = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(fetchDataFromTwitter) object:nil];
-            //
-            //			[GlobalPreferences addToOpertaionQueue:operationFetchMainData];
-            //			[operationFetchMainData release];
-			
+           
 			
 			[tblNews setHidden:YES];
 			[tblNews removeFromSuperview];
-			//[tblTweets setHidden:NO];
-			
+					
 			arrayData=[[NSArray alloc]initWithArray:self.arrTwitter];
 			isTwitter=YES;
 			break;
@@ -471,13 +464,13 @@ BOOL isOnlyTwitter;
 - (void)parseXMLFileAtURL:(NSString *)URL
 {
 	
-	NSAutoreleasePool* autoReleasePool = [[NSAutoreleasePool alloc] init];
+	//NSAutoreleasePool* autoReleasePool = [[NSAutoreleasePool alloc] init];
 	
 	//Custom parser for RSS News/Twitter Feeds
 	CustomMobicartParser *customParser = [[CustomMobicartParser alloc] initWithUrlString:URL];
-	[customParser release];
+	//[customParser release];
 	
-	[autoReleasePool release];
+	//[autoReleasePool release];
 	
 	
 }
@@ -489,13 +482,7 @@ static BOOL isErrorShowed1stTime = YES;
 	if (isErrorShowed1stTime)
 	{
 		isErrorShowed1stTime = NO;
-        // [GlobalPreferences createAlertWithTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.error.loading.title"] message:_error delegate:self cancelButtonTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.nointernet.cancelbutton"] otherButtonTitles:nil];
-        //
-        //      UIAlertView*  alert1=[[UIAlertView alloc]initWithTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.error.loading.title"] message:_error delegate:self cancelButtonTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.nointernet.cancelbutton"] otherButtonTitles:nil];
-        //        [alert1 show];
-        //        [alert1 release];
-        
-	}
+    }
 }
 
 - (void)setTextColors:(id)sender
@@ -1052,23 +1039,6 @@ static BOOL isErrorShowed1stTime = YES;
             
 			for (int i=0; i<str.length; i++)
             {
-                /*
-                 int httpStartIndex=[str rangeOfString:@"http"].location;
-                 if(httpStartIndex)
-                 {
-                 NSString *temp=[str substringFromIndex:httpStartIndex];
-                 int beg=[temp rangeOfString:@" "].location;
-                 NSString *st2=[temp substringToIndex:beg];
-                 NSString *tempStr=[NSString stringWithFormat:@"%c",[st2 characterAtIndex:st2.length-1]];
-                 DLog(@"%@",tempStr);
-                 
-                 if ([st2 characterAtIndex:st2.length-1]==':'||[st2 characterAtIndex:st2.length-1]==','||[st2 characterAtIndex:st2.length-1]==')'||[st2 characterAtIndex:st2.length-1]=='\''||[st2 characterAtIndex:st2.length-1]=='?'||[st2 characterAtIndex:st2.length-1]=='.'||[st2 characterAtIndex:st2.length-1]=='-')
-                 {
-                 st2=[st2 substringToIndex:st2.length-1];
-                 }
-                 NSRange range=[str rangeOfString:st2];
-                 [strAttribute addAttribute:ZForegroundColorAttributeName value:_savedPreferences.headerColor range:range];
-                 */
                 if ([str characterAtIndex:i]=='h')
                 {
                     //DLog(@" found h");

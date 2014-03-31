@@ -55,11 +55,14 @@ extern int controllersCount;
 {
 	[super viewWillAppear:animated];
     
+    //Sa Vo fix bug the view show a white space at the bottom
+    /*
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+     */
     
     //[NSThread detachNewThreadSelector:@selector(showLoadingbar) toTarget:self withObject:nil];
     [self showLoadingbar];
@@ -72,11 +75,13 @@ extern int controllersCount;
     
 	[GlobalPreferences setCurrentNavigationController:self.navigationController];
     [self hideLoadingBar];
+     
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     NSLog(@"viewWillDisappear");
+    
     
 	if(controllersCount>5){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"poweredByMobicart" object:nil];
@@ -97,6 +102,7 @@ extern int controllersCount;
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView
 {
+
 	self.navigationItem.titleView = [GlobalPreferences createLogoImage];
     
 	
@@ -108,11 +114,14 @@ extern int controllersCount;
 	lblCart.textColor = [UIColor whiteColor];
 	[self.navigationController.navigationBar addSubview:lblCart];
 	
+
 	contentView=[[UIView alloc]initWithFrame:[GlobalPreferences setDimensionsAsPerScreenSize:CGRectMake( 0, 0, 320, 396) chageHieght:YES]];
-	contentView.backgroundColor=[UIColor colorWithRed:200.0/256 green:200.0/256 blue:200.0/256 alpha:1];
-	[GlobalPreferences setGradientEffectOnView:contentView :[UIColor whiteColor] :contentView.backgroundColor];
+	//contentView.backgroundColor=[UIColor colorWithRed:200.0/256 green:200.0/256 blue:200.0/256 alpha:1];
+	//[GlobalPreferences setGradientEffectOnView:contentView :[UIColor whiteColor] :contentView.backgroundColor];
 	
 	self.view=contentView;
+
+    
 	
 	UIImageView *imgBg=[[UIImageView alloc]initWithFrame:[GlobalPreferences setDimensionsAsPerScreenSize:CGRectMake(0,30, 320, 350) chageHieght:YES]];
 	[imgBg setImage:[UIImage imageNamed:@"product_details_bg.png"]];
@@ -138,11 +147,12 @@ extern int controllersCount;
     [[_mapView layer] setCornerRadius:10];
 	[contentView addSubview:_mapView];
 	_mapView.delegate = self;
-	
+    
 	NSDictionary *dictMerchantDetails =[ServerAPI fetchAddressOfMerchant:[GlobalPreferences getMerchantEmailId]];
 	dictUserDetails = [dictMerchantDetails objectForKey:@"user-address"];
 	[self addressLocation];
-	
+    
+    
 	NSDictionary *dicAppSettings = [GlobalPreferences getSettingsOfUserAndOtherDetails];
 	
 	if (dicAppSettings)
@@ -154,14 +164,22 @@ extern int controllersCount;
         self.strStoreName = @"Store Location";
     }
     
+    
     //Sa Vo fix bug not display pointer if location turn off
     //Set Zoom level using Span
+    
 	annot= [[CSMapAnnotation alloc]initWithCoordinate:coord title:self.strStoreName subTitle:nil];
 	[_mapView addAnnotation:annot];
 	
+    MKCoordinateSpan span;
+    
+    span.latitudeDelta=0.1;
+    span.longitudeDelta=0.1;
+    
 	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord,1000,1000);
 	[_mapView setRegion:region animated:YES];
-    
+   
+
     
 	UIView *viewTopBar=[[UIView alloc]initWithFrame:CGRectMake(0,-1, 320, 31)];
     [viewTopBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"barNews.png"]]];
@@ -185,6 +203,7 @@ extern int controllersCount;
     
     
     [self fetchDataFromServer];
+    
 }
 
 #pragma mark - fetchDataFromServer
@@ -263,7 +282,7 @@ extern int controllersCount;
 	if ((![dictUserDetails isEqual:[NSNull null]]) && (dictUserDetails !=nil))
 	{
 		NSString *strMerchantAddress = [NSString stringWithFormat:@"%@,%@,%@,%@",[dictUserDetails objectForKey:@"sAddress"],[dictUserDetails objectForKey:@"sCity"],[dictUserDetails objectForKey:@"sState"],[dictUserDetails objectForKey:@"sCountry"]];
-		//Sa Vo fix bug google map doesn't display address exactly
+        //Sa Vo fix bug google map doesn't display address exactly
         
         double latitude = 0, longitude = 0;
         NSString *esc_addr =  [strMerchantAddress stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -272,11 +291,11 @@ extern int controllersCount;
         
         SBJSON *_JSONParser=[[[SBJSON alloc]init] autorelease];
         NSDictionary *dictJson = (NSDictionary*)[_JSONParser objectWithString:result error:nil];
-        NSDictionary *locationDict = [[[[dictJson objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
+         NSDictionary *locationDict = [[[[dictJson objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
         longitude = [[locationDict objectForKey:@"lng"] doubleValue];
         latitude = [[locationDict objectForKey:@"lat"] doubleValue];
-		
-        CLLocationCoordinate2D location;
+        
+		CLLocationCoordinate2D location;
 		location.latitude = latitude;
 		location.longitude = longitude;
 		

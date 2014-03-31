@@ -53,12 +53,16 @@ extern int controllersCount;
 {
 	[super viewWillAppear:animated];
     
+    //Sa Vo fix bug the view show a white space at the bottom
+    /*
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
+      
     }
-
+     */
+    
     [self showLoadingbar];
 	if(controllersCount>5)
     {
@@ -193,9 +197,7 @@ extern int controllersCount;
 		if ((![[dictTemp objectForKey:@"sDescription"] isEqualToString:@""]) && (![[dictTemp objectForKey:@"sDescription"] isEqual:[NSNull null]]))
 		{
 			aboutDetailLblText.hidden=YES;
-            //[dictTemp objectForKey:@"sDescription"];
-			
-            // strnew = [NSString stringWithFormat:@"<html><head><style type='text/css'>body { color:%@;}</style></head><body><font face='Helvetica' size=2.55>%@</font></body></html>",_savedPreferences.strHexadecimalColor, [dictTemp objectForKey:@"sDescription"]];
+           
             NSString * htmlString = [NSString stringWithFormat:@"<html><head><script> document.ontouchmove = function(event) { if (document.body.scrollHeight == document.body.clientHeight) event.preventDefault(); } </script><style type='text/css'>* { margin:0; padding:0; } p { color:%@; font-family:Helvetica; font-size:14px; } a { color:%@; text-decoration:none; }</style></head><body><p>%@</p></body></html>", _savedPreferences.strHexadecimalColor,_savedPreferences.subHeaderColor,[dictTemp objectForKey:@"sDescription"]];
             
             [aboutDetailLbl loadHTMLString:htmlString baseURL:nil];
@@ -247,21 +249,20 @@ extern int controllersCount;
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    //DLog(@"2");
+    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    //[NSThread detachNewThreadSelector:@selector(showLoadingbar) toTarget:self withObject:nil];
-    
+       
     
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    // DLog(@"1");
+    
     aboutDetailLbl.scalesPageToFit=YES;
     //[self hideIndicator];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
-    //[NSThread detachNewThreadSelector:@selector(hideIndicator1) toTarget:self withObject:nil];
+    
     
     
     

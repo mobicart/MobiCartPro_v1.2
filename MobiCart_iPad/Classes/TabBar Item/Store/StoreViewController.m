@@ -742,6 +742,7 @@ int myintcurrentpage;
 		NSArray *arrCountryAndStateID=[[TaxCalculation shared]getStateAndCountryIDForTax];
 		int countryID=[[arrCountryAndStateID objectAtIndex:1] intValue];
 		int stateID=[[arrCountryAndStateID objectAtIndex:0]intValue];
+        NSString *currentStoreId =_savedPreferences._iCurrentStoreId;
 		dictCategories=[ServerAPI fetchAllProductsInStore:countryID stateID:stateID:iCurrentStoreId];
 		arrAllData=[[NSMutableArray alloc]initWithArray:[[dictCategories objectForKey:@"productsResponse"]objectForKey:@"productList"]];
 	}
@@ -757,6 +758,7 @@ int myintcurrentpage;
             	}
         
 		else {
+            
 		    dictCategories = [ServerAPI fetchProductsWithCategories:iCurrentCategoryId :countryID :stateID:iCurrentStoreId:iCurrentDepartmentId];
 		}
         

@@ -15,7 +15,7 @@ UIActionSheet *loadingActionSheet1;
 
 NSArray *optionArray;
 UIActionSheet *loadingActionSheet;
-@interface ProductDetailsViewController : UIViewController <UISearchBarDelegate,UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,MFMailComposeViewControllerDelegate> 
+@interface ProductDetailsViewController : UIViewController <UISearchBarDelegate,UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,MFMailComposeViewControllerDelegate, UIWebViewDelegate>
 {
     NSArray  *arrImagesUrls ;
 	UIView *contentView;

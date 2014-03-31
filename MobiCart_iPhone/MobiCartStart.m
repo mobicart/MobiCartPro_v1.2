@@ -518,38 +518,39 @@ static MobiCartStart *shared;
 	_objMobicartAppDelegate.tabController.delegate=self;
     
     //Sa Vo set default tint color of tabbar is black for both iOS 6.x and iOS 7.x
+    //Sa Vo change the default black tabbar just apply for iOS 6.x, iOS 7.x the default is light bar
+    /*
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
         [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
     }
-	
+	*/
+    
 	NSArray *arrAllNavigationTitles = [NSArray arrayWithArray:[GlobalPreferences getAllNavigationTitles]];
 	
 	NSMutableArray *arrSelectedTitles = [[[NSMutableArray alloc] init] autorelease];
 	
     //Sa Vo fix bug display wrong title of More pages on iOS 7.0
-    
+
     NSMutableArray *arrTitleMorePage = [[[NSMutableArray alloc] init] autorelease];
-    
 	for(int i =0; i<[arrAllNavigationTitles count]; i++)
 	{
 		if (![[arrAllNavigationTitles objectAtIndex:i] isEqual: @""])
         {
             [arrSelectedTitles addObject:[arrAllNavigationTitles objectAtIndex:i]];
+            
         }
+        
 	}
-    
     //Sa Vo fix bug display wrong title of More pages on iOS 7.0
-    
+
     for (int i=0; i<[arrSelectedTitles count]; i++) {
         if(i>3){
             [arrTitleMorePage addObject:[arrSelectedTitles objectAtIndex:i]];
             
         }
     }
-    
     _objMobicartAppDelegate.arrMoreTitles = [NSArray arrayWithArray:arrTitleMorePage];
-
 	
     // For adding add to cart button
 	UIButton *btnCart[[arrControllersToCreate count]];
@@ -580,23 +581,36 @@ static MobiCartStart *shared;
 			
 			[objTemp.navigationController.navigationBar addSubview:btnCart[i]];
 		}
-		localNavigationController.navigationBar.tintColor=navBarColor;
+        
+        //Sa Vo fix bug Back button text color same as navigation bar
+		//localNavigationController.navigationBar.tintColor=navBarColor;
         
         //Sa Vo fix bug not display tint color of navigation bar on iOS 7.x
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
         {
+            
             localNavigationController.navigationBar.barTintColor = navBarColor;
             localNavigationController.navigationBar.translucent = NO;
+            //Sa Vo fix bug Back button text color same as navigation bar
+            //Set color for back button title color by header text color
+            localNavigationController.navigationBar.tintColor=_savedPreferences.headerColor;
             
+            //Remove the line at the bottom of navigation bar on iOS 7.x
+            
+            [localNavigationController.navigationBar.layer setBorderWidth:2.0];// Just to make sure its working
+            [localNavigationController.navigationBar.layer setBorderColor:[navBarColor CGColor]];
+
             //Sa Vo fix bug not display status bar text on dark background on iOS 7.x
             if ([self isDarkColor:navBarColor]) {
                 [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
             }else{
                 [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-                
-            }
-        }
 
+            }
+            
+        }else{
+            localNavigationController.navigationBar.tintColor=navBarColor;
+        }
 		
 		[localNavigationController release];
 	}
@@ -692,8 +706,6 @@ static MobiCartStart *shared;
 // Handling Loading Indicator at the time of loading data from Server
 - (void)showLoadingbar
 {
-    
-    //Adding loading bar to window instead of view to avoid Crash in iOS 7
     MobicartAppAppDelegate *appdelegate = (MobicartAppAppDelegate *)[UIApplication sharedApplication].delegate;
     
 	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc]init];
@@ -793,9 +805,9 @@ static MobiCartStart *shared;
 	ShoppingCartViewController *objShopping = [[ShoppingCartViewController alloc] init];
     
     
-    
+
 	[[GlobalPreferences getCurrentNavigationController] pushViewController:objShopping animated:YES];
-    
+   
     
 	[objShopping release];
 }
@@ -850,7 +862,6 @@ static MobiCartStart *shared;
         
         lblCart.textColor = [UIColor whiteColor];
         
-        //iOS7 Check to load Cart button on the exact location on the navigation Bar
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
         {
             btnCartOnNavBar.frame = CGRectMake(237, 25, 78, 34);
@@ -872,6 +883,7 @@ static MobiCartStart *shared;
 // This will handle the navigations of More Section
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController1
 {
+    
 	// If featured product was selected from "Home", then pop the view contorlller to root (i.e StoreViewController)
     int count=[[[GlobalPreferences getCurrentNavigationController] viewControllers]count];
 	
@@ -888,9 +900,23 @@ static MobiCartStart *shared;
 	}
     
 	[tabBarController.moreNavigationController popToRootViewControllerAnimated:YES];
-    
-	[tabBarController.moreNavigationController.navigationBar setTintColor:navBarColor];
+    //Sa Vo fix bug More Navigation Bar background not load color get from Mobicart website
+	//[tabBarController.moreNavigationController.navigationBar setTintColor:navBarColor];
 	
+    //Sa Vo fix bug not display tint color of navigation bar on iOS 7.x
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        
+        tabBarController.moreNavigationController.navigationBar.barTintColor = navBarColor;
+        tabBarController.moreNavigationController.navigationBar.translucent = NO;
+        
+        //Set color for back button title color by header text color
+        tabBarController.moreNavigationController.navigationBar.tintColor=_savedPreferences.headerColor;
+        
+    }else{
+        tabBarController.moreNavigationController.navigationBar.tintColor=navBarColor;
+    }
+    
 	[tabBarController.moreNavigationController.visibleViewController.view setBackgroundColor:[UIColor clearColor]];
 	
 	tabBarController.moreNavigationController.navigationBar.topItem.titleView = [GlobalPreferences createLogoImage];
@@ -911,6 +937,7 @@ static MobiCartStart *shared;
 			}
 		}
 		
+        
 		[tabBarController.moreNavigationController.view setFrame:[GlobalPreferences setDimensionsAsPerScreenSize:CGRectMake(0,0,320,430) chageHieght:YES]];
 		
 		UIView *imgBGView = (UIView *)[_objMobicartAppDelegate.mobicartView viewWithTag:668042];
@@ -949,7 +976,6 @@ static MobiCartStart *shared;
             
             lblCart.textColor = [UIColor whiteColor];
             
-            //iOS 7 check to add Cart button on exact location on Navigation Bar
             if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
             {
                 btnCartOnNavBar.frame = CGRectMake(237, 25, 78, 34);
@@ -963,6 +989,7 @@ static MobiCartStart *shared;
 		
         
 		[self showLoadingbar];
+        
 		
 		UITableView *moreTableView = (UITableView*)moreViewController.view;
         
@@ -985,6 +1012,7 @@ static MobiCartStart *shared;
         
 		moreTableView.dataSource = moreTableViewDataSource;
 		
+        
 		MoreTableViewDelegate *objMoreDelegate=[[MoreTableViewDelegate alloc]initWithDelegate:moreTableView.delegate];
         
 		if (!hideMobicartCopyrightLogo)
@@ -999,7 +1027,9 @@ static MobiCartStart *shared;
 		[moreTableView setSeparatorColor:[UIColor clearColor]];
 		
 		moreTableView.delegate=objMoreDelegate;
+        //moreTableView.delegate=self;
 		
+        
 		if ([_objMobicartAppDelegate.arrAllData count]>0)
 		{
 			if (!hideMobicartCopyrightLogo)
@@ -1022,6 +1052,7 @@ static MobiCartStart *shared;
 		}
 		
 		[self hideLoadingbar];
+        
 	}
 	else
 	{
@@ -1032,6 +1063,7 @@ static MobiCartStart *shared;
 		
 		[self removeMobicart];
 	}
+    
     
     if (!hideMobicartCopyrightLogo)
     {
@@ -1055,6 +1087,8 @@ static MobiCartStart *shared;
     {
         [GlobalPreferences setCurrentNavigationController:(UINavigationController *)viewController1];
     }
+    
+    
 }
 
 // Showing Mobi-Cart Branding on More Tab
@@ -1069,16 +1103,15 @@ static MobiCartStart *shared;
         }
         else
         {
-            // iOS 7 check on the PowerbyMobicart button 
             if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
             {
-                imgBGView= [[UIView alloc] initWithFrame: CGRectMake(0, 369, 320, 60)];
+                 imgBGView= [[UIView alloc] initWithFrame: CGRectMake(0, 369, 320, 60)];
             }
             else
             {
-                imgBGView= [[UIView alloc] initWithFrame: CGRectMake(0, 352, 320, 60)];
+                 imgBGView= [[UIView alloc] initWithFrame: CGRectMake(0, 352, 320, 60)];
             }
-            
+           
         }
 		[imgBGView setBackgroundColor:[UIColor blackColor]];
         
@@ -1171,7 +1204,6 @@ static MobiCartStart *shared;
 - (void)dealloc {
     [super dealloc];
 }
-
 
 
 @end

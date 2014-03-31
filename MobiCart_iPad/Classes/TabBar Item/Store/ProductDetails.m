@@ -955,6 +955,7 @@
 	}
     
 
+    
     //Sa Vo fix bug display discription on webview instead of label
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:WEBVIEWFIRST_TAG],
                                                       [NSNumber numberWithFloat:Yval], nil]
@@ -1548,10 +1549,11 @@
 - (void)createWebViewDescription:(NSDictionary*)dictionary{
     
     //Sa Vo fix bug display discription on webview instead of label
+    //Sa Vo fix bug html not have font same as the other controls
 
     int tag = [[dictionary objectForKey:@"tag"] intValue];
     float yPosition = [[dictionary objectForKey:@"yPosition"] floatValue];
-    NSString *htmlString = [NSString stringWithFormat:@"<html><body text=\"%@\">%@</body></html>",self.hexColor,[dictionary objectForKey:@"htmlString"]];
+    NSString *htmlString = [NSString stringWithFormat:@"<html><body text=\"%@\"><span style=\"font-family: %@; font-size: %i\">%@</span></body></html>",self.hexColor,@"HelveticaNeue",12,[dictionary objectForKey:@"htmlString"]];
     UIWebView *wvDescriptionDetails = [[UIWebView alloc] initWithFrame:CGRectMake(10,yPosition, 300, 29)];
     [wvDescriptionDetails setBackgroundColor:[UIColor clearColor]];
     [wvDescriptionDetails setOpaque:NO];

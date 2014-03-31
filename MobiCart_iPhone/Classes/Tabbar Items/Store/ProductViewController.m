@@ -282,17 +282,20 @@ extern BOOL isNewsSection;
         [sortSegCtrl setTintColor:[UIColor colorWithRed:81.6/100 green:81.6/100 blue:81.6/100 alpha:1.0]];
 	
     //Sa Vo fix bug not highlight sortby toolbar at initial
+    
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [UIFont fontWithName:@"Helvetica" size:12], UITextAttributeFont,
                                 [UIColor colorWithRed:58.0/255.0 green:67.0/255.0 blue:67.0/255.0 alpha:1], UITextAttributeTextColor,
                                 nil];
     [sortSegCtrl setTitleTextAttributes:attributes forState:UIControlStateNormal];
     NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:[UIColor colorWithRed:81.6/100 green:81.6/100 blue:81.6/100 alpha:1.0] forKey:UITextAttributeTextColor];
+    
     [sortSegCtrl setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
     
-    //Sa Vo fix bug the currently selected button’s text isn’t legible
+    //Sa Vo fix bug the currently selected button’s text isn’t legible 
     NSDictionary *selectedAttributes = [NSDictionary dictionaryWithObject:[UIColor colorWithRed:227/255.0 green:230/255.0 blue:228/255.0 alpha:1.0] forKey:UITextAttributeTextColor];
     [sortSegCtrl setTitleTextAttributes:selectedAttributes forState:UIControlStateSelected];
+
     
 	//[self setTextColors:sortSegCtrl];
 	
@@ -1141,7 +1144,7 @@ extern BOOL isNewsSection;
 	objProductDetails.dicProduct = dictTemp;
 	self.navigationItem.title = [[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.tabbar.store"];
 	[self.navigationController pushViewController:objProductDetails animated:YES];
-	[objProductDetails release];
+	//[objProductDetails release];
 }
 
 #pragma mark - Product Analytics

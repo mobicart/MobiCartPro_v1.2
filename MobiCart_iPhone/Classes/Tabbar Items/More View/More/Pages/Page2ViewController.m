@@ -58,11 +58,14 @@ extern int controllersCount;
 {
 	[super viewWillAppear:animated];
     
+    //Sa Vo fix bug the view show a white space at the bottom
+    /*
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+     */
     
    // [NSThread detachNewThreadSelector:@selector(showLoadingbar) toTarget:self withObject:nil];
     [self showLoadingbar];

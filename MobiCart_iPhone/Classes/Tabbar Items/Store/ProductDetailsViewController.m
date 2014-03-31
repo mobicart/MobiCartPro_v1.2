@@ -262,12 +262,7 @@ iProductSingleton *productObj;
 		[self.navigationController.navigationBar addSubview:viewRemoveLine];
 		[viewRemoveLine release];
 		
-        //		[self performSelectorInBackground:@selector(fetchDataFromServer:) withObject:[NSNumber numberWithBool:NO]];
         
-        //        ProductModel *objModel=[[ProductModel alloc]init];
-        //
-        //        [NSThread detachNewThreadSelector:@selector(fetchDataFromServer:) toTarget:objModel withObject:[NSNumber numberWithBool:NO]];
-        //   [objModel fetchDataFromServer];
         [self performSelectorInBackground:@selector(fetchDataFromServer:) withObject:[NSNumber numberWithBool:NO]];
         
 		[self dataValidationChecks];
@@ -323,7 +318,7 @@ iProductSingleton *productObj;
 		PostReviewsViewController *objPost = [[PostReviewsViewController alloc] init];
 		[self.navigationController pushViewController:objPost animated:YES];
 		objPost.productId = [[dicProduct objectForKey:@"id"]intValue];
-		[objPost release];
+	//	[objPost release];
 	}
 }
 
@@ -337,12 +332,7 @@ iProductSingleton *productObj;
 	optionArray = [[NSArray alloc] init];
 	optionArray = [dicProduct objectForKey:@"productOptions"];
 	
-	//NSString *sortByQuantity =@"iAvailableQuantity";
 	
-    // NSSortDescriptor*	priceDescriptor =[[NSSortDescriptor alloc] initWithKey:sortByQuantity ascending:NO selector:@selector(compare:)] ;
-	
-	//NSArray *descriptors = [NSArray arrayWithObjects:priceDescriptor,nil];
-	//optionArray = [optionArray sortedArrayUsingDescriptors:descriptors];
 	[optionArray retain];
     [self createDropDowns];
 	
@@ -387,12 +377,7 @@ iProductSingleton *productObj;
         [productImg setImage:[UIImage imageWithData:dataForProductImage]];
         [productImg setContentMode:UIViewContentModeScaleAspectFit];
     }
-    //    if(productImg.image==nil){
-    //        DLog(@"Image");
-    //        [productImg setImage:nil];
-    //       [productImg setContentMode:UIViewContentModeScaleAspectFit];
-    //    }
-    // [productObj release];
+    
 	
 }
 
@@ -557,7 +542,8 @@ iProductSingleton *productObj;
     //Sa Vo fix bug display discription on webview instead of label
     NSString *string = [dicProduct objectForKey:@"sDescription"];
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *htmlString = [string kv_decodeHTMLCharacterEntities];
+    //NSString *htmlString = [string kv_decodeHTMLCharacterEntities];
+    NSString *htmlString = string;
     [self performSelectorOnMainThread:@selector(createWebViewDescription:) withObject:htmlString waitUntilDone:NO];
 }
 
@@ -574,7 +560,9 @@ iProductSingleton *productObj;
 
 - (void)createWebViewDescription:(NSString*)htmlString{
     
-     NSString *string = [NSString stringWithFormat:@"<html><body text=\"%@\">%@</body></html>",self.hexColor,htmlString];
+    //Sa Vo fix bug html not have font same as the other controls
+    
+     NSString *string = [NSString stringWithFormat:@"<html><body text=\"%@\"><span style=\"font-family: %@; font-size: %i\">%@</span></body></html>",self.hexColor,@"Helvetica",13,htmlString];
     
     UIWebView *wvDescriptionDetails = [[UIWebView alloc] initWithFrame:CGRectMake(10,185, 300, 29)];
     [wvDescriptionDetails setBackgroundColor:[UIColor clearColor]];

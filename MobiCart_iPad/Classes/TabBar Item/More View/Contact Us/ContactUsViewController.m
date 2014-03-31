@@ -119,13 +119,13 @@
 	{
 		self.strStoreName = @"Store Location";
 	}
-	
+    //Sa Vo fix bug not display pointer if location service off
     //Set Zoom level using Span
 	annot= [[CSMapAnnotation alloc]initWithCoordinate:coord title:self.strStoreName subTitle:nil];
 	[_mapView addAnnotation:annot];
 	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord,1000,1000);
 	[_mapView setRegion:region animated:YES];
-    
+	
 	
 	UIView *viewTopBar=[[UIView alloc]initWithFrame:CGRectMake(50,0, 450, 40)];
 	[viewTopBar setBackgroundColor:[UIColor clearColor]];
@@ -203,6 +203,18 @@
 	
 }
 
+
+#pragma mark -
+#pragma mark Reverse Delegates
+- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark
+{
+	[_mapView addAnnotation:placemark];
+    [_mapView selectAnnotation:placemark animated:YES];
+}
+
+- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
+{
+}
 
 #pragma mark - Address Locator
 -(void) addressLocation {

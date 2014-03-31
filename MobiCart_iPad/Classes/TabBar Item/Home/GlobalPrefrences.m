@@ -528,7 +528,15 @@ UIView *loadingView;
     [viewLoading setAlpha:0.4];
     [loadingView addSubview:viewLoading];
 	
-    lblLoading = [[UILabel alloc] initWithFrame:CGRectMake(0, 720, 1024, 45)];
+    //Sa Vo fix bug the loading bar no longer fill tabbar on iOS 7.x
+    
+   if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+       lblLoading = [[UILabel alloc] initWithFrame:CGRectMake(0, 711, 1024, 56)];
+
+   }else{
+       lblLoading = [[UILabel alloc] initWithFrame:CGRectMake(0, 720, 1024, 45)];
+
+   }
     [lblLoading setBackgroundColor:[UIColor whiteColor]];
     [lblLoading setText:strText];
     [lblLoading setAlpha:0.7];
@@ -550,8 +558,14 @@ UIView *loadingView;
     [loadingView addSubview:viewLoading];
 	
 		
-		
-    lblLoading = [[UILabel alloc] initWithFrame:CGRectMake(-486, 491, 1024, 44)];
+    //Sa Vo fix bug the loading bar no longer fill tabbar on iOS 7.x
+	if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        lblLoading = [[UILabel alloc] initWithFrame:CGRectMake(0, 711, 1024, 56)];
+        
+    }else{
+        lblLoading = [[UILabel alloc] initWithFrame:CGRectMake(-486, 491, 1024, 44)];
+
+    }
     [lblLoading setBackgroundColor:[UIColor whiteColor]];
     [lblLoading setText:strText];
     [lblLoading setAlpha:0.7];
@@ -559,13 +573,27 @@ UIView *loadingView;
 	
 	if(orientation == UIDeviceOrientationLandscapeLeft)
 	{
-		[lblLoading setFrame:CGRectMake(-486, 491, 1024, 44)];
+        //Sa Vo fix bug the loading bar no longer fill tabbar on iOS 7.x
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+            lblLoading = [[UILabel alloc] initWithFrame:CGRectMake(0, 711, 1024, 56)];
+            
+        }else{
+            [lblLoading setFrame:CGRectMake(-486, 491, 1024, 44)];
+
+        }
 		[lblLoading setTransform:CGAffineTransformMakeRotation(3.14/2)];
 	}
 	
 	else
 	{
-		[lblLoading setFrame:CGRectMake(230, 491, 1024, 44)];
+        //Sa Vo fix bug the loading bar no longer fill tabbar on iOS 7.x
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+            lblLoading = [[UILabel alloc] initWithFrame:CGRectMake(0, 711, 1024, 56)];
+            
+        }else{
+            [lblLoading setFrame:CGRectMake(230, 491, 1024, 44)];
+
+        }
 		[lblLoading setTransform:CGAffineTransformMakeRotation(-3.14/2)];
         
 
