@@ -2188,6 +2188,8 @@ iProductSingleton *productObj;
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
+    //Sa Vo fix bug mail page couldn't close after sending an email
+    /*
 	if (result==MFMailComposeResultSent)
 	{
 		NSString *strEmailSent = [NSString stringWithFormat:@"%@",[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.product.detail.email.sent"]];
@@ -2197,6 +2199,14 @@ iProductSingleton *productObj;
     {
         [self dismissModalViewControllerAnimated:YES];
     }
+     */
+    if (result==MFMailComposeResultSent)
+	{
+		NSString *strEmailSent = [NSString stringWithFormat:@"%@",[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.product.detail.email.sent"]];
+        [GlobalPreferences createAlertWithTitle:strEmailSent message:@"" delegate:self cancelButtonTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.nointernet.cancelbutton"] otherButtonTitles:nil];
+	}
+    [self dismissModalViewControllerAnimated:YES];
+
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
