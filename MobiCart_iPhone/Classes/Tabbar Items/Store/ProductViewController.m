@@ -39,17 +39,45 @@ extern BOOL isNewsSection;
 		[btnStore release];
 		btnStore=nil;
 	}
+    //Sa Vo fix bug back button on Category Page, Product Page and Product Detail Page not consistence with others
+
+    /*
 	btnStore=[[UIButton alloc]init];
 	[btnStore setBackgroundImage:[UIImage imageNamed:@"store_btn_iphone4.png"] forState:UIControlStateNormal];
 	[btnStore setTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.department.store"] forState:UIControlStateNormal];
 	[btnStore.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12]];
 	[btnStore addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
 	[btnStore setFrame:CGRectMake(35, 0, 69,36)];
+     
+     UIBarButtonItem *btnBack=[[UIBarButtonItem alloc] initWithCustomView:btnStore];
+     [btnBack setStyle:UIBarButtonItemStyleBordered];
+     [self.navigationItem setLeftBarButtonItem:btnBack];
+     [btnBack release];
+
+     */
 	
-	UIBarButtonItem *btnBack=[[UIBarButtonItem alloc] initWithCustomView:btnStore];
-	[btnBack setStyle:UIBarButtonItemStyleBordered];
-	
-	[self.navigationItem setLeftBarButtonItem:btnBack];
+    
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        UIBarButtonItem *btnBack=[[UIBarButtonItem alloc] initWithTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.department.store"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+        
+        [self.navigationItem setBackBarButtonItem:btnBack];
+        [btnBack release];
+    }else{
+        btnStore=[[UIButton alloc]init];
+        [btnStore setBackgroundImage:[UIImage imageNamed:@"store_btn_iphone4.png"] forState:UIControlStateNormal];
+        [btnStore setTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.department.store"] forState:UIControlStateNormal];
+        [btnStore.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12]];
+        [btnStore addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+        [btnStore setFrame:CGRectMake(35, 0, 69,36)];
+        
+        UIBarButtonItem *btnBack=[[UIBarButtonItem alloc] initWithCustomView:btnStore];
+        [btnBack setStyle:UIBarButtonItemStyleBordered];
+        [self.navigationItem setLeftBarButtonItem:btnBack];
+        [btnBack release];
+
+    }
+
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"updateLabelStore" object:nil];

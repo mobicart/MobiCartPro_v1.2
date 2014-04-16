@@ -66,11 +66,18 @@
 	[viewTopBar release];
     
 	arrSearchedData =[[NSArray alloc] init];
-	
+    
+    
+    //Sa Vo fix bug the gray loading screen not removed when searching is done
+    [self performSelectorInBackground:@selector(fetchDataFromServer:) withObject:self.strProductToSearch];
+    
+	/*
 	NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(fetchDataFromServer:) object:self.strProductToSearch];
 	
 	[GlobalPreferences addToOpertaionQueue:operation];
 	[operation release];
+     */
+    
     
 	[super viewDidLoad];
 }
@@ -110,7 +117,7 @@
 	
 	arrSearchedData = [[ServerAPI fetchSearchProducts:strProductsToSearch :countryID :stateID :iCurrentAppId] objectForKey:@"products"];
 	[arrSearchedData retain];
-	[GlobalPreferences performSelector:@selector(dismissLoadingBar_AtBottom)];
+	//[GlobalPreferences performSelector:@selector(dismissLoadingBar_AtBottom)];
     
     
 	[self performSelectorOnMainThread:@selector(loadTableView) withObject:nil waitUntilDone:NO];
@@ -134,13 +141,15 @@
 	{
 		if ([arrSearchedData count]>0)
         {
-            [GlobalPreferences performSelector:@selector(dismissLoadingBar_AtBottom)];
+            //[GlobalPreferences performSelector:@selector(dismissLoadingBar_AtBottom)];
+            [GlobalPreferences dismissLoadingBar_AtBottom];
             [_tableView reloadData];
         }
 		else
 		{
-			[GlobalPreferences performSelector:@selector(dismissLoadingBar_AtBottom)];
-            
+			//[GlobalPreferences performSelector:@selector(dismissLoadingBar_AtBottom)];
+            [GlobalPreferences dismissLoadingBar_AtBottom];
+
 			UILabel *lblNoItem=[[UILabel alloc]initWithFrame:CGRectMake(10, 45, 300, 30)];
 			[lblNoItem setBackgroundColor:[UIColor clearColor]];
 			[lblNoItem setText:@"No results found"];

@@ -146,7 +146,8 @@ iProductSingleton *productObj;
     
 	
     self.navigationItem.leftBarButtonItem=nil;
-	
+    //Sa Vo fix bug back button on Category Page, Product Page and Product Detail Page not consistence with others
+    /*
 	UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom ];
 	[btn setBackgroundImage:[UIImage imageNamed:@"store_btn_iphone4.png"] forState:UIControlStateNormal];
 	[btn setTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.department.store"] forState:UIControlStateNormal];
@@ -156,8 +157,27 @@ iProductSingleton *productObj;
 	
 	UIBarButtonItem *btnBack=[[UIBarButtonItem alloc] initWithCustomView:btn];
 	[btnBack setStyle:UIBarButtonItemStyleBordered];
-	
-    [self.navigationItem setLeftBarButtonItem:btnBack];
+     [btnBack release];
+
+	*/
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        UIBarButtonItem *btnBack=[[UIBarButtonItem alloc] initWithTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.department.store"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+        [self.navigationItem setBackBarButtonItem:btnBack];
+        [btnBack release];
+
+    }else{
+        UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom ];
+        [btn setBackgroundImage:[UIImage imageNamed:@"store_btn_iphone4.png"] forState:UIControlStateNormal];
+        [btn setTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.department.store"] forState:UIControlStateNormal];
+        [btn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12]];
+        [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+        [btn setFrame:CGRectMake(35, 0, 69,36)];
+        
+        UIBarButtonItem *btnBack=[[UIBarButtonItem alloc] initWithCustomView:btn];
+        [btnBack setStyle:UIBarButtonItemStyleBordered];
+        [btnBack release];
+    }
     DLog(@"%d",iNumOfItemsInShoppingCart);
     lblCart.text =[NSString stringWithFormat:@"%d",iNumOfItemsInShoppingCart];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"updateLabelStore" object:nil];
@@ -2188,7 +2208,7 @@ iProductSingleton *productObj;
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
-    //Sa Vo fix bug mail page couldn't close after sending an email
+    //Sa Vo fix bug couldn't close Mail Page after sending email
     /*
 	if (result==MFMailComposeResultSent)
 	{
@@ -2205,6 +2225,7 @@ iProductSingleton *productObj;
 		NSString *strEmailSent = [NSString stringWithFormat:@"%@",[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.product.detail.email.sent"]];
         [GlobalPreferences createAlertWithTitle:strEmailSent message:@"" delegate:self cancelButtonTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.nointernet.cancelbutton"] otherButtonTitles:nil];
 	}
+	
     [self dismissModalViewControllerAnimated:YES];
 
 }

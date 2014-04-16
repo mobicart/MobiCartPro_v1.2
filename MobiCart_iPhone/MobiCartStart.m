@@ -608,6 +608,15 @@ static MobiCartStart *shared;
 
             }
             
+            //Sa Vo fix bug the cancel button of search bar not display text on iOS 7
+            [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                                          _savedPreferences.headerColor,
+                                                                                                          UITextAttributeTextColor,
+                                                                                                          [NSValue valueWithUIOffset:UIOffsetMake(0, 1)],
+                                                                                                          UITextAttributeTextShadowOffset,
+                                                                                                          nil]
+                                                                                                forState:UIControlStateNormal];
+            
         }else{
             localNavigationController.navigationBar.tintColor=navBarColor;
         }
