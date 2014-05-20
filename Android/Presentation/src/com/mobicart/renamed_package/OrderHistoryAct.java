@@ -52,7 +52,6 @@ public class OrderHistoryAct extends Activity implements OnClickListener {
 					MobicartCommonData.keyValues.getString(
 							"key.iphone.nointernet.cancelbutton", "ok"),
 					new DialogInterface.OnClickListener() {
-						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							AccountTabGroupAct parentActivity = (AccountTabGroupAct) getParent();
 							Intent signupAct = new Intent(OrderHistoryAct.this, SignUpAct.class);
@@ -65,7 +64,6 @@ public class OrderHistoryAct extends Activity implements OnClickListener {
 			builder.setNegativeButton(MobicartCommonData.keyValues.getString(
 					"key.iphone.cancel", "Cancel"),
 					new DialogInterface.OnClickListener() {
-						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							dialog.cancel();
 						}
@@ -134,7 +132,6 @@ public class OrderHistoryAct extends Activity implements OnClickListener {
 		super.onDestroy();
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.universal_back_btn: {

@@ -188,7 +188,6 @@ public class ReviewListAct extends Activity implements OnClickListener {
 		super.onDestroy();
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.review_writeReview_Btn:

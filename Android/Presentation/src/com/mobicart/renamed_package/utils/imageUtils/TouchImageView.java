@@ -46,7 +46,6 @@ public class TouchImageView extends ImageView {
 
 		setOnTouchListener(new OnTouchListener() {
 
-			@Override
 			public boolean onTouch(View v, MotionEvent rawEvent) {
 				WrapMotionEvent event = WrapMotionEvent.wrap(rawEvent);
 

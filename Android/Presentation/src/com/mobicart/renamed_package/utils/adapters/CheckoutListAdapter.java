@@ -58,27 +58,22 @@ public class CheckoutListAdapter implements ListAdapter {
 		
 	}
 
-	@Override
 	public boolean areAllItemsEnabled() {
 		return false;
 	}
 
-	@Override
 	public boolean isEnabled(int arg0) {
 		return false;
 	};
 
-	@Override
 	public int getCount() {
 		return checkOutList.size();
 	}
 
-	@Override
 	public Object getItem(int position) {
 		return null;
 	}
 
-	@Override
 	public long getItemId(int position) {
 		return 0;
 	}
@@ -89,12 +84,10 @@ public class CheckoutListAdapter implements ListAdapter {
 		TableLayout opTable;
 	}
 
-	@Override
 	public int getItemViewType(int position) {
 		return 0;
 	}
 
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (context).getLayoutInflater();
 		ViewHolder holder;
@@ -247,26 +240,21 @@ public class CheckoutListAdapter implements ListAdapter {
 		alertDialog.show();
 	}
 
-	@Override
 	public int getViewTypeCount() {
 		return 1;
 	}
 
-	@Override
 	public boolean hasStableIds() {
 		return false;
 	}
 
-	@Override
 	public boolean isEmpty() {
 		return false;
 	}
 
-	@Override
 	public void registerDataSetObserver(DataSetObserver observer) {
 	}
 
-	@Override
 	public void unregisterDataSetObserver(DataSetObserver observer) {
 	}
 }

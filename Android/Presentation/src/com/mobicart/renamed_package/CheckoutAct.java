@@ -305,7 +305,6 @@ public class CheckoutAct extends Activity implements OnClickListener {
 		super.onDestroy();
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.universal_back_btn:
@@ -767,7 +766,6 @@ public class CheckoutAct extends Activity implements OnClickListener {
 							MobicartCommonData.keyValues.getString(
 									"key.iphone.nointernet.cancelbutton", ""),
 							new DialogInterface.OnClickListener() {
-								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									deleteCartItem();
 									dialog.dismiss();
@@ -808,7 +806,6 @@ public class CheckoutAct extends Activity implements OnClickListener {
 				MobicartCommonData.keyValues.getString(
 						"key.iphone.nointernet.cancelbutton", ""),
 				new DialogInterface.OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						CheckoutAct.resultTitle = null;
 					}

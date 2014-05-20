@@ -679,7 +679,6 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 				"key.iphone.mainproduct.watchvideo", "Watch Video"));
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.navigation_bar_cart_btn:
@@ -782,7 +781,6 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 															"key.iphone.nointernet.cancelbutton",
 															"Ok"),
 											new DialogInterface.OnClickListener() {
-												@Override
 												public void onClick(
 														DialogInterface dialog,
 														int which) {
@@ -913,7 +911,6 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 															"key.iphone.nointernet.cancelbutton",
 															"Ok"),
 											new DialogInterface.OnClickListener() {
-												@Override
 												public void onClick(
 														DialogInterface dialog,
 														int which) {
@@ -981,7 +978,6 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 											"key.iphone.nointernet.cancelbutton",
 											"Ok"),
 									new DialogInterface.OnClickListener() {
-										@Override
 										public void onClick(
 												DialogInterface dialog,
 												int which) {
@@ -1036,7 +1032,6 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 						MobicartCommonData.keyValues.getString(
 								"key.iphone.nointernet.cancelbutton", "Ok"),
 						new DialogInterface.OnClickListener() {
-							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
 								dialog.cancel();
@@ -1360,7 +1355,6 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 			optionSize = productOptions.size();
 			optionSpinner1 = new Spinner[optionSize];
 			Collections.sort(productOptions, new Comparator<ProductOptionVO>() {
-				@Override
 				public int compare(ProductOptionVO object1,
 						ProductOptionVO object2) {
 
@@ -1409,7 +1403,6 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 				optionSpinner1[count]
 						.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-							@Override
 							public void onItemSelected(AdapterView<?> arg0,
 									View arg1, int arg2, long arg3) {
 
@@ -1679,7 +1672,6 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 								return min;
 							}
 
-							@Override
 							public void onNothingSelected(AdapterView<?> arg0) {
 							}
 						});

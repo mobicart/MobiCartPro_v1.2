@@ -90,7 +90,6 @@ public class CoverFlowExample extends Activity implements OnClickListener {
 		super.onDestroy();
 	}
 
-	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.universal_back_btn) {
 			finish();

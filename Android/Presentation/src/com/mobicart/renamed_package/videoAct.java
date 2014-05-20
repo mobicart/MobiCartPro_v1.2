@@ -76,7 +76,6 @@ public class videoAct extends Activity implements OnClickListener {
 		super.onBackPressed();
 	}
 
-	@Override
 	public void onClick(View v) {
 		finish();
 	}

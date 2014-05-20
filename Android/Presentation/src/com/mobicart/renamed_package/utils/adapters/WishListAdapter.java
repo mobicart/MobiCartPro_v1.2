@@ -63,17 +63,14 @@ public class WishListAdapter extends BaseAdapter {
 				+ MobicartDbConstants.TBL_WISHLIST, new WishListVO());
 	}
 
-	@Override
 	public int getCount() {
 		return wishListVO.size();
 	}
 
-	@Override
 	public Object getItem(int position) {
 		return null;
 	}
 
-	@Override
 	public long getItemId(int position) {
 		return 0;
 	}
@@ -87,7 +84,6 @@ public class WishListAdapter extends BaseAdapter {
 		Button deleteButton;
 	}
 
-	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder = new ViewHolder();
 		RelativeLayout imgRL;
@@ -328,7 +324,6 @@ public class WishListAdapter extends BaseAdapter {
 		holder.deleteButton.setTextColor(Color.WHITE);
 		holder.deleteButton.setOnClickListener(new OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 				int position = (Integer) v.getTag();
 				database.deleteWishListItem(MobicartCommonData.wishList.get(
@@ -343,7 +338,6 @@ public class WishListAdapter extends BaseAdapter {
 			}
 		});
 		convertView.setOnClickListener(new OnClickListener() {
-			@Override
 			public void onClick(View v) {
 				if (WishlistAct.WishListButtonMode == WishlistAct.WISHLIST_BUTTON_MODE_DONE) {
 				} else {
@@ -373,7 +367,6 @@ public class WishListAdapter extends BaseAdapter {
 }
 
 class RedButtonOnClickListener1 implements OnClickListener {
-	@Override
 	public void onClick(View redIcon) {
 		View button = (View) redIcon.getTag();
 		if (button.getVisibility() == View.VISIBLE) {

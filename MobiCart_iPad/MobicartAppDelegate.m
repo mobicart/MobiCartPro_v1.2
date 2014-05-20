@@ -14,6 +14,7 @@
 #import "ServerAPI.h"
 #import "SqlQuery.h"
 #import "GlobalPrefrences.h"
+#import <BugSense-iOS/BugSenseController.h>
 
 @implementation MobicartAppDelegate
 
@@ -26,6 +27,11 @@
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    // thai nguyen -- import bugsense v3.4
+    [BugSenseController sharedControllerWithBugSenseAPIKey:@"ab88c70d"];
+    //
+    
     //Override point for customization after app launch.
     [viewController showSplash];
     [viewController hideSplash];

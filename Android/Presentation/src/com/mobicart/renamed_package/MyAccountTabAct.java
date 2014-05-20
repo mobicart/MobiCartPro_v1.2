@@ -55,7 +55,6 @@ public class MyAccountTabAct extends ActivityGroup implements OnClickListener {
 		return super.onKeyDown(keyCode, event);
 	}
 
-	@Override
 	public void onClick(View v) {
 		AccountTabGroupAct parentActivity = (AccountTabGroupAct) getParent();
 		switch (v.getId()) {
@@ -69,7 +68,6 @@ public class MyAccountTabAct extends ActivityGroup implements OnClickListener {
 						MobicartCommonData.keyValues.getString(
 								"key.iphone.nointernet.cancelbutton", "Ok"),
 						new DialogInterface.OnClickListener() {
-							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
 								dialog.cancel();
@@ -134,7 +132,6 @@ public class MyAccountTabAct extends ActivityGroup implements OnClickListener {
 				MobicartCommonData.keyValues.getString(
 						"key.iphone.nointernet.cancelbutton", "Ok"),
 				new DialogInterface.OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						ParentActivityGroup parentActivity = (ParentActivityGroup) getParent();
 						Intent intent = new Intent(parentActivity
@@ -149,7 +146,6 @@ public class MyAccountTabAct extends ActivityGroup implements OnClickListener {
 		builder.setNegativeButton(MobicartCommonData.keyValues.getString(
 				"key.iphone.cancel", "Cancel"),
 				new DialogInterface.OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
 					}

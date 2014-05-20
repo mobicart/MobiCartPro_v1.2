@@ -199,24 +199,20 @@ public class HomeTabAct extends ActivityGroup implements OnClickListener {
 		cartBtn.setText("" + CartItemCount.getCartCount(this));
 		cartBtn.setOnClickListener(this);
 		homeSearchET.addTextChangedListener(new TextWatcher() {
-			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				homeSearchET.setHint("");
 			}
 
-			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 			}
 
-			@Override
 			public void afterTextChanged(Editable s) {
 
 			}
 		});
 		homeSearchET.setOnEditorActionListener(new OnEditorActionListener() {
-			@Override
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) {
 				searchQuery = homeSearchET.getText().toString();
@@ -248,7 +244,6 @@ public class HomeTabAct extends ActivityGroup implements OnClickListener {
 		} catch (IOException e) {
 		}
 		homeGallery.setOnItemClickListener(new OnItemClickListener() {
-			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				currentOrder = ORDER_PRODUCT_DETAIL;
@@ -259,7 +254,6 @@ public class HomeTabAct extends ActivityGroup implements OnClickListener {
 								"key.iphone.LoaderText", "Loading..."));
 				Handler handler = new Handler();
 				handler.postDelayed(new Runnable() {
-					@Override
 					public void run() {
 						TabHostAct.tabHost.setCurrentTab(1);
 						dialog.cancel();
@@ -287,7 +281,6 @@ public class HomeTabAct extends ActivityGroup implements OnClickListener {
 		final GestureDetector gestDetector = new GestureDetector(this,
 				new HomeBannersGestureListener(bannerVF));
 		bannerVF.setOnTouchListener(new OnTouchListener() {
-			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				gestDetector.onTouchEvent(event);
 				return true;
@@ -304,7 +297,6 @@ public class HomeTabAct extends ActivityGroup implements OnClickListener {
 		bannerTask.execute("");
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.home_tab_search_button:

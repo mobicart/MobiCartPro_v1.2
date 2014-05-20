@@ -89,7 +89,6 @@ public class GetUserAddressTask extends AsyncTask<String, String, UserAddressVO>
 	private void showNetworkError() {
 		activity.runOnUiThread(new Runnable() {
 
-			@Override
 			public void run() {
 				AlertDialog alertDialog = new AlertDialog.Builder(activity)
 						.create();
@@ -118,7 +117,6 @@ public class GetUserAddressTask extends AsyncTask<String, String, UserAddressVO>
 	private void showServerError() {
 		activity.runOnUiThread(new Runnable() {
 
-			@Override
 			public void run() {
 				AlertDialog alertDialog = new AlertDialog.Builder(activity)
 						.create();

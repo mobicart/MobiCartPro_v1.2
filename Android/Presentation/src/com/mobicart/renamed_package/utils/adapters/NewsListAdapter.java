@@ -63,17 +63,14 @@ public class NewsListAdapter extends BaseAdapter {
 		}
 	}
 
-	@Override
 	public int getCount() {
 		return size;
 	}
 
-	@Override
 	public Object getItem(int position) {
 		return null;
 	}
 
-	@Override
 	public long getItemId(int position) {
 		return 0;
 	}
@@ -82,7 +79,6 @@ public class NewsListAdapter extends BaseAdapter {
 		TextView titleTV, dateTV;
 	}
 
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		RelativeLayout imgRL = null;
 		ViewHolder holder;

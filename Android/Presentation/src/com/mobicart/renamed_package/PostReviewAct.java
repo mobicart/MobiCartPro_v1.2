@@ -166,7 +166,6 @@ public class PostReviewAct extends Activity implements OnClickListener {
 		super.onPause();
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.postReview_ET:
@@ -216,7 +215,6 @@ public class PostReviewAct extends Activity implements OnClickListener {
 				MobicartCommonData.keyValues.getString(
 						"key.iphone.nointernet.cancelbutton", "Ok"),
 				new DialogInterface.OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						ParentActivityGroup parentActivity = (ParentActivityGroup) getParent();
 						Intent intent = new Intent(parentActivity
@@ -231,7 +229,6 @@ public class PostReviewAct extends Activity implements OnClickListener {
 		builder.setNegativeButton(MobicartCommonData.keyValues.getString(
 				"key.iphone.cancel", "Cancel"),
 				new DialogInterface.OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
 					}
@@ -254,7 +251,6 @@ public class PostReviewAct extends Activity implements OnClickListener {
 				MobicartCommonData.keyValues.getString(
 						"key.iphone.nointernet.cancelbutton", "Ok"),
 				new DialogInterface.OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						ProductDetailAct.getRatingReview();
 						ReviewListAct.setReviewListAapter();

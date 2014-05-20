@@ -118,7 +118,6 @@ public class ProductsListAct extends Activity implements
 		searchBtn.setOnClickListener(this);
 		searchTextET.setOnEditorActionListener(this);
 		productLV.setOnItemClickListener(new OnItemClickListener() {
-			@Override
 			public void onItemClick(AdapterView<?> arg0, final View arg1, int arg2,
 					long arg3) {
 				currentPosition = arg2;
@@ -128,7 +127,6 @@ public class ProductsListAct extends Activity implements
 					    Handler handler=new Handler();
 					    handler.postDelayed(new Runnable() {
 					     
-					     @Override
 					     public void run() {
 					         	 StoreTabGroupAct parentActivity = (StoreTabGroupAct) getParent();
 								Intent intent = new Intent(getApplicationContext(),
@@ -299,7 +297,6 @@ public class ProductsListAct extends Activity implements
 
 	private void sortPrice(ArrayList<ProductVO> listToSort2) {
 		Collections.sort(listToSort2, new Comparator<ProductVO>() {
-			@Override
 			public int compare(ProductVO object1, ProductVO object2) {
 				float price1 = (float) object1.getfPrice();
 				float price2 = (float) object2.getfPrice();
@@ -337,7 +334,6 @@ public class ProductsListAct extends Activity implements
 
 	private void sortATOZ(ArrayList<ProductVO> listToSort2) {
 		Collections.sort(listToSort2, new Comparator<ProductVO>() {
-			@Override
 			public int compare(ProductVO object1, ProductVO object2) {
 				return object1.getsName().compareToIgnoreCase(
 						object2.getsName());
@@ -369,7 +365,6 @@ public class ProductsListAct extends Activity implements
 
 	private void sortStatus(ArrayList<ProductVO> listToSort2) {
 		Collections.sort(listToSort2, new Comparator<ProductVO>() {
-			@Override
 			public int compare(ProductVO object1, ProductVO object2) {
 				return object1.getsStatus().compareTo(object2.getsStatus());
 			}
@@ -379,7 +374,6 @@ public class ProductsListAct extends Activity implements
 						.toArray(new ProductVO[] {})));
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.productList_bottom_bar_LL:
@@ -472,7 +466,6 @@ public class ProductsListAct extends Activity implements
 		}
 	}
 
-	@Override
 	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 		imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 		if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -489,7 +482,6 @@ public class ProductsListAct extends Activity implements
 		return false;
 	}
 
-	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		currentPosition = arg2;
 		Log.e("TAG", "pos:"+currentPosition);
@@ -499,7 +491,6 @@ public class ProductsListAct extends Activity implements
 		parentActivity.startChildActivity("ProductDetailAct", intent);
 	}
 
-	@Override
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
 		if (event.getAction() != KeyEvent.ACTION_DOWN)
 			return true;
@@ -534,7 +525,6 @@ public class ProductsListAct extends Activity implements
 		return true;
 	}
 
-	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		switch (checkedId) {
 		case R.id.productList_price_RBtn:

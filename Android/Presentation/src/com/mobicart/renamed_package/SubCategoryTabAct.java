@@ -64,7 +64,6 @@ public class SubCategoryTabAct extends Activity implements OnClickListener,
 		departmentId = getIntent().getIntExtra("departmentId", -1);
 		categoryId = (int) getIntent().getLongExtra("categoryId", -1);
 		localSearchET.setOnKeyListener(new OnKeyListener() {
-			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_BACK) {
 					localSearchET
@@ -79,7 +78,6 @@ public class SubCategoryTabAct extends Activity implements OnClickListener,
 		});
 
 		localSearchET.addTextChangedListener(new TextWatcher() {
-			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				SubCategoryVO[] searchedList = searchList(s.toString());
@@ -88,12 +86,10 @@ public class SubCategoryTabAct extends Activity implements OnClickListener,
 						StoreTabGroupAct.TYPE_SUBCATEGORIES, searchedList));
 			}
 
-			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 			}
 
-			@Override
 			public void afterTextChanged(Editable s) {
 			}
 		});
@@ -190,7 +186,6 @@ public class SubCategoryTabAct extends Activity implements OnClickListener,
 						"Cancel") + " ");
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.universal_back_btn: {
@@ -243,7 +238,6 @@ public class SubCategoryTabAct extends Activity implements OnClickListener,
 		}
 	}
 
-	@Override
 	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 		if (v.getId() == R.id.store_search_et) {
 			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
@@ -262,7 +256,6 @@ public class SubCategoryTabAct extends Activity implements OnClickListener,
 		return false;
 	}
 
-	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
 		if (MobicartCommonData.subCategoriesList.get(position)

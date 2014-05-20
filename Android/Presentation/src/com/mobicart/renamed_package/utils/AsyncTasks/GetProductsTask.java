@@ -409,7 +409,6 @@ public class GetProductsTask extends AsyncTask<String, String, String> {
 		listToSort = MobicartCommonData.productsList;
 		if (listToSort.size() > 0) {
 			Collections.sort(listToSort, new Comparator<ProductVO>() {
-				@Override
 				public int compare(ProductVO object1, ProductVO object2) {
 					float price1 = (float) object1.getfPrice();
 					float price2 = (float) object2.getfPrice();

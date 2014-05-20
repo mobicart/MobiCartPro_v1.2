@@ -106,6 +106,8 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		318EC30F13B88E44000B2110 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 318EC30E13B88E44000B2110 /* CoreText.framework */; };
 		31AAE53F1469645D00EAAE17 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 31AAE53E1469645D00EAAE17 /* libz.1.1.3.dylib */; };
+		4BE7D350192B4BED00722E07 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE7D34F192B4BED00722E07 /* libz.dylib */; };
+		4BE7D352192B4BF400722E07 /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE7D351192B4BF400722E07 /* BugSense-iOS.framework */; };
 		4CD1C7E2123F635C00C16C13 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD1C7E1123F635C00C16C13 /* libsqlite3.0.dylib */; };
 		4CD1C7E6123F636C00C16C13 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD1C7E5123F636C00C16C13 /* QuartzCore.framework */; };
 		4CD1C843123F63D200C16C13 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD1C842123F63D200C16C13 /* AVFoundation.framework */; };
@@ -501,6 +503,8 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		318EC30E13B88E44000B2110 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		31AAE53E1469645D00EAAE17 /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
+		4BE7D34F192B4BED00722E07 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		4BE7D351192B4BF400722E07 /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "BugSense-iOS.framework"; sourceTree = "<group>"; };
 		4C9FC9F9126C902B00FA4810 /* Mobi-Cart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mobi-Cart.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CD1C7E1123F635C00C16C13 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		4CD1C7E5123F636C00C16C13 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -922,6 +926,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				07E492A818E941240047F391 /* ZooZSDK.framework in Frameworks */,
+				4BE7D352192B4BF400722E07 /* BugSense-iOS.framework in Frameworks */,
+				4BE7D350192B4BED00722E07 /* libz.dylib in Frameworks */,
 				4E327505179542850098AD5B /* AdSupport.framework in Frameworks */,
 				F4B2F1E4150B667A0007E67B /* libxml2.dylib in Frameworks */,
 				31AAE53F1469645D00EAAE17 /* libz.1.1.3.dylib in Frameworks */,
@@ -1086,6 +1092,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4BE7D351192B4BF400722E07 /* BugSense-iOS.framework */,
+				4BE7D34F192B4BED00722E07 /* libz.dylib */,
 				0762912818C45F4E00AB46DA /* ZooZSDK.embeddedframework */,
 				4E327504179542850098AD5B /* AdSupport.framework */,
 				F4B2F1E3150B667A0007E67B /* libxml2.dylib */,
@@ -2280,12 +2288,13 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZooZSDK.embeddedframework\"",
 					"$(SRCROOT)",
 					"$(PROJECT_DIR)/ZooZSDK.embeddedframework",
+					"$(PROJECT_DIR)",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2302,8 +2311,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
+				PROVISIONING_PROFILE = "6D57EFBD-22B0-4AAE-92D8-FE1136F61E82";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6D57EFBD-22B0-4AAE-92D8-FE1136F61E82";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/ZooZSDK.embeddedframework\" \"$(SRCROOT)\"";
@@ -2327,6 +2336,7 @@
 					"\"$(SRCROOT)/ZooZSDK.embeddedframework\"",
 					"$(SRCROOT)",
 					"$(PROJECT_DIR)/ZooZSDK.embeddedframework",
+					"$(PROJECT_DIR)",
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2340,8 +2350,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
+				PROVISIONING_PROFILE = "6D57EFBD-22B0-4AAE-92D8-FE1136F61E82";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6D57EFBD-22B0-4AAE-92D8-FE1136F61E82";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/ZooZSDK.embeddedframework\" \"$(SRCROOT)\"";
@@ -2384,12 +2394,13 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cuong Ly (4QKSZLYEQB)";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ZooZSDK.embeddedframework\"",
 					"$(SRCROOT)",
 					"$(PROJECT_DIR)/ZooZSDK.embeddedframework",
+					"$(PROJECT_DIR)",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2404,8 +2415,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Mobi-Cart";
-				PROVISIONING_PROFILE = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BFF3107F-0CDA-4DC2-8148-489F9F402501";
+				PROVISIONING_PROFILE = "6D57EFBD-22B0-4AAE-92D8-FE1136F61E82";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6D57EFBD-22B0-4AAE-92D8-FE1136F61E82";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) \"$(SRCROOT)/ZooZSDK.embeddedframework\" \"$(SRCROOT)\"";

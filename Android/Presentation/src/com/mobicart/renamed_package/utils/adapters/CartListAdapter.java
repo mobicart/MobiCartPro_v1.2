@@ -72,7 +72,6 @@ public class CartListAdapter extends BaseAdapter {
 	public static HashMap<Integer, Integer> qtyMap;
 	
 	class RedButtonOnClickListener implements OnClickListener {
-		@Override
 		public void onClick(View redIcon) {
 			View button = (View) redIcon.getTag();
 			if (button.getVisibility() == View.VISIBLE) {
@@ -138,22 +137,18 @@ public class CartListAdapter extends BaseAdapter {
 		return subTotal;
 	}
 
-	@Override
 	public int getCount() {
 		return MobicartCommonData.objCartList.size();
 	}
 
-	@Override
 	public Object getItem(int position) {
 		return null;
 	}
 
-	@Override
 	public long getItemId(int position) {
 		return position;
 	}
 
-	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		RelativeLayout imgRL;
 		final ViewHolder holder;
@@ -324,7 +319,6 @@ public class CartListAdapter extends BaseAdapter {
 				holder.quantityET.setTag(position);
 				holder.quantityET.setOnTouchListener(new OnTouchListener() {
 					@SuppressWarnings({ "unchecked", "rawtypes" })
-					@Override
 					public boolean onTouch(View v, MotionEvent event) {
 						if (event.getAction() == MotionEvent.ACTION_DOWN) {
 							int pos=Integer.parseInt(v.getTag().toString());
@@ -368,7 +362,6 @@ public class CartListAdapter extends BaseAdapter {
 									LayoutParams.FILL_PARENT, 200));
 							lv
 									.setOnItemClickListener(new OnItemClickListener() {
-										@Override
 										public void onItemClick(
 												AdapterView<?> arg0, View arg1,
 												int arg2, long arg3) {
@@ -386,7 +379,6 @@ public class CartListAdapter extends BaseAdapter {
 									.getString("key.iphone.shoppingcart.done",
 											""));
 							doneBtn.setOnClickListener(new OnClickListener() {
-								@Override
 								public void onClick(View v) {
 									updateCartDetails();
 									dialog.cancel();

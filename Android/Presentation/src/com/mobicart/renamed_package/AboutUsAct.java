@@ -142,7 +142,6 @@ public class AboutUsAct extends Activity implements OnClickListener {
 		super.onResume();
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.universal_back_btn: {

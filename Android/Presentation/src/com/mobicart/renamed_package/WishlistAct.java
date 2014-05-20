@@ -98,7 +98,6 @@ public class WishlistAct extends Activity implements OnClickListener {
 		doDoneButtonWork();
 		cartButton.setBackgroundResource(R.drawable.button_without_color);
 		cartButton.setOnClickListener(new OnClickListener() {
-			@Override
 			public void onClick(View v) {
 				if (WishListButtonMode == WISHLIST_BUTTON_MODE_EDIT) {
 					doEditButtonWork();
@@ -195,7 +194,6 @@ public class WishlistAct extends Activity implements OnClickListener {
 		super.onDestroy();
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.universal_back_btn: {

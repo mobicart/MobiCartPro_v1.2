@@ -24,32 +24,26 @@ public class OrderListAadpter implements ListAdapter {
 		this.context = orderHistory;
 	}
 
-	@Override
 	public boolean areAllItemsEnabled() {
 		return false;
 	}
 
-	@Override
 	public boolean isEnabled(int position) {
 		return false;
 	}
 
-	@Override
 	public int getCount() {
 		return MobicartCommonData.productOrderVO.size();
 	}
 
-	@Override
 	public Object getItem(int position) {
 		return null;
 	}
 
-	@Override
 	public long getItemId(int position) {
 		return 0;
 	}
 
-	@Override
 	public int getItemViewType(int position) {
 		return 0;
 	}
@@ -59,7 +53,6 @@ public class OrderListAadpter implements ListAdapter {
 				dateTitleTV, orderIdTV, orderTitleTV;
 	}
 
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (context).getLayoutInflater();
 		ViewHolder holder;
@@ -145,27 +138,22 @@ public class OrderListAadpter implements ListAdapter {
 		return b.toString();
 	}
 
-	@Override
 	public int getViewTypeCount() {
 		return 1;
 	}
 
-	@Override
 	public boolean hasStableIds() {
 		return false;
 	}
 
-	@Override
 	public boolean isEmpty() {
 		return false;
 	}
 
-	@Override
 	public void registerDataSetObserver(DataSetObserver observer) {
 
 	}
 
-	@Override
 	public void unregisterDataSetObserver(DataSetObserver observer) {
 
 	}

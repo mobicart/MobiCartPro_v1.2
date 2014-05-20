@@ -172,7 +172,6 @@ public class CartAct extends Activity implements OnClickListener,
 			cartLV.addFooterView(footerLayout);
 		}
 		stateSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				stateSelected = (String) stateSpinner.getSelectedItem();
@@ -187,7 +186,6 @@ public class CartAct extends Activity implements OnClickListener,
 					Handler handlerThST = new Handler();
 					handlerThST.postDelayed(new Runnable() {
 
-						@Override
 						public void run() {
 							stateId = getCountryNState
 									.checkstateId(stateSelected);
@@ -236,7 +234,6 @@ public class CartAct extends Activity implements OnClickListener,
 				}
 			}
 
-			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
@@ -384,7 +381,6 @@ public class CartAct extends Activity implements OnClickListener,
 		}
 	}
 
-	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {
 		final ProgressDialog dialog = new ProgressDialog(getParent());
@@ -397,7 +393,6 @@ public class CartAct extends Activity implements OnClickListener,
 
 		handlerTh.postDelayed(new Runnable() {
 
-			@Override
 			public void run() {
 				countrySelected = (String) countrySpinner.getSelectedItem();
 				territoryId = getCountryNState.checkId(countrySelected);
@@ -456,7 +451,6 @@ public class CartAct extends Activity implements OnClickListener,
 		}, 2000);
 	}
 
-	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 	}
 
@@ -676,7 +670,6 @@ public class CartAct extends Activity implements OnClickListener,
 		}
 		cartButton.setBackgroundResource(R.drawable.button_without_color);
 		cartButton.setOnClickListener(new OnClickListener() {
-			@Override
 			public void onClick(View v) {
 				if (cartButtonMode == CART_BUTTON_MODE_EDIT) {
 					doEditButtonWork();
@@ -693,7 +686,6 @@ public class CartAct extends Activity implements OnClickListener,
 		super.onRestart();
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.cartList_footer_checkout_Btn: {
@@ -737,7 +729,6 @@ public class CartAct extends Activity implements OnClickListener,
 						MobicartCommonData.keyValues.getString(
 								"key.iphone.nointernet.cancelbutton", "Ok"),
 						new DialogInterface.OnClickListener() {
-							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
 								dialog.cancel();
@@ -769,7 +760,6 @@ public class CartAct extends Activity implements OnClickListener,
 				MobicartCommonData.keyValues.getString(
 						"key.iphone.nointernet.cancelbutton", "Ok"),
 				new DialogInterface.OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						ParentActivityGroup parentActivity = (ParentActivityGroup) getParent();
 						Intent intent = new Intent(parentActivity
@@ -783,7 +773,6 @@ public class CartAct extends Activity implements OnClickListener,
 		builder.setNegativeButton(MobicartCommonData.keyValues.getString(
 				"key.iphone.cancel", "Cancel"),
 				new DialogInterface.OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
 					}

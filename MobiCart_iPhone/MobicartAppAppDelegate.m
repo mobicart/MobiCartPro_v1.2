@@ -10,6 +10,7 @@
 #import "MobiCartStart.h"
 #import "UserDetails.h"
 #import "SqlQuery.h"
+#import <BugSense-iOS/BugSenseController.h>
 
 @implementation MobicartAppAppDelegate
 @synthesize window;  
@@ -24,6 +25,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
 {
+    
+    // thai nguyen -- import bugsense version 3.4
+    [BugSenseController sharedControllerWithBugSenseAPIKey:@"20c78dd2"];
+    //
+    
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
         

@@ -76,7 +76,6 @@ public class StoreTabAct extends Activity implements OnClickListener,
 		GetProductsTask departmentsTask = new GetProductsTask(this.getParent(),
 				departmentsLV, StoreTabGroupAct.TYPE_DEPARTMENTS);
 		localSearchET.addTextChangedListener(new TextWatcher() {
-			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				localSearchET.setHint("");
@@ -86,18 +85,15 @@ public class StoreTabAct extends Activity implements OnClickListener,
 						searchedList));
 			}
 
-			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 			}
 
-			@Override
 			public void afterTextChanged(Editable s) {
 			}
 		});
 
 		localSearchET.setOnKeyListener(new OnKeyListener() {
-			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_BACK) {
 					localSearchET
@@ -114,7 +110,6 @@ public class StoreTabAct extends Activity implements OnClickListener,
 			}
 		});
 		localSearchET.setOnEditorActionListener(new OnEditorActionListener() {
-			@Override
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) {
 				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -140,7 +135,6 @@ public class StoreTabAct extends Activity implements OnClickListener,
 
 		departmentsLV.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int arg2,
 					long arg3) {
 
@@ -320,7 +314,6 @@ public class StoreTabAct extends Activity implements OnClickListener,
 		}
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.store_search_button:
@@ -371,7 +364,6 @@ public class StoreTabAct extends Activity implements OnClickListener,
 		}
 	}
 
-	@Override
 	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 		if (v.getId() == R.id.store_search_et) {
 			if (event == null) {

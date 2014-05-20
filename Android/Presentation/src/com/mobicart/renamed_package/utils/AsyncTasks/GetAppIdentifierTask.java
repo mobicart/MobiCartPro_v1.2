@@ -152,7 +152,6 @@ public class GetAppIdentifierTask extends AsyncTask<String, String, String> {
 	private void showNetworkError() {
 		activity.runOnUiThread(new Runnable() {
 
-			@Override
 			public void run() {
 				AlertDialog alertDialog = new AlertDialog.Builder(activity)
 						.create();
@@ -181,7 +180,6 @@ public class GetAppIdentifierTask extends AsyncTask<String, String, String> {
 	private void showServerError() {
 		activity.runOnUiThread(new Runnable() {
 
-			@Override
 			public void run() {
 				AlertDialog alertDialog = new AlertDialog.Builder(activity)
 						.create();

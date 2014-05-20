@@ -123,22 +123,18 @@ public class DepartmentsListAdapter extends BaseAdapter implements
 		this.searchedSubCategoryList = searchedList;
 	}
 
-	@Override
 	public int getCount() {
 		return getListCount(type);
 	}
 
-	@Override
 	public Object getItem(int position) {
 		return null;
 	}
 
-	@Override
 	public long getItemId(int position) {
 		return 0;
 	}
 
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		RelativeLayout rowRL = null;
 		if (type == StoreTabGroupAct.TYPE_DEPARTMENTS) {
@@ -511,7 +507,6 @@ public class DepartmentsListAdapter extends BaseAdapter implements
 		alertDialog.show();
 	}
 
-	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 		if (type == StoreTabGroupAct.TYPE_PRODUCTS) {
@@ -532,7 +527,6 @@ public class DepartmentsListAdapter extends BaseAdapter implements
 		}
 	}
 
-	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 
 	}

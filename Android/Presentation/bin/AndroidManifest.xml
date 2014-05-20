@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mobicart.renamed_package"
+    android:excludeFromRecents="true"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+
+     <permission
+        android:name="com.mobicart.renamed_package.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+     
+    <!-- @@@@@@@@@@@ C2DM  Permissions @@@@@@@@@@ -->
+    <permission
+        android:name="com.mobicart.renamed_package.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.mobicart.renamed_package.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application
+        android:icon="@drawable/mobicart_logo"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar" >
+        <uses-library android:name="com.google.android.maps" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name="com.mobicart.renamed_package.SplashAct"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="TabHostAct"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="HomeTabAct"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="StoreTabAct"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="MyAccountTabAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="LangPkgAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="CartAct"
+            android:noHistory="true"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="ProductsListAct"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="ProductDetailAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="MoreTabAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="NewsTabAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.mobicart.renamed_package.utils.coverflow.CoverFlowExample"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="AboutUsAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.mobicart.renamed_package.ContactUsAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="AboutUsTabAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="OrderHistoryAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="WishlistAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="LoginAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="PostReviewAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="SignUpAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="ReviewListAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="NewsDetailsAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="CategoryTabAct"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="CheckoutAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="MyAcountDetails"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- android:theme="@android:style/Theme.Dialog" -->
+
+        <activity
+            android:name="WatchVideoAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="StoreTabGroupAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="NewsTabGroup"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="AccountTabGroupAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="MoreTabGroupAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="ContactUsGroupAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="StaticPagesGroupAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="BrandingAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.zooz.android.lib.CheckoutActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name="com.paypal.android.MEP.PayPalActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".Pcom.mobicart.renamed_package.Paypal.PaypalAct" >
+        </activity>
+        <activity
+            android:name="videoAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="HomeTabGroupAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="AboutUsGroupAct"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="SubCategoryTabAct"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- @@@@@@@@@ C2DM  Activity and Receivers @@@@@@@@@@ -->
+        <!--
+        <receiver
+            android:name=".C2DMRegistrationReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" >
+                </action>
+
+                <category android:name="com.mobicart.renamed_packagee" />
+            </intent-filter>
+        </receiver>
+
+        -->
+        <!--
+        <receiver
+            android:name=".MyBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.example.gcm" />
+            </intent-filter>
+        </receiver>
+
+        -->
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.mobicart.renamed_packagee" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.mobicart.renamed_package.GCMIntentService" />
+
+        <activity android:name="RegistrationResultActivity" >
+        </activity>
+        <activity android:name="MessageReceivedActivity" >
+        </activity>
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <activity android:name="newAct" >
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDq0pBkA4q6XlWhGPWNrLHiudK6rlozgkY" />
+        <activity android:name="ContactUsActVersion2"></activity>
+    </application>
+
+    <uses-sdk android:minSdkVersion="11" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+ <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!--
+         <permission android:name="com.example.gcm.permission.C2D_MESSAGE" 
+        android:protectionLevel="signature" />
+
+    -->
+    <uses-permission android:name="com.mobicart.renamed_package.gcm.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+</manifest>

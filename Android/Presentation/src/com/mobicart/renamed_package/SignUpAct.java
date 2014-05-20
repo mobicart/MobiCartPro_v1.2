@@ -113,7 +113,6 @@ public class SignUpAct extends Activity implements OnClickListener {
 		backBtn.setOnClickListener(this);
 		deliveryAddChk
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-					@Override
 					public void onCheckedChanged(CompoundButton buttonView,
 							boolean isChecked) {
 						try {
@@ -181,7 +180,6 @@ public class SignUpAct extends Activity implements OnClickListener {
 		}
 		final Spinner stateSpinner = new Spinner(getParent());
 		countrySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				final ProgressDialog dialog = new ProgressDialog(getParent());
@@ -245,7 +243,6 @@ public class SignUpAct extends Activity implements OnClickListener {
 				stateSV.removeAllViews();
 				stateSpinner
 						.setOnItemSelectedListener(new OnItemSelectedListener() {
-							@Override
 							public void onItemSelected(AdapterView<?> arg0,
 									View arg1, int arg2, long arg3) {
 								if (MobicartCommonData.shippingObj != null
@@ -255,14 +252,12 @@ public class SignUpAct extends Activity implements OnClickListener {
 								}
 							}
 
-							@Override
 							public void onNothingSelected(AdapterView<?> arg0) {
 							}
 						});
 				stateSV.addView(stateSpinner);
 			}
 
-			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
@@ -384,7 +379,6 @@ public class SignUpAct extends Activity implements OnClickListener {
 		}
 		dCountrySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				dCountrySelected = (String) dCountrySpinner.getSelectedItem();
@@ -422,14 +416,12 @@ public class SignUpAct extends Activity implements OnClickListener {
 				}
 				dStateSpinner
 						.setOnItemSelectedListener(new OnItemSelectedListener() {
-							@Override
 							public void onItemSelected(AdapterView<?> arg0,
 									View arg1, int arg2, long arg3) {
 								dStateSelected = (String) dStateSpinner
 										.getSelectedItem();
 							}
 
-							@Override
 							public void onNothingSelected(AdapterView<?> arg0) {
 							}
 						});
@@ -438,7 +430,6 @@ public class SignUpAct extends Activity implements OnClickListener {
 				dStateSelected = (String) dStateSpinner.getSelectedItem();
 			}
 
-			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
@@ -584,7 +575,6 @@ public class SignUpAct extends Activity implements OnClickListener {
 				MobicartCommonData.keyValues.getString(
 						"key.iphone.nointernet.cancelbutton", "Ok"),
 				new DialogInterface.OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
 					}
@@ -592,7 +582,6 @@ public class SignUpAct extends Activity implements OnClickListener {
 		builder.show();
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.signup_submit2_Btn: {

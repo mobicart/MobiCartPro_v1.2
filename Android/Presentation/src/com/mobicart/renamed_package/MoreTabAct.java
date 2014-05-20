@@ -55,7 +55,6 @@ public class MoreTabAct extends ActivityGroup implements OnItemClickListener,
 				this.getParent(), moreListView).execute("");
 	}
 
-	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		String saticListPages = (String) arg1.getTag();
 		getPages(saticListPages);
@@ -191,7 +190,6 @@ public class MoreTabAct extends ActivityGroup implements OnItemClickListener,
 		super.onPause();
 	}
 
-	@Override
 	public void onClick(View v) {
 		MoreTabGroupAct parentActivity = (MoreTabGroupAct) getParent();
 		Intent cartAct = new Intent(this, CartAct.class);

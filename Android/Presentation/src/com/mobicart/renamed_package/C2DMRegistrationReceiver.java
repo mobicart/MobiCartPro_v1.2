@@ -132,23 +132,19 @@ public class C2DMRegistrationReceiver extends BroadcastReceiver implements
 		return uri;
 	}
 
-	@Override
 	public void onLocationChanged(Location location) {
 		location.getLatitude();
 		location.getLongitude();
 	}
 
-	@Override
 	public void onProviderDisabled(String provider) {
 
 	}
 
-	@Override
 	public void onProviderEnabled(String provider) {
 
 	}
 
-	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 
 	}

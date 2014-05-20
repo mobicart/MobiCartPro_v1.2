@@ -48,17 +48,14 @@ public class TwitterListAdapter extends BaseAdapter
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
-	@Override
 	public int getCount() {
 		return MobicartCommonData.tweetFeedVO.size();
 	}
 
-	@Override
 	public Object getItem(int position) {
 		return null;
 	}
 
-	@Override
 	public long getItemId(int position) {
 		return 0;
 	}
@@ -68,7 +65,6 @@ public class TwitterListAdapter extends BaseAdapter
 		ImageView img;
 	}
 
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		convertView = layoutInflater

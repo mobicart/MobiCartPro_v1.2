@@ -321,7 +321,6 @@ public class MyAcountDetails extends ActivityGroup implements OnClickListener {
 			}
 		}
 		dCountrySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				final ProgressDialog dialog = new ProgressDialog(getParent());
@@ -370,20 +369,17 @@ public class MyAcountDetails extends ActivityGroup implements OnClickListener {
 				}
 				dStateSpinner
 						.setOnItemSelectedListener(new OnItemSelectedListener() {
-							@Override
 							public void onItemSelected(AdapterView<?> arg0,
 									View arg1, int arg2, long arg3) {
 								dStateSelected = (String) dStateSpinner
 										.getSelectedItem();
 							}
-							@Override
 							public void onNothingSelected(AdapterView<?> arg0) {
 							}
 						});
 				dStateSV.removeAllViews();
 				dStateSV.addView(dStateSpinner);
 			}
-			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
@@ -441,7 +437,6 @@ public class MyAcountDetails extends ActivityGroup implements OnClickListener {
 				MobicartCommonData.keyValues.getString(
 						"key.iphone.nointernet.cancelbutton", "Ok"),
 				new DialogInterface.OnClickListener() {
-					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
 					}
@@ -465,7 +460,6 @@ public class MyAcountDetails extends ActivityGroup implements OnClickListener {
 		}
 		final Spinner stateSpinner = new Spinner(getParent());
 		countrySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 
@@ -517,19 +511,16 @@ public class MyAcountDetails extends ActivityGroup implements OnClickListener {
 				stateSV.removeAllViews();
 				stateSpinner
 						.setOnItemSelectedListener(new OnItemSelectedListener() {
-							@Override
 							public void onItemSelected(AdapterView<?> arg0,
 									View arg1, int arg2, long arg3) {
 								stateSelected = (String) stateSpinner
 										.getSelectedItem();
 							}
-							@Override
 							public void onNothingSelected(AdapterView<?> arg0) {
 							}
 						});
 				stateSV.addView(stateSpinner);
 			}
-			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
@@ -571,7 +562,6 @@ public class MyAcountDetails extends ActivityGroup implements OnClickListener {
 		super.onDestroy();
 	}
 
-	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.myAccountEdit_Btn:

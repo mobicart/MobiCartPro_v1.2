@@ -33,22 +33,18 @@ public class ReviewListAdapter extends BaseAdapter {
 		pReview = getProduct.getProductDetails(context, currentProductId);
 	}
 
-	@Override
 	public int getCount() {
 		return pReview.getProductReviews().size();
 	}
 
-	@Override
 	public Object getItem(int position) {
 		return true;
 	}
 
-	@Override
 	public long getItemId(int position) {
 		return 0;
 	}
 
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (context).getLayoutInflater();
 		View v = inflater.inflate(R.layout.review_listlayout, null);

@@ -39,7 +39,6 @@ public class LocalSearchEtTextWatcher implements TextWatcher {
 		this.listToSort = listToSort;
 	}
 
-	@Override
 	public void afterTextChanged(Editable s) {
 		ProductsListAct.isInSearchMode = true;
 		searchedList = searchList(s.toString());
@@ -47,12 +46,10 @@ public class LocalSearchEtTextWatcher implements TextWatcher {
 				StoreTabGroupAct.TYPE_PRODUCTS, searchedList));
 	}
 
-	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
 	}
 
-	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 	}
 

@@ -148,7 +148,6 @@ public class AboutUsTabAct extends ActivityGroup implements OnClickListener {
 		super.onDestroy();
 	}
 
-	@Override
 	public void onClick(View v) {
 		AboutUsGroupAct parentActivity = (AboutUsGroupAct) getParent();
 		Intent cartAct = new Intent(this, CartAct.class);

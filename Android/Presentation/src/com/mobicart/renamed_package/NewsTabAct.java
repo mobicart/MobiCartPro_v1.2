@@ -104,7 +104,6 @@ public class NewsTabAct extends Activity implements OnCheckedChangeListener,
 		cartBtn.setText("" + CartItemCount.getCartCount(this));
 	}
 
-	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		switch (checkedId) {
 		case R.id.news_news_RB: {
@@ -191,7 +190,6 @@ public class NewsTabAct extends Activity implements OnCheckedChangeListener,
 		return super.onKeyDown(keyCode, event);
 	}
 
-	@Override
 	public void onClick(View v) {
 		NewsTabGroup parentActivity = (NewsTabGroup) getParent();
 		Intent cartAct = new Intent(this, CartAct.class);

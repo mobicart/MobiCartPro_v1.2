@@ -44,22 +44,18 @@ public class MoreListAdapter extends BaseAdapter {
 		ImageView img;
 	}
 
-	@Override
 	public int getCount() {
 		return list.size();
 	}
 
-	@Override
 	public Object getItem(int position) {
 		return null;
 	}
 
-	@Override
 	public long getItemId(int position) {
 		return 0;
 	}
 
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		convertView = lInflater.inflate(R.layout.more_list_layout, null);

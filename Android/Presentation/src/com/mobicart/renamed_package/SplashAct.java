@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 
-import com.bugsense.trace.BugSenseHandler;
 import com.mobicart.android.communication.MobicartLogger;
 import com.mobicart.android.communication.Oauth;
 import com.mobicart.android.core.MobicartUrlConstants;
@@ -22,7 +21,7 @@ import com.mobicart.android.model.MobicartCommonData;
 import com.mobicart.renamed_package.R;
 import com.mobicart.renamed_package.constants.MobiCartConstantIds;
 import com.mobicart.renamed_package.utils.AsyncTasks.GetAppIdentifierTask;
-
+import com.bugsense.trace.BugSenseHandler;
 /**
  * This activity is the launcher activity for the app. In this activity, all the
  * initial "application data" gets downloaded through the tasks.
@@ -50,7 +49,10 @@ public class SplashAct extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		BugSenseHandler.setup(this, "5b625fc4");
+		// thai nguyen -- upgrade bugsense to version 3.6.1
+		BugSenseHandler.initAndStartSession(SplashAct.this, "35474605");
+		//
+		
 		reqDateFormat = new SimpleDateFormat("MMM. dd,yyyy kk:mm:ss ");
 		objMobicartLogger = new MobicartLogger("MobicartServiceLogger");
 		getAppKey();

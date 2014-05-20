@@ -326,7 +326,6 @@ public class ContactUsAct extends Activity implements OnClickListener,
 		return new LatLng(lat, lng);
 	}
 
-	@Override
 	public void didGetUserAddress(UserAddressVO userAddress) {
 		// TODO Auto-generated method stub
 		if (userAddress != null) {
