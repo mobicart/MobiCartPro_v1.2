@@ -26,7 +26,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
 {
     
-    // thai nguyen -- import bugsense version 3.4
+    // Sa Vo - tnlq -- import bugsense version 3.4
     [BugSenseController sharedControllerWithBugSenseAPIKey:@"20c78dd2"];
     //
     

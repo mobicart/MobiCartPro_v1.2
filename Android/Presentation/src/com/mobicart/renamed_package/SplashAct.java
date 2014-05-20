@@ -49,7 +49,7 @@ public class SplashAct extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// thai nguyen -- upgrade bugsense to version 3.6.1
+		// Sa Vo - tnlq -- upgrade bugsense to version 3.6.1
 		BugSenseHandler.initAndStartSession(SplashAct.this, "35474605");
 		//
 		

@@ -89,9 +89,6 @@ BOOL isAccount;
 	self.navigationItem.titleView = [GlobalPreferences createLogoImage];
 	
 	lblCart = [[UILabel alloc] initWithFrame:CGRectMake(280, 5, 30, 34)];
-    // thai nguyen -- make crash to test bugsense
-    [lblCart release];
-    //
 	lblCart.backgroundColor = [UIColor clearColor];
 	lblCart.textAlignment = UITextAlignmentCenter;
 	lblCart.font = [UIFont boldSystemFontOfSize:16];
