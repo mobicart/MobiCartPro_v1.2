@@ -68,7 +68,8 @@ BOOL isFirstTime;
 	
 	arrStates=[[NSMutableArray alloc]init];
 	
-    self.navigationController.navigationBar.tintColor = navBarColor;
+    // Sa Vo - tnlq - fix bug barButton don't appear after enter shopping cart
+//    self.navigationController.navigationBar.tintColor = navBarColor;
     
     UIView *viewTopBar=[[UIView alloc]initWithFrame:CGRectMake(0,-1, 320, 31)];
 	[viewTopBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"barNews.png"]]];
