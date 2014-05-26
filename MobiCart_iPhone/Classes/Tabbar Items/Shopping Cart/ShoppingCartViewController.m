@@ -170,6 +170,10 @@ BOOL isFirstTime;
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     
+    // Sa Vo - tnlq - 26/05/2014 set white background for UIPickerView
+    [[UIPickerView appearance] setBackgroundColor:[UIColor whiteColor]];
+    //
+    
 }
 - (void)hideBottomBar
 {
