@@ -64,7 +64,9 @@ BOOL isRegisterClicked;
 								   selector:@selector(hideLoadingView)
 								   userInfo:nil
 									repeats:NO];
-	
+	// Sa Vo - tnlq - 26/05/2014 - fix bug UIPickerView transparent in iOS 7x
+    [[UIPickerView appearance] setBackgroundColor:[UIColor whiteColor]];
+    //
 }
 
 -(void)hideLoadingView
@@ -1795,7 +1797,10 @@ static int kAnimationType;
 	}
     
     
-    pickerViewQuantity = [[UIPickerView alloc]initWithFrame:CGRectMake( 50, 490, 400, 200.0)];
+    // Sa Vo - tnlq - 26/05/2014 - reset pickerViewQuantity position to avoid ovalap with toolbar
+    pickerViewQuantity = [[UIPickerView alloc]initWithFrame:CGRectMake( 50, 504, 400, 200.0)];
+    //
+    
 	[pickerViewQuantity setDelegate:self];
 	[pickerViewQuantity setDataSource:self];
     
