@@ -638,8 +638,10 @@ iProductSingleton *productObj;
 	
 	NSString *strText=[NSString stringWithFormat:@"%@",[dicProduct valueForKey:@"sName"]];
 	CGSize size=[strText sizeWithFont:[UIFont fontWithName:@"Helvetica-Bold" size :16] constrainedToSize:CGSizeMake(160,500) lineBreakMode:UILineBreakModeWordWrap];
-	int yName=size.height;
-	
+	// Sa Vo - tnlq - 27/05/2014 - get height of multiline text in iOS 7
+	int yName=ceilf(size.height);
+    //
+    
     if (yName>40)
     {
         yName=40;
@@ -690,7 +692,9 @@ iProductSingleton *productObj;
         if ([[dicProduct objectForKey:@"fPrice"] floatValue]>[[dicProduct valueForKey:@"fDiscountedPrice"] floatValue])
         {
             NSString *strFinalProductPrice=[NSString stringWithFormat:@"%@",[ProductModel calculateDiscountedPrice:dicProduct]];
-            [lblProductDiscount setText:[NSString stringWithFormat:@"\n%@%@", _savedPreferences.strCurrencySymbol, strFinalProductPrice]];
+            // Sa Vo - tnlq - 27/05/2014 - remove \n to show in ios7
+            [lblProductDiscount setText:[NSString stringWithFormat:@" %@%@", _savedPreferences.strCurrencySymbol, strFinalProductPrice]];
+            //
         }
     }
 	[contentScrollView addSubview:lblProductDiscount];
