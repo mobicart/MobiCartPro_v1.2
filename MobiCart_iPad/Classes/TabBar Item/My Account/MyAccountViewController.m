@@ -27,18 +27,25 @@ BOOL isAccount;
     return self;
 }
 
-
--(void)viewWillAppear:(BOOL)animated 
-{ 
-	if ([[GlobalPrefrences getUserDefault_Preferences:@"userEmail"] length]!=0)
+// Sa Vo - tnlq - 28/05/2014
+-(void) showButtonLogout {
+    if ([[GlobalPrefrences getUserDefault_Preferences:@"userEmail"] length]!=0)
 	{
 		if([showArray count]==3)
 		{
 			[showArray addObject:[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.myaccount.logout"]];
 			[tableView setFrame:CGRectMake(46, 78, 420, 180)];
 			[tableView reloadData];
-		}    
+		}
 	}
+}
+//
+
+-(void)viewWillAppear:(BOOL)animated 
+{
+    // Sa Vo - tnlq - 28/05/2014
+    [self showButtonLogout];
+    //
 	if (rightContentView) 
 	{
 		NSArray *arrTemp = [rightContentView subviews];
@@ -171,7 +178,12 @@ BOOL isAccount;
 	[contentView addSubview:tableView];
 }
 
-
+#pragma mark DetailsViewController Method
+// Sa Vo - tnlq - 28/05/2014
+-(void) didLoginSuccessful {
+    [self showButtonLogout];
+}
+//
 
 #pragma mark TableView Delegate Method
 
@@ -262,7 +274,10 @@ BOOL isAccount;
 		case 1:
 		{
 			isAccount = YES;
-			DetailsViewController *objDetail=[[DetailsViewController alloc]init];			
+			DetailsViewController *objDetail=[[DetailsViewController alloc]init];
+			// Sa Vo - tnlq - 28/05/2014
+            objDetail.delegate = self;
+            //
 			[rightContentView addSubview:objDetail.view];
 			[rightContentView bringSubviewToFront:objDetail.view];
 			break;
@@ -276,7 +291,10 @@ BOOL isAccount;
 			{
 				isOrderLogin=YES;
 				DetailsViewController *_details = 	[[DetailsViewController alloc] init];
-				[rightContentView addSubview:_details.view];
+				// Sa Vo - tnlq - 28/05/2014
+                _details.delegate = self;
+                //
+                [rightContentView addSubview:_details.view];
 				[rightContentView bringSubviewToFront:_details.view];
 			}
 			

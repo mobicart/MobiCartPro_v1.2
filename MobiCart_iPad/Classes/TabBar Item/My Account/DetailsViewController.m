@@ -23,6 +23,9 @@ int isfromTag;
 @synthesize viewForLogin, viewForRegistration;
 @synthesize alertMain,isReview,pickerViewCountry,pickerViewStates;
 @synthesize isFromPostReview;
+// Sa Vo - tnlq - 28/05/2014
+@synthesize delegate;
+//
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -1068,6 +1071,11 @@ int isfromTag;
      [alert release];
      }*/
 	isReview=NO;
+    // Sa Vo - tnlq - 28/05/2014
+    if ([self.delegate respondsToSelector:@selector(didLoginSuccessful)]) {
+        [self.delegate didLoginSuccessful];
+    }
+    //
 }
 
 -(void)showDeliveryView
@@ -1633,6 +1641,11 @@ int isfromTag;
 			}
 		}
 	}
+    // Sa Vo - tnlq - 28/05/2014
+    if ([self.delegate respondsToSelector:@selector(didLoginSuccessful)]) {
+        [self.delegate didLoginSuccessful];
+    }
+    //
 }
 
 

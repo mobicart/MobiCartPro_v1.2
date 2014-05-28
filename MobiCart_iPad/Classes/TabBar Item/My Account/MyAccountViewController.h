@@ -6,9 +6,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DetailsViewController.h"
 
-
-@interface MyAccountViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+// Sa Vo - tnlq - 28/05/2014
+@interface MyAccountViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, DetailsViewControllerDelegate>
 {
 	UIAlertView *alertMain;	
 	UIView *contentView;

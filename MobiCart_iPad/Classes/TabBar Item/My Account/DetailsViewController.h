@@ -7,6 +7,16 @@
 
 #import <UIKit/UIKit.h>
 BOOL isLoadingTableFooter;
+
+// Sa Vo - tnlq - 28/05/2014
+@protocol DetailsViewControllerDelegate <NSObject>
+
+@required
+-(void) didLoginSuccessful;
+
+@end
+//
+
 @interface DetailsViewController : UIViewController <UIAlertViewDelegate,UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
 	UIAlertView *alertView1;
 	UIAlertView *alertMain;
@@ -46,6 +56,9 @@ BOOL isLoadingTableFooter;
 	NSDictionary *dicStates;	
 	NSMutableArray *arrInfoAccount;
 	NSDictionary *dicSettings;
+    // Sa Vo - tnlq - 28/05/2014
+    id <DetailsViewControllerDelegate> delegate;
+    //
 }
 @property (nonatomic, retain) UIPickerView *pickerViewCountry;
 @property (nonatomic, retain) UIPickerView *pickerViewStates;
@@ -54,6 +67,9 @@ BOOL isLoadingTableFooter;
 @property (nonatomic, retain) UIAlertView *alertMain;
 @property (assign)BOOL isReview;
 @property (assign)BOOL isFromPostReview;
+// Sa Vo - tnlq - 28/05/2014
+@property (nonatomic, assign) id <DetailsViewControllerDelegate> delegate;
+//
 -(void)displayViewForRegistration;
 -(void)displayViewForLogin;
 -(void)createDeliveryView;
