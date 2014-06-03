@@ -1032,25 +1032,10 @@ BOOL isRegisterClicked;
 
 - (NSInteger) tableView:(UITableView*) _tableView numberOfRowsInSection:(NSInteger) section
 {
-	if(_tableView == tblCountries)
-		return [interDict count];
-	else if(_tableView == tblStates)
-		return [arrStates count];
-	else
-		return [arrShoppingCart count];
-	
-}
-
-
-- (UITableViewCell*) tableView:(UITableView*)tableview cellForRowAtIndexPath:(NSIndexPath*) indexPath
-{
-	NSString *SimpleTableIdentifier = [NSString stringWithFormat:@"SimpleTableIdentifier%d", indexPath.row];
-	TableViewCell_Common *cell= (TableViewCell_Common *)[tableview dequeueReusableCellWithIdentifier:SimpleTableIdentifier];
-    if(tableview == tblCountries)
-    {
-		int i = [interDict count];
-		
-        
+	// Sa Vo - tnlq - [03/06/2014]
+    // recalcuate height of table
+	if(_tableView == tblCountries) {
+        int i = [interDict count];
 		
         if([arrShoppingCart count]==1)
         {
@@ -1088,6 +1073,70 @@ BOOL isRegisterClicked;
         
 		
 		tblCountries.frame = CGRectMake(15, 54, 138, i);
+		return [interDict count];
+    }
+	else if(_tableView == tblStates) {
+        int height = [arrStates count];
+        
+        if([arrShoppingCart count]==1)
+        {
+            if(height<12)
+            {
+                height=height*25;
+            }
+            else
+            {
+                height = 300;
+            }
+            
+        }
+        else if([arrShoppingCart count]==2)
+        {
+            if(height<7)
+            {
+                height=height*25;
+            }
+            else
+            {
+                height = 200;
+            }
+            
+        }
+        else
+        {
+            if(height<5)
+            {
+                height=height*25;
+            }
+            else
+            {
+                height = 100;
+            }
+        }
+        
+        
+        tblStates.frame =CGRectMake(15, 106, 138, height);
+        
+		return [arrStates count];
+    }
+	else {
+		return [arrShoppingCart count];
+    }
+    //
+
+	
+}
+
+
+- (UITableViewCell*) tableView:(UITableView*)tableview cellForRowAtIndexPath:(NSIndexPath*) indexPath
+{
+	NSString *SimpleTableIdentifier = [NSString stringWithFormat:@"SimpleTableIdentifier%d", indexPath.row];
+	TableViewCell_Common *cell= (TableViewCell_Common *)[tableview dequeueReusableCellWithIdentifier:SimpleTableIdentifier];
+    if(tableview == tblCountries)
+    {
+		// Sa Vo - tnlq - [03/06/2014]
+        // remove code reset table frame here
+        //
 		NSDictionary *dictTemp = [interDict objectAtIndex:indexPath.row];
 		
 		if(cell==nil)
@@ -1102,48 +1151,9 @@ BOOL isRegisterClicked;
 	}
 	else if(tableview==tblStates)
 	{
-		int j = [arrStates count];
-        
-        
-        if([arrShoppingCart count]==1)
-        {
-            if(j<12)
-            {
-                j=j*25;
-            }
-            else
-            {
-                j = 300;
-            }
-            
-        }
-        else if([arrShoppingCart count]==2)
-        {
-            if(j<7)
-            {
-                j=j*25;
-            }
-            else
-            {
-                j = 200;
-            }
-            
-        }
-        else
-        {
-            if(j<5)
-            {
-                j=j*25;
-            }
-            else
-            {
-                j = 100;
-            }
-        }
-        
-        
-		tblStates.frame =CGRectMake(15, 106, 138, j);
-		if(cell==nil)
+		// Sa Vo - tnlq - [03/06/2014]
+        // remove code reset table frame here
+        //		if(cell==nil)
 		{
 			cell = [[[TableViewCell_Common alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier]autorelease];
 		}
@@ -1847,7 +1857,7 @@ static int kAnimationType;
 	
 	[toolbarForPicker setItems:barItems animated:YES];
 	[toolbarForPicker setTag:5656];
-    btnTemp.enabled=FALSE;
+//    btnTemp.enabled=FALSE;
 	[contentView addSubview:toolbarForPicker];
 	[barItems release];
 }
@@ -1868,7 +1878,7 @@ static int kAnimationType;
         pickerViewQuantity = nil;
 	}
 	UIButton *btnTemp = (UIButton *) [tableView viewWithTag:iTagOfCurrentQuantityBtn];
-    btnTemp.enabled=TRUE;
+//    btnTemp.enabled=TRUE;
 	[[SqlQuery shared] updateTblShoppingCart:[btnTemp.titleLabel.text intValue] :[[[arrDatabaseCart objectAtIndex:(iTagOfCurrentQuantityBtn%10)-1] valueForKey:@"id"] intValue] :[[arrDatabaseCart objectAtIndex:(iTagOfCurrentQuantityBtn%10)-1] valueForKey:@"pOptionId"] ];
 	
 	arrDatabaseCart = [[SqlQuery shared]getShoppingCartProductIDs:NO];
