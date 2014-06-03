@@ -25,6 +25,7 @@ BOOL isLoadingTableFooter2ndTime;
 BOOL isFirstTime;
 @synthesize isEditCommit=_isEditCommit;
 @synthesize  isFomCheckout=_isFomCheckout;
+@synthesize isQtyEdit=_isQtyEdit;
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 
@@ -42,9 +43,9 @@ BOOL isFirstTime;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    [GlobalPreferences showLoadingIndicator];
 	isFirstTime=YES;
     _isFomCheckout=NO;
+    _isQtyEdit=NO;
 	strEditButtonTitle = [[NSString alloc ]initWithFormat:@"%@",[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.shoppingcart.edit"]];
 	strDoneButtonTitle = [[NSString alloc]initWithFormat:@"%@",[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.shoppingcart.done"]];
 	
@@ -67,9 +68,8 @@ BOOL isFirstTime;
 	self.view=contentView;
 	
 	arrStates=[[NSMutableArray alloc]init];
-	
-    // Sa Vo - tnlq - fix bug barButton don't appear after enter shopping cart
-//    self.navigationController.navigationBar.tintColor = navBarColor;
+	//Sa Vo - tnlq - fix bug can't see barButton after enter shopping cart
+    //    self.navigationController.navigationBar.tintColor = navBarColor;
     
     UIView *viewTopBar=[[UIView alloc]initWithFrame:CGRectMake(0,-1, 320, 31)];
 	[viewTopBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"barNews.png"]]];
@@ -152,7 +152,7 @@ BOOL isFirstTime;
 	}
 	
 	[interDict retain];
-	
+	[arrStates retain];
 	dicStates=[[NSDictionary alloc]init];
 	[dicStates retain];
 	dictTaxAndShippingDetails=[[NSDictionary alloc]init];
@@ -165,14 +165,10 @@ BOOL isFirstTime;
 	
 	arrQuantity = [[NSMutableArray alloc] init];
 	//[self performSelector:@selector(hideBottomBar) onThread:[NSThread currentThread] withObject:nil waitUntilDone:NO];
-    [self hideLoadingBar ];
+    
     //[GlobalPreferences hideLoadingIndicator];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
-    // Sa Vo - tnlq - 26/05/2014 set white background for UIPickerView
-    [[UIPickerView appearance] setBackgroundColor:[UIColor whiteColor]];
-    //
     
 }
 - (void)hideBottomBar
@@ -382,12 +378,14 @@ BOOL isFirstTime;
 	if ([self.navigationItem.rightBarButtonItem.title isEqualToString:strEditButtonTitle])
     {
 		isEditing=YES;
+        _isQtyEdit=NO;
 		self.navigationItem.rightBarButtonItem.title = strDoneButtonTitle;
 		[tableView setEditing:YES animated:YES];
 	}
     else if ([self.navigationItem.rightBarButtonItem.title isEqualToString: strDoneButtonTitle])
     {
 		isEditing=NO;
+        _isQtyEdit=NO;
 		self.navigationItem.rightBarButtonItem.title = strEditButtonTitle;
 		[tableView setEditing:NO animated:YES];
         
@@ -404,6 +402,8 @@ BOOL isFirstTime;
 {
 	[super viewWillAppear:animated];
     // self.title=@"";
+    
+    [GlobalPreferences showLoadingIndicator];
     _isFomCheckout=NO;
 	if(controllersCount>5&&_objMobicartAppDelegate.tabController.selectedIndex>3)
 	{
@@ -465,7 +465,6 @@ BOOL isFirstTime;
 		isCheckForCheckout=NO;
         _isFomCheckout=YES;
         isEditing=NO;
-        NSLog(@"strDoneButtonTitle%@",strDoneButtonTitle);
         if ([self.navigationItem.rightBarButtonItem.title isEqualToString: strDoneButtonTitle])
         {
             isEditing=NO;
@@ -517,7 +516,8 @@ BOOL isFirstTime;
         {
             selectedQuantity=[[[arrDatabaseCart objectAtIndex:0]valueForKey:@"quantity"]intValue];
             if(!_isFomCheckout)
-                [self reloadMe];
+                // [self reloadMe];
+                [self performSelector:@selector(reloadMe) withObject:nil afterDelay:0.01];
         }
         
         
@@ -545,6 +545,7 @@ BOOL isFirstTime;
             }
         }
 	}
+    [self hideLoadingBar ];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -581,7 +582,7 @@ BOOL isFirstTime;
 	isShoppingCart_TableStyle = FALSE;
 	isCheckForCheckout=NO;
 	// Stoping the loading indicator
-	[GlobalPreferences stopLoadingIndicator];
+	//[GlobalPreferences stopLoadingIndicator];
 }
 
 
@@ -1308,7 +1309,8 @@ BOOL isFirstTime;
 			lblQuantity.text = [[arrDatabaseCart objectAtIndex:indexPath.row] valueForKey:@"quantity"];
 			lblQuantity.lineBreakMode = UILineBreakModeWordWrap;
 			lblQuantity.font=[UIFont fontWithName:@"Helvetica" size:13];
-			lblQuantity.tag = [[NSString stringWithFormat:@"99%d0%d",indexPath.row+1,indexPath.row+1] intValue];
+			//lblQuantity.tag = [[NSString stringWithFormat:@"99%d0%d",indexPath.row+1,indexPath.row+1] intValue];
+            lblQuantity.tag=700+indexPath.row;
 			[cell addSubview:lblQuantity];
 			
 			[lblQuantity release];
@@ -1321,7 +1323,8 @@ BOOL isFirstTime;
 			[btnQuantity setTitle:[[arrDatabaseCart objectAtIndex:indexPath.row] valueForKey:@"quantity"] forState:UIControlStateNormal];
 			[btnQuantity setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             btnQuantity.titleLabel.font=	[UIFont fontWithName:@"Helvetica" size:13];
-			btnQuantity.tag = [[NSString stringWithFormat:@"%d0%d",indexPath.row+1, indexPath.row+1] intValue];
+			//btnQuantity.tag = [[NSString stringWithFormat:@"%d0%d",indexPath.row+1, indexPath.row+1] intValue];
+            btnQuantity.tag=900+indexPath.row;
 			[btnQuantity addTarget:self action:@selector(btnQuantity_Clicked:) forControlEvents:UIControlEventTouchUpInside];
 			[cell addSubview:btnQuantity];
 			btnQuantity.hidden= TRUE;
@@ -1397,8 +1400,9 @@ BOOL isFirstTime;
             
             
         }
-        UIButton *btnQuantity_Temp = (UIButton *)[cell viewWithTag:[[NSString stringWithFormat:@"%d0%d",indexPath.row+1, indexPath.row+1] intValue]];
+        //  UIButton *btnQuantity_Temp = (UIButton *)[cell viewWithTag:[[NSString stringWithFormat:@"%d0%d",indexPath.row+1, indexPath.row+1] intValue]];
 		
+        UIButton *btnQuantity_Temp = (UIButton *)[cell viewWithTag:900+indexPath.row];
 		([tableView isEditing])?(btnQuantity_Temp.hidden = FALSE):(btnQuantity_Temp.hidden = TRUE);
 		
 		
@@ -1636,6 +1640,9 @@ BOOL isFirstTime;
 		dictTaxAndShippingDetails=[ServerAPI fetchTaxShippingDetails:countryID :stateID :iCurrentStoreId];
 		[tblStates setHidden:YES];
 		[lblStateName setText:[[arrStates valueForKey:@"sState"]objectAtIndex:indexPath.row]];
+        // Sa Vo - tnlq - [03/06/2014]
+        [tblStates reloadData];
+        //
 		[tableView reloadData];
 	}
 }
@@ -1710,12 +1717,13 @@ static int kAnimationType;
 - (void)btnQuantity_Clicked:(id)sender
 {
 	iTagOfCurrentQuantityBtn=[sender tag];
+    _isQtyEdit=YES;
 	
-	iTagOfCurrentQuantityLabel = [[NSString stringWithFormat:@"99%d",[sender tag]] intValue];
+	//iTagOfCurrentQuantityLabel = [[NSString stringWithFormat:@"99%d",[sender tag]] intValue];
+	iTagOfCurrentQuantityLabel=[sender tag]-200;
+	//NSString *strSelectedIndex=[NSString stringWithFormat:@"%d",iTagOfCurrentQuantityBtn];
 	
-	NSString *strSelectedIndex=[NSString stringWithFormat:@"%d",iTagOfCurrentQuantityBtn];
-	
-	NSArray *temp = [strSelectedIndex componentsSeparatedByString:@"0"];
+	//NSArray *temp = [strSelectedIndex componentsSeparatedByString:@"0"];
 	
 	
 	[arrQuantity removeAllObjects];
@@ -1724,8 +1732,8 @@ static int kAnimationType;
 	
 	if ([arrDatabaseCart count]>0)
 	{
-		int selectedRow = [[temp objectAtIndex:0] intValue] - 1;
-		
+		//int selectedRow = [[temp objectAtIndex:0] intValue] - 1;
+		int selectedRow =iTagOfCurrentQuantityLabel-700;
 		if ([[[arrDatabaseCart objectAtIndex:selectedRow] valueForKey:@"pOptionId"] intValue]==0)
 		{
 			max=[[[arrShoppingCart objectAtIndex:selectedRow] objectForKey:@"iAggregateQuantity"] intValue];
@@ -1872,7 +1880,8 @@ static int kAnimationType;
 	int pickerRow=0;
     
     UILabel *lblTemp = (UILabel *)[tableView viewWithTag:iTagOfCurrentQuantityLabel];
-	
+    
+    
 	UIPickerView *pickerViewQuantity = [[UIPickerView alloc]initWithFrame:CGRectMake( 0, 44.0, 0.0, 0.0)];
 	[pickerViewQuantity setDelegate:self];
 	[pickerViewQuantity setDataSource:self];
@@ -1921,13 +1930,23 @@ static int kAnimationType;
 	[barItems release];
 }
 
+
+// Sa Vo - tnlq - [03/06/2014] - move change subtotal to PickeQuantity
+// didselectRow
 - (void)doneButtonForActionSheet:(id)sender
 {
 	[actionSheetForPicker dismissWithClickedButtonIndex:0 animated:YES];
-	
-	UIButton *btnTemp = (UIButton *) [tableView viewWithTag:iTagOfCurrentQuantityBtn];
-	
-	[[SqlQuery shared] updateTblShoppingCart:[btnTemp.titleLabel.text intValue] :[[[arrDatabaseCart objectAtIndex:(iTagOfCurrentQuantityBtn%10)-1] valueForKey:@"id"] intValue] :[[arrDatabaseCart objectAtIndex:(iTagOfCurrentQuantityBtn%10)-1] valueForKey:@"pOptionId"] ];
+}
+//
+
+// Sa Vo - tnlq - [03/06/2014]
+- (void) setValueToRecalculatePrice {
+    UIButton *btnTemp = (UIButton *) [tableView viewWithTag:iTagOfCurrentQuantityBtn];
+    
+    
+    int tagOfClickedButton=iTagOfCurrentQuantityBtn-900;
+    
+	[[SqlQuery shared] updateTblShoppingCart:[btnTemp.titleLabel.text intValue] :[[[arrDatabaseCart objectAtIndex:tagOfClickedButton] valueForKey:@"id"] intValue] :[[arrDatabaseCart objectAtIndex:tagOfClickedButton] valueForKey:@"pOptionId"] ];
 	
 	arrDatabaseCart = [[SqlQuery shared]getShoppingCartProductIDs:NO];
 	UILabel *lblTemp = (UILabel *)[tableView viewWithTag:iTagOfCurrentQuantityLabel];
@@ -1942,11 +1961,12 @@ static int kAnimationType;
     // It will be again calculated in viewForFooterInSection
 	mainTotal = 0.0f;
     tableView.delegate=self;
-    _isEditCommit=YES;
+    _isEditCommit=NO;
 	[tableView reloadData];
     
-	
 }
+//
+
 #pragma mark Picker View Delegates method
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)thePickerView
@@ -1992,6 +2012,9 @@ static int kAnimationType;
             [lblTemp setText:@"0"];
         }
 	}
+    // Sa Vo - tnlq - [03/06/2014]
+    [self setValueToRecalculatePrice];
+    //
 }
 
 
@@ -2056,7 +2079,7 @@ static int kAnimationType;
 - (void)hideLoadingBar
 {
 	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc]init];
-    NSTimer *aTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(runScheduledTask) userInfo:nil repeats:NO];
+    NSTimer *aTimer = [NSTimer scheduledTimerWithTimeInterval:0.7 target:self selector:@selector(runScheduledTask) userInfo:nil repeats:NO];
     aTimer=nil;
 	
 	[pool release];
