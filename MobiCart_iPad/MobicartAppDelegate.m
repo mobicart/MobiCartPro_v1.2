@@ -31,7 +31,9 @@
     // Sa Vo - tnlq -- import bugsense v3.4
     [BugSenseController sharedControllerWithBugSenseAPIKey:@"ab88c70d"];
     //
-    
+    // Sa Vo - tnlq - [09/06/2014] - fix bugs problem when orientation
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //
     //Override point for customization after app launch.
     [viewController showSplash];
     [viewController hideSplash];

@@ -64,9 +64,11 @@ BOOL isRegisterClicked;
 								   selector:@selector(hideLoadingView)
 								   userInfo:nil
 									repeats:NO];
-	// Sa Vo - tnlq - 26/05/2014 - fix bug UIPickerView transparent in iOS 7x
+    
+    // Sa Vo - tnlq - 26/05/2014 - fix bug UIPickerView transparent in iOS 7x
     [[UIPickerView appearance] setBackgroundColor:[UIColor whiteColor]];
     //
+	
 }
 
 -(void)hideLoadingView
@@ -316,7 +318,6 @@ BOOL isRegisterClicked;
         [GlobalPrefrences setIsEditMode:YES];
 		[btnEdit setTitle:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.shoppingcart.done"] forState:UIControlStateNormal];
 		[tableView setEditing:YES animated:YES];
-		
 	}
 	else if([btnEdit.titleLabel.text isEqualToString: [[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.shoppingcart.done"]])
     {
@@ -386,8 +387,9 @@ BOOL isRegisterClicked;
     [tblCountries reloadData];
     [tblStates reloadData];
     viewFooter.frame=CGRectMake(25, tableView.frame.size.height+tableView.frame.origin.x+30, 480, 500);
-    
-    [tableView reloadData];
+    // Sa Vo - tnlq - [16/06/2014] - fix bug delete not show
+    //    [tableView reloadData];
+    //
 	[self viewForFooter];
 }
 -(void)reloadMe
@@ -575,9 +577,7 @@ BOOL isRegisterClicked;
 -(void)getStatesTable:(id)sender
 {
 	[tblCountries setHidden:YES];
-	
 	tblStates.hidden = !tblStates.hidden;
-	
 }
 
 #pragma mark createTableView
@@ -1032,7 +1032,7 @@ BOOL isRegisterClicked;
 
 - (NSInteger) tableView:(UITableView*) _tableView numberOfRowsInSection:(NSInteger) section
 {
-	// Sa Vo - tnlq - [03/06/2014]
+    // Sa Vo - tnlq - [03/06/2014]
     // recalcuate height of table
 	if(_tableView == tblCountries) {
         int i = [interDict count];
@@ -1123,22 +1123,21 @@ BOOL isRegisterClicked;
 		return [arrShoppingCart count];
     }
     //
-
 	
 }
 
 
 - (UITableViewCell*) tableView:(UITableView*)tableview cellForRowAtIndexPath:(NSIndexPath*) indexPath
 {
+    
 	NSString *SimpleTableIdentifier = [NSString stringWithFormat:@"SimpleTableIdentifier%d", indexPath.row];
 	TableViewCell_Common *cell= (TableViewCell_Common *)[tableview dequeueReusableCellWithIdentifier:SimpleTableIdentifier];
     if(tableview == tblCountries)
     {
+		NSDictionary *dictTemp = [interDict objectAtIndex:indexPath.row];
 		// Sa Vo - tnlq - [03/06/2014]
         // remove code reset table frame here
         //
-		NSDictionary *dictTemp = [interDict objectAtIndex:indexPath.row];
-		
 		if(cell==nil)
 		{
 			cell =[[[TableViewCell_Common alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier]autorelease];
@@ -1151,17 +1150,24 @@ BOOL isRegisterClicked;
 	}
 	else if(tableview==tblStates)
 	{
-		// Sa Vo - tnlq - [03/06/2014]
+        // Sa Vo - tnlq - [03/06/2014]
         // remove code reset table frame here
-        //		if(cell==nil)
+        //
+        if(cell==nil)
 		{
 			cell = [[[TableViewCell_Common alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier]autorelease];
 		}
 		[cell setBackgroundColor:[UIColor whiteColor]];
-		cell.textLabel.font = [UIFont systemFontOfSize:13.0];
-		cell.textLabel.text = [[arrStates valueForKey:@"sState"]objectAtIndex:indexPath.row];
-		[cell.textLabel setTextAlignment:UITextAlignmentCenter];
-		
+        
+        if (indexPath.row<arrStates.count) {
+            cell.textLabel.font = [UIFont systemFontOfSize:13.0];
+            NSString *stateName = [[arrStates valueForKey:@"sState"]objectAtIndex:indexPath.row];
+            cell.textLabel.text = stateName;
+            //		cell.textLabel.text = [[arrStates valueForKey:@"sState"]objectAtIndex:indexPath.row];
+            [cell.textLabel setTextAlignment:UITextAlignmentCenter];
+            
+        }
+        
 	}
 	else if (tableview==tableView)
 	{
@@ -1349,7 +1355,7 @@ BOOL isRegisterClicked;
 			[btnQuantity addTarget:self action:@selector(btnQuantity_Clicked:) forControlEvents:UIControlEventTouchUpInside];
 			[cell addSubview:btnQuantity];
 			
-
+            
 			NSDictionary *dictTemp=[arrShoppingCart objectAtIndex:indexPath.row];
 			NSArray  *arrImagesUrls = [dictTemp objectForKey:@"productImages"];
 			
@@ -1422,11 +1428,9 @@ BOOL isRegisterClicked;
     UIButton *btnQuantity_Temp = (UIButton *)[cell viewWithTag:[[NSString stringWithFormat:@"%d0%d",indexPath.row+1, indexPath.row+1] intValue]];
     
     ([tableView isEditing])?(btnQuantity_Temp.hidden = FALSE):(btnQuantity_Temp.hidden = TRUE);
+    
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
-	
-	
-	
 	return  cell;
     
 }
@@ -1478,9 +1482,11 @@ BOOL isRegisterClicked;
 			dictTaxAndShippingDetails=nil;
 		}
 		dictTaxAndShippingDetails = [ServerAPI fetchTaxShippingDetails:countryID:stateID:iCurrentStoreId];
-		[tblStates reloadData];
         _isEditCommit=NO;
-		[tableView reloadData];
+        [tblStates reloadData];
+        // Sa Vo - tnlq - [16/06/2014] - fix bug delete button not show
+        //		[tableView reloadData];
+        //
 		[self viewForFooter];
 	}
 	else if(tableview==tblStates)
@@ -1490,7 +1496,6 @@ BOOL isRegisterClicked;
 		stateID=[[[arrStates valueForKey:@"stateId"]objectAtIndex:indexPath.row]intValue];
 		if(dictTaxAndShippingDetails)
 		{
-			
 			[dictTaxAndShippingDetails release];
 			dictTaxAndShippingDetails=nil;
 		}
@@ -1498,7 +1503,9 @@ BOOL isRegisterClicked;
 		[tblStates setHidden:YES];
 		[lblStateName setText:[[arrStates valueForKey:@"sState"]objectAtIndex:indexPath.row]];
         _isEditCommit=NO;
-		[tableView reloadData];
+        // Sa Vo - tnlq - [16/06/2014] - fix bug delete button not show
+        //		[tableView reloadData];
+        //
 		[self viewForFooter];
 	}
 }
@@ -1521,16 +1528,15 @@ BOOL isRegisterClicked;
 		[[tblViewCell viewWithTag:[[NSString stringWithFormat:@"9900%d0%d",indexPath.row+1,indexPath.row+1] intValue]]setBackgroundColor:[UIColor whiteColor]];
 		[[tblViewCell viewWithTag: [[NSString stringWithFormat:@"9900%d0%d",indexPath.row+1,indexPath.row+1] intValue]]setHidden:NO];
 	}
+    
+    UIButton *btnQuantity_Temp = (UIButton *)[tblViewCell viewWithTag:[[NSString stringWithFormat:@"%d0%d",indexPath.row+1, indexPath.row+1] intValue]];
+    
+    ([tableView isEditing])?(btnQuantity_Temp.hidden = FALSE):(btnQuantity_Temp.hidden = TRUE);
 	
 	
 	return [tableView isEditing];
 }
 
-
-- (void)willTransitionToState:(UITableViewCellStateMask)state
-{
-	
-}
 
 static int kAnimationType;
 - (void)tableView:(UITableView *)_tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1652,7 +1658,12 @@ static int kAnimationType;
 }
 -(void)btnQuantity_Clicked:(id)sender
 {
-	
+    // Sa Vo - tnlq - [09/06/2014]
+    NSLog(@"%@", pickerViewQuantity);
+    if (pickerViewQuantity != nil) {
+        return;
+    }
+    //
 	iTagOfCurrentQuantityBtn=[sender tag];
 	
 	iTagOfCurrentQuantityLabel = [[NSString stringWithFormat:@"99%d",[sender tag]] intValue];
@@ -1766,7 +1777,6 @@ static int kAnimationType;
 					
 					
 				}
-				//NSLog(@"%d", minQuantityCheck[count]);
 				
 			}
 			
@@ -1806,7 +1816,6 @@ static int kAnimationType;
 		[arrQuantity addObject:[NSString stringWithFormat:@"%d",i+1]];
 	}
     
-    
     // Sa Vo - tnlq - 26/05/2014 - reset pickerViewQuantity position to avoid ovalap with toolbar
     pickerViewQuantity = [[UIPickerView alloc]initWithFrame:CGRectMake( 50, 504, 400, 200.0)];
     //
@@ -1816,7 +1825,7 @@ static int kAnimationType;
     
 	[pickerViewQuantity setShowsSelectionIndicator:YES];
     
-   	    
+    
 	[contentView addSubview:pickerViewQuantity];
 	[contentView bringSubviewToFront:pickerViewQuantity];
     
@@ -1829,7 +1838,6 @@ static int kAnimationType;
 			[btnTemp setTitle:[arrQuantity objectAtIndex:0] forState:UIControlStateNormal];
 		else
 			[btnTemp setTitle:@"0" forState:UIControlStateNormal];
-		
 	}
 	
 	if([lblTemp isKindOfClass:[UILabel class]])
@@ -1857,7 +1865,9 @@ static int kAnimationType;
 	
 	[toolbarForPicker setItems:barItems animated:YES];
 	[toolbarForPicker setTag:5656];
-//    btnTemp.enabled=FALSE;
+    // Sa Vo - thainlq - [16/06/2014] - fix bug don't change quantity
+    //    btnTemp.enabled=FALSE;
+    //
 	[contentView addSubview:toolbarForPicker];
 	[barItems release];
 }
@@ -1878,14 +1888,17 @@ static int kAnimationType;
         pickerViewQuantity = nil;
 	}
 	UIButton *btnTemp = (UIButton *) [tableView viewWithTag:iTagOfCurrentQuantityBtn];
-//    btnTemp.enabled=TRUE;
+    // Sa Vo - thainlq - [16/06/2014] - fix bug don't change quantity
+    //    btnTemp.enabled=TRUE;
+    //
 	[[SqlQuery shared] updateTblShoppingCart:[btnTemp.titleLabel.text intValue] :[[[arrDatabaseCart objectAtIndex:(iTagOfCurrentQuantityBtn%10)-1] valueForKey:@"id"] intValue] :[[arrDatabaseCart objectAtIndex:(iTagOfCurrentQuantityBtn%10)-1] valueForKey:@"pOptionId"] ];
-	
+    
 	arrDatabaseCart = [[SqlQuery shared]getShoppingCartProductIDs:NO];
 	UILabel *lblTemp = (UILabel *)[tableView viewWithTag:iTagOfCurrentQuantityLabel];
 	lblTemp.text = btnTemp.titleLabel.text;
-    _isEditCommit=YES;
-    [tableView reloadData];
+    //    _isEditCommit=YES;
+    // Sa Vo - tnlq - [16/06/2014] - fix bug delete button not show
+    //    [tableView reloadData];
 	[self viewForFooter];
 }
 
@@ -1920,26 +1933,27 @@ static int kAnimationType;
 	UILabel *lblTemp = (UILabel *)[tableView viewWithTag:iTagOfCurrentQuantityLabel];
     selectedQuantity=[[arrQuantity objectAtIndex:row]intValue];
 	isLoadingTableFooter2ndTime=NO;
-	
+    
 	
 	if([btnTemp isKindOfClass:[UIButton class]])
 	{
 		if([arrQuantity count]>=row)
         {
-            
 			[btnTemp setTitle:[arrQuantity objectAtIndex:row] forState:UIControlStateNormal];
         }
-		else
+		else {
 			[btnTemp setTitle:@"1" forState:UIControlStateNormal];
-		
+		}
 	}
 	
 	if([lblTemp isKindOfClass:[UILabel class]])
 	{
-		if([arrQuantity count]>=row)
+		if([arrQuantity count]>=row) {
 			lblTemp.text =[arrQuantity objectAtIndex:row];
-		else
+        }
+        else {
 			[lblTemp setText:@"1"];
+        }
 	}
 	
 	
