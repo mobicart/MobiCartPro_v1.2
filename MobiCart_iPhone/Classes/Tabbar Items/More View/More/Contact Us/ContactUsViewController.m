@@ -291,17 +291,20 @@ extern int controllersCount;
         
         SBJSON *_JSONParser=[[[SBJSON alloc]init] autorelease];
         NSDictionary *dictJson = (NSDictionary*)[_JSONParser objectWithString:result error:nil];
-         NSDictionary *locationDict = [[[[dictJson objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
-        longitude = [[locationDict objectForKey:@"lng"] doubleValue];
-        latitude = [[locationDict objectForKey:@"lat"] doubleValue];
-        
-		CLLocationCoordinate2D location;
-		location.latitude = latitude;
-		location.longitude = longitude;
-		
-		
-		coord.latitude = latitude;
-		coord.longitude = longitude;
+        // Sa Vo - tnlq - fix bug crash when failed to received map location
+        if (dictJson != nil && [[dictJson objectForKey:@"results"] objectAtIndex:0] != nil) {
+            NSDictionary *locationDict = [[[[dictJson objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
+            longitude = [[locationDict objectForKey:@"lng"] doubleValue];
+            latitude = [[locationDict objectForKey:@"lat"] doubleValue];
+            
+            CLLocationCoordinate2D location;
+            location.latitude = latitude;
+            location.longitude = longitude;
+            
+            
+            coord.latitude = latitude;
+            coord.longitude = longitude;
+        }
 	}
 	
 	else
