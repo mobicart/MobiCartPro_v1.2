@@ -277,11 +277,10 @@ extern int controllersCount;
 
 #pragma mark - Address Locator
 - (void)addressLocation {
-	NSString *google_key = @"ABQIAAAA0lbZAqHh-vHS7WCn1s8sFhSXNnz9Mc3EzpX9jxA7H0PRhkjvWRQFLP11Ocnm_ptoZlq5PxCc-3CtJw";
-	
-	if ((![dictUserDetails isEqual:[NSNull null]]) && (dictUserDetails !=nil))
-	{
-		NSString *strMerchantAddress = [NSString stringWithFormat:@"%@,%@,%@,%@",[dictUserDetails objectForKey:@"sAddress"],[dictUserDetails objectForKey:@"sCity"],[dictUserDetails objectForKey:@"sState"],[dictUserDetails objectForKey:@"sCountry"]];
+    NSString *google_key = @"ABQIAAAA0lbZAqHh-vHS7WCn1s8sFhSXNnz9Mc3EzpX9jxA7H0PRhkjvWRQFLP11Ocnm_ptoZlq5PxCc-3CtJw";
+    
+    @try {
+        NSString *strMerchantAddress = [NSString stringWithFormat:@"%@,%@,%@,%@",[dictUserDetails objectForKey:@"sAddress"],[dictUserDetails objectForKey:@"sCity"],[dictUserDetails objectForKey:@"sState"],[dictUserDetails objectForKey:@"sCountry"]];
         //Sa Vo fix bug google map doesn't display address exactly
         
         double latitude = 0, longitude = 0;
@@ -292,27 +291,23 @@ extern int controllersCount;
         SBJSON *_JSONParser=[[[SBJSON alloc]init] autorelease];
         NSDictionary *dictJson = (NSDictionary*)[_JSONParser objectWithString:result error:nil];
         // Sa Vo - tnlq - fix bug crash when failed to received map location
-        if (dictJson != nil && [[dictJson objectForKey:@"results"] objectAtIndex:0] != nil) {
-            NSDictionary *locationDict = [[[[dictJson objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
-            longitude = [[locationDict objectForKey:@"lng"] doubleValue];
-            latitude = [[locationDict objectForKey:@"lat"] doubleValue];
-            
-            CLLocationCoordinate2D location;
-            location.latitude = latitude;
-            location.longitude = longitude;
-            
-            
-            coord.latitude = latitude;
-            coord.longitude = longitude;
-        }
-	}
+        
+        NSDictionary *locationDict = [[[[dictJson objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
+        longitude = [[locationDict objectForKey:@"lng"] doubleValue];
+        latitude = [[locationDict objectForKey:@"lat"] doubleValue];
+        
+        CLLocationCoordinate2D location;
+        location.latitude = latitude;
+        location.longitude = longitude;
+        
+        
+        coord.latitude = latitude;
+        coord.longitude = longitude;
+    } @catch (NSException *e) {
+        NSLOg(@"ContactUs - addressLocation: %@", e);
+    }
 	
-	else
-	{
-		
-	}
 }
-
 - (void)showLoadingbar
 {
 	if (!loadingActionSheet1.superview)
