@@ -584,7 +584,16 @@ iProductSingleton *productObj;
     
      NSString *string = [NSString stringWithFormat:@"<html><body text=\"%@\"><span style=\"font-family: %@; font-size: %i\">%@</span></body></html>",self.hexColor,@"Helvetica",13,htmlString];
     
-    UIWebView *wvDescriptionDetails = [[UIWebView alloc] initWithFrame:CGRectMake(10,185, 300, 29)];
+    //Sa Vo fix bug Add to cart button overlap description when there is option dropbox
+    
+    float originYWebViewY = 185;
+    if (optionBtn[0].hidden==NO)
+    {
+        originYWebViewY = CGRectGetMaxY(addToCartBtn.frame);
+    }
+    
+    UIWebView *wvDescriptionDetails = [[UIWebView alloc] initWithFrame:CGRectMake(10,originYWebViewY, 300, 29)];
+
     [wvDescriptionDetails setBackgroundColor:[UIColor clearColor]];
     [wvDescriptionDetails setOpaque:NO];
     [wvDescriptionDetails loadHTMLString:string baseURL:nil];
@@ -637,11 +646,11 @@ iProductSingleton *productObj;
 	imgTimer = [NSTimer scheduledTimerWithTimeInterval:0.0 target:self selector:@selector(CheckImageLoading) userInfo:nil repeats:YES];
 	
 	NSString *strText=[NSString stringWithFormat:@"%@",[dicProduct valueForKey:@"sName"]];
-	CGSize size=[strText sizeWithFont:[UIFont fontWithName:@"Helvetica-Bold" size :16] constrainedToSize:CGSizeMake(160,500) lineBreakMode:UILineBreakModeWordWrap];
-	// Sa Vo - tnlq - 27/05/2014 - get height of multiline text in iOS 7
+    CGSize size=[strText sizeWithFont:[UIFont fontWithName:@"Helvetica-Bold" size :16] constrainedToSize:CGSizeMake(160,500) lineBreakMode:UILineBreakModeWordWrap];
+    // Sa Vo - tnlq - 27/05/2014 - get height of multiline text in iOS 7
 	int yName=ceilf(size.height);
     //
-    
+	
     if (yName>40)
     {
         yName=40;
@@ -734,7 +743,6 @@ iProductSingleton *productObj;
             
             //UIImageView *imgCutLine = [[UIImageView alloc]initWithFrame:CGRectMake(150,lblProductPrice.frame.origin.y+lblProductPrice.frame.size.height/2, sizeDiscount.width+23,1)];
             [imgCutLine setBackgroundColor:_savedPreferences.labelColor];
-            
             //[imgCutLine setImage:[UIImage imageNamed:@"cut_line.png"]];
 			[contentScrollView addSubview:imgCutLine];
 			[imgCutLine release];
@@ -818,7 +826,9 @@ iProductSingleton *productObj;
 	[optionBtn[0] addTarget:self action:@selector(createTableView:) forControlEvents:UIControlEventTouchUpInside];
 	[contentScrollView addSubview:optionBtn[0]];
 	
-	lblOption[0] = [[UILabel alloc]initWithFrame:CGRectMake(160,imgStock.frame.origin.y+imgStock.frame.size.height+15,80, 29)];
+	//Sa Vo fix bug text of Option Dropdown box not display full
+    //lblOption[0] = [[UILabel alloc]initWithFrame:CGRectMake(160,imgStock.frame.origin.y+imgStock.frame.size.height+15,80, 29)];
+    lblOption[0] = [[UILabel alloc]initWithFrame:CGRectMake(160,imgStock.frame.origin.y+imgStock.frame.size.height+15,115, 29)];
     
 	[lblOption[0] setTextAlignment:UITextAlignmentCenter];
 	[lblOption[0] setBackgroundColor:[UIColor clearColor]];

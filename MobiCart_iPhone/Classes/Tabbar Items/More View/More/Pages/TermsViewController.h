@@ -17,5 +17,6 @@
 	UIScrollView *contentScrollView;
     
     }
+- (void)hideLoadingBar;
 
 @end

@@ -122,13 +122,13 @@ extern BOOL isWishlistLogin;
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-    
+	
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-	
+    
 	isWishlist_TableStyle=YES;
 	
 	for (UIView *view in [self.navigationController.navigationBar subviews]) 

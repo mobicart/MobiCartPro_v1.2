@@ -1142,8 +1142,9 @@ extern BOOL isNewsSection;
 -(void)hideIndicator
 
 {
-	
-	if (loadingActionSheet1.superview)
+	// Sa Vo - NhanTVT - [17/06/2014] -
+    // Fix issue related to can't dimiss loading indicator on iOS 8
+	if (loadingActionSheet1.visible)
     {
         [loadingActionSheet1 dismissWithClickedButtonIndex:0 animated:YES];
         [loadingActionSheet1 release];

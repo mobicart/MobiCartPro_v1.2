@@ -15,13 +15,13 @@ BOOL isCheckForCheckout;
 @interface ShoppingCartViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate>
 {
 	UITableView *tableView,*tblStates,*tblCountries;
-    
+
 	NSMutableArray *arrShoppingCart, *arrDatabaseCart;
 	UILabel *lblSubTotalFooter;
 	UILabel *lblTax;
-    
+
 	UILabel *lblGrandTotalFooter;
-    
+
 	UILabel *lblCountryName,*lblStateName;
 	UIView *contentView;
 	UILabel *lblShippingCharges,*lblShippingTax;
@@ -49,6 +49,17 @@ BOOL isCheckForCheckout;
 	NSString *strEditButtonTitle;
 	NSString *strDoneButtonTitle;
     CustomImageView * cellProductImageView;
+    
+    // Sa Vo - NhanTVT -[18/06/2014] -
+    // Fix issue related to UIPickerView does not displayed on iOS 8
+    UIView *pickerViewContainer;
+    NSInteger originalYCoor;
+    NSInteger animatedYCoor;
+    BOOL isPickerViewShown;
+    
+    // Sa Vo - NhanTVT - [20/06/2014] -
+    // Fix issue wrong calculate Sub Total for each products
+    UITableViewCell *editingCell;
 	
 }
 @property(readwrite)int isEditCommit;

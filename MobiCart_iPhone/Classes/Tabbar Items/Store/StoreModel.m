@@ -88,6 +88,7 @@ BOOL isTryingSecondTime;
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+
     
 	// Do any additional setup after loading the view.
 }

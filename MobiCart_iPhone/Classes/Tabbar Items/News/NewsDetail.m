@@ -17,13 +17,13 @@ extern BOOL isTwiiterSelected;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"updateLabelNews" object:nil];
-    
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+    
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"updateLabelNews" object:nil];
 }
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
@@ -31,6 +31,7 @@ extern BOOL isTwiiterSelected;
 {
 	self.navigationItem.titleView = [GlobalPreferences createLogoImage];
 	
+    
 	UIView *contentView = [[UIView alloc]initWithFrame:[GlobalPreferences setDimensionsAsPerScreenSize:CGRectMake(0,0,320,392) chageHieght:YES]];
 	contentView.backgroundColor=[UIColor colorWithRed:200.0/256 green:200.0/256 blue:200.0/256 alpha:1];
 	[GlobalPreferences setGradientEffectOnView:contentView :[UIColor whiteColor] :contentView.backgroundColor];
@@ -181,8 +182,7 @@ extern BOOL isTwiiterSelected;
 		[adateComponents setDay:[[dateComponenentsTemp objectAtIndex:2] integerValue]];
 		[adateComponents setMonth:monCom];
 		NSDate *date = [aCalendar dateFromComponents:adateComponents];
-		//DLog(@"%@",date);
-		//	NSDate *date = [NSDate date];
+		
 		NSDateFormatter *prefixDateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 		[prefixDateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
 		[prefixDateFormatter setDateFormat:@"d"];
@@ -300,10 +300,7 @@ extern BOOL isTwiiterSelected;
 		{
 			monCom=12;
 		}
-		
-		
-		
-		
+			
 		[adateComponents setYear:[[dateComponenentsTemp objectAtIndex:3] integerValue]];
 		[adateComponents setDay:[[dateComponenentsTemp objectAtIndex:1] integerValue]];
 		[adateComponents setMonth:monCom];
@@ -377,7 +374,7 @@ extern BOOL isTwiiterSelected;
     frame.size.height = size.height;
     [lblNewsDetail setFrame:frame];
     
-	[scrollView setContentSize:CGSizeMake( 320, lblNewsDetail.frame.origin.y+lblNewsDetail.frame.size.height+10)];
+	[scrollView setContentSize:CGSizeMake(320, lblNewsDetail.frame.origin.y+lblNewsDetail.frame.size.height+10)];
     
 	[lblNewsDate release];
 	[lblNewsTitle release];

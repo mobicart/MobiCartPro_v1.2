@@ -22,7 +22,7 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    
+
 	if(yValue)
 		[yValue removeAllObjects];
 	

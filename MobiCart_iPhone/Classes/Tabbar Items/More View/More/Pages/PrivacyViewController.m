@@ -292,7 +292,9 @@ extern int controllersCount;
 - (void)runScheduledTask {
     // Do whatever u want
     
-    if (loadingActionSheet1.superview)
+    // Sa Vo - NhanTVT - [20/06/2014] -
+    // Fix issue related to can't dimiss loading indicator on iOS 8
+    if (loadingActionSheet1.visible)
     {
         [loadingActionSheet1 dismissWithClickedButtonIndex:0 animated:YES];
         [loadingActionSheet1 release];

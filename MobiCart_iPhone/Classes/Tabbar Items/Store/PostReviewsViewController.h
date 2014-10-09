@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 BOOL isPostReviews;
-@interface PostReviewsViewController : UIViewController <UITextViewDelegate>{
+@interface PostReviewsViewController : UIViewController <UITextViewDelegate,UIAlertViewDelegate>{
 
 	int productId;
 	int previousTag;

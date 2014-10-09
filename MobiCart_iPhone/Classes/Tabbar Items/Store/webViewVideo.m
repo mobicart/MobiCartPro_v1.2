@@ -36,13 +36,13 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"updateLabelStore" object:nil];
-    
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"updateLabelStore" object:nil];
 }
 
 - (UIWebView *)embedYouTube:(NSString *)urlString frame:(CGRect)frame {
@@ -53,7 +53,6 @@
     }
     else
     {
-        
         if([urlString rangeOfString:@"&"].location==NSNotFound)
         {
             NSLog(@"not found");

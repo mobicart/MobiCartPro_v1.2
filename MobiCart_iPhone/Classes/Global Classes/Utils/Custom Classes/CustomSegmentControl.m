@@ -20,11 +20,12 @@ extern BOOL isOnlyNews;
         // Initialization code
 		offColor = [offcolor retain];
 		onColor = [oncolor retain];
-		hasSetSelectedIndexOnce = NO;
+		hasSetSelectedIndexOnce = YES;
 		
+        [self setSelectedSegmentIndex:0];
+
 		[self setInitialMode];
         
-		[self setSelectedSegmentIndex:0];  
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setToggleHighlightColors) name:@"updateSegmentController" object:nil];
     }

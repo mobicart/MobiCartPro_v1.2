@@ -51,6 +51,7 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+
     
     self.navigationItem.titleView = [GlobalPreferences createLogoImage];
     

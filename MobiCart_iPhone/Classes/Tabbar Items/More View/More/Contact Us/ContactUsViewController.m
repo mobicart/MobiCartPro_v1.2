@@ -31,6 +31,7 @@ extern int controllersCount;
 - (void)addCartButtonAndLabel
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
 	
     //Adding Shopping Cart on the Navigation Bar
 	MobiCartStart *as=[[MobiCartStart alloc]init];
@@ -277,36 +278,45 @@ extern int controllersCount;
 
 #pragma mark - Address Locator
 - (void)addressLocation {
-    NSString *google_key = @"ABQIAAAA0lbZAqHh-vHS7WCn1s8sFhSXNnz9Mc3EzpX9jxA7H0PRhkjvWRQFLP11Ocnm_ptoZlq5PxCc-3CtJw";
-    
-    @try {
-        NSString *strMerchantAddress = [NSString stringWithFormat:@"%@,%@,%@,%@",[dictUserDetails objectForKey:@"sAddress"],[dictUserDetails objectForKey:@"sCity"],[dictUserDetails objectForKey:@"sState"],[dictUserDetails objectForKey:@"sCountry"]];
-        //Sa Vo fix bug google map doesn't display address exactly
-        
-        double latitude = 0, longitude = 0;
-        NSString *esc_addr =  [strMerchantAddress stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *req = [NSString stringWithFormat:@"http://maps.google.com/maps/api/geocode/json?sensor=false&address=%@", esc_addr];
-        NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:req] encoding:NSUTF8StringEncoding error:NULL];
-        
-        SBJSON *_JSONParser=[[[SBJSON alloc]init] autorelease];
-        NSDictionary *dictJson = (NSDictionary*)[_JSONParser objectWithString:result error:nil];
-        // Sa Vo - tnlq - fix bug crash when failed to received map location
-        
-        NSDictionary *locationDict = [[[[dictJson objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
-        longitude = [[locationDict objectForKey:@"lng"] doubleValue];
-        latitude = [[locationDict objectForKey:@"lat"] doubleValue];
-        
-        CLLocationCoordinate2D location;
-        location.latitude = latitude;
-        location.longitude = longitude;
-        
-        
-        coord.latitude = latitude;
-        coord.longitude = longitude;
-    } @catch (NSException *e) {
-    }
+	NSString *google_key = @"ABQIAAAA0lbZAqHh-vHS7WCn1s8sFhSXNnz9Mc3EzpX9jxA7H0PRhkjvWRQFLP11Ocnm_ptoZlq5PxCc-3CtJw";
 	
+	if ((![dictUserDetails isEqual:[NSNull null]]) && (dictUserDetails !=nil))
+	{
+        @try {
+            NSString *strMerchantAddress = [NSString stringWithFormat:@"%@,%@,%@,%@",[dictUserDetails objectForKey:@"sAddress"],[dictUserDetails objectForKey:@"sCity"],[dictUserDetails objectForKey:@"sState"],[dictUserDetails objectForKey:@"sCountry"]];
+            //Sa Vo fix bug google map doesn't display address exactly
+            
+            double latitude = 0, longitude = 0;
+            NSString *esc_addr =  [strMerchantAddress stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSString *req = [NSString stringWithFormat:@"http://maps.google.com/maps/api/geocode/json?sensor=false&address=%@", esc_addr];
+            NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:req] encoding:NSUTF8StringEncoding error:NULL];
+            
+            SBJSON *_JSONParser=[[[SBJSON alloc]init] autorelease];
+            NSDictionary *dictJson = (NSDictionary*)[_JSONParser objectWithString:result error:nil];
+            // Sa Vo - tnlq - [18/07/2014] - fix bug crash when load location
+//            if ([[dictJson objectForKey:@"results"] objectAtIndex: 0] != nil) {
+                NSDictionary *locationDict = [[[[dictJson objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
+                longitude = [[locationDict objectForKey:@"lng"] doubleValue];
+                latitude = [[locationDict objectForKey:@"lat"] doubleValue];
+                
+                CLLocationCoordinate2D location;
+                location.latitude = latitude;
+                location.longitude = longitude;
+                
+                
+                coord.latitude = latitude;
+                coord.longitude = longitude;
+        } @catch (NSException *e) {
+            NSLog(@"LocationAddress error: %@" ,e);
+        }
+	}
+	
+	else
+	{
+		
+	}
 }
+
 - (void)showLoadingbar
 {
 	if (!loadingActionSheet1.superview)
@@ -333,7 +343,9 @@ extern int controllersCount;
 - (void)runScheduledTask {
     // Do whatever u want
     
-    if (loadingActionSheet1.superview)
+    // Sa Vo - NhanTVT - [20/06/2014] -
+    // Fix issue related to can't dimiss loading indicator on iOS 8
+    if (loadingActionSheet1.visible)
     {
         [loadingActionSheet1 dismissWithClickedButtonIndex:0 animated:YES];
         [loadingActionSheet1 release];

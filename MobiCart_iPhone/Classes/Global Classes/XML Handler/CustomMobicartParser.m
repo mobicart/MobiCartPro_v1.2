@@ -34,6 +34,7 @@
     {
         stories = [[NSMutableArray alloc] init];
     }
+    /*
 	// Set self as the delegate of the parser so that it will receive the parser delegate methods callbacks.
 	[super setDelegate:self];
 	
@@ -43,6 +44,14 @@
 	[super setShouldResolveExternalEntities:NO];
 	
 	[super parse];
+     */
+    self.delegate = self;
+    
+    [self setShouldProcessNamespaces:NO];
+	[self setShouldReportNamespacePrefixes:NO];
+	[self setShouldResolveExternalEntities:NO];
+	
+	[self parse];
 	
 
 }

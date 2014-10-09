@@ -36,7 +36,8 @@ BOOL isAccount;
 }	
 
 - (void)viewWillAppear:(BOOL)animated 
-{ 
+{
+    
 	[super viewWillAppear:animated];
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
@@ -44,7 +45,7 @@ BOOL isAccount;
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-	
+    
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateShoppingLabel) name:@"updateLabelAccount" object:nil];

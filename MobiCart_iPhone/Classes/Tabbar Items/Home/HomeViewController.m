@@ -50,11 +50,10 @@ BOOL isPromotionalItem;
 	NSInvocationOperation *operationFetchMainData = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(fetchDataFromServer) object:nil];
 	[GlobalPreferences addToOpertaionQueue:operationFetchMainData];
 	[operationFetchMainData release];
-    //[operationFetchSettings release];
+
     
     
 	
-    //  [self performSelectorOnMainThread:@selector(updateControls) withObject:nil waitUntilDone:NO];
     [self performSelector:@selector(createBasicControls) withObject:nil];
 }
 
@@ -122,6 +121,7 @@ BOOL isPromotionalItem;
 	
 	//_searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(11,0,309,44)];
     _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,0,320,44)];
+    
     [GlobalPreferences setSearchBarDefaultSettings:_searchBar];
 	[_searchBar setDelegate:self];
 	[contentView addSubview:_searchBar];
@@ -148,11 +148,15 @@ BOOL isPromotionalItem;
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
+    
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
+        
+       
     }
+    
     
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignSearchBar) name:@"resignSearchBarFromHome" object:nil];
 	
@@ -315,7 +319,7 @@ BOOL isPromotionalItem;
 		}
 	}
 	
-	//NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
     
     // Fetching Featured Products Details From Mobi-cart Server
     dictFeaturedProducts = [ServerAPI fetchFeaturedproducts: countryID :stateID :iCurrentAppId];
@@ -569,10 +573,10 @@ BOOL isPromotionalItem;
                         [lblPrice[i] setFont:[UIFont boldSystemFontOfSize:9]];
                     }
                 }
-				//[img[i] setContentMode:UIViewContentModeScaleAspectFit];
+				
 				
                 [lblPrice[i] setText:[NSString stringWithFormat:@"%@%0.2f", _savedPreferences.strCurrencySymbol, [ProductModel discountedPrice:dictTemp]]];
-                //	DLog(@"%@%0.2f",_savedPreferences.strCurrencySymbol, [ProductPriceCalculation discountedPrice:dictTemp]);
+               
 				[lblPrice[i] setTextColor:[UIColor whiteColor]];
 				[bottomHorizontalView addSubview:lblPrice[i]];
 				//x+=102;
@@ -627,8 +631,7 @@ BOOL isPromotionalItem;
 {
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"popViewController" object:nil];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"popViewControllerRead" object:nil];
-	
-    //[self showLoadingbar];
+
 	
     isPromotionalItem=YES;
 	int stateID=0,countryID=0;
@@ -796,13 +799,7 @@ BOOL isPromotionalItem;
 		{
             [self performSelector:@selector(sendDataToServer:) withObject:[arrShoppingCart_Queue objectAtIndex:0]];
             
-            /*
-             // Send data to the server, If internet is available now)
-             NSInvocationOperation *operationSendDataToServer= [[NSInvocationOperation alloc]  initWithTarget:self selector:@selector(sendDataToServer:) object:[arrShoppingCart_Queue objectAtIndex:0]];
-             
-             [GlobalPreferences addToOpertaionQueue:operationSendDataToServer];
-             [operationSendDataToServer release];
-             */
+           
 		}
 	}
 }

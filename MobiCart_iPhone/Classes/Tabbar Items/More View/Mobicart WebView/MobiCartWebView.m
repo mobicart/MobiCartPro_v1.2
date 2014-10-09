@@ -28,7 +28,7 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-
+    
 	UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"copyright_logo.png"]];
 	self.navigationItem.titleView = imgView;
 	[imgView release];

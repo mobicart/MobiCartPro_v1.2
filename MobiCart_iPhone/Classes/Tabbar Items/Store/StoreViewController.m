@@ -17,9 +17,9 @@
 @implementation StoreViewController
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil 
 {
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) 
     {
         // Custom initialization
 		[self.tabBarItem setTitle:@"Account"];
@@ -30,13 +30,13 @@
 
 #pragma mark -
 - (void)viewWillAppear:(BOOL)animated
-{
+{ 
 	[super viewWillAppear:animated];
 	
 	categoryCount=0;
     
     isStoreSearch=NO;
-    
+
 	if(isCatogeryEmpty==YES)
     {
         isCatogeryEmpty=NO;
@@ -73,7 +73,7 @@
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
 }
 
-#pragma mark -
+#pragma mark - 
 - (void)updateDataForCurrent_Navigation_And_View_Controller
 {
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];
@@ -86,7 +86,7 @@
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
+- (void)viewDidLoad 
 {
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
@@ -95,7 +95,6 @@
     }
     
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignSearchBar) name:@"resignSearchBarFromStore" object:nil];
-	
 	[GlobalPreferences setCurrentNavigationController:self.navigationController];
 	[super viewDidLoad];
 	
@@ -128,11 +127,11 @@
 	{
 		_searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,0,
 																  320 ,44)];
-		[GlobalPreferences setSearchBarDefaultSettings:_searchBar];
+		[GlobalPreferences setSearchBarDefaultSettings:_searchBar];	
 		[_searchBar setDelegate:self];
 		[_searchBar setTag:1001];
 		[contentView addSubview:_searchBar];
-        
+
 		UIView *viewRemoveLine = [[UIView alloc] initWithFrame:CGRectMake( 0, 43, 320,1)];
 		[viewRemoveLine setBackgroundColor:self.navigationController.navigationBar.tintColor];
 		[self.navigationController.navigationBar addSubview:viewRemoveLine];
@@ -141,7 +140,7 @@
 		[self allocateMemoryToObjects];
 		
 		[self createTableView];
-        
+				
 		UIView *selectDeptView=[[UIView alloc]initWithFrame:CGRectMake(0,44, 320, 28)];
 		[contentView addSubview:selectDeptView];
 		[selectDeptView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"select_dept_bar.png"]]];
@@ -173,42 +172,42 @@
     {
         showArray=[[NSMutableArray alloc]init];
     }
-    
+		
 	if(!showNoArray)
     {
         showNoArray=[[NSMutableArray alloc]init];
     }
-    
+		
 	if(!arrDeptIDs)
     {
         arrDeptIDs = [[NSMutableArray alloc] init];
     }
-    
+		
 	if(!showArray_Searched)
     {
         showArray_Searched=[[NSMutableArray alloc]init];
     }
-    
+		
 	if(!showNoArray_Searched)
     {
         showNoArray_Searched=[[NSMutableArray alloc]init];
     }
-    
+		
 	if(!arrDeptIDs_Searched)
     {
         arrDeptIDs_Searched = [[NSMutableArray alloc] init];
     }
-    
+		
 	if(!arrNumberofProducts)
     {
         arrNumberofProducts=[[NSMutableArray alloc]init];
     }
-    
+		
 	if(!arrNumberofProducts_Search)
     {
         arrNumberofProducts_Search=[[NSMutableArray alloc]init];
     }
-    
+		
 }
 
 BOOL isTryingSecondTime;
@@ -247,7 +246,7 @@ BOOL isTryingSecondTime;
 		else
 		{
 			if (!isTryingSecondTime)
-			{
+			{ 
 				DLog (@"No Data Available for this Store (StoreViewContoller)  --> TRYING AGAIN TO FETCH DATA ");
 				isTryingSecondTime = TRUE;
 				[self fetchDataFromServer];
@@ -258,7 +257,7 @@ BOOL isTryingSecondTime;
             }
 		}
 	}
-	else
+	else 
 	{
 		DLog(@"No Data Returned from server (StoreViewContoller)");
 	}
@@ -268,6 +267,8 @@ BOOL isTryingSecondTime;
 	// Stoping the loading indicator
 	[GlobalPreferences stopLoadingIndicator];
 	[GlobalPreferences performSelector:@selector(dismissLoadingBar_AtBottom)];
+    
+    
 }
 
 - (void)createTableView
@@ -314,13 +315,13 @@ BOOL isTryingSecondTime;
 	NSString *SimpleTableIdentifier = [NSString stringWithFormat:@"SimpleTableIdentifier%d", indexPath.row];
 	UITableViewCell *cell=[tableview dequeueReusableCellWithIdentifier:SimpleTableIdentifier];
     DLog(@"%@",cell);
-	if(cell==nil)
+//	if(cell==nil)
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: SimpleTableIdentifier]autorelease];
 		cell.backgroundColor=cellBackColor;
 		//cell.textLabel.textColor=_savedPreferences.headerColor;
 		//cell.textLabel.font=[UIFont fontWithName:@"Helvetica-Bold" size:16];
-        
+	
 		UIImageView *imgCellBackground=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 55)] autorelease];
 		
         [imgCellBackground setImage:[UIImage imageNamed:@"store_cell_bg.png"]];
@@ -329,73 +330,73 @@ BOOL isTryingSecondTime;
 		
 		//[imgCellBackground release];
         
-        
-        //	[lblQyantity setTag:101010111];
+			
+	//	[lblQyantity setTag:101010111];
      	
 		
 		
-        
-        UILabel *lblTitle=[[UILabel alloc]initWithFrame:CGRectMake(7, 17, 218, 28)];
-        lblTitle.font=[UIFont fontWithName:@"Helvetica-Bold" size:16];
-        lblTitle.textColor=_savedPreferences.headerColor;
-        [lblTitle setBackgroundColor:[UIColor clearColor]];
-        [cell addSubview:lblTitle];
-        UILabel *lblQyantity = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 46, 28)];
-        UIImageView *cellImage =[[UIImageView alloc]initWithFrame:CGRectMake(232, 13, 46, 28)];
-        cellImage.image  = [UIImage imageNamed:@"oval_shape.png"];
-        
-        if ([[showNoArray_Searched objectAtIndex:indexPath.row]intValue]==0)
+	
+	UILabel *lblTitle=[[UILabel alloc]initWithFrame:CGRectMake(7, 17, 218, 28)];
+	lblTitle.font=[UIFont fontWithName:@"Helvetica-Bold" size:16];
+	lblTitle.textColor=_savedPreferences.headerColor;
+	[lblTitle setBackgroundColor:[UIColor clearColor]];
+	[cell addSubview:lblTitle];
+	UILabel *lblQyantity = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 46, 28)];
+	UIImageView *cellImage =[[UIImageView alloc]initWithFrame:CGRectMake(232, 13, 46, 28)];                                 
+	cellImage.image  = [UIImage imageNamed:@"oval_shape.png"];
+	
+	if ([[showNoArray_Searched objectAtIndex:indexPath.row]intValue]==0)
+	{
+		if ([[arrNumberofProducts_Search objectAtIndex:indexPath.row]intValue]>0)
+		{
+			[lblQyantity setText:[NSString stringWithFormat:@"%@", [arrNumberofProducts_Search objectAtIndex:indexPath.row]]];
+		}
+		else
+		{
+			[lblQyantity setText:[NSString stringWithFormat:@"%@", [showNoArray_Searched objectAtIndex:indexPath.row]]];
+		}
+	}
+	else
+	{
+		[lblQyantity setText:[NSString stringWithFormat:@"%@", [showNoArray_Searched objectAtIndex:indexPath.row]]];
+	}
+	[lblQyantity setTextAlignment:UITextAlignmentCenter];
+	[lblQyantity setBackgroundColor:[UIColor clearColor]];
+	[lblQyantity setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13]];
+	lblQyantity.textColor = _savedPreferences.headerColor;        
+	[cell addSubview:cellImage];
+	
+	[cellImage addSubview:lblQyantity];
+	[lblQyantity release];
+	[cellImage release];
+	
+	if ([[showNoArray_Searched objectAtIndex:indexPath.row]intValue]==0)
+	{
+		if ([[arrNumberofProducts_Search objectAtIndex:indexPath.row]intValue]>0)
+		{
+			lblTitle.text=[NSString stringWithFormat:@"%@", [showArray_Searched objectAtIndex:indexPath.row]];
+			//cell.textLabel.text = [NSString stringWithFormat:@"%@", [showArray_Searched objectAtIndex:indexPath.row]];
+		}
+		else
         {
-            if ([[arrNumberofProducts_Search objectAtIndex:indexPath.row]intValue]>0)
-            {
-                [lblQyantity setText:[NSString stringWithFormat:@"%@", [arrNumberofProducts_Search objectAtIndex:indexPath.row]]];
-            }
-            else
-            {
-                [lblQyantity setText:[NSString stringWithFormat:@"%@", [showNoArray_Searched objectAtIndex:indexPath.row]]];
-            }
-        }
-        else
-        {
-            [lblQyantity setText:[NSString stringWithFormat:@"%@", [showNoArray_Searched objectAtIndex:indexPath.row]]];
-        }
-        [lblQyantity setTextAlignment:UITextAlignmentCenter];
-        [lblQyantity setBackgroundColor:[UIColor clearColor]];
-        [lblQyantity setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13]];
-        lblQyantity.textColor = _savedPreferences.headerColor;
-        [cell addSubview:cellImage];
-        
-        [cellImage addSubview:lblQyantity];
-        [lblQyantity release];
-        [cellImage release];
-        
-        if ([[showNoArray_Searched objectAtIndex:indexPath.row]intValue]==0)
-        {
-            if ([[arrNumberofProducts_Search objectAtIndex:indexPath.row]intValue]>0)
-            {
-                lblTitle.text=[NSString stringWithFormat:@"%@", [showArray_Searched objectAtIndex:indexPath.row]];
-                //cell.textLabel.text = [NSString stringWithFormat:@"%@", [showArray_Searched objectAtIndex:indexPath.row]];
-            }
-            else
-            {
-                lblTitle.text=[NSString stringWithFormat:@"%@", [showArray_Searched objectAtIndex:indexPath.row]];
-                //cell.textLabel.text = [NSString stringWithFormat:@"%@", [showArray_Searched objectAtIndex:indexPath.row]];
-            }
-        }
-        else
-        {
-            lblTitle.text=@"";
             lblTitle.text=[NSString stringWithFormat:@"%@", [showArray_Searched objectAtIndex:indexPath.row]];
-            // cell.textLabel.text = [NSString stringWithFormat:@"%@", [showArray_Searched objectAtIndex:indexPath.row]];
+			//cell.textLabel.text = [NSString stringWithFormat:@"%@", [showArray_Searched objectAtIndex:indexPath.row]];
         }
-        [lblTitle release];
-        UIImageView *imgViewCellAcccesory=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow.png"]];
-        [cell setAccessoryView:imgViewCellAcccesory];
-        [imgViewCellAcccesory release];
-        
-        [cell setAccessoryType:UITableViewCellAccessoryNone];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+	}
+	else
+    {  
+        lblTitle.text=@"";
+        lblTitle.text=[NSString stringWithFormat:@"%@", [showArray_Searched objectAtIndex:indexPath.row]];
+       // cell.textLabel.text = [NSString stringWithFormat:@"%@", [showArray_Searched objectAtIndex:indexPath.row]];
     }
+	[lblTitle release];
+	UIImageView *imgViewCellAcccesory=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow.png"]];
+	[cell setAccessoryView:imgViewCellAcccesory];
+	[imgViewCellAcccesory release];
+	
+	[cell setAccessoryType:UITableViewCellAccessoryNone];
+	[cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        }
 	return  cell;
 }
 
@@ -416,12 +417,12 @@ BOOL isTryingSecondTime;
 			[objProducts release];
 		}
 	}
-	else
+	else 
     {
 		CategoryViewController *objCategory = [[CategoryViewController alloc]init];
 		isCatogeryEmpty=NO;
         objCategory.categoryId=0;
-        
+    
 		// Hide keyboard, if visible, when navigating to the next view controller
 		UISearchBar *searchbar = (UISearchBar *)[contentView viewWithTag:1001];
 		if([searchbar isFirstResponder])
@@ -432,27 +433,27 @@ BOOL isTryingSecondTime;
 		[GlobalPreferences setCurrentDepartmentId:[[arrDeptIDs objectAtIndex:indexWhileSearching] integerValue]];
 		
 		[self.navigationController pushViewController:objCategory animated:YES];
-        //	[objCategory release];
+	//	[objCategory release];
 	}
 }
 
 #pragma mark Search Bar Delegates
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
-    searchBar.showsCancelButton = YES;
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar 
+{  
+    searchBar.showsCancelButton = YES;  
 	isStoreSearch=YES;
 	return YES;
-}
+}  
 
-- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
-{
-    searchBar.showsCancelButton = NO;
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar 
+{  
+    searchBar.showsCancelButton = NO;  
 	isStoreSearch=NO;
 	return YES;
-}
+}  
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
+{	
 	[_searchBar resignFirstResponder];
 	isStoreSearch=NO;
 }
@@ -476,7 +477,7 @@ BOOL isTryingSecondTime;
 	[arrNumberofProducts_Search removeAllObjects];
     [tableView reloadData];
 	//[[self.view viewWithTag:101010111] setHidden:YES];
-    //	[[self.view viewWithTag:101010111] removeFromSuperview];
+//	[[self.view viewWithTag:101010111] removeFromSuperview];
 	if ([searchText isEqualToString:@""] || searchText==nil)
 	{
 		[showArray_Searched addObjectsFromArray:showArray];
@@ -506,7 +507,7 @@ BOOL isTryingSecondTime;
 		[pool release];
 	}
 	[tableView reloadData];
-    
+   
 }
 
 // Called when cancel button pressed
@@ -528,14 +529,14 @@ BOOL isTryingSecondTime;
 	{
 		
 	}
-	searchBar.showsCancelButton = NO;
+	searchBar.showsCancelButton = NO; 
 	[searchBar resignFirstResponder];
 	searchBar.text = @"";
 }
 
 #pragma mark -
 #pragma mark Memory Management
-- (void)didReceiveMemoryWarning
+- (void)didReceiveMemoryWarning 
 {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];

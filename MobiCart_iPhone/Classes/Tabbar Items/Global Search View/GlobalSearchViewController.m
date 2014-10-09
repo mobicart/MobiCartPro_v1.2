@@ -217,16 +217,13 @@
 				cell.isTaxbale=NO;
 			}
 		}
-		
-		
-		
-		
+
 		NSArray  *arrImagesUrls = [dictTemp objectForKey:@"productImages"];
 		if (![arrImagesUrls isEqual:[NSNull null]])
 		{
 			if ([arrImagesUrls count]==0)
 			{
-				dataForProductImage =nil; //[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"noImage_S_New" ofType:@"png"]];
+				dataForProductImage =nil;
 			}
 			else
 			{
@@ -236,7 +233,7 @@
 		
 		if((!dataForProductImage) || (![dataForProductImage isKindOfClass:[NSData class]]))
 		{
-			dataForProductImage =nil; //[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"noImage_S_New" ofType:@"png"]];
+			dataForProductImage =nil;
 		}
 		
 		
@@ -249,33 +246,6 @@
 		cell.textLabel.textColor=[UIColor colorWithRed:127.0/256 green:127.0/256 blue:127.0/256 alpha:1];
 		
 		NSString *discount = [NSString stringWithFormat:@"%@", [dictTemp objectForKey:@"fDiscountedPrice"]];
-		
-        /*
-         NSString *tempDiscount;
-         NSString *strTaxTypeLenght=@"";
-         
-         strTaxTypeLenght=[dictTemp objectForKey:@"sTaxType"];
-         
-         if ([strTaxTypeLenght isEqualToString:@"default"])
-         {
-         strTaxTypeLenght=[NSString stringWithFormat:@"%@ %@",_savedPreferences.strCurrencySymbol, [dictTemp objectForKey:@"fPrice"]];
-         }
-         else
-         {
-         strTaxTypeLenght=[NSString stringWithFormat:@"%@%@",_savedPreferences.strCurrencySymbol, [dictTemp objectForKey:@"fPrice"]];
-         }
-         
-         
-         if ([[dictTemp objectForKey:@"bTaxable"]intValue]==1)
-         {
-         tempDiscount =strTaxTypeLenght;
-         }
-         else
-         {
-         tempDiscount = [NSString stringWithFormat:@"%@%@",_savedPreferences.strCurrencySymbol, [dictTemp objectForKey:@"fPrice"]];
-         }
-         */
-		//CGSize size = [tempDiscount sizeWithFont:[UIFont fontWithName:@"Helvetica-Bold" size:13]];
 		
         CGSize size=[[ProductModel productActualPrice:dictTemp] sizeWithFont:[UIFont fontWithName:@"Helvetica-Bold" size:13] constrainedToSize:CGSizeMake(100000,20) lineBreakMode:UILineBreakModeWordWrap];
         
@@ -467,7 +437,7 @@
                 {
                     if ([[dictTemp objectForKey:@"bTaxable"]intValue]==1)
                     {
-                        //[cell setProductName:[dictTemp valueForKey:@"sName"] :[NSString stringWithFormat:@"%@%0.2f %@ ", _savedPreferences.strCurrencySymbol,( [[dictTemp valueForKey:@"fPrice"] floatValue]+[[dictTemp valueForKey:@"fTaxOnFPrice"] floatValue]),strOriginalPrice]:strStatus :[NSString stringWithFormat:@"%@",strFinalProductPrice]:imgProduct];
+                       
                         
                         [cell setProductName:[dictTemp valueForKey:@"sName"] :[ProductModel productActualPrice:dictTemp] :strStatus :[NSString stringWithFormat:@"%@",strFinalProductPrice] :[UIImage imageWithData:dataForProductImage]];
                         
@@ -475,7 +445,7 @@
                     }
                     else
                     {
-                        //[cell setProductName:[dictTemp valueForKey:@"sName"] :[NSString stringWithFormat:@"%@%0.2f ", _savedPreferences.strCurrencySymbol,( [[dictTemp valueForKey:@"fPrice"] floatValue])]:strStatus :[NSString stringWithFormat:@"%@",strFinalProductPrice]:imgProduct];
+                       
                         
                         [cell setProductName:[dictTemp valueForKey:@"sName"] :[ProductModel productActualPrice:dictTemp] :strStatus :[NSString stringWithFormat:@"%@",strFinalProductPrice] :[UIImage imageWithData:dataForProductImage]];
                         

@@ -18,13 +18,14 @@ extern BOOL isOrderLogin;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"updateLabelAccount" 
-                                          object:nil];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+    
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"updateLabelAccount" 
+                                          object:nil];
 }
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.

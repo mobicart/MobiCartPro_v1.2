@@ -13,6 +13,8 @@
 #import "Constants.h"
 #import "AppRecord.h"
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
 
 BOOL isOnlyNews;
 BOOL isTwitter;
@@ -582,6 +584,18 @@ static BOOL isErrorShowed1stTime = YES;
 			NSString *strText =appRecord.tweetMsg;
 			
 			CGSize textsize = [strText sizeWithFont:[UIFont fontWithName:@"Helvetica" size:10] constrainedToSize:CGSizeMake(230, 400) lineBreakMode:UILineBreakModeWordWrap];
+            
+            // Sa Vo - NhanTVT - [25/06/2014]
+            // Fix issue cell does not displayed full of information
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+                NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:strText];
+                [attrStr addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Helvetica" size:10] range:NSMakeRange(0, [strText length])];
+                CGRect frame = [attrStr boundingRectWithSize:CGSizeMake(230, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
+                
+                textsize = CGSizeMake(frame.size.width, frame.size.height+10);
+            
+            }
+            
 			return textsize.height+55;
 			
 			
@@ -1096,6 +1110,18 @@ static BOOL isErrorShowed1stTime = YES;
 			
 			
 			CGSize textsize = [strText sizeWithFont:[UIFont fontWithName:@"Helvetica" size:10] constrainedToSize:CGSizeMake(230, 400) lineBreakMode:UILineBreakModeWordWrap];
+            
+            // Sa Vo - NhanTVT - [25/06/2014]
+            // Fix issue cell does not displayed full of information
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+                NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:strText];
+                [attrStr addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Helvetica" size:10] range:NSMakeRange(0, [strText length])];
+                CGRect frame = [attrStr boundingRectWithSize:CGSizeMake(230, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
+               
+                textsize = CGSizeMake(frame.size.width, frame.size.height+10);
+            
+            }
+            
 			int cellHeight1=textsize.height;
 			cellHeight1=cellHeight1+55;
 			

@@ -32,15 +32,15 @@ BOOL isLoadingTableFooter;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	if(_objMobicartAppDelegate.tabController.selectedIndex>3)
-	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"removedPoweredByMobicart" object:nil];
-    }
-    
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
+	if(_objMobicartAppDelegate.tabController.selectedIndex>3)
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"removedPoweredByMobicart" object:nil];
     }
 	
 	

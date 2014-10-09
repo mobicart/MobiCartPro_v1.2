@@ -109,7 +109,7 @@ extern int controllersCount;
 	[contentView addSubview:contentScrollView];
 	
 	aboutDetailLblText=[[UILabel alloc]initWithFrame:CGRectMake( 10, 0, 305, 50)];
-	aboutDetailLblText.textColor=_savedPreferences.labelColor;
+    aboutDetailLblText.textColor=_savedPreferences.labelColor;
     aboutDetailLblText.font =[UIFont fontWithName:@"Helvetica" size:12.0];
 	[aboutDetailLblText setNumberOfLines:0];
 	[aboutDetailLblText setLineBreakMode:UILineBreakModeWordWrap];
@@ -275,6 +275,7 @@ extern int controllersCount;
 
 - (void)showLoadingbar
 {
+    /*
 	if (!loadingActionSheet1.superview)
     {
         loadingActionSheet1 = [[UIActionSheet alloc] initWithTitle:[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.LoaderText"] delegate:nil cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
@@ -282,6 +283,8 @@ extern int controllersCount;
         [loadingActionSheet1 showInView:self.tabBarController.view];
         
     }
+     */
+    [GlobalPreferences showLoadingIndicator];
     
 	
 }
@@ -301,13 +304,18 @@ extern int controllersCount;
 - (void)runScheduledTask {
     // Do whatever u want
     
-    if (loadingActionSheet1.superview)
+    /*
+    // Sa Vo - NhanTVT - [20/06/2014] -
+    // Fix issue related to can't dimiss loading indicator on iOS 8
+    if (loadingActionSheet1.visible)
     {
         [loadingActionSheet1 dismissWithClickedButtonIndex:0 animated:YES];
         [loadingActionSheet1 release];
 		loadingActionSheet1 = nil;
     }
     // Set the timer to nil as it has been fired
+     */
+    [GlobalPreferences hideLoadingIndicator];
     
     
     

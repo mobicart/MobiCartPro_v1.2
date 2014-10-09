@@ -62,7 +62,7 @@ extern BOOL isCatogeryEmpty;
 
 
 
--(void)showLoadingIndicator;
--(void)hideLoadingIndicator;
+//-(void)showLoadingIndicator;
+//-(void)hideLoadingIndicator;
 
 @end

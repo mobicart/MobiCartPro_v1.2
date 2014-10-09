@@ -19,12 +19,12 @@ extern BOOL isTwiiterSelected;
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
-    
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+
     
 	self.navigationItem.titleView = [GlobalPreferences createLogoImage];
 	
@@ -374,8 +374,9 @@ extern BOOL isTwiiterSelected;
 -(void)hideIndicator1
 
 {
-	
-	if (loadingActionSheet1.superview)
+	// Sa Vo - NhanTVT - [20/06/2014] -
+    // Fix issue related to can't dimiss loading indicator on iOS 8
+	if (loadingActionSheet1.visible)
     {
         [loadingActionSheet1 dismissWithClickedButtonIndex:0 animated:YES];
         [loadingActionSheet1 release];
