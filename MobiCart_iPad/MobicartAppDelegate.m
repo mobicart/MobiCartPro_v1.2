@@ -27,18 +27,19 @@
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    // Sa Vo - tnlq -- import bugsense v3.4
+    // Sa Vo - tnlq -- import bugsense version 3.4
     [BugSenseController sharedControllerWithBugSenseAPIKey:@"ab88c70d"];
     //
-    // Sa Vo - tnlq - [09/06/2014] - fix bugs problem when orientation
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    //
+    
     //Override point for customization after app launch.
     [viewController showSplash];
     [viewController hideSplash];
-    
+    // Sa Vo - tnlq - [09/06/2014] - fix bugs problem when orientation
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //
+    [self.window setBackgroundColor:[UIColor blueColor]];
     [self performSelector:@selector(loading) withObject:nil];
+
     [self.window makeKeyAndVisible];
     
 	return YES;

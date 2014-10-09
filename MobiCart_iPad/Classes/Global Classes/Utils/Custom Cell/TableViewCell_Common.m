@@ -126,6 +126,31 @@
     return self;
 }
 
+// Sa Vo - tnlq - [16/06/2014] - fix bug don't show delete button
+//-(void) willTransitionToState: (UITableViewCellStateMask) state {
+//    [super willTransitionToState:state];
+//    if (state == UITableViewCellStateShowingDeleteConfirmationMask) {
+//        for (UIView *subView in self.subviews) {
+//            if ([NSStringFromClass([subView class]) isEqualToString:@"UITableViewCellDeleteConfirmationControl"]) {
+//                UIView *deleteButtonView = (UIView *) [subView.subviews objectAtIndex:0];
+//                CGRect f = deleteButtonView.frame;
+//                f.origin.x = 0;
+//                f.origin.y = 0;
+//                f.size.width = 30;
+//                f.size.height = 34;
+//                
+//                CGRect sf = self.frame;
+//                sf.size.width = 110;
+//                sf.size.height = 110;
+//                
+//                deleteButtonView.frame = f;
+//                self.frame = sf;
+//            }
+//        }
+//    }
+//}
+//
+
 - (void) setProductName:(NSString*)productName:(NSString *)productPrice: (NSString *)availability: (NSString *)discount
 {		
     if(![productName isEqual:[NSNull null]])

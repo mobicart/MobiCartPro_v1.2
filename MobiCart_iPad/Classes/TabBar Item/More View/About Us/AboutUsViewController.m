@@ -95,7 +95,8 @@
 	[viewTopBar addSubview:btnCart];
 	
 	lblCart = [[UILabel alloc] initWithFrame:CGRectMake(42, 2, 30, 30)];
-	lblCart.backgroundColor = [UIColor clearColor];
+    
+    lblCart.backgroundColor = [UIColor clearColor];
 	lblCart.textAlignment = UITextAlignmentCenter;
 	lblCart.font = [UIFont boldSystemFontOfSize:16];
 	lblCart.text = [NSString stringWithFormat:@"%d", iNumOfItemsInShoppingCart];

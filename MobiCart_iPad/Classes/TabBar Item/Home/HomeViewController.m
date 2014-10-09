@@ -508,6 +508,7 @@ int count=0;
 	//  Set the user settings into the global preferences (like tax type, tax charges for user's country etc)
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSDictionary *dicTemp;
+    int storeId =_savedPreferences._iCurrentStoreId;
 	dicTemp=[ServerAPI fetchSettings:iCurrentStoreId];
     [dicTemp retain];
     [GlobalPrefrences setSettingsOfUserAndOtherDetails:dicTemp];

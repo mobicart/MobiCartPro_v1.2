@@ -56,6 +56,24 @@
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
 	
+    /*
+	CLLocationManager *userLocation = [[CLLocationManager alloc] init];
+	userLocation.delegate = self;
+    
+	const CLLocationAccuracy * ptr = &kCLLocationAccuracyBestForNavigation;
+	BOOL frameworkSupports = (ptr != NULL);
+	
+    if (frameworkSupports)
+    {
+        userLocation.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+    }
+	else
+    {
+        userLocation.desiredAccuracy = kCLLocationAccuracyBest;
+    }
+	
+	[userLocation startUpdatingLocation];
+     */
 	
 	NSInvocationOperation *operationFetchDataFromServer= [[NSInvocationOperation alloc] initWithTarget:self
 																							  selector:@selector(fetchDataFromServer) 

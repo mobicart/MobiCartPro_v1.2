@@ -11,6 +11,10 @@
 #import "CustomImageView.h"
 extern BOOL isLoadingTableFooter;
 
+// 05/8/2014 Tuyen new code
+@class CheckoutViewController;
+// End
+
 @interface ShoppingCartViewController : UIViewController<UITableViewDelegate,UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate> {
     CustomImageView * cellProductImageView;
 	UIView *contentView;
@@ -35,7 +39,22 @@ extern BOOL isLoadingTableFooter;
 	int	countryID;
 	UIView *rightContentView;
 	NSMutableArray *arrCountries,*arrStates,*arrInfoAccount;
-	BOOL isEditing;
+    
+    // 05/8/2014 Tuyen new code
+    CheckoutViewController *objCheckout;
+    // End
+    BOOL isEditing;
+    
+    // Sa Vo - NhanTVT -[23/06/2014] -
+    // Making view overlay the view while pickerView is showing
+    // Initialize variables
+    UIView *maskView;
+    BOOL isMaskViewShown;
+    
+    // Sa Vo - NhanTVT - [23/06/2014] -
+    // Fix issue wrong calculate Sub Total for each products
+    // Initialize variables
+    UITableViewCell *editingCell;
 }
 @property(readwrite)int isEditCommit;
 -(void)viewForFooter;

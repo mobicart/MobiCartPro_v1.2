@@ -973,8 +973,8 @@
 	[contentView addSubview:lblDepartmets];
 	[lblDepartmets release];
 	
-	
-	UILabel *lblDepartmetsName=[[UILabel alloc]initWithFrame:CGRectMake(141, 16, 150, 30)];
+	// Sa Vo - tnlq - fix word overlap word on top left corner
+	UILabel *lblDepartmetsName=[[UILabel alloc]initWithFrame:CGRectMake(160, 16, 150, 30)];
 	[lblDepartmetsName setBackgroundColor:[UIColor clearColor]];
 	[lblDepartmetsName setText:selectedDepartment];
 	[lblDepartmetsName setFont:[UIFont fontWithName:@"Helvetica-Bold" size:13]];

@@ -1071,6 +1071,7 @@ int isfromTag;
      [alert release];
      }*/
 	isReview=NO;
+    
     // Sa Vo - tnlq - 28/05/2014
     if ([self.delegate respondsToSelector:@selector(didLoginSuccessful)]) {
         [self.delegate didLoginSuccessful];
@@ -1639,13 +1640,14 @@ int isfromTag;
 				[alertView release];
 				
 			}
-		}
+        }
 	}
     // Sa Vo - tnlq - 28/05/2014
     if ([self.delegate respondsToSelector:@selector(didLoginSuccessful)]) {
         [self.delegate didLoginSuccessful];
     }
     //
+
 }
 
 

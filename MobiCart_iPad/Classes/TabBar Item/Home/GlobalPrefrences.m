@@ -645,6 +645,19 @@ NSDictionary *dictUserSettings;
     if(![payPalToken isKindOfClass:[NSNull class]])
         [GlobalPrefrences setPaypalLiveToken:payPalToken];
     
+    //18/09/2014 Sa VoSa Vo insert 2 keys for Paypal: Client ID and Scerect Id
+    //**************************PayPal ClientId***************************
+    NSString *payPalClientId=[[dictUserSettings valueForKey:@"store"] valueForKey:@"sIphonePaypalClientId"];
+    if(![payPalClientId isKindOfClass:[NSNull class]])
+        [GlobalPrefrences setPayPalClientId:payPalClientId];
+    
+    //**************************PayPal Secret Key***************************
+    NSString *payPalSecretKey=[[dictUserSettings valueForKey:@"store"] valueForKey:@"sIphonePaypalSecretKey"];
+    if(![payPalSecretKey isKindOfClass:[NSNull class]])
+        [GlobalPrefrences setPaypalSecretKey:payPalSecretKey];
+
+    
+    
     //********************************PalPal Live Mode****************
     NSString *isPayPallive=[[dictUserSettings valueForKey:@"store"] valueForKey:@"sPayPalLive"];
     if(![isPayPallive isKindOfClass:[NSNull class]])
@@ -844,6 +857,30 @@ NSString * payPalLiveToken;
 {
     return payPalLiveToken;
 }
+
+//18/09/2014 Sa Vo
+NSString * payPalClientId;
++(void)setPayPalClientId:(NSString *)aPaypalClientId
+{
+    payPalClientId=aPaypalClientId;
+    [payPalClientId retain];
+}
++(NSString *) getPayPalClientId
+{
+    return payPalClientId;
+}
+
+NSString * paypalSecretKey;
++(void)setPaypalSecretKey:(NSString *)aPaypalSecretKey
+{
+    paypalSecretKey=aPaypalSecretKey;
+    [paypalSecretKey retain];
+}
++(NSString *) getPaypalSecretKey
+{
+    return paypalSecretKey;
+}
+
 
 NSString *isPayPalModeLive;
 +(void) setPaypalModeIsLive:(NSString *)payPalMode

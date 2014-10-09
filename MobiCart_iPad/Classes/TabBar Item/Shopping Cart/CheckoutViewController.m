@@ -8,19 +8,37 @@
 
 #import "CheckoutViewController.h"
 #import "Constants.h"
-#import "PayPalPayment.h"
-#import "PayPalAdvancedPayment.h"
-#import "PayPalAmounts.h"
-#import "PayPalReceiverAmounts.h"
-#import "PayPalAddress.h"
-#import "PayPalInvoiceItem.h"
+// 05/8/2014 Tuyen close code
+//#import "PayPalPayment.h"
+//#import "PayPalAdvancedPayment.h"
+//#import "PayPalAmounts.h"
+//#import "PayPalReceiverAmounts.h"
+//#import "PayPalAddress.h"
+//#import "PayPalInvoiceItem.h"
+//#import "PayPalMobile.h"
+// End
 MobicartAppDelegate *_objMobicartAppDelegate;
 
 extern BOOL isLoadingTableFooter;
 
+//18/09/2014 Sa Vo
+@interface CheckoutViewController(){
+    NSString *_enviroment;
+}
+
+@property NSString *enviroment;
+
+@end
+
+
 @implementation CheckoutViewController
 
 @synthesize grandTotalValue,fSubTotalAmount,fTaxAmount,arrProductIds, fShippingCharges,sCountry,fSubTotal,arrCartItems,btnPayPal,btnZooz,cashOnDBtn;
+
+//18/09/2014 Sa Vo
+@synthesize enviroment = _enviroment;
+
+
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -541,29 +559,58 @@ extern BOOL isLoadingTableFooter;
 	[lblStateFooter release];
 	int yAxise=lblGrandTotal.frame.origin.y+lblGrandTotal.frame.size.height+50;
     /*********************************integration with PayPAl payment gatway***************/
-	if([[GlobalPrefrences getPaypalModeEnable] intValue]==1 &&([GlobalPrefrences getPaypalLiveToken].length!=0))
+	if([[GlobalPrefrences getPaypalModeEnable] intValue]==1 &&([GlobalPrefrences getPayPalClientId].length!=0))
     {
         
         NSLog(@"*****************************PayPal Token/PayPal Mode******************************");
         NSLog(@"PayPalToken: %@",[GlobalPrefrences getPaypalLiveToken]);
         NSLog(@"PayPalMode:  %@",[GlobalPrefrences getPaypalModeIsLive]);
-        NSLog(@"PayPal version%@",[PayPal buildVersion]);
+        //DuyenHK: change to new Paypal library
+//        NSLog(@"PayPal version%@",[PayPal buildVersion]);
+        ////////////
         NSLog(@"*******************************************************************************");
         
+        //18/09/2014 Sa Vo
+        [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : [GlobalPrefrences getPayPalClientId],
+                                                               PayPalEnvironmentSandbox : [GlobalPrefrences getPayPalClientId]}];
         
         if([[GlobalPrefrences getPaypalModeIsLive]intValue]==1)
         {
-            [PayPal initializeWithAppID:[GlobalPrefrences getPaypalLiveToken] forEnvironment:ENV_LIVE];
+            //DuyenHK: change to new Paypal library
+//            [PayPal initializeWithAppID:[GlobalPrefrences getPaypalLiveToken] forEnvironment:ENV_LIVE];
+//            [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : @"YOUR_CLIENT_ID_FOR_PRODUCTION",
+//                                                                   PayPalEnvironmentSandbox : @"YOUR_CLIENT_ID_FOR_SANDBOX"}];
+            
+            self.enviroment = PayPalEnvironmentProduction;
+            
         }
         else
         {
-            [PayPal initializeWithAppID:@"APP-80W284485P519543T" forEnvironment:ENV_SANDBOX];
+            //DuyenHK: change to new Paypal library
+//            [PayPal initializeWithAppID:@"APP-80W284485P519543T" forEnvironment:ENV_SANDBOX];
+//            
+//            [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : @"YOUR_CLIENT_ID_FOR_PRODUCTION",
+//                                                                   PayPalEnvironmentSandbox : @"YOUR_CLIENT_ID_FOR_SANDBOX"}];
+            /////////
+            
+             self.enviroment = PayPalEnvironmentSandbox;
         }
         
+        //18/09/2014 Sa Vo
+        // Preconnect to PayPal early
+        if([[GlobalPrefrences getPaypalModeEnable] intValue]==1 &&([GlobalPrefrences getPayPalClientId].length!=0)){
+            [PayPalMobile preconnectWithEnvironment:self.enviroment];
+            
+        }
+        
+        //DuyenHK: change to new Paypal library
+        /*UIButton * btn = [[PayPal getPayPalInst] getPayButtonWithTarget:self andAction:@selector(payWithPayPal) andButtonType:BUTTON_278x43];
+        
+        UIButton * btn = [[UIButton alloc] init];
+        
+        btn.frame = CGRectMake (70, lblGrandTotal.frame.origin.y+lblGrandTotal.frame.size.height+30, 278, 38);*/
         
         
-        UIButton * btn = [[PayPal getPayPalInst] getPayButtonWithTarget:self andAction:@selector(payWithPayPal) andButtonType:BUTTON_278x43];
-        btn.frame = CGRectMake (70, lblGrandTotal.frame.origin.y+lblGrandTotal.frame.size.height+30, 278, 38);
         btnPayPal=[UIButton buttonWithType:UIButtonTypeCustom];
         
         [btnPayPal addTarget:self action:@selector(payWithPayPal) forControlEvents:UIControlEventTouchUpInside];
@@ -646,7 +693,7 @@ extern BOOL isLoadingTableFooter;
 			view.hidden =TRUE;
 	}
 	
-	
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -664,6 +711,10 @@ extern BOOL isLoadingTableFooter;
 #pragma mark PayPal Integration
 -(void)payWithPayPal
 {
+    //DuyenHK: change to new Paypal library
+    
+    
+    /*
     NSLog(@"PayPal");
     
     if(![GlobalPrefrences getIsEditMode])
@@ -725,23 +776,155 @@ extern BOOL isLoadingTableFooter;
         [[PayPal getPayPalInst] checkoutWithPayment:payment];
         
         
+    }*/
+
+     
+
+    // 05/8/2014 Tuyen new code
+    totalShippingAmount=0.0;
+    
+    float shippingFloat = fShippingCharges + taxOnShipping;
+    totalShippingAmount=shippingFloat;
+    
+    NSString *strCode =[_savedPreferences.strCurrency substringFromIndex:3];
+    NSDictionary *dicAppSettings = [GlobalPrefrences getSettingsOfUserAndOtherDetails];
+    // Tuyen fix bug subTotal contains more than 2 fractional digits
+//    NSDecimalNumber *subTotal = [[NSDecimalNumber alloc] initWithFloat:priceWithoutTax];
+    NSString *totals = [NSString stringWithFormat:@"%0.2f",priceWithoutTax];
+    NSDecimalNumber *subTotal = [NSDecimalNumber decimalNumberWithString:totals];
+    //
+    NSString *totalShiping =  [NSString stringWithFormat:@"%0.2f", totalShippingAmount];
+    NSString *taxString=[NSString stringWithFormat:@"%0.2f",[GlobalPrefrences getRoundedOffValue:fTaxAmount]];
+    
+    PayPalItem *item1 = [PayPalItem itemWithName:@"Total Amount"
+                                    withQuantity:1
+                                       withPrice:subTotal
+                                    withCurrency:strCode
+                                         withSku:@""];
+    
+    NSArray *items = @[item1];
+    NSDecimalNumber *subtotal = [PayPalItem totalPriceForItems:items];
+    
+    // Optional: include payment details
+    NSDecimalNumber *shipping = [NSDecimalNumber decimalNumberWithString:totalShiping];
+    NSDecimalNumber *tax = [NSDecimalNumber decimalNumberWithString:taxString];
+    PayPalPaymentDetails *paymentDetails = [PayPalPaymentDetails paymentDetailsWithSubtotal:subTotal
+                                                                               withShipping:shipping
+                                                                                    withTax:tax];
+    
+    NSDecimalNumber *total = [[subtotal decimalNumberByAdding:shipping] decimalNumberByAdding:tax];
+    
+    PayPalPayment *payment = [[PayPalPayment alloc] init];
+    payment.amount = total;
+    payment.currencyCode = strCode;
+    payment.shortDescription = [NSString stringWithFormat:@"Total Amount"];
+    payment.items = items;  // if not including multiple items, then leave payment.items as nil
+    payment.paymentDetails = paymentDetails; // if not including payment details, then leave payment.paymentDetails as nil
+    
+    if (!payment.processable) {
+        // This particular payment will always be processable. If, for
+        // example, the amount was negative or the shortDescription was
+        // empty, this payment wouldn't be processable, and you'd want
+        // to handle that here.
+        if ([subTotal compare:[NSNumber numberWithInt:0]]== NSOrderedSame) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your subtotal amount is invalid" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            
+            [alert show];
+            
+            [alert release];
+        }
+    }else{
+        // Update payPalConfig re accepting credit cards.
+        // Set up payPalConfig
+        PayPalConfiguration *_payPalConfig = [[PayPalConfiguration alloc] init];
+        _payPalConfig.acceptCreditCards = YES;
+        //    _payPalConfig.languageOrLocale = @"en";
+        _payPalConfig.merchantName = [NSString stringWithFormat:@"%@", [[dicAppSettings objectForKey:@"store"] objectForKey:@"sSName"]];
+        _payPalConfig.languageOrLocale = [NSLocale preferredLanguages][0];
+        _payPalConfig.payPalShippingAddressOption = PayPalShippingAddressOptionPayPal;
+        
+        PayPalPaymentViewController *paymentViewController = [[PayPalPaymentViewController alloc] initWithPayment:payment
+                                                                                                    configuration:_payPalConfig
+                                                                                                         delegate:self];
+        [self presentViewController:paymentViewController animated:YES completion:nil];
+        // End
+
+    }
+    
+}
+#pragma mark PayPalPaymentDelegate methods
+
+- (void)payPalPaymentViewController:(PayPalPaymentViewController *)paymentViewController didCompletePayment:(PayPalPayment *)completedPayment {
+    NSLog(@"PayPal Payment Success!");
+    [self dismissViewControllerAnimated:YES completion:nil];
+    int state = paymentViewController.state;
+    
+    UIAlertView *alert = nil;
+    if (state == PayPalPaymentViewControllerStateInProgress)
+    {
+        //Send the order information/details to the server
+        [self performSelectorInBackground:@selector(sendDataToServer:) withObject:@"2"];
+        
+        NSString *strTitle = [[NSString alloc] initWithFormat:@"%@",[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.order.completed.sucess.title"] ];
+        
+        NSString *strMessage = [[NSString alloc] initWithFormat:@"%@",[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.order.completed.sucess.text"]];
+        
+        NSString *strCancelButton = [[NSString alloc] initWithFormat:@"%@",[[GlobalPrefrences getLangaugeLabels] valueForKey:@"key.iphone.nointernet.cancelbutton"] ];
+        
+        if ([strTitle length]>0 && [strMessage length]>0 && [strCancelButton length]>0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.order.completed.sucess.title"] message:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.order.completed.sucess.text"] delegate:self cancelButtonTitle:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.nointernet.cancelbutton"] otherButtonTitles:nil];
+            
+            [alert show];
+            
+            [alert release];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Order Approved" message:@"Thank you, your order has been completed successfully. Please visit the 'Account' tab for further details." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            
+            [alert show];
+            
+            [alert release];
+        }
+        [strTitle release];
+        [strMessage release];
+        [strCancelButton release];
+    }
+    else
+    {
+        alert = [[UIAlertView alloc] initWithTitle:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.order.failed.title"] message:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.order.failed.text"] delegate:nil cancelButtonTitle:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.nointernet.cancelbutton"] otherButtonTitles:nil];
     }
     
     
+}
+- (void)payPalPaymentDidCancel:(PayPalPaymentViewController *)paymentViewController {
+    NSLog(@"PayPal Payment Canceled");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.order.cancel.title"] message:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.order.cancel.text"] delegate:nil cancelButtonTitle:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.nointernet.cancelbutton"] otherButtonTitles:nil];
+	
+	[alert show];
+	
+	[alert release];
     
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark PayPal delegates Integration
+//DuyenHK mark code: change to new Paypal
+/*#pragma mark PayPal delegates Integration
 -(void)RetryInitialization
 {
     if([[GlobalPrefrences getPaypalModeIsLive]intValue]==1)
     {
-        [PayPal initializeWithAppID:[GlobalPrefrences getPaypalLiveToken] forEnvironment:ENV_LIVE];
+        //DuyenHK: change to new Paypal library
+//        [PayPal initializeWithAppID:[GlobalPrefrences getPaypalLiveToken] forEnvironment:ENV_LIVE];
+        [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : @"YOUR_CLIENT_ID_FOR_PRODUCTION",
+                                                               PayPalEnvironmentSandbox : @"YOUR_CLIENT_ID_FOR_SANDBOX"}];
     }
     else
     {
-        [PayPal initializeWithAppID:@"APP-80W284485P519543T" forEnvironment:ENV_SANDBOX];
+//        [PayPal initializeWithAppID:@"APP-80W284485P519543T" forEnvironment:ENV_SANDBOX];
+        [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : @"YOUR_CLIENT_ID_FOR_PRODUCTION",
+                                                               PayPalEnvironmentSandbox : @"YOUR_CLIENT_ID_FOR_SANDBOX"}];
+        //////////
     }
     
 }
@@ -779,8 +962,8 @@ extern BOOL isLoadingTableFooter;
     
 	status = PAYMENTSTATUS_FAILED;
     
-}
-
+}*/
+/*
 //paymentCanceled is a required method. in it, you should record that the payment was canceled by
 //the user and perform any desired bookkeeping. you should not do any user interface updates.
 - (void)paymentCanceled
@@ -793,11 +976,14 @@ extern BOOL isLoadingTableFooter;
 	[alert release];
     
 }
+*/
+
+//DuyenHK mark code: change to new Paypal
 
 //paymentLibraryExit is a required method. this is called when the library is finished with the display
 //and is returning control back to your app. you should now do any user interface updates such as
 //displaying a success/failure/canceled message.
-
+/*
 - (void)paymentLibraryExit {
 	UIAlertView *alert = nil;
   	switch (status) {
@@ -851,9 +1037,10 @@ extern BOOL isLoadingTableFooter;
 	}
 	[alert show];
 	[alert release];
-}
+}*/
 
 
+////////////////////
 
 
 #pragma mark Zooz Payment Integration
@@ -1294,6 +1481,10 @@ extern BOOL isLoadingTableFooter;
     //	[contentView release];
 	//contentView=nil;
     //[super dealloc];
+    
+    // 05/8/2014 Tuyen new code
+    [super dealloc];
+    // End
 }
 
 

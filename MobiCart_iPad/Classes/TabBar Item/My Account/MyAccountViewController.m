@@ -27,8 +27,9 @@ BOOL isAccount;
     return self;
 }
 
+
 // Sa Vo - tnlq - 28/05/2014
--(void) showButtonLogout {
+-(void) showLogoutButton {
     if ([[GlobalPrefrences getUserDefault_Preferences:@"userEmail"] length]!=0)
 	{
 		if([showArray count]==3)
@@ -38,13 +39,14 @@ BOOL isAccount;
 			[tableView reloadData];
 		}
 	}
+
 }
 //
 
 -(void)viewWillAppear:(BOOL)animated 
 {
     // Sa Vo - tnlq - 28/05/2014
-    [self showButtonLogout];
+	[self showLogoutButton];
     //
 	if (rightContentView) 
 	{
@@ -178,10 +180,10 @@ BOOL isAccount;
 	[contentView addSubview:tableView];
 }
 
-#pragma mark DetailsViewController Method
 // Sa Vo - tnlq - 28/05/2014
+#pragma mark DetailsViewControllerDelegate method
 -(void) didLoginSuccessful {
-    [self showButtonLogout];
+    [self showLogoutButton];
 }
 //
 
@@ -291,10 +293,10 @@ BOOL isAccount;
 			{
 				isOrderLogin=YES;
 				DetailsViewController *_details = 	[[DetailsViewController alloc] init];
-				// Sa Vo - tnlq - 28/05/2014
+                // Sa Vo - tnlq - 28/05/2014
                 _details.delegate = self;
                 //
-                [rightContentView addSubview:_details.view];
+				[rightContentView addSubview:_details.view];
 				[rightContentView bringSubviewToFront:_details.view];
 			}
 			

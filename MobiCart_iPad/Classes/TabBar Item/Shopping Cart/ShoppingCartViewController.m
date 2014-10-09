@@ -337,7 +337,18 @@ BOOL isRegisterClicked;
 		{
 			
 			[self checkoutMethod];
-		}
+        }
+        
+        // Sa Vo - NhanTVT - [23/06/2014] -
+        // Fix issue wrong calculate sub total price for each product
+        // Release memmory used by editingCell
+        editingCell = nil;
+        
+        // Sa Vo - NhanTVT -[23/06/2014] -
+        // Making view overlay the view while pickerView is showing
+        // Remove mask view from superview
+        if (maskView && isMaskViewShown)
+            [maskView removeFromSuperview];
         
 	}
 	
@@ -388,7 +399,7 @@ BOOL isRegisterClicked;
     [tblStates reloadData];
     viewFooter.frame=CGRectMake(25, tableView.frame.size.height+tableView.frame.origin.x+30, 480, 500);
     // Sa Vo - tnlq - [16/06/2014] - fix bug delete not show
-    //    [tableView reloadData];
+//    [tableView reloadData];
     //
 	[self viewForFooter];
 }
@@ -948,7 +959,39 @@ BOOL isRegisterClicked;
 				[contentView addSubview:rightContentView];
 			}
 			
-			CheckoutViewController *objCheckout=[[CheckoutViewController alloc]init];
+            // 05/8/2014 Tuyen close code
+//			CheckoutViewController *objCheckout=[[CheckoutViewController alloc]init];
+//			NSMutableArray *arrTemp = [[NSMutableArray alloc] init];
+//			
+//			for (int i=0; i<[arrDatabaseCart count]; i++)
+//			{
+//				NSDictionary *dictTemp = [arrShoppingCart objectAtIndex:i];
+//				
+//				NSMutableDictionary *dictTemp1=[[NSMutableDictionary alloc]initWithDictionary:dictTemp];
+//				
+//				[dictTemp1 setValue:[[arrDatabaseCart objectAtIndex:i] objectForKey:@"quantity"] forKey:@"quantity"];
+//				[dictTemp1 setValue:[[arrDatabaseCart objectAtIndex:i] objectForKey:@"pOptionId"] forKey:@"pOptionId"];
+//				
+//				[arrTemp addObject:dictTemp1];
+//				[dictTemp1 release];
+//			}
+//			objCheckout.arrProductIds = arrTemp;
+//			objCheckout.arrCartItems=arrDatabaseCart;
+//			
+//			[arrTemp release];
+//			[rightContentView addSubview:objCheckout.view];
+//            
+//			[objCheckout release];
+            
+            // End
+            
+            // 05/8/2014 Tuyen new code
+            if (objCheckout != nil)
+            {
+                [objCheckout release];
+                objCheckout = nil;
+            }
+            objCheckout=[[CheckoutViewController alloc]init];
 			NSMutableArray *arrTemp = [[NSMutableArray alloc] init];
 			
 			for (int i=0; i<[arrDatabaseCart count]; i++)
@@ -968,8 +1011,7 @@ BOOL isRegisterClicked;
 			
 			[arrTemp release];
 			[rightContentView addSubview:objCheckout.view];
-			
-			[objCheckout release];
+            // End
 		}
 		else {
 			alertLogin=[[UIAlertView alloc]initWithTitle:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.nointernet.title"] message:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.must.login"] delegate:self cancelButtonTitle:[[GlobalPrefrences getLangaugeLabels]valueForKey:@"key.iphone.nointernet.cancelbutton"] otherButtonTitles:nil];
@@ -1116,7 +1158,7 @@ BOOL isRegisterClicked;
         
         
         tblStates.frame =CGRectMake(15, 106, 138, height);
-        
+
 		return [arrStates count];
     }
 	else {
@@ -1158,16 +1200,16 @@ BOOL isRegisterClicked;
 			cell = [[[TableViewCell_Common alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SimpleTableIdentifier]autorelease];
 		}
 		[cell setBackgroundColor:[UIColor whiteColor]];
-        
+
         if (indexPath.row<arrStates.count) {
             cell.textLabel.font = [UIFont systemFontOfSize:13.0];
             NSString *stateName = [[arrStates valueForKey:@"sState"]objectAtIndex:indexPath.row];
             cell.textLabel.text = stateName;
             //		cell.textLabel.text = [[arrStates valueForKey:@"sState"]objectAtIndex:indexPath.row];
             [cell.textLabel setTextAlignment:UITextAlignmentCenter];
-            
+
         }
-        
+				
 	}
 	else if (tableview==tableView)
 	{
@@ -1355,7 +1397,7 @@ BOOL isRegisterClicked;
 			[btnQuantity addTarget:self action:@selector(btnQuantity_Clicked:) forControlEvents:UIControlEventTouchUpInside];
 			[cell addSubview:btnQuantity];
 			
-            
+
 			NSDictionary *dictTemp=[arrShoppingCart objectAtIndex:indexPath.row];
 			NSArray  *arrImagesUrls = [dictTemp objectForKey:@"productImages"];
 			
@@ -1414,6 +1456,14 @@ BOOL isRegisterClicked;
         }
 		
     }
+    
+    // Sa Vo - NhanTVT - [23/06/2014] -
+    // Fix issue wrong calculate sub total price for each products
+    // If cell is already created, update latest sub total price for each products
+    else {
+        [self updateSubTotalForCell:cell atIndex:indexPath];
+    }
+    
     if([tableView isEditing])
     {
         [[cell viewWithTag:[[NSString stringWithFormat:@"9900%d0%d",indexPath.row+1,indexPath.row+1] intValue]]setBackgroundColor:[UIColor clearColor]];
@@ -1430,7 +1480,7 @@ BOOL isRegisterClicked;
     ([tableView isEditing])?(btnQuantity_Temp.hidden = FALSE):(btnQuantity_Temp.hidden = TRUE);
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
+
 	return  cell;
     
 }
@@ -1485,7 +1535,7 @@ BOOL isRegisterClicked;
         _isEditCommit=NO;
         [tblStates reloadData];
         // Sa Vo - tnlq - [16/06/2014] - fix bug delete button not show
-        //		[tableView reloadData];
+//		[tableView reloadData];
         //
 		[self viewForFooter];
 	}
@@ -1504,7 +1554,7 @@ BOOL isRegisterClicked;
 		[lblStateName setText:[[arrStates valueForKey:@"sState"]objectAtIndex:indexPath.row]];
         _isEditCommit=NO;
         // Sa Vo - tnlq - [16/06/2014] - fix bug delete button not show
-        //		[tableView reloadData];
+//		[tableView reloadData];
         //
 		[self viewForFooter];
 	}
@@ -1529,7 +1579,7 @@ BOOL isRegisterClicked;
 		[[tblViewCell viewWithTag: [[NSString stringWithFormat:@"9900%d0%d",indexPath.row+1,indexPath.row+1] intValue]]setHidden:NO];
 	}
     
-    UIButton *btnQuantity_Temp = (UIButton *)[tblViewCell viewWithTag:[[NSString stringWithFormat:@"%d0%d",indexPath.row+1, indexPath.row+1] intValue]];
+        UIButton *btnQuantity_Temp = (UIButton *)[tblViewCell viewWithTag:[[NSString stringWithFormat:@"%d0%d",indexPath.row+1, indexPath.row+1] intValue]];
     
     ([tableView isEditing])?(btnQuantity_Temp.hidden = FALSE):(btnQuantity_Temp.hidden = TRUE);
 	
@@ -1816,6 +1866,31 @@ static int kAnimationType;
 		[arrQuantity addObject:[NSString stringWithFormat:@"%d",i+1]];
 	}
     
+    // Sa Vo - NhanTVT -[23/06/2014] -
+    // Making view overlay the view while pickerView is showing
+    // Create mask view
+    if (!maskView)
+    {
+        NSInteger xOffSet = 25;
+        NSInteger yOffSet = 52;
+        maskView = [[UIView alloc] initWithFrame:
+                    CGRectMake(xOffSet, yOffSet,
+                               self.view.frame.size.width - 2 * xOffSet,
+                               roundf(self.view.frame.size.height - 2.3 * yOffSet))];
+        maskView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+        
+        // Add tap gesture into mask view for exiting purpose
+        UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doneButtonForActionSheet:)];
+        
+        singleTap.numberOfTapsRequired = 1;
+        singleTap.numberOfTouchesRequired = 1;
+        [maskView addGestureRecognizer:singleTap];
+        [singleTap release];
+    }
+    
+    [contentView addSubview:maskView];
+    isMaskViewShown = YES;
+    
     // Sa Vo - tnlq - 26/05/2014 - reset pickerViewQuantity position to avoid ovalap with toolbar
     pickerViewQuantity = [[UIPickerView alloc]initWithFrame:CGRectMake( 50, 504, 400, 200.0)];
     //
@@ -1825,28 +1900,54 @@ static int kAnimationType;
     
 	[pickerViewQuantity setShowsSelectionIndicator:YES];
     
-    
+   	    
 	[contentView addSubview:pickerViewQuantity];
 	[contentView bringSubviewToFront:pickerViewQuantity];
     
-	UIButton *btnTemp = (UIButton *) [tableView viewWithTag:iTagOfCurrentQuantityBtn];
 	UILabel *lblTemp = (UILabel *)[tableView viewWithTag:iTagOfCurrentQuantityLabel];
+    
+    // Sa Vo - NhanTVT - [23/06/2014] -
+    // Fix issue wrong calculate sub total price for each products
+    // Check whether superview of label is a cell
+    
+    // Because of UITableViewCell structure differences
+    // iOS 8 beta, iOS 6.x and below will go here
+    if ([lblTemp.superview isKindOfClass:[UITableViewCell class]]) {
+        editingCell = (UITableViewCell *)lblTemp.superview;
+        
+        // for only iOS 7.x
+    } else if ([lblTemp.superview.superview isKindOfClass:[UITableViewCell class]]) {
+        editingCell = (UITableViewCell *)lblTemp.superview.superview;
+    }
+    
+    // Sa Vo - NhanTVT - [23/06/2014]
+    // Fix issue incorrect selection in pickerView
+    NSInteger selectedRow = 0;
+    
+    if (lblTemp.text && ![lblTemp.text isEqualToString:@""])
+        selectedRow = lblTemp.text.integerValue - 1;
+    
+    [pickerViewQuantity selectRow:selectedRow inComponent:0 animated:NO];
 	
-    if([btnTemp isKindOfClass:[UIButton class]])
-	{
-		if([arrQuantity count]>0)
-			[btnTemp setTitle:[arrQuantity objectAtIndex:0] forState:UIControlStateNormal];
-		else
-			[btnTemp setTitle:@"0" forState:UIControlStateNormal];
-	}
-	
-	if([lblTemp isKindOfClass:[UILabel class]])
-	{
-		if([arrQuantity count]>0)
-			lblTemp.text =[arrQuantity objectAtIndex:0];
-		else
-			[lblTemp setText:@"0"];
-	}
+    // Sa Vo - NhanTVT - [23/06/2014]
+    // Fix issue incorrect selection in pickerview
+    // Removable code
+//    UIButton *btnTemp = (UIButton *) [tableView viewWithTag:iTagOfCurrentQuantityBtn];
+//    if([btnTemp isKindOfClass:[UIButton class]])
+//	{
+//		if([arrQuantity count]>0)
+//			[btnTemp setTitle:[arrQuantity objectAtIndex:0] forState:UIControlStateNormal];
+//		else
+//			[btnTemp setTitle:@"0" forState:UIControlStateNormal];
+//	}
+//	
+//	if([lblTemp isKindOfClass:[UILabel class]])
+//	{
+//		if([arrQuantity count]>0)
+//			lblTemp.text =[arrQuantity objectAtIndex:0];
+//		else
+//			[lblTemp setText:@"0"];
+//	}
 	
 	
 	
@@ -1866,13 +1967,43 @@ static int kAnimationType;
 	[toolbarForPicker setItems:barItems animated:YES];
 	[toolbarForPicker setTag:5656];
     // Sa Vo - thainlq - [16/06/2014] - fix bug don't change quantity
-    //    btnTemp.enabled=FALSE;
+//    btnTemp.enabled=FALSE;
     //
 	[contentView addSubview:toolbarForPicker];
 	[barItems release];
 }
 
+// Sa Vo - NhanTVT - [23/06/2014]
+// Fix issue wrong calculate Sub Total for each products
+// Updating Sub Total after finishing editing
+- (void)updateSubTotalForCell:(UITableViewCell *)cell atIndex:(NSIndexPath *)indexPath {
+    
+    float productCost = 0.0f;
+    productCost = [[TaxCalculation shared] caluateTaxForProductInShoppingCart:arrShoppingCart
+                                                                 forIndexPath:indexPath];
+    
+    productCost = [GlobalPrefrences getRoundedOffValue:productCost];
+    
+    float productSubTotal = productCost * [[[arrDatabaseCart objectAtIndex:indexPath.row]
+                                            valueForKey:@"quantity"] intValue];
+    
+    productSubTotal = [GlobalPrefrences getRoundedOffValue:productSubTotal];
+    
+    NSString *strText=[NSString stringWithFormat:@"%@%0.2f", _savedPreferences.strCurrencySymbol, productSubTotal];
+    CGSize size=[strText sizeWithFont:[UIFont boldSystemFontOfSize:12.00] constrainedToSize:CGSizeMake(500,500) lineBreakMode:UILineBreakModeWordWrap];
+    int x=size.width;
+    if(x>80)
+        x=80;
 
+    NSInteger tagLabelSubPrice = [[NSString stringWithFormat:@"1000%d",indexPath.row] intValue];
+    UILabel *productTotalPrice = (UILabel *)[cell viewWithTag:tagLabelSubPrice];
+    productTotalPrice.frame = CGRectMake(400-x,78,x+10,20);
+    [productTotalPrice setText:[NSString stringWithFormat:@"%@%0.2f", _savedPreferences.strCurrencySymbol, productSubTotal]];
+    
+    NSInteger tagLabelSubPriceTitle = [[NSString stringWithFormat:@"999%d",indexPath.row] intValue];
+    UILabel *productTotalPriceTitle = (UILabel *)[cell viewWithTag:tagLabelSubPriceTitle];
+    productTotalPriceTitle.frame = CGRectMake(productTotalPrice.frame.origin.x-70,78, 65, 20);
+}
 
 -(void)doneButtonForActionSheet:(id)sender
 {
@@ -1887,19 +2018,12 @@ static int kAnimationType;
         [pickerViewQuantity release];
         pickerViewQuantity = nil;
 	}
-	UIButton *btnTemp = (UIButton *) [tableView viewWithTag:iTagOfCurrentQuantityBtn];
-    // Sa Vo - thainlq - [16/06/2014] - fix bug don't change quantity
-    //    btnTemp.enabled=TRUE;
-    //
-	[[SqlQuery shared] updateTblShoppingCart:[btnTemp.titleLabel.text intValue] :[[[arrDatabaseCart objectAtIndex:(iTagOfCurrentQuantityBtn%10)-1] valueForKey:@"id"] intValue] :[[arrDatabaseCart objectAtIndex:(iTagOfCurrentQuantityBtn%10)-1] valueForKey:@"pOptionId"] ];
     
-	arrDatabaseCart = [[SqlQuery shared]getShoppingCartProductIDs:NO];
-	UILabel *lblTemp = (UILabel *)[tableView viewWithTag:iTagOfCurrentQuantityLabel];
-	lblTemp.text = btnTemp.titleLabel.text;
-    //    _isEditCommit=YES;
-    // Sa Vo - tnlq - [16/06/2014] - fix bug delete button not show
-    //    [tableView reloadData];
-	[self viewForFooter];
+    // Sa Vo - NhanTVT -[23/06/2014] -
+    // Making view overlay the view while pickerView is showing
+    // Remove mask view from superview
+    if (maskView && isMaskViewShown)
+        [maskView removeFromSuperview];
 }
 
 
@@ -1933,7 +2057,7 @@ static int kAnimationType;
 	UILabel *lblTemp = (UILabel *)[tableView viewWithTag:iTagOfCurrentQuantityLabel];
     selectedQuantity=[[arrQuantity objectAtIndex:row]intValue];
 	isLoadingTableFooter2ndTime=NO;
-    
+
 	
 	if([btnTemp isKindOfClass:[UIButton class]])
 	{
@@ -1954,9 +2078,23 @@ static int kAnimationType;
         else {
 			[lblTemp setText:@"1"];
         }
-	}
+    }
+    
+    // Sa Vo - NhanTVT - [19/06/2014] -
+    // Fix issue wrong calculate Sub Total for each products
+    // Update quantity into database
+    [[SqlQuery shared] updateTblShoppingCart:[[btnTemp titleForState:UIControlStateNormal] intValue] :[[[arrDatabaseCart objectAtIndex:(iTagOfCurrentQuantityBtn%10)-1] valueForKey:@"id"] intValue] :[[arrDatabaseCart objectAtIndex:(iTagOfCurrentQuantityBtn%10)-1] valueForKey:@"pOptionId"] ];
+    
+    arrDatabaseCart = [[SqlQuery shared]getShoppingCartProductIDs:NO];
+    [self viewForFooter];
 	
-	
+    // Sa Vo - NhanTVT - [23/06/2014] -
+    // Fix issue wrong calculate sub total price for each products
+    // Calculate sub total for edited product
+    if (editingCell) {
+        NSIndexPath *editingIndexPath = [tableView indexPathForCell:editingCell];
+        [self updateSubTotalForCell:editingCell atIndex:editingIndexPath];
+    }
 }
 
 
@@ -2006,6 +2144,22 @@ static int kAnimationType;
 		[lblShippingCharges release];
 	if(lblShippingTax)
 		[lblShippingTax release];
+    // Tuyen new code
+    if (objCheckout != nil)
+    {
+        [objCheckout release];
+        objCheckout = nil;
+    }
+    //
+    
+    // Sa Vo - NhanTVT -[23/06/2014] -
+    // Making view overlay the view while pickerView is showing
+    // Release memory
+    if (maskView) {
+        [maskView removeFromSuperview];
+        [maskView release];
+        maskView = nil;
+    }
 	
     [super dealloc];
 }

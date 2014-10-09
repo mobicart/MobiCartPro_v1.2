@@ -63,6 +63,7 @@ static TaxCalculation *shared;
 		 state id and in this case tax will be 0
 		 */
 		
+		
 		//Sa Vo fix bug iPad not load tax type
         
 		//countryID=[[[dictSettingsDetails valueForKey:@"store"]valueForKey:@"territoryId"]intValue];
@@ -84,14 +85,14 @@ static TaxCalculation *shared;
 		
 		for(int index=0;index<[arrTaxAndShippingCountries count];index++)
 		{
-            //Sa Vo fix bug iPad not load tax type
-
+			//Sa Vo fix bug iPad not load tax type
+            
             /*
-			if([[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"sState"]isEqualToString:@"Other"]&& [[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"territoryId"]intValue]==countryID)
-			{
-				stateID=[[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"id"]intValue];
-			    break;
-			}
+             if([[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"sState"]isEqualToString:@"Other"]&& [[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"territoryId"]intValue]==countryID)
+             {
+             stateID=[[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"id"]intValue];
+             break;
+             }
              */
             if([[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"sState"]isEqualToString:@"Other"]&& [[[arrTaxAndShippingCountries objectAtIndex:index]valueForKey:@"territoryId"]intValue]==territoryId)
 			{
@@ -99,7 +100,6 @@ static TaxCalculation *shared;
                 countryID = territoryId;
 			    break;
 			}
-            
 		}
 		
 	}

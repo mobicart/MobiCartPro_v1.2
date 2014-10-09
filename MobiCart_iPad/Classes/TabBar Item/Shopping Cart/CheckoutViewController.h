@@ -8,7 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import <ZooZSDK/ZooZ.h>
-#import "PayPal.h"
+// 05/8/2014 Tuyen close code
+//#import "PayPal.h"
+// End
+
+// 05/8/2014 Tuyen new code
+#import "PayPalPayment.h"
+#import "PayPalConfiguration.h"
+#import "PayPalPaymentViewController.h"
+#import "PayPalMobile.h"
+// End
 
 typedef enum PaymentStatuses {
 	PAYMENTSTATUS_SUCCESS,
@@ -17,7 +26,13 @@ typedef enum PaymentStatuses {
 } PaymentStatus;
 
 UIView *contentView;
-@interface CheckoutViewController : UIViewController<ZooZPaymentCallbackDelegate,PayPalPaymentDelegate>
+// 05/8/2014 Tuyen close code
+//@interface CheckoutViewController : UIViewController<ZooZPaymentCallbackDelegate,PayPalPaymentDelegate>
+// End
+
+// 05/8/2014 Tuyen new code
+@interface CheckoutViewController : UIViewController<PayPalPaymentDelegate, ZooZPaymentCallbackDelegate>
+// End
 {
 	
 	float grandTotalValue, fTaxAmount, fSubTotalAmount, fShippingCharges, fShippingTax,fSubTotal;

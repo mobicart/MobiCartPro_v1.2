@@ -88,7 +88,7 @@ extern BOOL isWishlistLogin;
 		[btnEdit setTag:112233];
 		btnEdit.hidden = NO;
 		[contentView bringSubviewToFront:btnEdit];
-		[contentView addSubview:btnEdit];	
+		[contentView addSubview:btnEdit];
 	}
 	
 	UIButton *	btnCart = [UIButton buttonWithType:UIButtonTypeCustom];

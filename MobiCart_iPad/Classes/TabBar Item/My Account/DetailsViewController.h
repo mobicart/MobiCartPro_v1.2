@@ -12,7 +12,7 @@ BOOL isLoadingTableFooter;
 @protocol DetailsViewControllerDelegate <NSObject>
 
 @required
--(void) didLoginSuccessful;
+- (void) didLoginSuccessful;
 
 @end
 //
@@ -59,6 +59,7 @@ BOOL isLoadingTableFooter;
     // Sa Vo - tnlq - 28/05/2014
     id <DetailsViewControllerDelegate> delegate;
     //
+    
 }
 @property (nonatomic, retain) UIPickerView *pickerViewCountry;
 @property (nonatomic, retain) UIPickerView *pickerViewStates;
