@@ -8,7 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import <ZooZSDK/ZooZ.h>
-#import "PayPal.h"
+// 05/8/2014 Tuyen close code
+//#import "PayPal.h"
+// End
+
+// 05/8/2014 Tuyen new code
+#import "PayPalPayment.h"
+#import "PayPalConfiguration.h"
+#import "PayPalPaymentViewController.h"
+#import "PayPalMobile.h"
+// End
 
 typedef enum PaymentStatuses {
 	PAYMENTSTATUS_SUCCESS,
@@ -51,6 +60,8 @@ typedef enum PaymentStatuses {
 	NSMutableArray *arrCartItems;
 	NSMutableArray *arrInfoAccount;
    PaymentStatus status;
+    
+    
    }
 
 @property(readwrite)float grandTotalValue;

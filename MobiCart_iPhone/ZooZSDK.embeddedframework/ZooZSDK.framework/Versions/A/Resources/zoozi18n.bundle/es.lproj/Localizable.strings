@@ -77,3 +77,13 @@
 "zooz.fundtype.qiwi" = "Qiwi wallet";
 "zooz.fundtype.klarna" = "Klarna";
 
+"subscription.header.days.period.unit" = "Total: AMOUNTCURRENCY cada PERIODNUM días,\nhasta ENDDATE";
+"subscription.header.day.period.unit" = "Total: AMOUNTCURRENCY cada día,\nhasta ENDDATE";
+"subscription.header.weeks.period.unit" = "Total: AMOUNTCURRENCY cada PERIODNUM semanas,\nhasta ENDDATE";
+"subscription.header.week.period.unit" = "Total: AMOUNTCURRENCY cada semana,\nhasta ENDDATE";
+"subscription.header.months.period.unit" = "Total: AMOUNTCURRENCY cada PERIODNUM meses,\nhasta ENDDATE";
+"subscription.header.month.period.unit" = "Total: AMOUNTCURRENCY cada mes,\nhasta ENDDATE";
+"subscription.header.years.period.unit" = "Total: AMOUNTCURRENCY cada PERIODNUM años,\nhasta ENDDATE";
+"subscription.header.year.period.unit" = "Total: AMOUNTCURRENCY cada año,\nhasta ENDDATE";
+
+

@@ -539,16 +539,16 @@ int userStateID=0;
 		[_searchBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"searchback.png"]]];
 	}
 	else {
-		//Sa Vo fix bug search bar not get search theme color from Mobicart website
-        //[_searchBar setBackgroundColor:_savedPreferences.searchBgColor];
         
+        //Sa Vo fix bug search bar not get search theme color from Mobicart website
+        //[_searchBar setBackgroundColor:_savedPreferences.searchBgColor];
+
         _searchBar.tintColor =_savedPreferences.searchBgColor;
         
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
         {
             _searchBar.barTintColor = _savedPreferences.searchBgColor;
         }
-
 	}
     
     // [_searchBar setTintColor:navBarColor];
@@ -556,7 +556,6 @@ int userStateID=0;
 	[_searchBar setPlaceholder:str];
 	[_searchBar setTranslucent:YES];
    //	[[_searchBar.subviews objectAtIndex:0] removeFromSuperview];
-    //
     
     
     
@@ -580,7 +579,7 @@ UINavigationController *moreNavBar;
 UINavigationController *currentNavigationController;
 +(void)setCurrentNavigationController: (UINavigationController *)_navigationController
 {
-	currentNavigationController = _navigationController;
+    currentNavigationController = _navigationController;
 }
 
 +(UINavigationController *)getCurrentNavigationController
@@ -825,6 +824,17 @@ NSDictionary *dictUserSettings;
     NSString *payPalToken=[dictUserSettings  valueForKey:@"iphonePaypalToken"];
     if(![payPalToken isKindOfClass:[NSNull class]])
         [GlobalPreferences setPaypalLiveToken:payPalToken];
+    
+    //18/09/2014 Sa Vo insert 2 keys for Paypal: Client ID and Scerect Id
+    //**************************PayPal ClientId***************************
+    NSString *payPalClientId=[dictUserSettings  valueForKey:@"sIphonePaypalClientId"];
+    if(![payPalClientId isKindOfClass:[NSNull class]])
+        [GlobalPreferences setPayPalClientId:payPalClientId];
+    
+    //**************************PayPal Secret Key***************************
+    NSString *payPalSecretKey=[dictUserSettings  valueForKey:@"sIphonePaypalSecretKey"];
+    if(![payPalSecretKey isKindOfClass:[NSNull class]])
+        [GlobalPreferences setPaypalSecretKey:payPalSecretKey];
     
     //********************************PalPal Live Mode****************
     NSString *isPayPallive=[dictUserSettings  valueForKey:@"sPayPalLive"];
@@ -1185,6 +1195,29 @@ NSString * payPalLiveToken;
 +(NSString *) getPaypalLiveToken
 {
     return payPalLiveToken;
+}
+
+//18/09/2014 Sa Vo
+NSString * payPalClientId;
++(void)setPayPalClientId:(NSString *)aPaypalClientId
+{
+    payPalClientId=aPaypalClientId;
+    [payPalClientId retain];
+}
++(NSString *) getPayPalClientId
+{
+    return payPalClientId;
+}
+
+NSString * paypalSecretKey;
++(void)setPaypalSecretKey:(NSString *)aPaypalSecretKey
+{
+    paypalSecretKey=aPaypalSecretKey;
+    [paypalSecretKey retain];
+}
++(NSString *) getPaypalSecretKey
+{
+    return paypalSecretKey;
 }
 
 NSString *isZoozModeLive;

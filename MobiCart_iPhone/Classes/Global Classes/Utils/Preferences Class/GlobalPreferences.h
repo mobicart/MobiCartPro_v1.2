@@ -169,6 +169,14 @@ NSOperationQueue *queue;
 +(void) setPaypalLiveToken:(NSString *)paypalToken;
 +(NSString *) getPaypalLiveToken;
 
+//18/09/2014 Sa Vo
+#pragma mark - Paypal Live ClientId & Secrect
++(void)setPayPalClientId:(NSString *)aPaypalClientId;
++(NSString *) getPayPalClientId;
+
++(void)setPaypalSecretKey:(NSString *)aPaypalSecretKey;
++(NSString *) getPaypalSecretKey;
+
 +(void) setZoozToken:(NSString *)_zoozToken;
 +(NSString *) getZoozPaymentToken;
 

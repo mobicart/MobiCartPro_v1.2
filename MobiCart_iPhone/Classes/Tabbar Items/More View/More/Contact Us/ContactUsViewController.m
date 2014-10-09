@@ -304,7 +304,6 @@ extern int controllersCount;
         coord.latitude = latitude;
         coord.longitude = longitude;
     } @catch (NSException *e) {
-        NSLOg(@"ContactUs - addressLocation: %@", e);
     }
 	
 }

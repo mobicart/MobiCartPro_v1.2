@@ -7,19 +7,33 @@
 
 #import "CheckoutViewController.h"
 #import "Constants.h"
-#import "PayPalPayment.h"
-#import "PayPalAdvancedPayment.h"
-#import "PayPalAmounts.h"
-#import "PayPalReceiverAmounts.h"
-#import "PayPalAddress.h"
-#import "PayPalInvoiceItem.h"
+// 05/8/2014 Tuyen close code
+//#import "PayPalPayment.h"
+//#import "PayPalAdvancedPayment.h"
+//#import "PayPalAmounts.h"
+//#import "PayPalReceiverAmounts.h"
+//#import "PayPalAddress.h"
+//#import "PayPalInvoiceItem.h"
+// End
 
 extern BOOL isLoadingTableFooter;
 extern int controllersCount;
 extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
+
+//18/09/2014 Sa Vo
+@interface CheckoutViewController(){
+    NSString *_enviroment;
+}
+
+@property NSString *enviroment;
+
+@end
 @implementation CheckoutViewController
 
 @synthesize grandTotalValue,fSubTotalAmount,fTaxAmount,arrProductIds, fShippingCharges,sCountry,fSubTotal,arrCartItems,sMerchantPaypayEmail;
+
+//18/09/2014 Sa Vo
+@synthesize enviroment = _enviroment;
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -232,10 +246,7 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
 		}
 		
 		float productCost=0, productTax=0;
-        
-        
-        
-		
+  	
 		NSString *discount = [NSString stringWithFormat:@"%@", [[arrProductIds objectAtIndex:indexPath.row]valueForKey:@"fDiscountedPrice"]];
 		
 		if((![discount isEqual:[NSNull null]]) && (![discount isEqualToString:@"<null>"]) && ([discount length]!=0))
@@ -342,7 +353,7 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
 		else
 			lblProductTotal.text = [NSString stringWithFormat:@"%@%0.2f", _savedPreferences.strCurrencySymbol, productTotal];
 		
-		DLog(@"Currency label----- %@",lblProductTotal.text);
+	
 		//[contentScrollView addSubview:lblProductTotal];
 		[lblProductTotal release];
 		
@@ -371,7 +382,7 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
 		
 		int optionsCount=[arrSelectedOptions count];
 		return 50+(optionsCount-1)*15;
-		//return optionsCount*35;
+		
 	}
 	
 	
@@ -548,28 +559,44 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
     
     int yAxis=190;
 	/**************************PayAPl Gatway*******************************************************/
-    if([[GlobalPreferences getPaypalModeEnable] intValue]==1 && ([GlobalPreferences getPaypalLiveToken].length!=0))
+    if([[GlobalPreferences getPaypalModeEnable] intValue]==1 && ([GlobalPreferences getPayPalClientId].length != 0))
     {
-//        NSLog(@"*****************************PayPal Token/PayPal Mode******************************");
-//        NSLog(@"PayPalToken: %@",[GlobalPreferences getPaypalLiveToken]);
-//        NSLog(@"PayPalMode:  %@",[GlobalPreferences getPaypalModeIsLive]);
-//        NSLog(@"*******************************************************************************");
-//        
+        
+        //18/09/2014 Sa Vo
+        [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : [GlobalPreferences getPayPalClientId],
+                                                               PayPalEnvironmentSandbox : [GlobalPreferences getPayPalClientId]}];
+       
         if([[GlobalPreferences getPaypalModeIsLive] intValue]==1)
         {
-            [PayPal initializeWithAppID:[GlobalPreferences getPaypalLiveToken] forEnvironment:ENV_LIVE];
+            //DuyenHK: change to new Paypal library
+//            [PayPal initializeWithAppID:[GlobalPreferences getPaypalLiveToken] forEnvironment:ENV_LIVE];
+            
+//            [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : [GlobalPreferences getPayPalClientId],
+//                                                                   PayPalEnvironmentSandbox : @""}];
+            
+           
+            self.enviroment = PayPalEnvironmentProduction;
         }
         else
         {
-            [PayPal initializeWithAppID:@"APP-80W284485P519543T" forEnvironment:ENV_SANDBOX];
+            //DuyenHK: change to new Paypal library
+//            [PayPal initializeWithAppID:@"APP-80W284485P519543T" forEnvironment:ENV_SANDBOX];
+            
+//            [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : @"",
+//                                                                   PayPalEnvironmentSandbox : [GlobalPreferences getPayPalClientId]}];
+            
+           
+            self.enviroment = PayPalEnvironmentSandbox;
         }
         
+       
         
+        //DuyenHK: change to new Paypal library
+        /*
         UIButton * btn = [[PayPal getPayPalInst] getPayButtonWithTarget:self andAction:@selector(payWithPayPal) andButtonType:BUTTON_278x43];
         btn.frame = CGRectMake(20, 180, 278, 34);
-        //[viewFooter addSubview:btn];
-        
-        
+         */
+               
         UIButton *btnPayPal=[UIButton buttonWithType:UIButtonTypeCustom];
         [btnPayPal addTarget:self action:@selector(payWithPayPal) forControlEvents:UIControlEventTouchUpInside];
         [btnPayPal setTitle:[NSString stringWithFormat:@"%@",[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.paybypaypalnew"]] forState:UIControlStateNormal];
@@ -591,13 +618,7 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
     if([[GlobalPreferences getZoozModeEnable] intValue]==1 && ([GlobalPreferences getZoozPaymentToken].length!=0))
     {
         
-        
-//        NSLog(@"*****************************ZooZ AppUnique ID/Zooz Mode******************************");
-//        NSLog(@"iPhone ZooZ App Unique ID:  %@",[[NSBundle mainBundle] bundleIdentifier]);
-//        NSLog(@"iPhone ZooZ key:  %@",[GlobalPreferences getZoozPaymentToken]);
-//        NSLog(@"ZooZ Mode:  %@",[GlobalPreferences getZoozModeIsLive]);
-//        NSLog(@"*******************************************************************************");
-//        
+      
         
         
         UIButton *btnPaywithZooZ=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -943,6 +964,14 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
 {
 	
 	[super viewWillAppear:animated];
+    
+    //18/09/2014 Sa Vo
+    // Preconnect to PayPal early
+    if([[GlobalPreferences getPaypalModeEnable] intValue]==1 && ([GlobalPreferences getPayPalClientId].length != 0)){
+        [PayPalMobile preconnectWithEnvironment:self.enviroment];
+
+    }
+    
     //self.title=@"Checkout";
 	//[GlobalPreferences performSelector:@selector(dismissLoadingBar_AtBottom)];
 	
@@ -1014,10 +1043,7 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
             if(([self.sMerchantPaypayEmail isEqual:[NSNull null]]) || ([self.sMerchantPaypayEmail isEqualToString:@"null"]) ||  ([self.sMerchantPaypayEmail isEqualToString:@""]))
                 
             {
-                //use the the merchant email ID as his paypal email ID
                 
-                //DLog(@"%@",merchantEmailId);
-                //DLog(@"%@",[GlobalPreferences getMerchantEmailId]);
                 self.sMerchantPaypayEmail = merchantEmailId;
             }
             
@@ -1072,6 +1098,8 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
 #pragma mark PayPal Integration
 -(void)payWithPayPal
 {
+    // 05/8/2014 Tuyen close code
+    /*
     NSLog(@"PayPal");
     NSString *strCode =[_savedPreferences.strCurrency substringFromIndex:3];
     NSDictionary *dicAppSettings = [GlobalPreferences getSettingsOfUserAndOtherDetails];
@@ -1127,10 +1155,87 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
 	item.name = @"Total Amount";
 	[payment.invoiceData.invoiceItems addObject:item];
     [[PayPal getPayPalInst] checkoutWithPayment:payment];
+     */
+    // End
+    
+    // 05/8/2014 Tuyen new code
 
+    totalShippingAmount=0.0;
+    
+    float shippingFloat = fShippingCharges + taxOnShipping;
+    totalShippingAmount=shippingFloat;
+    
+    NSString *strCode =[_savedPreferences.strCurrency substringFromIndex:3];
+    NSDictionary *dicAppSettings = [GlobalPreferences getSettingsOfUserAndOtherDetails];
+    // Tuyen fix bug subTotal contains more than 2 fractional digits
+//    NSDecimalNumber *subTotal = [[NSDecimalNumber alloc] initWithFloat:priceWithoutTax];
+    NSString *totals = [NSString stringWithFormat:@"%0.2f",priceWithoutTax];
+    NSDecimalNumber *subTotal = [NSDecimalNumber decimalNumberWithString:totals];
+    //
+    NSString *totalShiping =  [NSString stringWithFormat:@"%0.2f", totalShippingAmount];
+    NSString *taxString=[NSString stringWithFormat:@"%0.2f",[GlobalPreferences getRoundedOffValue:fTaxAmount]];
+    
+    PayPalItem *item1 = [PayPalItem itemWithName:@"Total Amount"
+                                    withQuantity:1
+                                       withPrice:subTotal
+                                    withCurrency:strCode
+                                         withSku:@""];
+    
+    NSArray *items = @[item1];
+    NSDecimalNumber *subtotal = [PayPalItem totalPriceForItems:items];
+    
+    // Optional: include payment details
+    NSDecimalNumber *shipping = [NSDecimalNumber decimalNumberWithString:totalShiping];
+    NSDecimalNumber *tax = [NSDecimalNumber decimalNumberWithString:taxString];
+    PayPalPaymentDetails *paymentDetails = [PayPalPaymentDetails paymentDetailsWithSubtotal:subTotal
+                                                                               withShipping:shipping
+                                                                                    withTax:tax];
+    
+    NSDecimalNumber *total = [[subtotal decimalNumberByAdding:shipping] decimalNumberByAdding:tax];
+    
+    PayPalPayment *payment = [[PayPalPayment alloc] init];
+    payment.amount = total;
+    payment.currencyCode = strCode;
+    payment.shortDescription = [NSString stringWithFormat:@"Total Amount"];
+    payment.items = items;  // if not including multiple items, then leave payment.items as nil
+    payment.paymentDetails = paymentDetails; // if not including payment details, then leave payment.paymentDetails as nil
+    
+    if (!payment.processable) {
+        // This particular payment will always be processable. If, for
+        // example, the amount was negative or the shortDescription was
+        // empty, this payment wouldn't be processable, and you'd want
+        // to handle that here.
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your subtotal amount is invalid" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        
+        [alert show];
+        
+        [alert release];
+    }else{
+        // Update payPalConfig re accepting credit cards.
+        // Set up payPalConfig
+        PayPalConfiguration *_payPalConfig = [[PayPalConfiguration alloc] init];
+        _payPalConfig.acceptCreditCards = YES;
+        //    _payPalConfig.languageOrLocale = @"en";
+        _payPalConfig.merchantName = [NSString stringWithFormat:@"%@", [[dicAppSettings objectForKey:@"store"] objectForKey:@"sSName"]];
+        //    _payPalConfig.merchantPrivacyPolicyURL = [NSURL URLWithString:@"https://www.paypal.com/webapps/mpp/ua/privacy-full"];
+        //    _payPalConfig.merchantUserAgreementURL = [NSURL URLWithString:@"https://www.paypal.com/webapps/mpp/ua/useragreement-full"];
+        _payPalConfig.languageOrLocale = [NSLocale preferredLanguages][0];
+        _payPalConfig.payPalShippingAddressOption = PayPalShippingAddressOptionPayPal;
+        
+        PayPalPaymentViewController *paymentViewController = [[PayPalPaymentViewController alloc] initWithPayment:payment
+                                                                                                    configuration:_payPalConfig
+                                                                                                         delegate:self];
+        [self presentViewController:paymentViewController animated:YES completion:nil];
+    }
+    
+    
 
+    // End
 }
 
+// 05/8/2014 Tuyen close code
+// Tuyen close code for change library PayPal
+/*
 #pragma mark PayPal delegates Integration
 -(void)RetryInitialization
 {
@@ -1265,10 +1370,68 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
 	[alert show];
 	[alert release];
 }
+*/
+// End
 
 
+// 05/8/2014 Tuyen new code
+// Tuyen new code for libraray PayPal
+#pragma mark PayPalPaymentDelegate methods
 
-
+- (void)payPalPaymentViewController:(PayPalPaymentViewController *)paymentViewController didCompletePayment:(PayPalPayment *)completedPayment {
+    NSLog(@"PayPal Payment Success!");
+    [self dismissViewControllerAnimated:YES completion:nil];
+    int state = paymentViewController.state;
+    
+    UIAlertView *alert = nil;
+    if (state == PayPalPaymentViewControllerStateInProgress)
+    {
+        //Send the order information/details to the server
+        [self performSelectorInBackground:@selector(sendDataToServers:) withObject:@"2"];
+        
+        NSString *strTitle = [[NSString alloc] initWithFormat:@"%@",[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.order.completed.sucess.title"] ];
+        
+        NSString *strMessage = [[NSString alloc] initWithFormat:@"%@",[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.order.completed.sucess.text"]];
+        
+        NSString *strCancelButton = [[NSString alloc] initWithFormat:@"%@",[[GlobalPreferences getLangaugeLabels] valueForKey:@"key.iphone.nointernet.cancelbutton"] ];
+        
+        if ([strTitle length]>0 && [strMessage length]>0 && [strCancelButton length]>0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.order.completed.sucess.title"] message:[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.order.completed.sucess.text"] delegate:self cancelButtonTitle:[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.nointernet.cancelbutton"] otherButtonTitles:nil];
+            
+            [alert show];
+            
+            [alert release];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Order Approved" message:@"Thank you, your order has been completed successfully. Please visit the 'Account' tab for further details." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            
+            [alert show];
+            
+            [alert release];
+        }
+        [strTitle release];
+        [strMessage release];
+        [strCancelButton release];
+    }
+    else
+    {
+        alert = [[UIAlertView alloc] initWithTitle:[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.order.failed.title"] message:[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.order.failed.text"] delegate:nil cancelButtonTitle:[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.nointernet.cancelbutton"] otherButtonTitles:nil];
+    }
+    
+    
+}
+- (void)payPalPaymentDidCancel:(PayPalPaymentViewController *)paymentViewController {
+    NSLog(@"PayPal Payment Canceled");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.order.cancel.title"] message:[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.order.cancel.text"] delegate:nil cancelButtonTitle:[[GlobalPreferences getLangaugeLabels]valueForKey:@"key.iphone.nointernet.cancelbutton"] otherButtonTitles:nil];
+	
+	[alert show];
+	
+	[alert release];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+// End
 
 
 #pragma mark Zooz/PayPal Integration
@@ -1429,7 +1592,7 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
 {
     NSMutableString * newproductName ;
     
-    NSMutableArray *tempArray=nil;
+    NSMutableArray *test=nil;
     
     NSMutableArray * strArray=nil;
     float optionPrice=0;
@@ -1439,10 +1602,10 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
     
     
     int optionSizesIndex[100]={};
-    strArray=[NSMutableArray new];
+    
     if (!([[[arrProductIds objectAtIndex:k] valueForKey:@"pOptionId"] intValue]==0))
     {
-        tempArray=[NSMutableArray new];
+        
         NSMutableArray *dictOption = [[arrProductIds objectAtIndex:k] objectForKey:@"productOptions"];
         
         NSMutableArray *arrProductOptionSize = [[[NSMutableArray alloc] init] autorelease];
@@ -1476,13 +1639,13 @@ extern   MobicartAppAppDelegate *_objMobicartAppDelegate;
             optionPrice+=[[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"pPrice"]floatValue];
             
             
-            [tempArray addObject: [NSString stringWithFormat:@"%@: %@",[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"sTitle"],[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"sName"]]] ;
+            [test addObject: [NSString stringWithFormat:@"%@: %@",[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"sTitle"],[[dictOption objectAtIndex:optionSizesIndex[count]]valueForKey:@"sName"]]] ;
             
             //DLog(@"%@",[test componentsJoinedByString:@"," ]);
         }
         //  DLog(@"%@",[NSString stringWithFormat:@"%@ %@",newproductName,[test componentsJoinedByString:@"," ]]);
         
-        [strArray addObject:[NSString stringWithFormat:@"%@ [%@]",newproductName,[tempArray componentsJoinedByString:@"," ]]];
+        [strArray addObject:[NSString stringWithFormat:@"%@ [%@]",newproductName,[test componentsJoinedByString:@"," ]]];
         [strArray addObject:[NSString stringWithFormat:@"%f",optionPrice]];
         
         return strArray;
