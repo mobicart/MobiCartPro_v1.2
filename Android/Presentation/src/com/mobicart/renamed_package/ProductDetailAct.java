@@ -92,9 +92,11 @@ public class ProductDetailAct extends Activity implements OnClickListener {
 			String startHTML = "<html><body text=\"#"
 					+ MobicartCommonData.colorSchemeObj.getLabelColor() + "\">";
 			String endHTML = "</body></html>";
-			String htmlString = startHTML
-					+ decodeString
-					+ endHTML;
+			//String htmlString = startHTML
+			//		+ decodeString
+			//		+ endHTML;
+			// HocOT: fix issue when product description cannot display html tag
+			String htmlString = startHTML + currentProduct.getsDescription() + endHTML;
 			
 			productTextTV.loadData(htmlString, "text/html; charset=UTF-8", null);
 			sendToFriendBtn.setVisibility(View.VISIBLE);
