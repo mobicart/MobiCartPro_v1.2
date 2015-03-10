@@ -1,0 +1,14 @@
+//
+// Prefix header for all source files of the 'Mobicart' target in the 'Mobicart' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+
+    #import "libMobicart_iPad/DDLog.h"
+    #import "libMobicart_iPad/DDASLLogger.h"
+    #import "libMobicart_iPad/DDTTYLogger.h"
+    #import "libMobicart_iPad/IMTCustomFormatter.h"
+    #import "libMobicart_iPad/ConstantLogLevel.h"
+#endif

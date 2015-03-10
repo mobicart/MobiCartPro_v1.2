@@ -1,0 +1,23 @@
+//
+// Prefix header for all source files of the 'Mobicart' target in the 'Mobicart' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+
+    #import "library/DDLog.h"
+    #import "library/DDASLLogger.h"
+    #import "library/DDTTYLogger.h"
+    #import "library/IMTCustomFormatter.h"
+    #import "library/ConstantLogLevel.h"
+#endif
+#define IsDebuggingMobicart false
+
+#if IsDebuggingMobicart
+#define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+
+#else
+#define DLog(...)
+
+#endif
