@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>CF835080-8651-47F3-B5DF-B6FB8CA59DFB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Mobicart</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>9C853940C4C2D2091DB1E165DDF7BC9D9061AEFC</key>
+		<string>https://github.com/mobicart/MobiCartPro_v1.2.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MobiCart_iPad/codec-ipad/Mobicart.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>9C853940C4C2D2091DB1E165DDF7BC9D9061AEFC</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/mobicart/MobiCartPro_v1.2.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9C853940C4C2D2091DB1E165DDF7BC9D9061AEFC</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9C853940C4C2D2091DB1E165DDF7BC9D9061AEFC</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MobiCartPro_v1.2</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "StripeExample": {
+            "applicationId": "dRZlWm7v1smERGNh8XN14M4vo7mxOaP9RpgqxEL2",
+            "masterKey": "J8mc5bjHiO45k3tq9II0tfNyiiJsrGtBHCroqKNj"
+        }, 
+        "_default": {
+            "link": "StripeExample"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.19"
+    }
+}

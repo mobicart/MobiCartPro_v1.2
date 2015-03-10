@@ -1,0 +1,26 @@
+/*
+ Localizable.strings
+ ZooZSDK
+ 
+ Created by Ronen Morecki on 12/18/11.
+ Copyright (c) 2011 ronen@zooz.co. All rights reserved.
+ */
+"Forgot passcode? Click here to enter card details"="Forgot passcode?\nClick here to enter card details";
+
+"Excellent"="Excellent!";
+"ZooZ Mobile Gateway"="ZooZ Mobile Gateway";
+"zooz.fundtype.creditcard" = "Credit Card";
+"zooz.fundtype.paypal" = "PayPal";
+"zooz.fundtype.dwolla" = "Bank transfer";
+"zooz.fundtype.qiwi" = "Qiwi wallet";
+"zooz.fundtype.klarna" = "Klarna";
+
+"subscription.header.days.period.unit" = "Total: AMOUNTCURRENCY every PERIODNUM days,\nends ENDDATE";
+"subscription.header.day.period.unit" = "Total: AMOUNTCURRENCY per day,\nends ENDDATE";
+"subscription.header.weeks.period.unit" = "Total: AMOUNTCURRENCY every PERIODNUM weeks,\nends ENDDATE";
+"subscription.header.week.period.unit" = "Total: AMOUNTCURRENCY per week,\nends ENDDATE";
+"subscription.header.months.period.unit" = "Total: AMOUNTCURRENCY every PERIODNUM months,\nends ENDDATE";
+"subscription.header.month.period.unit" = "Total: AMOUNTCURRENCY per month,\nends ENDDATE";
+"subscription.header.years.period.unit" = "Total: AMOUNTCURRENCY every PERIODNUM years,\nends ENDDATE";
+"subscription.header.year.period.unit" = "Total: AMOUNTCURRENCY per year,\nends ENDDATE";
+
